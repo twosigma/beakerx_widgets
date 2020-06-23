@@ -1,29 +1,42 @@
 # IntelliJ
 .idea/
-.iml
+*.iml
 
-# Jupyter
+# Javascript compiled files
+beakerx_widgets/static/
+js/css/*.css
+js/css/*.css.map
+js/dist/
+js/lib/
+
+# Karma tests coverage
+js/coverage/
+
+# Beaker
+/beakerx_widgets/*/static/
+
+# Node modules
+node_modules/
+
+yarn-error.log
+
+# Python
+*.py[cod]
+__pycache__/
+*.egg-info
+
+# Jupyter notebook checkpoints
 .ipynb_checkpoints/
+*Untitled*.ipynb
 
 # Gradle
 .gradle/
-gradle*
+gradle/
+gradlew
+gradlew.bat
 /build/
 */build/
 
-*.egg-info/
+# conda
+dist
 
-dist/
-
-
-# Beaker
-VERSION
-beakerx/static/
-#beakerx/beakerx/static/
-beakerx/beakerx_databrowser/static/
-beakerx/beakerx/kernel/
-beakerx/beakerx/javadoc/
-beakerx/record.txt
-
-# General
-lib/
