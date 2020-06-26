@@ -52,7 +52,7 @@ cmdclass['js-lab'] = install_node_modules(
 # cmdclass['javadoc'] = run_gradle(cmd='base:javadoc')
 
 setup_args = dict(
-    name='beakerx',
+    name='beakerx_widgets',
     description='BeakerX: Beaker Extensions for Jupyter Notebook',
     long_description='BeakerX: Beaker Extensions for Jupyter Notebook',
     version=get_version(os.path.join('beakerx', '_version.py')),
