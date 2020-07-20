@@ -14,39 +14,32 @@
  *  limitations under the License.
  */
 
-
 define([
   'underscore',
   './../plotSampler',
   './../lod/plotLodLine',
   './../lod/plotLodBox',
-  './../lod/plotLodRiver'
-], function (
-  _,
-  PlotSampler,
-  PlotLodLine,
-  PlotLodBox,
-  PlotLodRiver
-) {
-  const PlotLine = require("../../std/PlotLine").PlotLine;
-  const PlotColorUtils = require("../../../../utils/PlotColorUtils").PlotColorUtils;
-  const CommonUtils = require("../../../../utils/CommonUtils").CommonUtils;
-  const PlotUtils = require("../../../../utils/PlotUtils").PlotUtils;
+  './../lod/plotLodRiver',
+], function (_, PlotSampler, PlotLodLine, PlotLodBox, PlotLodRiver) {
+  const PlotLine = require('../../std/PlotLine').PlotLine;
+  const PlotColorUtils = require('../../../../utils/PlotColorUtils').PlotColorUtils;
+  const CommonUtils = require('../../../../utils/CommonUtils').CommonUtils;
+  const PlotUtils = require('../../../../utils/PlotUtils').PlotUtils;
 
   var PlotLineLodLoader = function (data, lodthresh) {
     this.datacopy = {};
-    _.extend(this.datacopy, data);  // save for later use
+    _.extend(this.datacopy, data); // save for later use
     _.extend(this, data); // copy properties to itself
     this.lodthresh = lodthresh;
     this.format(lodthresh);
   };
   // class constants
-  PlotLineLodLoader.prototype.lodTypes = ["box", "river"];
+  PlotLineLodLoader.prototype.lodTypes = ['box', 'river'];
   PlotLineLodLoader.prototype.lodSteps = [10, 3];
 
   PlotLineLodLoader.prototype.format = function () {
     // create plot type index
-    this.lodTypeIndex = (this.datacopy.lod_filter) ? this.lodTypes.indexOf(this.datacopy.lod_filter) : 1;
+    this.lodTypeIndex = this.datacopy.lod_filter ? this.lodTypes.indexOf(this.datacopy.lod_filter) : 1;
     this.lodType = this.lodTypes[this.lodTypeIndex];
 
     // create the plotters
@@ -62,16 +55,16 @@ define([
     if (this.color != null) {
       this.tip_color = PlotColorUtils.createColor(this.color, this.color_opacity);
     } else {
-      this.tip_color = "gray";
+      this.tip_color = 'gray';
     }
 
     this.itemProps = {
-      "id": this.id,
-      "st": this.color,
-      "st_op": this.color_opacity,
-      "st_w": this.width,
-      "st_da": this.stroke_dasharray,
-      "d": ""
+      id: this.id,
+      st: this.color,
+      st_op: this.color_opacity,
+      st_w: this.width,
+      st_da: this.stroke_dasharray,
+      d: '',
     };
     this.elementProps = [];
   };
@@ -92,14 +85,14 @@ define([
   };
 
   PlotLineLodLoader.prototype.switchLodType = function (scope) {
-    this.clear(scope);  // must clear first before changing lodType
+    this.clear(scope); // must clear first before changing lodType
     this.lodTypeIndex = (this.lodTypeIndex + 1) % this.lodTypes.length;
     this.lodType = this.lodTypes[this.lodTypeIndex];
     this.createLodPlotter();
   };
 
   PlotLineLodLoader.prototype.applyLodType = function (type) {
-    this.lodTypeIndex = this.lodTypes.indexOf(type);  // maybe -1
+    this.lodTypeIndex = this.lodTypes.indexOf(type); // maybe -1
     if (this.lodTypeIndex === -1) {
       this.lodTypeIndex = 0;
     }
@@ -110,19 +103,19 @@ define([
   PlotLineLodLoader.prototype.createLodPlotter = function () {
     var data = {};
     _.extend(data, this.datacopy);
-    if (this.lodType === "line") {
+    if (this.lodType === 'line') {
       this.lodplotter = new PlotLodLine(data);
       this.lodplotter.setZoomHash(this.zoomHash);
-    } else if (this.lodType === "box") {
+    } else if (this.lodType === 'box') {
       data.stroke = data.color;
-      data.color_opacity *= .25;
+      data.color_opacity *= 0.25;
       data.stroke_opacity = 1.0;
       this.lodplotter = new PlotLodBox(data);
       this.lodplotter.setWidthShrink(1);
       this.lodplotter.setZoomHash(this.zoomHash);
-    } else if (this.lodType === "river") {
-      data.stroke = data.color;  // assume the user has no way to set outline for line
-      data.color_opacity *= .25;
+    } else if (this.lodType === 'river') {
+      data.stroke = data.color; // assume the user has no way to set outline for line
+      data.color_opacity *= 0.25;
       data.stroke_opacity = 1.0;
       this.lodplotter = new PlotLodRiver(data);
       this.lodplotter.setZoomHash(this.zoomHash);
@@ -139,10 +132,10 @@ define([
   };
 
   PlotLineLodLoader.prototype.toggleLod = function (scope) {
-    if (this.lodType === "off") {
+    if (this.lodType === 'off') {
       this.lodType = this.lodTypes[this.lodTypeIndex];
     } else {
-      this.lodType = "off";
+      this.lodType = 'off';
     }
     this.clear(scope);
   };
@@ -156,7 +149,7 @@ define([
     this.filter(scope);
 
     var lod = false;
-    if (this.lodType !== "off") {
+    if (this.lodType !== 'off') {
       if ((this.lodAuto === true && this.vlength > this.lodthresh) || this.lodAuto === false) {
         lod = true;
       }
@@ -197,7 +190,9 @@ define([
   };
 
   PlotLineLodLoader.prototype.createSampler = function () {
-    var xs = [], ys = [], _ys = [];
+    var xs = [],
+      ys = [],
+      _ys = [];
     for (var i = 0; i < this.elements.length; i++) {
       var ele = this.elements[i];
       xs.push(ele.x);
@@ -207,7 +202,6 @@ define([
     this.sampler = new PlotSampler(xs, ys, _ys);
   };
 
-
   PlotLineLodLoader.prototype.filter = function (scope) {
     this.plotter.filter(scope);
     this.vindexL = this.plotter.vindexL;
@@ -216,10 +210,10 @@ define([
   };
 
   PlotLineLodLoader.prototype.sample = function (scope) {
-
     var xAxis = this.xAxis,
       yAxis = this.yAxis;
-    var xl = scope.plotFocus.focus.xl, xr = scope.plotFocus.focus.xr;
+    var xl = scope.plotFocus.focus.xl,
+      xr = scope.plotFocus.focus.xr;
 
     if (this.sampleStep === -1) {
       var pixelWidth = scope.layout.plotSize.width;
@@ -236,7 +230,10 @@ define([
   };
 
   PlotLineLodLoader.prototype.clear = function (scope) {
-    scope.maing.select("#" + this.id).selectAll("*").remove();
+    scope.maing
+      .select('#' + this.id)
+      .selectAll('*')
+      .remove();
     this.hideTips(scope);
   };
 
@@ -256,7 +253,7 @@ define([
       yAxis = this.yAxis;
     var tip = {};
     if (this.legend != null) {
-      tip.title = this.legend + " (sample)";
+      tip.title = this.legend + ' (sample)';
     }
     var eles = this.elements;
     tip.xl = PlotUtils.getTipStringPercent(ele.xl, xAxis, 6);
@@ -269,5 +266,4 @@ define([
   };
 
   return PlotLineLodLoader;
-
 });

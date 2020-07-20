@@ -14,37 +14,33 @@
  *  limitations under the License.
  */
 
-define([
-  'underscore'
-], function (
-  _
-) {
-  const PlotUtils = require("../../../../utils/PlotUtils").PlotUtils;
-  const PlotColorUtils = require("../../../../utils/PlotColorUtils").PlotColorUtils;
-  const BigNumberUtils = require("../../../../utils/BigNumberUtils").BigNumberUtils;
-  const PlotTip = require("../../PlotTip").PlotTip;
+define(['underscore'], function (_) {
+  const PlotUtils = require('../../../../utils/PlotUtils').PlotUtils;
+  const PlotColorUtils = require('../../../../utils/PlotColorUtils').PlotColorUtils;
+  const BigNumberUtils = require('../../../../utils/BigNumberUtils').BigNumberUtils;
+  const PlotTip = require('../../PlotTip').PlotTip;
 
   var PlotText = function (data) {
     _.extend(this, data);
     this.format();
   };
 
-  PlotText.prototype.plotClass = "plot-text";
-  PlotText.prototype.respClass = "plot-resp";
+  PlotText.prototype.plotClass = 'plot-text';
+  PlotText.prototype.respClass = 'plot-resp';
 
   PlotText.prototype.format = function () {
     if (this.color != null) {
       this.tip_color = PlotColorUtils.createColor(this.color, this.color_opacity);
     } else {
-      this.tip_color = "gray";
+      this.tip_color = 'gray';
     }
     this.itemProps = {
-      "id": this.id,
-      "fi": this.color,
-      "fi_op": this.color_opacity,
-      "show_pointer": this.show_pointer,
-      "pointer_angle": this.pointer_angle,
-      "size": this.size
+      id: this.id,
+      fi: this.color,
+      fi_op: this.color_opacity,
+      show_pointer: this.show_pointer,
+      pointer_angle: this.pointer_angle,
+      size: this.size,
     };
     this.elementProps = [];
   };
@@ -69,7 +65,7 @@ define([
       xl: Infinity,
       xr: -Infinity,
       yl: Infinity,
-      yr: -Infinity
+      yr: -Infinity,
     };
     for (var i = 0; i < eles.length; i++) {
       var ele = eles[i];
@@ -93,13 +89,13 @@ define([
 
   PlotText.prototype.filter = function (scope) {
     var eles = this.elements;
-    var l = PlotUtils.upper_bound(eles, "x", scope.plotFocus.focus.xl) + 1,
-      r = PlotUtils.upper_bound(eles, "x", scope.plotFocus.focus.xr);
+    var l = PlotUtils.upper_bound(eles, 'x', scope.plotFocus.focus.xl) + 1,
+      r = PlotUtils.upper_bound(eles, 'x', scope.plotFocus.focus.xr);
 
     l = Math.max(l, 0);
     r = Math.min(r, eles.length - 1);
 
-    if (l > r || l == r && eles[l].x < scope.plotFocus.focus.xl) {
+    if (l > r || (l == r && eles[l].x < scope.plotFocus.focus.xl)) {
       // nothing visible, or all elements are to the left of the svg, vlength = 0
       l = 0;
       r = -1;
@@ -108,7 +104,6 @@ define([
     this.vindexR = r;
     this.vlength = r - l + 1;
   };
-
 
   /**
    * Uses canvas.measureText to compute and return the width of the given text of given font in pixels.
@@ -120,8 +115,8 @@ define([
    */
   var getTextWidth = function (text, font) {
     // re-use canvas object for better performance
-    var canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
-    var context = canvas.getContext("2d");
+    var canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement('canvas'));
+    var context = canvas.getContext('2d');
     context.font = font;
     var metrics = context.measureText(text);
     return metrics.width;
@@ -149,7 +144,8 @@ define([
       if (ele.y < focus.yl || ele.y > focus.yr) {
         continue;
       }
-      var x = mapX(ele.x), y = mapY(ele.y);
+      var x = mapX(ele.x),
+        y = mapY(ele.y);
 
       if (PlotUtils.rangeAssert([x, y])) {
         eleprops.length = 0;
@@ -157,19 +153,18 @@ define([
       }
 
       var prop = {
-        "id": this.id + "_" + i,
-        "idx": this.index,
-        "ele": ele,
-        "txt": ele.text,
-        "x": x,
-        "y": y
+        id: this.id + '_' + i,
+        idx: this.index,
+        ele: ele,
+        txt: ele.text,
+        x: x,
+        y: y,
       };
       eleprops.push(prop);
     }
   };
 
   PlotText.prototype.draw = function (scope) {
-
     var pointerSize = 20;
     var pointerIndent = 10;
 
@@ -178,88 +173,101 @@ define([
     var props = this.itemProps,
       eleprops = this.elementProps;
 
-    if (svg.select("#" + this.id).empty()) {
-      svg.selectAll("g")
+    if (svg.select('#' + this.id).empty()) {
+      svg
+        .selectAll('g')
         .data([props], function (d) {
           return d.id;
-        }).enter().append("g")
-        .attr("id", function (d) {
+        })
+        .enter()
+        .append('g')
+        .attr('id', function (d) {
           return d.id;
         });
     }
-    svg.select("#" + this.id)
-      .attr("class", this.plotClass);
+    svg.select('#' + this.id).attr('class', this.plotClass);
 
     var respClass = this.useToolTip === true ? this.respClass : null;
-    var itemsvg = svg.select("#" + this.id);
+    var itemsvg = svg.select('#' + this.id);
 
-    itemsvg.selectAll("text")
+    itemsvg
+      .selectAll('text')
       .data(eleprops, function (d) {
         return d.id;
-      }).exit().remove();
-    itemsvg.selectAll("line")
+      })
+      .exit()
+      .remove();
+    itemsvg
+      .selectAll('line')
       .data(eleprops, function (d) {
-        return "line_" + d.id;
-      }).exit().remove();
+        return 'line_' + d.id;
+      })
+      .exit()
+      .remove();
 
     if (self.itemProps.show_pointer === true) {
-
-      itemsvg.selectAll("line")
+      itemsvg
+        .selectAll('line')
         .data(eleprops, function (d) {
           return d.id;
-        }).enter().append("line")
-        .attr("id", function (d) {
-          return "line_" + d.id;
         })
-        .attr("x1", pointerSize)
-        .attr("x2", pointerIndent)
-        .attr("y1", 0)
-        .attr("y2", 0)
-        .attr("class", "text-line-style")
-        .attr("stroke-width", 1)
-        .attr("marker-end", "url(#Triangle)");
+        .enter()
+        .append('line')
+        .attr('id', function (d) {
+          return 'line_' + d.id;
+        })
+        .attr('x1', pointerSize)
+        .attr('x2', pointerIndent)
+        .attr('y1', 0)
+        .attr('y2', 0)
+        .attr('class', 'text-line-style')
+        .attr('stroke-width', 1)
+        .attr('marker-end', 'url(#Triangle)');
 
-
-      itemsvg.selectAll("line")
+      itemsvg
+        .selectAll('line')
         .data(eleprops, function (d) {
-          return "line_" + d.id;
+          return 'line_' + d.id;
         })
-        .attr("transform", function (d) {
+        .attr('transform', function (d) {
           var x = d.x;
           var y = d.y;
-          var transform = "rotate(" + self.itemProps.pointer_angle * (180 / Math.PI) + " " + x + " " + y + ")";
-          transform += "translate(" + x + "," + y + ")";
+          var transform = 'rotate(' + self.itemProps.pointer_angle * (180 / Math.PI) + ' ' + x + ' ' + y + ')';
+          transform += 'translate(' + x + ',' + y + ')';
           return transform;
         });
     }
 
-    itemsvg.selectAll("text")
+    itemsvg
+      .selectAll('text')
       .data(eleprops, function (d) {
         return d.id;
-      }).enter().append("text")
-      .attr("id", function (d) {
+      })
+      .enter()
+      .append('text')
+      .attr('id', function (d) {
         return d.id;
       })
-      .attr("class", respClass)
-      .attr("fill", self.itemProps.fi)
-      .style("opacity", self.itemProps.fi_op)
+      .attr('class', respClass)
+      .attr('fill', self.itemProps.fi)
+      .style('opacity', self.itemProps.fi_op)
       .style('font-size', self.itemProps.size)
       .text(function (d) {
         return d.txt;
       });
-    itemsvg.selectAll("text")
+    itemsvg
+      .selectAll('text')
       .data(eleprops, function (d) {
         return d.id;
       })
-      .attr("transform", function (d) {
-
+      .attr('transform', function (d) {
         var x = d.x;
         var y = d.y;
 
         if (self.itemProps.show_pointer) {
           var size = self.itemProps.size;
 
-          var width = getTextWidth(d.txt, size + "px Lato, Helvetica, sans-serif");
+          var width = getTextWidth(d.txt, size + 'px Lato, Helvetica, sans-serif');
           var height = size;
 
           var angle = self.itemProps.pointer_angle;
@@ -287,25 +295,28 @@ define([
           } else if (angle > Math.PI && angle < 1.5 * Math.PI) {
             x -= width;
           } else if (angle > 1.5 * Math.PI && angle < 2 * Math.PI) {
-
           }
         }
 
-        var tf = "", rot = null;
+        var tf = '',
+          rot = null;
         if (d.ele.rotate != null) {
           rot = d.ele.rotate;
         }
         if (rot != null) {
-          tf = "rotate(" + rot + " " + x + " " + y + ")";
+          tf = 'rotate(' + rot + ' ' + x + ' ' + y + ')';
         }
-        tf += "translate(" + x + "," + y + ")";
+        tf += 'translate(' + x + ',' + y + ')';
 
         return tf;
       });
   };
 
   PlotText.prototype.clear = function (scope) {
-    scope.maing.select("#" + this.id).selectAll("*").remove();
+    scope.maing
+      .select('#' + this.id)
+      .selectAll('*')
+      .remove();
     this.hideTips(scope);
   };
 
@@ -314,8 +325,7 @@ define([
   };
 
   PlotText.prototype.createTip = function (ele) {
-    if (ele.tooltip)
-      return ele.tooltip;
+    if (ele.tooltip) return ele.tooltip;
     var xAxis = this.xAxis,
       yAxis = this.yAxis;
     var tip = {};
@@ -328,5 +338,4 @@ define([
   };
 
   return PlotText;
-
 });

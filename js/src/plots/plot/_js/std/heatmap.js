@@ -14,46 +14,36 @@
  *  limitations under the License.
  */
 
+define(['underscore', 'd3-scale'], function (_, d3scale) {
+  const PlotUtils = require('../../../../utils/PlotUtils').PlotUtils;
+  const BigNumberUtils = require('../../../../utils/BigNumberUtils').BigNumberUtils;
 
-define([
-  'underscore',
-  'd3-scale'
-], function(
-  _,
-  d3scale
-) {
-  const PlotUtils = require("../../../../utils/PlotUtils").PlotUtils;
-  const BigNumberUtils = require("../../../../utils/BigNumberUtils").BigNumberUtils;
-
-  var HeatMap = function(data) {
+  var HeatMap = function (data) {
     _.extend(this, data); // copy properties to itself
     this.format();
   };
-  HeatMap.prototype.plotClass = "heatmap";
-  HeatMap.prototype.respClass = "plot-resp";
+  HeatMap.prototype.plotClass = 'heatmap';
+  HeatMap.prototype.respClass = 'plot-resp';
 
-  HeatMap.prototype.format = function() {
-
-    this.tip_class = "heatmap-tooltip";
-    this.tip_color = "#004C80";
+  HeatMap.prototype.format = function () {
+    this.tip_class = 'heatmap-tooltip';
+    this.tip_color = '#004C80';
 
     var valueStep = (this.maxValue - this.minValue) / (this.colors.length - 1);
     var domain = [];
-    for(var i = 0; i < this.colors.length; i++){
+    for (var i = 0; i < this.colors.length; i++) {
       domain.push(this.minValue + valueStep * i);
     }
 
-    this.colorScale = d3scale.scaleLinear()
-      .domain(domain)
-      .range(this.colors);
+    this.colorScale = d3scale.scaleLinear().domain(domain).range(this.colors);
 
     this.itemProps = {
-      "id": this.id
+      id: this.id,
     };
     this.elementProps = [];
   };
 
-  HeatMap.prototype.render = function(scope) {
+  HeatMap.prototype.render = function (scope) {
     if (this.showItem == false) {
       this.clear(scope);
       return;
@@ -67,12 +57,12 @@ define([
     }
   };
 
-  HeatMap.prototype.getRange = function(eles = this.elements) {
+  HeatMap.prototype.getRange = function (eles = this.elements) {
     var range = {
       xl: Infinity,
       xr: -Infinity,
       yl: Infinity,
-      yr: -Infinity
+      yr: -Infinity,
     };
     for (var i = 0; i < eles.length; i++) {
       var ele = eles[i];
@@ -84,7 +74,7 @@ define([
     return range;
   };
 
-  HeatMap.prototype.applyAxis = function(xAxis, yAxis) {
+  HeatMap.prototype.applyAxis = function (xAxis, yAxis) {
     this.xAxis = xAxis;
     this.yAxis = yAxis;
     for (var i = 0; i < this.elements.length; i++) {
@@ -96,15 +86,16 @@ define([
     }
   };
 
-  HeatMap.prototype.filter = function(scope) {
+  HeatMap.prototype.filter = function (scope) {
     var eles = this.elements;
-    var l = PlotUtils.upper_bound(eles, "x2", scope.plotFocus.focus.xl) + 1,
-      r = PlotUtils.upper_bound(eles, "x", scope.plotFocus.focus.xr);
+    var l = PlotUtils.upper_bound(eles, 'x2', scope.plotFocus.focus.xl) + 1,
+      r = PlotUtils.upper_bound(eles, 'x', scope.plotFocus.focus.xr);
 
     l = Math.max(l, 0);
     r = Math.min(r, eles.length - 1);
 
-    if (l > r || l == r && eles[l].x2 < scope.plotFocus.focus.xl) { // TODO check 'focus' -> 'scope.focus'
+    if (l > r || (l == r && eles[l].x2 < scope.plotFocus.focus.xl)) {
+      // TODO check 'focus' -> 'scope.focus'
       // nothing visible, or all elements are to the left of the svg, vlength = 0
       l = 0;
       r = -1;
@@ -114,7 +105,7 @@ define([
     this.vlength = r - l + 1;
   };
 
-  HeatMap.prototype.prepare = function(scope) {
+  HeatMap.prototype.prepare = function (scope) {
     var sw;
     var focus = scope.plotFocus.getFocus();
     var mapX = scope.plotRange.data2scrXi;
@@ -125,83 +116,118 @@ define([
     eleprops.length = 0;
     for (var i = this.vindexL; i <= this.vindexR; i++) {
       var ele = eles[i];
-      if (ele.y2 < focus.yl || ele.y > focus.yr) { continue; }
+      if (ele.y2 < focus.yl || ele.y > focus.yr) {
+        continue;
+      }
 
-      var x = mapX(ele.x), x2 = mapX(ele.x2);
+      var x = mapX(ele.x),
+        x2 = mapX(ele.x2);
       if (x2 - x < 1) x2 = x + 1;
-      var y = mapY(ele.y), y2 = mapY(ele.y2);
+      var y = mapY(ele.y),
+        y2 = mapY(ele.y2);
       sw = x2 - x;
-      if (y < y2) { continue; } // prevent negative height
-
+      if (y < y2) {
+        continue;
+      } // prevent negative height
 
       if (PlotUtils.rangeAssert([x, x2, y, y2])) {
         eleprops.length = 0;
         return;
       }
 
-      var id = this.id + "_" + i;
+      var id = this.id + '_' + i;
       var prop = {
-        "id": id,
-        "idx": this.index,
-        "ele": ele,
-        "x": x,
-        "y": y2,
-        "w": sw,
-        "h": y - y2,
-        "fi": this.colorScale(ele.value)
+        id: id,
+        idx: this.index,
+        ele: ele,
+        x: x,
+        y: y2,
+        w: sw,
+        h: y - y2,
+        fi: this.colorScale(ele.value),
       };
       eleprops.push(prop);
     }
   };
 
-  HeatMap.prototype.draw = function(scope) {
+  HeatMap.prototype.draw = function (scope) {
     var svg = scope.maing;
     var props = this.itemProps,
       eleprops = this.elementProps;
 
-    if (svg.select("#" + this.id).empty()) {
-      svg.selectAll("g")
-        .data([props], function(d) { return d.id; }).enter().append("g")
-        .attr("id", function(d) { return d.id; });
+    if (svg.select('#' + this.id).empty()) {
+      svg
+        .selectAll('g')
+        .data([props], function (d) {
+          return d.id;
+        })
+        .enter()
+        .append('g')
+        .attr('id', function (d) {
+          return d.id;
+        });
     }
-    svg.select("#" + this.id)
-      .attr("class", this.plotClass);
+    svg.select('#' + this.id).attr('class', this.plotClass);
 
-    var itemsvg = svg.select("#" + this.id);
+    var itemsvg = svg.select('#' + this.id);
     var respClass = this.useToolTip === true ? this.respClass : null;
-    itemsvg.selectAll("rect")
-      .data(eleprops, function(d) { return d.id; }).exit().remove();
-    itemsvg.selectAll("rect")
-      .data(eleprops, function(d) { return d.id; }).enter().append("rect")
-      .attr("id", function(d) { return d.id; })
-      .attr("class", respClass)
-      .attr("shape-rendering", "crispEdges")
-      .style("fill", function(d) {
+    itemsvg
+      .selectAll('rect')
+      .data(eleprops, function (d) {
+        return d.id;
+      })
+      .exit()
+      .remove();
+    itemsvg
+      .selectAll('rect')
+      .data(eleprops, function (d) {
+        return d.id;
+      })
+      .enter()
+      .append('rect')
+      .attr('id', function (d) {
+        return d.id;
+      })
+      .attr('class', respClass)
+      .attr('shape-rendering', 'crispEdges')
+      .style('fill', function (d) {
         return d.fi;
       });
-    itemsvg.selectAll("rect")
-      .data(eleprops, function(d) { return d.id; })
-      .attr("x", function(d) { return d.x; })
-      .attr("y", function(d) { return d.y; })
-      .attr("width", function(d) { return d.w; })
-      .attr("height", function(d) { return d.h; });
+    itemsvg
+      .selectAll('rect')
+      .data(eleprops, function (d) {
+        return d.id;
+      })
+      .attr('x', function (d) {
+        return d.x;
+      })
+      .attr('y', function (d) {
+        return d.y;
+      })
+      .attr('width', function (d) {
+        return d.w;
+      })
+      .attr('height', function (d) {
+        return d.h;
+      });
   };
 
-  HeatMap.prototype.clear = function(scope) {
-    scope.maing.select("#" + this.id).selectAll("*").remove();
+  HeatMap.prototype.clear = function (scope) {
+    scope.maing
+      .select('#' + this.id)
+      .selectAll('*')
+      .remove();
     this.hideTips(scope);
   };
 
-  HeatMap.prototype.hideTips = function(scope, hidden) {
+  HeatMap.prototype.hideTips = function (scope, hidden) {
     plotTip.hideTips(scope, this.id, hidden);
   };
 
-  HeatMap.prototype.createTip = function(ele) {
-    if (ele.tooltip)
-      return ele.tooltip;
-    return "<div>" + ele.value.toFixed(5) * 1 + "</div>";
+  HeatMap.prototype.createTip = function (ele) {
+    if (ele.tooltip) return ele.tooltip;
+    return '<div>' + ele.value.toFixed(5) * 1 + '</div>';
   };
 
   return HeatMap;
-
 });

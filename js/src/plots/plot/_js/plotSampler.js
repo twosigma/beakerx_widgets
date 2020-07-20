@@ -14,57 +14,54 @@
  *  limitations under the License.
  */
 
-define([
-  'underscore'
-], function(
-  _
-) {
-
-  var PlotSampler = function(xs, ys, _ys){
+define(['underscore'], function (_) {
+  var PlotSampler = function (xs, ys, _ys) {
     this.xs = xs;
     this.ys = ys;
     this._ys = _ys;
     this.n = xs.length;
 
     if (this.debug) {
-      console.log("data size: ", this.n);
+      console.log('data size: ', this.n);
       var t = Date.now();
     }
 
     this.buildCoordTable();
 
     if (this.debug) {
-      console.log("coord table: ", Date.now() - t, "ms");
+      console.log('coord table: ', Date.now() - t, 'ms');
       t = Date.now();
     }
 
     this.buildSegTree();
 
     if (this.debug) {
-      console.log("seg tree: ", Date.now() - t, "ms");
+      console.log('seg tree: ', Date.now() - t, 'ms');
     }
   };
 
-  PlotSampler.prototype.debug = false;  // set time estimation
+  PlotSampler.prototype.debug = false; // set time estimation
 
-  PlotSampler.prototype.sample = function(xl, xr, step) {
+  PlotSampler.prototype.sample = function (xl, xr, step) {
     if (step <= 0 || xr < xl) {
-      console.error("incorrect sample parameters");
+      console.error('incorrect sample parameters');
       return [];
     }
     var ret = [];
     this.hashes = {};
-    var nsl = xl, sl, sr;
+    var nsl = xl,
+      sl,
+      sr;
     while (nsl < xr) {
       sl = nsl;
       nsl += step;
-      sr = sl + step - 1E-12; // [sl,sr) closed open, be ware of precision problem
+      sr = sl + step - 1e-12; // [sl,sr) closed open, be ware of precision problem
 
       var qret = this.query(sl, sr);
       if (qret == null) {
         continue;
       }
-      var h = qret.l + "_" + qret.r;
+      var h = qret.l + '_' + qret.r;
       if (this.hashes[h] != null) {
         continue;
       } else {
@@ -80,19 +77,21 @@ define([
           index = i;
         }
       });
-      if(!count){ continue; }
+      if (!count) {
+        continue;
+      }
       var ele = {
-        min : qret.min,
-        max : qret.max,
-        _min : qret._min,
-        _max : qret._max,
-        xl : sl,
-        xr : sr,
-        avg : avg,
-        x : count === 1 ? this.xs[index] : (sl + sr) / 2,
-        y : avg,
-        hash : h,
-        count: count
+        min: qret.min,
+        max: qret.max,
+        _min: qret._min,
+        _max: qret._max,
+        xl: sl,
+        xr: sr,
+        avg: avg,
+        x: count === 1 ? this.xs[index] : (sl + sr) / 2,
+        y: avg,
+        hash: h,
+        count: count,
       };
       ret.push(ele);
     }
@@ -100,7 +99,7 @@ define([
     return ret;
   };
 
-  PlotSampler.prototype.query = function(xl, xr) {
+  PlotSampler.prototype.query = function (xl, xr) {
     if (xr < this.xs[0] || xl > this.xs[this.xs.length - 1]) {
       return null;
     }
@@ -117,7 +116,7 @@ define([
     return ret;
   };
 
-  PlotSampler.prototype.buildCoordTable = function() {
+  PlotSampler.prototype.buildCoordTable = function () {
     this.x = this.xs.slice(0); // copy xs to x
 
     if (this.debug) {
@@ -127,7 +126,7 @@ define([
     _.uniq(this.xs, true); // keep unique values in xs
 
     if (this.debug) {
-      console.log("uniq ", Date.now() - t, "ms");
+      console.log('uniq ', Date.now() - t, 'ms');
       t = Date.now();
     }
 
@@ -139,11 +138,11 @@ define([
     }
 
     if (this.debug) {
-      console.log("map ", Date.now() - t, "ms");
+      console.log('map ', Date.now() - t, 'ms');
     }
   };
 
-  PlotSampler.prototype.buildSegTree = function() {
+  PlotSampler.prototype.buildSegTree = function () {
     this.mins = [];
     this.maxs = [];
     this.sums = [];
@@ -153,7 +152,7 @@ define([
     this.initSegTree(0, 0, this.n - 1);
   };
 
-  PlotSampler.prototype.initSegTree = function(k, nl, nr) {
+  PlotSampler.prototype.initSegTree = function (k, nl, nr) {
     if (nl == nr) {
       this.mins[k] = this.ys[nl];
       this.maxs[k] = this.ys[nl];
@@ -176,18 +175,18 @@ define([
     this.cnts[k] = this.cnts[kl] + this.cnts[kr];
   };
 
-  PlotSampler.prototype.querySegTree = function(k, nl, nr, l, r) {
+  PlotSampler.prototype.querySegTree = function (k, nl, nr, l, r) {
     if (r < nl || l > nr || l > r) {
       return null;
     }
     if (l <= nl && r >= nr) {
       return {
-        min : this.mins[k],
-        max : this.maxs[k],
-        _min : this._mins[k],
-        _max : this._maxs[k],
-        sum : this.sums[k],
-        cnt : this.cnts[k]
+        min: this.mins[k],
+        max: this.maxs[k],
+        _min: this._mins[k],
+        _max: this._maxs[k],
+        sum: this.sums[k],
+        cnt: this.cnts[k],
       };
     }
     var nm = Math.floor((nl + nr) / 2),
@@ -203,19 +202,20 @@ define([
       return retl;
     } else {
       return {
-        min : Math.min(retl.min, retr.min),
-        max : Math.max(retl.max, retr.max),
-        _min : Math.min(retl._min, retr._min),
-        _max : Math.max(retl._max, retr._max),
-        sum : retl.sum + retr.sum,
-        cnt : retl.cnt + retr.cnt
+        min: Math.min(retl.min, retr.min),
+        max: Math.max(retl.max, retr.max),
+        _min: Math.min(retl._min, retr._min),
+        _max: Math.max(retl._max, retr._max),
+        sum: retl.sum + retr.sum,
+        cnt: retl.cnt + retr.cnt,
       };
     }
   };
 
-  PlotSampler.prototype.mapIndex = function(x) {
+  PlotSampler.prototype.mapIndex = function (x) {
     // find the largest element in xs that is <= x, may return -1 (no such element)
-    var l = 0, r = this.xs.length - 1;
+    var l = 0,
+      r = this.xs.length - 1;
     while (l <= r) {
       var m = Math.floor((l + r) / 2);
       if (this.xs[m] <= x) {
@@ -228,5 +228,4 @@ define([
   };
 
   return PlotSampler;
-
 });

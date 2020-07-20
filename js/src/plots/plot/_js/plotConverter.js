@@ -14,66 +14,57 @@
  *  limitations under the License.
  */
 
-define([
-  'underscore',
-  'big.js',
-  'd3'
-], function (
-  _,
-  Big,
-  d3
-) {
-  const PlotUtils = require("../../../utils/PlotUtils").PlotUtils;
-  const PlotColorUtils = require("../../../utils/PlotColorUtils").PlotColorUtils;
-  const BigNumberUtils = require("../../../utils/BigNumberUtils").BigNumberUtils;
+define(['underscore', 'big.js', 'd3'], function (_, Big, d3) {
+  const PlotUtils = require('../../../utils/PlotUtils').PlotUtils;
+  const PlotColorUtils = require('../../../utils/PlotColorUtils').PlotColorUtils;
+  const BigNumberUtils = require('../../../utils/BigNumberUtils').BigNumberUtils;
 
   var dataTypeMap = {
-    "Line": "line",
-    "Stems": "stem",
-    "Bars": "bar",
-    "Area": "area",
-    "Text": "text",
-    "Points": "point",
-    "Rasters": "image",
-    "CategoryLines": "line",
-    "CategoryStems": "stem",
-    "CategoryBars": "bar",
-    "CategoryArea": "area",
-    "CategoryText": "text",
-    "CategoryPoints": "point",
-    "TreeMapNode": "treemapnode",
-    "": ""
+    Line: 'line',
+    Stems: 'stem',
+    Bars: 'bar',
+    Area: 'area',
+    Text: 'text',
+    Points: 'point',
+    Rasters: 'image',
+    CategoryLines: 'line',
+    CategoryStems: 'stem',
+    CategoryBars: 'bar',
+    CategoryArea: 'area',
+    CategoryText: 'text',
+    CategoryPoints: 'point',
+    TreeMapNode: 'treemapnode',
+    '': '',
   };
   var lineStyleMap = {
-    "DEFAULT": "solid",
-    "SOLID": "solid",
-    "DASH": "dash",
-    "DOT": "dot",
-    "DASHDOT": "dashdot",
-    "LONGDASH": "longdash",
-    "": "solid"
+    DEFAULT: 'solid',
+    SOLID: 'solid',
+    DASH: 'dash',
+    DOT: 'dot',
+    DASHDOT: 'dashdot',
+    LONGDASH: 'longdash',
+    '': 'solid',
   };
   var pointShapeMap = {
-    "DEFAULT": "rect",
-    "CIRCLE": "circle",
-    "DIAMOND": "diamond",
-    "TRIANGLE": "triangle",
-    "DOWNTRIANGLE": "downtriangle",
-    "LEVEL": "level",
-    "VLEVEL": "vlevel",
-    "LINECROSS": "linecross",
-    "CROSS": "cross",
-    "DCROSS": "dcross",
-    "": "rect"
+    DEFAULT: 'rect',
+    CIRCLE: 'circle',
+    DIAMOND: 'diamond',
+    TRIANGLE: 'triangle',
+    DOWNTRIANGLE: 'downtriangle',
+    LEVEL: 'level',
+    VLEVEL: 'vlevel',
+    LINECROSS: 'linecross',
+    CROSS: 'cross',
+    DCROSS: 'dcross',
+    '': 'rect',
   };
   var interpolationMap = {
-    0: "none",
-    1: "linear",
-    2: "linear", // should be "curve" but right now it is not implemented yet
-    "": "linear"
+    0: 'none',
+    1: 'linear',
+    2: 'linear', // should be "curve" but right now it is not implemented yet
+    '': 'linear',
   };
   var calcWidths = function (categoryItems) {
-
     var plotCategoriesNumber = 0;
     var plotSeriesNumber = 0;
 
@@ -101,7 +92,10 @@ define([
           if (_.isArray(categoryItem.widths)) {
             var rowWidths = categoryItem.widths[rowindex];
             if (_.isArray(rowWidths)) {
-              calculatedWidths[rowindex][colindex] = Math.max(calculatedWidths[rowindex][colindex], rowWidths[colindex]);
+              calculatedWidths[rowindex][colindex] = Math.max(
+                calculatedWidths[rowindex][colindex],
+                rowWidths[colindex],
+              );
             } else {
               calculatedWidths[rowindex][colindex] = Math.max(calculatedWidths[rowindex][colindex], rowWidths);
             }
@@ -115,7 +109,6 @@ define([
     return calculatedWidths;
   };
   var calccategoryitem = function (newmodel, categoryItem, categoriesNumber, seriesNumber, calculatedWidths) {
-
     var categoryMargin = newmodel.categoryMargin;
 
     var elementsxs = new Array(seriesNumber);
@@ -130,14 +123,13 @@ define([
       var categoryxl = resWidth;
       var maxRowWidth = 0;
       for (var rowindex = 0; rowindex < seriesNumber; rowindex++) {
-
         var elWidth = calculatedWidths[rowindex][colindex] || 1; //FIXME why width default value is not set?
         elementsxs[rowindex][colindex] = resWidth + elWidth / 2;
 
         if (!categoryItem.center_series) {
           resWidth += elWidth;
         } else {
-          maxRowWidth = Math.max(maxRowWidth, elWidth)
+          maxRowWidth = Math.max(maxRowWidth, elWidth);
         }
       }
       if (categoryItem.center_series) {
@@ -149,72 +141,66 @@ define([
     }
     return {
       elementsxs: elementsxs,
-      labelsxs: labelsxs
+      labelsxs: labelsxs,
     };
   };
   var processElement = function (item, j, ele, yAxisSettings, logx) {
-
     if (item.tooltips) {
       ele.tooltip = item.tooltips[j];
     }
 
     // discard NaN entries
-    if (ele.x === "NaN" || ele.y === "NaN" ||
-      logx && ele.x <= 0 || yAxisSettings.logy && ele.y <= 0)
-      return false;
+    if (ele.x === 'NaN' || ele.y === 'NaN' || (logx && ele.x <= 0) || (yAxisSettings.logy && ele.y <= 0)) return false;
 
     if (item.colors != null) {
       ele.color_opacity = parseInt(item.colors[j].substr(1, 2), 16) / 255;
-      ele.color = "#" + item.colors[j].substr(3);
+      ele.color = '#' + item.colors[j].substr(3);
     }
     if (item.fills != null && item.fills[j] === false) {
-      ele.color = "none";
+      ele.color = 'none';
     }
-    if (item.hasOwnProperty("outlines") || item.hasOwnProperty("outline")) {
-      if (item.outlines && item.outlines[j] === true || item.outline === true) {
+    if (item.hasOwnProperty('outlines') || item.hasOwnProperty('outline')) {
+      if ((item.outlines && item.outlines[j] === true) || item.outline === true) {
         if (item.outline_colors != null) {
           ele.stroke_opacity = parseInt(item.outline_colors[j].substr(1, 2), 16) / 255;
-          ele.stroke = "#" + item.outline_colors[j].substr(3);
+          ele.stroke = '#' + item.outline_colors[j].substr(3);
         } else if (item.outline_color != null) {
           ele.stroke_opacity = parseInt(item.outline_color.substr(1, 2), 16) / 255;
-          ele.stroke = "#" + item.outline_color.substr(3);
+          ele.stroke = '#' + item.outline_color.substr(3);
         } else {
           ele.stroke_opacity = 1;
-          ele.stroke = PlotColorUtils.colorToHex("black");
+          ele.stroke = PlotColorUtils.colorToHex('black');
         }
       }
     } else if (item.outline_colors != null) {
       ele.stroke_opacity = parseInt(item.outline_colors[j].substr(1, 2), 16) / 255;
-      ele.stroke = "#" + item.outline_colors[j].substr(3);
+      ele.stroke = '#' + item.outline_colors[j].substr(3);
     }
 
-    if (item.type === "line" || item.type === "stem") {
+    if (item.type === 'line' || item.type === 'stem') {
       if (item.styles != null) {
         var style = item.styles[j];
         if (style == null) {
-          style = "";
+          style = '';
         }
-        if (item.type === "line")
-          item.style = lineStyleMap[style];
-        else
-          ele.style = lineStyleMap[style];
+        if (item.type === 'line') item.style = lineStyleMap[style];
+        else ele.style = lineStyleMap[style];
       }
     }
 
-    if ((item.type === "stem" || item.type === "bar" || item.type === "area") &&
-      ele.y2 == null) {
+    if ((item.type === 'stem' || item.type === 'bar' || item.type === 'area') && ele.y2 == null) {
       if (item.bases != null) {
         ele.y2 = item.bases[j];
       }
     }
 
-    if (item.type === "point") {
+    if (item.type === 'point') {
       if (item.sizes != null) {
         ele.size = item.sizes[j];
       }
     }
 
-    if (item.type === "bar" && item.widths != null) {
+    if (item.type === 'bar' && item.widths != null) {
       ele.x = BigNumberUtils.minus(ele.x, item.widths[j] / 2);
       ele.x2 = BigNumberUtils.plus(ele.x, item.widths[j]);
     }
@@ -239,56 +225,58 @@ define([
 
     if (item.color != null && item.color.length === 9) {
       item.color_opacity = parseInt(item.color.substr(1, 2), 16) / 255;
-      item.color = "#" + item.color.substr(3);
+      item.color = '#' + item.color.substr(3);
     }
     if (item.fill != null && item.fill === false) {
-      item.color = "none";
+      item.color = 'none';
     }
     if (item.outline_color != null) {
-      if (!item.hasOwnProperty("outline") && !item.hasOwnProperty("outlines") ||
-        item.hasOwnProperty("outline") && item.outline === true) {
+      if (
+        (!item.hasOwnProperty('outline') && !item.hasOwnProperty('outlines')) ||
+        (item.hasOwnProperty('outline') && item.outline === true)
+      ) {
         item.stroke_opacity = parseInt(item.outline_color.substr(1, 2), 16) / 255;
-        item.stroke = "#" + item.outline_color.substr(3);
+        item.stroke = '#' + item.outline_color.substr(3);
         //do not remove item.outline_color here, it is used in processElement()
       }
     }
 
     if (item.type == null) {
-      item.type = "";
+      item.type = '';
     }
     if (item.style == null) {
-      item.style = "";
+      item.style = '';
     }
     if (item.stroke_dasharray == null) {
-      item.stroke_dasharray = "";
+      item.stroke_dasharray = '';
     }
     if (item.interpolation == null) {
-      item.interpolation = "";
+      item.interpolation = '';
     }
 
     item.type = dataTypeMap[item.type] || item.type;
 
-    if (item.type === "bar" || item.type === "area") {
+    if (item.type === 'bar' || item.type === 'area') {
       //newmodel.yPreventNegative = true; // auto range to y = 0
     }
 
-    if (item.type === "line" || item.type === "stem") {
+    if (item.type === 'line' || item.type === 'stem') {
       item.style = lineStyleMap[item.style] || item.style;
     }
 
-    if (item.type === "line" || item.type === "area") {
+    if (item.type === 'line' || item.type === 'area') {
       item.interpolation = interpolationMap[item.interpolation];
     }
 
-    if (item.type === "bar") {
+    if (item.type === 'bar') {
       if (item.width == null) {
         item.width = 1;
       }
     }
 
-    if (item.type === "point") {
+    if (item.type === 'point') {
       if (item.shape == null) {
-        item.shape = "DEFAULT";
+        item.shape = 'DEFAULT';
       }
       item.shape = pointShapeMap[item.shape] || item.shape;
     }
@@ -307,8 +295,9 @@ define([
         this.convertTreeMapGroovyData(newmodel, model);
         return;
       }
-      var logx = false, logxb;
-      var yAxisSettings = {yIncludeZero: false, logy: false, logyb: null};
+      var logx = false,
+        logxb;
+      var yAxisSettings = { yIncludeZero: false, logy: false, logyb: null };
       var yAxisRSettings = _.clone(yAxisSettings);
       if (model.rangeAxes != null) {
         var updateAxisSettings = function (axis, settings) {
@@ -394,10 +383,10 @@ define([
         var cursor = newmodel.xCursor;
 
         cursor.color_opacity = parseInt(color.substr(1, 2), 16) / 255;
-        cursor.color = "#" + color.substr(3);
+        cursor.color = '#' + color.substr(3);
 
         var style = model.crosshair.style;
-        if (style == null) style = "";
+        if (style == null) style = '';
         cursor.style = lineStyleMap[style];
         cursor.width = model.crosshair.width != null ? model.crosshair.width : 2;
 
@@ -407,16 +396,16 @@ define([
 
       // log scaling
       if (logx) {
-        newmodel.xAxis.type = "log";
+        newmodel.xAxis.type = 'log';
         newmodel.xAxis.base = logxb;
-      } else if (model.type === "TimePlot") {
-        newmodel.xAxis.type = "time";
-      } else if (model.type === "NanoPlot") {
-        newmodel.xAxis.type = "nanotime";
-      } else if (model.type === "CategoryPlot") {
-        newmodel.xAxis.type = "category";
+      } else if (model.type === 'TimePlot') {
+        newmodel.xAxis.type = 'time';
+      } else if (model.type === 'NanoPlot') {
+        newmodel.xAxis.type = 'nanotime';
+      } else if (model.type === 'CategoryPlot') {
+        newmodel.xAxis.type = 'category';
       } else {
-        newmodel.xAxis.type = "linear";
+        newmodel.xAxis.type = 'linear';
       }
 
       var setYAxisType = function (axis, settings) {
@@ -424,10 +413,10 @@ define([
           return;
         }
         if (settings.logy) {
-          axis.type = "log";
+          axis.type = 'log';
           axis.base = settings.logyb;
         } else {
-          axis.type = "linear";
+          axis.type = 'linear';
         }
       };
       setYAxisType(newmodel.yAxis, yAxisSettings);
@@ -436,7 +425,7 @@ define([
       var list = model.graphics_list;
       var numLines = list.length;
       switch (model.type) {
-        case "CategoryPlot":
+        case 'CategoryPlot':
           var calculatedWidths = calcWidths(list);
 
           for (var index = 0; index < list.length; index++) {
@@ -447,7 +436,7 @@ define([
             var seriesNames = categoryItem.seriesNames || [];
             if (_.isEmpty(seriesNames) && newmodel.showLegend) {
               for (var s = 0; s < seriesNumber; s++) {
-                seriesNames.push("series" + s);
+                seriesNames.push('series' + s);
               }
             }
 
@@ -457,7 +446,7 @@ define([
 
             for (var i = 0; i < seriesNumber; i++) {
               var series = value[i];
-              var item = _.extend({}, categoryItem);//
+              var item = _.extend({}, categoryItem); //
               item.series = i;
               item.display_name = seriesNames[i];
 
@@ -471,7 +460,7 @@ define([
                     delete item[property];
                   }
 
-                  if (property === 'styles' && item.type === "CategoryLines") {
+                  if (property === 'styles' && item.type === 'CategoryLines') {
                     item.style = lineStyleMap[item.style];
                   }
                 }
@@ -502,8 +491,7 @@ define([
                   series: i,
                   category: j,
                   x: item.x[j],
-                  y: item.y[j]
-
+                  y: item.y[j],
                 };
                 if (categoryItem.itemLabels) {
                   ele.itemLabel = categoryItem.itemLabels[j][i];
@@ -521,12 +509,13 @@ define([
             }
           }
           break;
-        case "Histogram":
+        case 'Histogram':
           if (!list || !list.length || !list[0] || !list[0].length) {
             break;
           }
           var datasets = [];
-          var rangeMin = list[0][0], rangeMax = rangeMin;
+          var rangeMin = list[0][0],
+            rangeMax = rangeMin;
           for (var i = 0; i < list.length; i++) {
             rangeMin = Math.min(rangeMin, d3.min(list[i]));
             rangeMax = Math.max(rangeMax, d3.max(list[i]));
@@ -534,10 +523,10 @@ define([
           for (var i = 0; i < list.length; i++) {
             var dataset = list[i];
             var item = {
-              type: "Bars",
+              type: 'Bars',
               color: !_.isEmpty(model.colors) ? model.colors[i] : model.color,
               x: [],
-              y: []
+              y: [],
             };
 
             if (newmodel.displayMode === 'STACK' && list.length > 1) {
@@ -546,9 +535,9 @@ define([
 
             if (list.length > 1) {
               if (model.names && model.names.length > 0) {
-                item.display_name = model.names[i]
+                item.display_name = model.names[i];
               } else {
-                item.display_name = "dataset" + (i + 1);
+                item.display_name = 'dataset' + (i + 1);
               }
             }
 
@@ -557,7 +546,7 @@ define([
               newmodel.binCount,
               newmodel.rangeMin != null ? newmodel.rangeMin : rangeMin,
               newmodel.rangeMax != null ? newmodel.rangeMax : rangeMax,
-              dataset
+              dataset,
             );
 
             datasets.push(histvalues);
@@ -610,7 +599,6 @@ define([
             item.elements = elements;
 
             newmodel.data.push(item);
-
           }
           if (newmodel.displayMode === 'STACK' && list.length > 1) {
             newmodel.data.reverse();
@@ -658,41 +646,41 @@ define([
         for (var i = 0; i < model.constant_lines.length; i++) {
           var line = model.constant_lines[i];
           var item = {
-            "type": "constline",
-            "width": line.width != null ? line.width : 1,
-            "color": "black",
-            "yAxis": line.yAxis,
-            "showLabel": line.showLabel,
-            "elements": []
+            type: 'constline',
+            width: line.width != null ? line.width : 1,
+            color: 'black',
+            yAxis: line.yAxis,
+            showLabel: line.showLabel,
+            elements: [],
           };
           if (line.color != null) {
             item.color_opacity = parseInt(line.color.substr(1, 2), 16) / 255;
-            item.color = "#" + line.color.substr(3);
+            item.color = '#' + line.color.substr(3);
           }
           var style = line.style;
           if (style == null) {
-            style = "";
+            style = '';
           }
           item.style = lineStyleMap[style];
 
           var addElement = function (line, type, log) {
-            if (line[type] == null || log && BigNumberUtils.lte(line[type], 0)) {
+            if (line[type] == null || (log && BigNumberUtils.lte(line[type], 0))) {
               return false;
             }
-            var ele = {"type": type};
+            var ele = { type: type };
             ele[type] = line[type];
             item.elements.push(ele);
           };
 
-          if (model.type === "NanoPlot") {
+          if (model.type === 'NanoPlot') {
             if (!_.isEmpty(line.x)) {
               line.x = new Big(line.x);
-              addElement(line, "x", logx)
+              addElement(line, 'x', logx);
             }
           } else {
-            addElement(line, "x", logx)
+            addElement(line, 'x', logx);
           }
-          addElement(line, "y", yAxisSettings.logy)
+          addElement(line, 'y', yAxisSettings.logy);
 
           if (!_.isEmpty(item.elements)) {
             newmodel.data.push(item);
@@ -703,26 +691,27 @@ define([
         for (var i = 0; i < model.constant_bands.length; i++) {
           var band = model.constant_bands[i];
           var item = {
-            "type": "constband",
-            "elements": []
+            type: 'constband',
+            elements: [],
           };
           if (band.color != null) {
             item.color_opacity = parseInt(band.color.substr(1, 2), 16) / 255;
-            item.color = "#" + band.color.substr(3);
+            item.color = '#' + band.color.substr(3);
           }
           if (band.x != null) {
             var ele = {
-              "type": "x",
-              "x": PlotUtils.convertInfinityValue(band.x[0]),
-              "x2": PlotUtils.convertInfinityValue(band.x[1])
+              type: 'x',
+              x: PlotUtils.convertInfinityValue(band.x[0]),
+              x2: PlotUtils.convertInfinityValue(band.x[1]),
             };
             item.elements.push(ele);
           }
           if (band.y != null) {
             var ele = {
-              "type": "y"
+              type: 'y',
             };
-            var y1 = band.y[0], y2 = band.y[1];
+            var y1 = band.y[0],
+              y2 = band.y[1];
             ele.y = PlotUtils.convertInfinityValue(y1);
             ele.y2 = PlotUtils.convertInfinityValue(y2);
             item.elements.push(ele);
@@ -732,22 +721,22 @@ define([
       }
 
       var isDark = document.body.classList.contains('bx-dark-theme');
-      var mtext_color = isDark ? "white" : "black";
+      var mtext_color = isDark ? 'white' : 'black';
       var mtext_opacity = isDark ? 0.7 : 1;
 
       if (model.texts != null) {
         for (var i = 0; i < model.texts.length; i++) {
           var mtext = model.texts[i];
           var item = {
-            "type": "text",
+            type: 'text',
 
-            "color": mtext.color != null ? "#" + mtext.color.substr(3) : mtext_color,
-            "color_opacity": mtext.color != null ? parseInt(mtext.color.substr(1, 2), 16) / 255 : mtext_opacity,
-            "show_pointer": mtext.show_pointer,
-            "pointer_angle": mtext.pointer_angle,
-            "size": mtext.size,
+            color: mtext.color != null ? '#' + mtext.color.substr(3) : mtext_color,
+            color_opacity: mtext.color != null ? parseInt(mtext.color.substr(1, 2), 16) / 255 : mtext_opacity,
+            show_pointer: mtext.show_pointer,
+            pointer_angle: mtext.pointer_angle,
+            size: mtext.size,
 
-            "elements": []
+            elements: [],
           };
           var x = mtext.x;
           if (model.type === 'NanoPlot') {
@@ -758,9 +747,9 @@ define([
             mtext.x = bigv;
           }
           var ele = {
-            "x": mtext.x,
-            "y": mtext.y,
-            "text": mtext.text
+            x: mtext.x,
+            y: mtext.y,
+            text: mtext.text,
           };
           item.elements.push(ele);
           newmodel.data.push(item);
@@ -770,8 +759,8 @@ define([
         for (var i = 0; i < model.rasters.length; i++) {
           var mraster = model.rasters[i];
           var item = {
-            "type": "raster",
-            "elements": []
+            type: 'raster',
+            elements: [],
           };
           var x = mraster.x;
           if (model.type === 'NanoPlot') {
@@ -782,13 +771,13 @@ define([
             mraster.x = bigv;
           }
           var ele = {
-            "x": mraster.x,
-            "y": mraster.y,
-            "width": mraster.width,
-            "height": mraster.height,
-            "opacity": mraster.opacity,
-            "position": mraster.position,
-            "value": mraster.value
+            x: mraster.x,
+            y: mraster.y,
+            width: mraster.width,
+            height: mraster.height,
+            opacity: mraster.opacity,
+            position: mraster.position,
+            value: mraster.value,
           };
           item.elements.push(ele);
           newmodel.data.push(item);
@@ -798,7 +787,6 @@ define([
       newmodel.yRIncludeZero = yAxisRSettings.yIncludeZero;
     },
     convertTreeMapGroovyData: function (newmodel, model) {
-
       newmodel.process = process;
 
       function findParent(node) {
@@ -806,8 +794,7 @@ define([
         for (var i = 0; i < data.length; i++) {
           var _node_ = data[i];
           var _parent_ = _findParent_(_node_, node);
-          if (_parent_)
-            return _parent_;
+          if (_parent_) return _parent_;
         }
 
         return null;
@@ -817,12 +804,10 @@ define([
         if (parent.children) {
           for (var i = 0; i < parent.children.length; i++) {
             var child = parent.children[i];
-            if (child == node)
-              return parent;
+            if (child == node) return parent;
 
             var _parent_ = _findParent_(parent.children[i], node);
-            if (_parent_)
-              return _parent_;
+            if (_parent_) return _parent_;
           }
         }
 
@@ -846,7 +831,7 @@ define([
           node.type = dataTypeMap[node.type];
 
           node.index = this.i;
-          node.id = "i" + this.i;
+          node.id = 'i' + this.i;
 
           this.i = this.i + 1;
           node.showItem = true;
@@ -855,8 +840,8 @@ define([
             node.legend = node.label;
           }
 
-          newmodel.data.push(node)
-        }
+          newmodel.data.push(node);
+        },
       };
 
       function setShowItem(showItem, skipChildren) {
@@ -884,7 +869,7 @@ define([
 
       item.root = true;
       process(visitor);
-    }
+    },
   };
 
   return plotConverter;

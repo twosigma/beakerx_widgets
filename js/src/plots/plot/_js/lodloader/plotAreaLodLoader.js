@@ -14,38 +14,31 @@
  *  limitations under the License.
  */
 
-
 define([
   'underscore',
   './../std/plotarea',
   './../plotSampler',
   './../lod/plotLodRiver',
-  './../auxes/plotAuxRiver'
-], function (
-  _,
-  PlotArea,
-  PlotSampler,
-  PlotLodRiver,
-  PlotAuxRiver
-) {
-  const PlotUtils = require("../../../../utils/PlotUtils").PlotUtils;
-  const PlotColorUtils = require("../../../../utils/PlotColorUtils").PlotColorUtils;
-  const CommonUtils = require("../../../../utils/CommonUtils").CommonUtils;
+  './../auxes/plotAuxRiver',
+], function (_, PlotArea, PlotSampler, PlotLodRiver, PlotAuxRiver) {
+  const PlotUtils = require('../../../../utils/PlotUtils').PlotUtils;
+  const PlotColorUtils = require('../../../../utils/PlotColorUtils').PlotColorUtils;
+  const CommonUtils = require('../../../../utils/CommonUtils').CommonUtils;
 
   var PlotAreaLodLoader = function (data, lodthresh) {
     this.datacopy = {};
-    _.extend(this.datacopy, data);  // save for later use
+    _.extend(this.datacopy, data); // save for later use
     _.extend(this, data); // copy properties to itself
     this.lodthresh = lodthresh;
     this.format(lodthresh);
   };
   // class constants
-  PlotAreaLodLoader.prototype.lodTypes = ["river"];
+  PlotAreaLodLoader.prototype.lodTypes = ['river'];
   PlotAreaLodLoader.prototype.lodSteps = [3];
 
   PlotAreaLodLoader.prototype.format = function () {
     // create plot type index
-    this.lodTypeIndex = (this.datacopy.lod_filter) ? this.lodTypes.indexOf(this.datacopy.lod_filter) : 0;
+    this.lodTypeIndex = this.datacopy.lod_filter ? this.lodTypes.indexOf(this.datacopy.lod_filter) : 0;
     this.lodType = this.lodTypes[this.lodTypeIndex]; // line, box
 
     // create the plotters
@@ -61,16 +54,16 @@ define([
     if (this.color != null) {
       this.tip_color = PlotColorUtils.createColor(this.color, this.color_opacity);
     } else {
-      this.tip_color = "gray";
+      this.tip_color = 'gray';
     }
 
     this.itemProps = {
-      "id": this.id,
-      "st": this.color,
-      "st_op": this.color_opacity,
-      "st_w": this.width,
-      "st_da": this.stroke_dasharray,
-      "d": ""
+      id: this.id,
+      st: this.color,
+      st_op: this.color_opacity,
+      st_w: this.width,
+      st_da: this.stroke_dasharray,
+      d: '',
     };
     this.elementProps = [];
   };
@@ -81,10 +74,10 @@ define([
     if (this.lodOn === false) {
       return;
     }
-    if (this.lodType === "area") {
+    if (this.lodType === 'area') {
       this.lodplotter.setZoomHash(this.zoomHash);
       this.lodplotter.hideTips(scope);
-    } else if (this.lodType === "river") {
+    } else if (this.lodType === 'river') {
       this.lodplotter.setZoomHash(this.zoomHash);
       this.lodplotter2.setZoomHash(this.zoomHash);
       this.lodplotter.hideTips(scope);
@@ -94,9 +87,9 @@ define([
 
   PlotAreaLodLoader.prototype.applyZoomHash = function (hash) {
     this.zoomHash = hash;
-    if (this.lodType === "area") {
+    if (this.lodType === 'area') {
       this.lodplotter.setZoomHash(hash);
-    } else if (this.lodType === "river") {
+    } else if (this.lodType === 'river') {
       this.lodplotter.setZoomHash(hash);
       this.lodplotter2.setZoomHash(hash);
     }
@@ -110,7 +103,7 @@ define([
   };
 
   PlotAreaLodLoader.prototype.applyLodType = function (type) {
-    this.lodTypeIndex = this.lodTypes.indexOf(type);  // maybe -1
+    this.lodTypeIndex = this.lodTypes.indexOf(type); // maybe -1
     if (this.lodTypeIndex === -1) {
       this.lodTypeIndex = 0;
     }
@@ -121,12 +114,12 @@ define([
   PlotAreaLodLoader.prototype.createLodPlotter = function () {
     var data = {};
     _.extend(data, this.datacopy);
-    if (this.lodType === "area") {
+    if (this.lodType === 'area') {
       this.lodplotter = new PlotLodRiver(data);
       this.lodplotter.setZoomHash(this.zoomHash);
-    } else if (this.lodType === "river") {
-      data.stroke = data.color;  // assume the user has no way to set outline for area
-      data.color_opacity *= .25;
+    } else if (this.lodType === 'river') {
+      data.stroke = data.color; // assume the user has no way to set outline for area
+      data.color_opacity *= 0.25;
       data.stroke_opacity = 1.0;
       this.lodplotter = new PlotLodRiver(data);
       this.lodplotter2 = new PlotLodRiver(data);
@@ -148,10 +141,10 @@ define([
   };
 
   PlotAreaLodLoader.prototype.toggleLod = function (scope) {
-    if (this.lodType === "off") {
+    if (this.lodType === 'off') {
       this.lodType = this.lodTypes[this.lodTypeIndex];
     } else {
-      this.lodType = "off";
+      this.lodType = 'off';
     }
     this.clear(scope);
   };
@@ -165,7 +158,7 @@ define([
     this.filter(scope);
 
     var lod = false;
-    if (this.lodType !== "off") {
+    if (this.lodType !== 'off') {
       if ((this.lodAuto === true && this.vlength > this.lodthresh) || this.lodAuto === false) {
         lod = true;
       }
@@ -183,23 +176,23 @@ define([
     }
 
     this.sample(scope);
-    if (this.lodType === "area") {
+    if (this.lodType === 'area') {
       this.lodplotter.render(scope, this.elementSamples);
-    } else if (this.lodType === "river") {
-      this.auxplotter.render(scope, this.elementAuxes, "a");
-      this.lodplotter.render(scope, this.elementSamples, "yBtm");
-      this.lodplotter2.render(scope, this.elementSamples2, "yTop");
+    } else if (this.lodType === 'river') {
+      this.auxplotter.render(scope, this.elementAuxes, 'a');
+      this.lodplotter.render(scope, this.elementSamples, 'yBtm');
+      this.lodplotter2.render(scope, this.elementSamples2, 'yTop');
     }
   };
 
   PlotAreaLodLoader.prototype.setHighlighted = function (scope, highlighted) {
     if (this.lodOn === true) {
-      if (this.lodType === "area") {
+      if (this.lodType === 'area') {
         this.lodplotter.setHighlighted(scope, highlighted);
-      } else if (this.lodType === "river") {
-        this.auxplotter.setHighlighted(scope, highlighted, "a");
-        this.lodplotter.setHighlighted(scope, highlighted, "yBtm");
-        this.lodplotter2.setHighlighted(scope, highlighted, "yTop");
+      } else if (this.lodType === 'river') {
+        this.auxplotter.setHighlighted(scope, highlighted, 'a');
+        this.lodplotter.setHighlighted(scope, highlighted, 'yBtm');
+        this.lodplotter2.setHighlighted(scope, highlighted, 'yTop');
       }
     } else {
       this.plotter.setHighlighted(scope, highlighted);
@@ -219,7 +212,11 @@ define([
   };
 
   PlotAreaLodLoader.prototype.createSampler = function () {
-    var xs = [], ys = [], y2s = [], _ys = [], _y2s = [];
+    var xs = [],
+      ys = [],
+      y2s = [],
+      _ys = [],
+      _y2s = [];
     for (var i = 0; i < this.elements.length; i++) {
       var ele = this.elements[i];
       xs.push(ele.x);
@@ -242,7 +239,8 @@ define([
   PlotAreaLodLoader.prototype.sample = function (scope) {
     var xAxis = this.xAxis,
       yAxis = this.yAxis;
-    var xl = scope.plotFocus.focus.xl, xr = scope.plotFocus.focus.xr;
+    var xl = scope.plotFocus.focus.xl,
+      xr = scope.plotFocus.focus.xr;
 
     if (this.sampleStep === -1) {
       var pixelWidth = scope.layout.plotSize.width;
@@ -259,7 +257,7 @@ define([
     this.elementSamples2 = this.sampler2.sample(xl, xr, this.sampleStep);
     var count = this.elementSamples.length;
 
-    if (this.lodType === "area") {
+    if (this.lodType === 'area') {
       var elements = [];
       for (var i = 0; i < count; i++) {
         elements.push({
@@ -268,26 +266,28 @@ define([
           max: this.elementSamples2[i].avg,
           hash: this.elementSamples[i].hash,
           xl: this.elementSamples[i].xl,
-          xr: this.elementSamples[i].xr
+          xr: this.elementSamples[i].xr,
         });
       }
       this.elementSamples = elements;
-    } else if (this.lodType === "river") {
+    } else if (this.lodType === 'river') {
       this.elementAuxes = [];
       // prepare the aux river in between
       for (var i = 0; i < count; i++) {
         this.elementAuxes.push({
           x: this.elementSamples[i].x,
           y: this.elementSamples[i].max,
-          y2: this.elementSamples2[i].min
+          y2: this.elementSamples2[i].min,
         });
       }
     }
-
   };
 
   PlotAreaLodLoader.prototype.clear = function (scope) {
-    scope.maing.select("#" + this.id).selectAll("*").remove();
+    scope.maing
+      .select('#' + this.id)
+      .selectAll('*')
+      .remove();
     this.hideTips(scope);
   };
 
@@ -296,9 +296,9 @@ define([
       this.plotter.hideTips(scope);
       return;
     }
-    if (this.lodType === "area") {
+    if (this.lodType === 'area') {
       this.lodplotter.hideTips(scope, hidden);
-    } else if (this.lodType === "river") {
+    } else if (this.lodType === 'river') {
       this.lodplotter.hideTips(scope, hidden);
       this.lodplotter2.hideTips(scope, hidden);
     }
@@ -311,17 +311,17 @@ define([
     var xAxis = this.xAxis,
       yAxis = this.yAxis;
     var tip = {};
-    var sub = "sample" + (g !== "" ? (" " + g) : "");
+    var sub = 'sample' + (g !== '' ? ' ' + g : '');
     if (this.legend != null) {
-      tip.title = this.legend + " (" + sub + ")";
+      tip.title = this.legend + ' (' + sub + ')';
     }
     var eles = this.elements;
     tip.xl = PlotUtils.getTipStringPercent(ele.xl, xAxis, 6);
     tip.xr = PlotUtils.getTipStringPercent(ele.xr, xAxis, 6);
-    if (this.lodType === "area") {
+    if (this.lodType === 'area') {
       tip.avg_yTop = PlotUtils.getTipStringPercent(ele.max, yAxis, 6);
       tip.avg_yBtm = PlotUtils.getTipStringPercent(ele.min, yAxis, 6);
-    } else if (this.lodType === "river") {
+    } else if (this.lodType === 'river') {
       tip.max = PlotUtils.getTipString(ele._max, yAxis, true);
       tip.min = PlotUtils.getTipString(ele._min, yAxis, true);
       tip.avg = PlotUtils.getTipStringPercent(ele.avg, yAxis, 6);
@@ -331,5 +331,4 @@ define([
   };
 
   return PlotAreaLodLoader;
-
 });

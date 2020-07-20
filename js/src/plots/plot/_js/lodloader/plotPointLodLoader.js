@@ -19,32 +19,26 @@ define([
   './../std/plotpoint',
   './../plotSampler',
   './../lod/plotLodPoint',
-  './../lod/plotLodBox'
-], function(
-  _,
-  PlotPoint,
-  PlotSampler,
-  PlotLodPoint,
-  PlotLodBox
-) {
-  const PlotUtils = require("../../../../utils/PlotUtils").PlotUtils;
-  const PlotColorUtils = require("../../../../utils/PlotColorUtils").PlotColorUtils;
-  const CommonUtils = require("../../../../utils/CommonUtils").CommonUtils;
+  './../lod/plotLodBox',
+], function (_, PlotPoint, PlotSampler, PlotLodPoint, PlotLodBox) {
+  const PlotUtils = require('../../../../utils/PlotUtils').PlotUtils;
+  const PlotColorUtils = require('../../../../utils/PlotColorUtils').PlotColorUtils;
+  const CommonUtils = require('../../../../utils/CommonUtils').CommonUtils;
 
-  var PlotPointLodLoader = function(data, lodthresh){
+  var PlotPointLodLoader = function (data, lodthresh) {
     this.datacopy = {};
-    _.extend(this.datacopy, data);  // save for later use
+    _.extend(this.datacopy, data); // save for later use
     _.extend(this, data); // copy properties to itself
     this.lodthresh = lodthresh;
     this.format(lodthresh);
   };
   // class constants
-  PlotPointLodLoader.prototype.lodTypes = ["box"];
+  PlotPointLodLoader.prototype.lodTypes = ['box'];
   PlotPointLodLoader.prototype.lodSteps = [10];
 
-  PlotPointLodLoader.prototype.format = function() {
+  PlotPointLodLoader.prototype.format = function () {
     // create plot type index
-    this.lodTypeIndex =  (this.datacopy.lod_filter) ? this.lodTypes.indexOf(this.datacopy.lod_filter) : 0;
+    this.lodTypeIndex = this.datacopy.lod_filter ? this.lodTypes.indexOf(this.datacopy.lod_filter) : 0;
     this.lodType = this.lodTypes[this.lodTypeIndex]; // line, box
 
     // create the plotters
@@ -60,42 +54,44 @@ define([
     if (this.color != null) {
       this.tip_color = PlotColorUtils.createColor(this.color, this.color_opacity);
     } else {
-      this.tip_color = "gray";
+      this.tip_color = 'gray';
     }
 
     this.itemProps = {
-      "id" : this.id,
-      "st" : this.color,
-      "st_op" : this.color_opacity,
-      "st_w" : this.width,
-      "st_da" : this.stroke_dasharray,
-      "d" : ""
+      id: this.id,
+      st: this.color,
+      st_op: this.color_opacity,
+      st_w: this.width,
+      st_da: this.stroke_dasharray,
+      d: '',
     };
     this.elementProps = [];
   };
 
-  PlotPointLodLoader.prototype.zoomLevelChanged = function(scope) {
+  PlotPointLodLoader.prototype.zoomLevelChanged = function (scope) {
     this.sampleStep = -1;
     this.zoomHash = CommonUtils.randomString(3);
-    if (this.lodOn === false) { return; }
+    if (this.lodOn === false) {
+      return;
+    }
     this.lodplotter.setZoomHash(this.zoomHash);
     this.lodplotter.hideTips(scope);
   };
 
-  PlotPointLodLoader.prototype.applyZoomHash = function(hash) {
+  PlotPointLodLoader.prototype.applyZoomHash = function (hash) {
     this.zoomHash = hash;
     this.lodplotter.setZoomHash(hash);
   };
 
-  PlotPointLodLoader.prototype.createLodPlotter = function() {
+  PlotPointLodLoader.prototype.createLodPlotter = function () {
     var data = {};
     _.extend(data, this.datacopy);
-    if (this.lodType === "point") {
+    if (this.lodType === 'point') {
       this.lodplotter = new PlotLodPoint(data);
       this.lodplotter.setZoomHash(this.zoomHash);
-    } else if (this.lodType === "box") {
+    } else if (this.lodType === 'box') {
       // user can set outline for point
-      data.color_opacity *= .25;
+      data.color_opacity *= 0.25;
       data.stroke_opacity = 1.0;
       this.lodplotter = new PlotLodBox(data);
       this.lodplotter.setWidthShrink(1);
@@ -103,25 +99,25 @@ define([
     }
   };
 
-  PlotPointLodLoader.prototype.toggleLodAuto = function(scope) {
+  PlotPointLodLoader.prototype.toggleLodAuto = function (scope) {
     this.lodAuto = !this.lodAuto;
     this.clear(scope);
   };
 
-  PlotPointLodLoader.prototype.applyLodAuto = function(auto) {
+  PlotPointLodLoader.prototype.applyLodAuto = function (auto) {
     this.lodAuto = auto;
   };
 
-  PlotPointLodLoader.prototype.toggleLod = function(scope) {
-    if (this.lodType === "off") {
+  PlotPointLodLoader.prototype.toggleLod = function (scope) {
+    if (this.lodType === 'off') {
       this.lodType = this.lodTypes[this.lodTypeIndex];
     } else {
-      this.lodType = "off";
+      this.lodType = 'off';
     }
     this.clear(scope);
   };
 
-  PlotPointLodLoader.prototype.render = function(scope){
+  PlotPointLodLoader.prototype.render = function (scope) {
     if (this.showItem === false) {
       this.clear(scope);
       return;
@@ -130,8 +126,8 @@ define([
     this.filter(scope);
 
     var lod = false;
-    if (this.lodType !== "off") {
-      if ( (this.lodAuto === true && this.vlength > this.lodthresh) || this.lodAuto === false) {
+    if (this.lodType !== 'off') {
+      if ((this.lodAuto === true && this.vlength > this.lodthresh) || this.lodAuto === false) {
         lod = true;
       }
     }
@@ -144,10 +140,10 @@ define([
 
     if (this.lodOn === true) {
       this.sample(scope);
-      if (this.lodType === "point") {
+      if (this.lodType === 'point') {
         // lod point plotter needs size information
         this.lodplotter.render(scope, this.elementSamples, this.sizeSamples);
-      } else if (this.lodType === "box") {
+      } else if (this.lodType === 'box') {
         this.lodplotter.render(scope, this.elementSamples);
       }
     } else {
@@ -155,7 +151,7 @@ define([
     }
   };
 
-  PlotPointLodLoader.prototype.setHighlighted = function(scope, highlighted) {
+  PlotPointLodLoader.prototype.setHighlighted = function (scope, highlighted) {
     if (this.lodOn === true) {
       this.lodplotter.setHighlighted(scope, highlighted);
     } else {
@@ -163,11 +159,11 @@ define([
     }
   };
 
-  PlotPointLodLoader.prototype.getRange = function(){
+  PlotPointLodLoader.prototype.getRange = function () {
     return this.plotter.getRange();
   };
 
-  PlotPointLodLoader.prototype.applyAxis = function(xAxis, yAxis) {
+  PlotPointLodLoader.prototype.applyAxis = function (xAxis, yAxis) {
     this.xAxis = xAxis;
     this.yAxis = yAxis;
     this.plotter.applyAxis(xAxis, yAxis);
@@ -175,15 +171,15 @@ define([
     this.createSampler();
   };
 
-  PlotPointLodLoader.prototype.switchLodType = function(scope) {
-    this.clear(scope);  // must clear first before changing lodType
+  PlotPointLodLoader.prototype.switchLodType = function (scope) {
+    this.clear(scope); // must clear first before changing lodType
     this.lodTypeIndex = (this.lodTypeIndex + 1) % this.lodTypes.length;
     this.lodType = this.lodTypes[this.lodTypeIndex];
     this.createLodPlotter();
   };
 
-  PlotPointLodLoader.prototype.applyLodType = function(type) {
-    this.lodTypeIndex = this.lodTypes.indexOf(type);  // maybe -1
+  PlotPointLodLoader.prototype.applyLodType = function (type) {
+    this.lodTypeIndex = this.lodTypes.indexOf(type); // maybe -1
     if (this.lodTypeIndex === -1) {
       this.lodTypeIndex = 0;
     }
@@ -191,8 +187,11 @@ define([
     this.createLodPlotter();
   };
 
-  PlotPointLodLoader.prototype.createSampler = function() {
-    var xs = [], ys = [], ss = [], _ys = [];
+  PlotPointLodLoader.prototype.createSampler = function () {
+    var xs = [],
+      ys = [],
+      ss = [],
+      _ys = [];
     for (var i = 0; i < this.elements.length; i++) {
       var ele = this.elements[i];
       xs.push(ele.x);
@@ -204,17 +203,18 @@ define([
     this.samplerSize = new PlotSampler(xs, ss, ss);
   };
 
-  PlotPointLodLoader.prototype.filter = function(scope) {
+  PlotPointLodLoader.prototype.filter = function (scope) {
     this.plotter.filter(scope);
     this.vindexL = this.plotter.vindexL;
     this.vindexR = this.plotter.vindexR;
     this.vlength = this.plotter.vlength;
   };
 
-  PlotPointLodLoader.prototype.sample = function(scope) {
+  PlotPointLodLoader.prototype.sample = function (scope) {
     var xAxis = this.xAxis,
       yAxis = this.yAxis;
-    var xl = scope.plotFocus.focus.xl, xr = scope.plotFocus.focus.xr;
+    var xl = scope.plotFocus.focus.xl,
+      xr = scope.plotFocus.focus.xr;
 
     if (this.sampleStep === -1) {
       var pixelWidth = scope.layout.plotSize.width;
@@ -231,12 +231,15 @@ define([
     this.sizeSamples = this.samplerSize.sample(xl, xr, this.sampleStep);
   };
 
-  PlotPointLodLoader.prototype.clear = function(scope) {
-    scope.maing.select("#" + this.id).selectAll("*").remove();
+  PlotPointLodLoader.prototype.clear = function (scope) {
+    scope.maing
+      .select('#' + this.id)
+      .selectAll('*')
+      .remove();
     this.hideTips(scope);
   };
 
-  PlotPointLodLoader.prototype.hideTips = function(scope, hidden) {
+  PlotPointLodLoader.prototype.hideTips = function (scope, hidden) {
     if (this.lodOn === false) {
       this.plotter.hideTips(scope, hidden);
       return;
@@ -244,16 +247,16 @@ define([
     this.lodplotter.hideTips(scope, hidden);
   };
 
-  PlotPointLodLoader.prototype.createTip = function(ele, g) {
+  PlotPointLodLoader.prototype.createTip = function (ele, g) {
     if (this.lodOn === false) {
       return this.plotter.createTip(ele);
     }
     var xAxis = this.xAxis,
       yAxis = this.yAxis;
     var tip = {};
-    var sub = "sample" + (g !== "" ? (" " + g) : "");
+    var sub = 'sample' + (g !== '' ? ' ' + g : '');
     if (this.legend != null) {
-      tip.title = this.legend + " (" + sub + ")";
+      tip.title = this.legend + ' (' + sub + ')';
     }
     if (ele.count > 1) {
       tip.xl = PlotUtils.getTipStringPercent(ele.xl, xAxis, 6);
@@ -270,5 +273,4 @@ define([
   };
 
   return PlotPointLodLoader;
-
 });

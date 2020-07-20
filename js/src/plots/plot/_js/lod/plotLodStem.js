@@ -14,40 +14,35 @@
  *  limitations under the License.
  */
 
-
-define([
-  'underscore'
-], function (
-  _
-) {
-  const PlotUtils = require("../../../../utils/PlotUtils").PlotUtils;
-  const PlotColorUtils = require("../../../../utils/PlotColorUtils").PlotColorUtils;
-  const PlotTip = require("../../PlotTip").PlotTip;
+define(['underscore'], function (_) {
+  const PlotUtils = require('../../../../utils/PlotUtils').PlotUtils;
+  const PlotColorUtils = require('../../../../utils/PlotColorUtils').PlotColorUtils;
+  const PlotTip = require('../../PlotTip').PlotTip;
 
   var PlotLodStem = function (data) {
     _.extend(this, data); // copy properties to itself
     this.format();
   };
 
-  PlotLodStem.prototype.plotClass = "";
-  PlotLodStem.prototype.respClass = "plot-resp";
-  PlotLodStem.prototype.plotClassAvgCircle = "plot-lodavg";
+  PlotLodStem.prototype.plotClass = '';
+  PlotLodStem.prototype.respClass = 'plot-resp';
+  PlotLodStem.prototype.plotClassAvgCircle = 'plot-lodavg';
   PlotLodStem.prototype.plotAvgCircleR = 2;
-  PlotLodStem.prototype.actionClass = "item-clickable item-onkey";
+  PlotLodStem.prototype.actionClass = 'item-clickable item-onkey';
 
   PlotLodStem.prototype.format = function () {
     if (this.color != null) {
       this.tip_color = PlotColorUtils.createColor(this.color, this.color_opacity);
     } else {
-      this.tip_color = "gray";
+      this.tip_color = 'gray';
     }
     this.widthShrink = 0;
     this.itemProps = {
-      "id": this.id,
-      "st": this.color,
-      "st_w": this.width,
-      "st_op": this.color_opacity,
-      "st_da": this.stroke_dasharray
+      id: this.id,
+      st: this.color,
+      st_w: this.width,
+      st_op: this.color_opacity,
+      st_da: this.stroke_dasharray,
     };
     this.elementProps = [];
   };
@@ -58,7 +53,7 @@ define([
 
   PlotLodStem.prototype.render = function (scope, samples, gid) {
     if (gid == null) {
-      gid = "";
+      gid = '';
     }
     this.elementSamples = samples;
     this.prepare(scope, gid);
@@ -88,7 +83,8 @@ define([
         continue;
       }
       var x = mapX(ele.x),
-        y = mapY(ele.max), y2 = mapY(ele.min);
+        y = mapY(ele.max),
+        y2 = mapY(ele.min);
 
       if (ele.avg == null) {
         this.avgOn = false;
@@ -99,15 +95,15 @@ define([
         return false;
       }
 
-      var hashid = this.id + "_" + this.zoomHash + "_" + ele.hash + gid;
+      var hashid = this.id + '_' + this.zoomHash + '_' + ele.hash + gid;
       var prop = {
-        "id": hashid,
-        "idx": this.index,
-        "ele": ele,
-        "g": gid,
-        "x": x,
-        "y": y,
-        "y2": y2
+        id: hashid,
+        idx: this.index,
+        ele: ele,
+        g: gid,
+        x: x,
+        y: y,
+        y2: y2,
       };
       if (this.avgOn === true) {
         var y3 = mapY(ele.avg);
@@ -119,18 +115,19 @@ define([
 
   PlotLodStem.prototype.setHighlighted = function (scope, highlighted, gid) {
     if (gid == null) {
-      gid = "";
+      gid = '';
     }
     var svg = scope.maing;
     var props = this.itemProps;
 
-    var groupid = this.id + "_" + gid;
-    var itemsvg = svg.select("#" + this.id);
+    var groupid = this.id + '_' + gid;
+    var itemsvg = svg.select('#' + this.id);
 
-    itemsvg.select("#" + groupid)
+    itemsvg
+      .select('#' + groupid)
       .transition()
       .duration(PlotUtils.getHighlightDuration())
-      .style("stroke-width", PlotUtils.getHighlightedSize(props.st_w, highlighted));
+      .style('stroke-width', PlotUtils.getHighlightedSize(props.st_w, highlighted));
   };
 
   PlotLodStem.prototype.draw = function (scope, gid) {
@@ -138,91 +135,112 @@ define([
     var props = this.itemProps,
       eleprops = this.elementProps;
 
-    if (svg.select("#" + this.id).empty()) {
-      svg.selectAll("g")
+    if (svg.select('#' + this.id).empty()) {
+      svg
+        .selectAll('g')
         .data([props], function (d) {
           return d.id;
-        }).enter().append("g")
-        .attr("id", function (d) {
+        })
+        .enter()
+        .append('g')
+        .attr('id', function (d) {
           return d.id;
         });
     }
 
-    var groupid = this.id + "_" + gid;
-    var itemsvg = svg.select("#" + this.id);
+    var groupid = this.id + '_' + gid;
+    var itemsvg = svg.select('#' + this.id);
 
-    if (itemsvg.select("#" + groupid).empty()) {
-      itemsvg.selectAll("#" + groupid)
+    if (itemsvg.select('#' + groupid).empty()) {
+      itemsvg
+        .selectAll('#' + groupid)
         .data([props], function (d) {
           return d.id;
-        }).enter().append("g")
-        .attr("id", groupid);
+        })
+        .enter()
+        .append('g')
+        .attr('id', groupid);
     }
-    itemsvg.select("#" + groupid)
-      .style("class", this.plotClass)
-      .style("stroke", props.st)
-      .style("stroke-opacity", props.st_op)
-      .style("stroke-dasharray", props.st_da)
-      .style("stroke-width", props.st_w);
+    itemsvg
+      .select('#' + groupid)
+      .style('class', this.plotClass)
+      .style('stroke', props.st)
+      .style('stroke-opacity', props.st_op)
+      .style('stroke-dasharray', props.st_da)
+      .style('stroke-width', props.st_w);
 
-    var groupsvg = itemsvg.select("#" + groupid);
+    var groupsvg = itemsvg.select('#' + groupid);
 
     // draw stems
-    groupsvg.selectAll("line")
-      .data(eleprops, function (d) {
-        return d.id;
-      }).exit().remove();
-    groupsvg.selectAll("line")
-      .data(eleprops, function (d) {
-        return d.id;
-      }).enter().append("line")
-      .attr("id", function (d) {
-        return d.id;
-      })
-      .attr("class", this.respClass + " " + this.actionClass);
-    groupsvg.selectAll("line")
+    groupsvg
+      .selectAll('line')
       .data(eleprops, function (d) {
         return d.id;
       })
-      .attr("x1", function (d) {
+      .exit()
+      .remove();
+    groupsvg
+      .selectAll('line')
+      .data(eleprops, function (d) {
+        return d.id;
+      })
+      .enter()
+      .append('line')
+      .attr('id', function (d) {
+        return d.id;
+      })
+      .attr('class', this.respClass + ' ' + this.actionClass);
+    groupsvg
+      .selectAll('line')
+      .data(eleprops, function (d) {
+        return d.id;
+      })
+      .attr('x1', function (d) {
         return d.x;
       })
-      .attr("x2", function (d) {
+      .attr('x2', function (d) {
         return d.x;
       })
-      .attr("y1", function (d) {
+      .attr('y1', function (d) {
         return d.y;
       })
-      .attr("y2", function (d) {
+      .attr('y2', function (d) {
         return d.y2;
       });
 
     if (this.avgOn === true) {
-      var clr = props.st == null ? "gray" : props.st;
+      var clr = props.st == null ? 'gray' : props.st;
       // draw avg lines
-      groupsvg.selectAll("circle")
+      groupsvg
+        .selectAll('circle')
         .data(eleprops, function (d) {
-          return d.id + "l";
-        }).exit().remove();
-      groupsvg.selectAll("circle")
-        .data(eleprops, function (d) {
-          return d.id + "l";
-        }).enter().append("circle")
-        .attr("id", function (d) {
-          return d.id + "l";
+          return d.id + 'l';
         })
-        .attr("class", this.plotClassAvgCircle)
-        .attr("r", this.plotAvgCircleR)
-        .style("stroke", clr)
-        .style("stroke-opacity", props.st_op);
-      groupsvg.selectAll("circle")
+        .exit()
+        .remove();
+      groupsvg
+        .selectAll('circle')
         .data(eleprops, function (d) {
-          return d.id + "l";
+          return d.id + 'l';
         })
-        .attr("cx", function (d) {
+        .enter()
+        .append('circle')
+        .attr('id', function (d) {
+          return d.id + 'l';
+        })
+        .attr('class', this.plotClassAvgCircle)
+        .attr('r', this.plotAvgCircleR)
+        .style('stroke', clr)
+        .style('stroke-opacity', props.st_op);
+      groupsvg
+        .selectAll('circle')
+        .data(eleprops, function (d) {
+          return d.id + 'l';
+        })
+        .attr('cx', function (d) {
           return d.x;
         })
-        .attr("cy", function (d) {
+        .attr('cy', function (d) {
           return d.ym;
         });
     }
@@ -233,5 +251,4 @@ define([
   };
 
   return PlotLodStem;
-
 });

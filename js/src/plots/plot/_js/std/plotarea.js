@@ -14,15 +14,11 @@
  *  limitations under the License.
  */
 
-define([
-  'underscore'
-], function (
-  _
-) {
-  const PlotUtils = require("../../../../utils/PlotUtils").PlotUtils;
-  const PlotColorUtils = require("../../../../utils/PlotColorUtils").PlotColorUtils;
-  const BigNumberUtils = require("../../../../utils/BigNumberUtils").BigNumberUtils;
-  const PlotTip = require("../../PlotTip").PlotTip;
+define(['underscore'], function (_) {
+  const PlotUtils = require('../../../../utils/PlotUtils').PlotUtils;
+  const PlotColorUtils = require('../../../../utils/PlotColorUtils').PlotColorUtils;
+  const BigNumberUtils = require('../../../../utils/BigNumberUtils').BigNumberUtils;
+  const PlotTip = require('../../PlotTip').PlotTip;
 
   var PlotArea = function (data) {
     _.extend(this, data); // copy properties to itself
@@ -31,16 +27,17 @@ define([
 
   PlotArea.prototype.respWidth = 5;
   PlotArea.prototype.respMinHeight = 5;
-  PlotArea.prototype.plotClass = "plot-area";
-  PlotArea.prototype.respClass = "plot-resp plot-respstem";
-  PlotArea.prototype.actionClass = "item-clickable item-onkey";
+  PlotArea.prototype.plotClass = 'plot-area';
+  PlotArea.prototype.respClass = 'plot-resp plot-respstem';
+  PlotArea.prototype.actionClass = 'item-clickable item-onkey';
 
   PlotArea.prototype.setHighlighted = function (scope, highlighted) {
-
     if (highlighted === true) {
-      scope.jqsvg.find("#" + this.id + " polygon").attr("filter", "url(" + window.location.pathname + "#svgAreaFilter)");
+      scope.jqsvg
+        .find('#' + this.id + ' polygon')
+        .attr('filter', 'url(' + window.location.pathname + '#svgAreaFilter)');
     } else {
-      scope.jqsvg.find("#" + this.id + " polygon").removeAttr("filter");
+      scope.jqsvg.find('#' + this.id + ' polygon').removeAttr('filter');
     }
   };
 
@@ -48,17 +45,17 @@ define([
     if (this.color != null) {
       this.tip_color = PlotColorUtils.createColor(this.color, this.color_opacity);
     } else {
-      this.tip_color = "gray";
+      this.tip_color = 'gray';
     }
 
     this.itemProps = {
-      "id": this.id,
-      "fi": this.color,
-      "fi_op": this.color_opacity,
-      "st": this.stroke,
-      "st_w": this.stroke_width,
-      "st_op": this.stroke_opacity,
-      "pts": null
+      id: this.id,
+      fi: this.color,
+      fi_op: this.color_opacity,
+      st: this.stroke,
+      st_w: this.stroke_width,
+      st_op: this.stroke_opacity,
+      pts: null,
     };
     this.elementProps = [];
   };
@@ -81,7 +78,7 @@ define([
       xl: Infinity,
       xr: -Infinity,
       yl: Infinity,
-      yr: -Infinity
+      yr: -Infinity,
     };
     for (var i = 0; i < eles.length; i++) {
       var ele = eles[i];
@@ -113,13 +110,13 @@ define([
       this.vlength = eles.length;
       return;
     }
-    var l = PlotUtils.upper_bound(eles, "x", scope.plotFocus.focus.xl),
-      r = PlotUtils.upper_bound(eles, "x", scope.plotFocus.focus.xr) + 1;
+    var l = PlotUtils.upper_bound(eles, 'x', scope.plotFocus.focus.xl),
+      r = PlotUtils.upper_bound(eles, 'x', scope.plotFocus.focus.xr) + 1;
 
     l = Math.max(l, 0);
     r = Math.min(r, eles.length - 1);
 
-    if (l > r || l == r && eles[l].x < scope.plotFocus.focus.xl) {
+    if (l > r || (l == r && eles[l].x < scope.plotFocus.focus.xl)) {
       // nothing visible, or all elements are to the left of the svg, vlength = 0
       l = 0;
       r = -1;
@@ -144,41 +141,43 @@ define([
       eleprops = this.elementProps;
     var mapX = scope.plotRange.data2scrXi,
       mapY = this.getYMapper(scope);
-    var pstr = "";
+    var pstr = '';
 
     eleprops.length = 0;
 
     for (var i = this.vindexL; i <= this.vindexR; i++) {
       var ele = eles[i];
-      var x = mapX(ele.x), y = mapY(ele.y), y2 = mapY(ele.y2);
+      var x = mapX(ele.x),
+        y = mapY(ele.y),
+        y2 = mapY(ele.y2);
 
       if (PlotUtils.rangeAssert([x, y, y2])) {
         eleprops.length = 0;
         return;
       }
 
-      if (this.interpolation === "linear") {
-        pstr += x + "," + y + " ";
-      } else if (this.interpolation === "none" && i < this.vindexR) {
+      if (this.interpolation === 'linear') {
+        pstr += x + ',' + y + ' ';
+      } else if (this.interpolation === 'none' && i < this.vindexR) {
         var ele2 = eles[i + 1];
         var x2 = mapX(ele2.x);
-        if (Math.abs(x2) > 1E6) {
+        if (Math.abs(x2) > 1e6) {
           break;
         }
-        pstr += x + "," + y + " " + x2 + "," + y + " ";
+        pstr += x + ',' + y + ' ' + x2 + ',' + y + ' ';
       }
 
       if (this.useToolTip === true && ele.y <= focus.yr && ele.y2 >= focus.yl) {
-        var id = this.id + "_" + i;
+        var id = this.id + '_' + i;
         var prop = {
-          "id": id,
-          "idx": this.index,
-          "ele": ele,
-          "isresp": true,
-          "x": x - this.respWidth / 2,
-          "y": y2,
-          "h": Math.max(y - y2, this.respMinHeight),  // min height to be hoverable
-          "op": scope.tips[id] == null ? 0 : 1
+          id: id,
+          idx: this.index,
+          ele: ele,
+          isresp: true,
+          x: x - this.respWidth / 2,
+          y: y2,
+          h: Math.max(y - y2, this.respMinHeight), // min height to be hoverable
+          op: scope.tips[id] == null ? 0 : 1,
         };
         eleprops.push(prop);
       }
@@ -186,11 +185,12 @@ define([
 
     for (var i = this.vindexR; i >= this.vindexL; i--) {
       var ele = eles[i];
-      var x = mapX(ele.x), y2 = mapY(ele.y2);
+      var x = mapX(ele.x),
+        y2 = mapY(ele.y2);
 
-      if (this.interpolation === "linear") {
-        pstr += x + "," + y2 + " ";
-      } else if (this.interpolation === "none" && i < this.vindexR) {
+      if (this.interpolation === 'linear') {
+        pstr += x + ',' + y2 + ' ';
+      } else if (this.interpolation === 'none' && i < this.vindexR) {
         var ele2 = eles[i + 1];
         var x2 = mapX(ele2.x);
 
@@ -199,7 +199,7 @@ define([
           return;
         }
 
-        pstr += x2 + "," + y2 + " " + x + "," + y2 + " ";
+        pstr += x2 + ',' + y2 + ' ' + x + ',' + y2 + ' ';
       }
     }
     if (pstr.length > 0) {
@@ -212,76 +212,91 @@ define([
     var props = this.itemProps,
       eleprops = this.elementProps;
 
-    if (svg.select("#" + this.id).empty()) {
-      svg.selectAll("g")
+    if (svg.select('#' + this.id).empty()) {
+      svg
+        .selectAll('g')
         .data([props], function (d) {
           return d.id;
-        }).enter().append("g")
-        .attr("id", function (d) {
+        })
+        .enter()
+        .append('g')
+        .attr('id', function (d) {
           return d.id;
         });
     }
 
-    var itemsvg = svg.select("#" + this.id);
+    var itemsvg = svg.select('#' + this.id);
 
-    itemsvg.selectAll("polygon")
-      .data([props]).enter().append("polygon")
-      .attr("class", this.plotClass + " " + this.actionClass)
-      .style("fill", function (d) {
+    itemsvg
+      .selectAll('polygon')
+      .data([props])
+      .enter()
+      .append('polygon')
+      .attr('class', this.plotClass + ' ' + this.actionClass)
+      .style('fill', function (d) {
         return d.fi;
       })
-      .style("fill-opacity", function (d) {
+      .style('fill-opacity', function (d) {
         return d.fi_op;
       })
-      .style("stroke", function (d) {
+      .style('stroke', function (d) {
         return d.st;
       })
-      .style("stroke-opacity", function (d) {
+      .style('stroke-opacity', function (d) {
         return d.st_op;
       })
-      .style("stroke-width", function (d) {
+      .style('stroke-width', function (d) {
         return d.st_w;
       });
-    itemsvg.select("polygon")
-      .attr("points", props.pts);
+    itemsvg.select('polygon').attr('points', props.pts);
 
     if (this.useToolTip === true) {
-      itemsvg.selectAll("rect")
+      itemsvg
+        .selectAll('rect')
         .data(eleprops, function (d) {
-          return d.id;
-        }).exit().remove();
-      itemsvg.selectAll("rect")
-        .data(eleprops, function (d) {
-          return d.id;
-        }).enter().append("rect")
-        .attr("id", function (d) {
           return d.id;
         })
-        .attr("class", this.respClass + " " + this.actionClass)
-        .attr("width", this.respWidth)
-        .style("stroke", this.tip_color);
+        .exit()
+        .remove();
+      itemsvg
+        .selectAll('rect')
+        .data(eleprops, function (d) {
+          return d.id;
+        })
+        .enter()
+        .append('rect')
+        .attr('id', function (d) {
+          return d.id;
+        })
+        .attr('class', this.respClass + ' ' + this.actionClass)
+        .attr('width', this.respWidth)
+        .style('stroke', this.tip_color);
 
-      itemsvg.selectAll("rect")
+      itemsvg
+        .selectAll('rect')
         .data(eleprops, function (d) {
           return d.id;
         })
-        .attr("x", function (d) {
+        .attr('x', function (d) {
           return d.x;
         })
-        .attr("y", function (d) {
+        .attr('y', function (d) {
           return d.y;
         })
-        .attr("height", function (d) {
+        .attr('height', function (d) {
           return d.h;
         })
-        .style("opacity", function (d) {
+        .style('opacity', function (d) {
           return d.op;
         });
     }
   };
 
   PlotArea.prototype.clear = function (scope) {
-    scope.maing.select("#" + this.id).selectAll("*").remove();
+    scope.maing
+      .select('#' + this.id)
+      .selectAll('*')
+      .remove();
     this.hideTips(scope);
   };
 
@@ -290,8 +305,7 @@ define([
   };
 
   PlotArea.prototype.createTip = function (ele) {
-    if (ele.tooltip)
-      return ele.tooltip;
+    if (ele.tooltip) return ele.tooltip;
 
     var xAxis = this.xAxis,
       yAxis = this.yAxis;
@@ -306,5 +320,4 @@ define([
   };
 
   return PlotArea;
-
 });
