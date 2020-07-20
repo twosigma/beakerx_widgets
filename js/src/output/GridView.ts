@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-import {VBoxModel as JupyterVBoxModel, VBoxView as JupyterVBoxView} from "@jupyter-widgets/controls";
-import {BEAKERX_MODULE_VERSION} from '../version';
+import { VBoxModel as JupyterVBoxModel, VBoxView as JupyterVBoxView } from '@jupyter-widgets/controls';
+import { BEAKERX_MODULE_VERSION } from '../version';
 
 export class GridViewModel extends JupyterVBoxModel {
   defaults() {
@@ -26,8 +26,8 @@ export class GridViewModel extends JupyterVBoxModel {
       _model_module: 'beakerx_widgets.outputs',
       _view_module: 'beakerx_widgets.outputs',
       _model_module_version: BEAKERX_MODULE_VERSION,
-      _view_module_version: BEAKERX_MODULE_VERSION
-    }
+      _view_module_version: BEAKERX_MODULE_VERSION,
+    };
   }
 }
 

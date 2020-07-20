@@ -14,19 +14,19 @@
  *  limitations under the License.
  */
 
-import {HTMLModel as JupyterHTMLModel, HTMLView as JupyteHTMLView} from "@jupyter-widgets/controls";
-import {BEAKERX_MODULE_VERSION} from "../version";
+import { HTMLModel as JupyterHTMLModel, HTMLView as JupyteHTMLView } from '@jupyter-widgets/controls';
+import { BEAKERX_MODULE_VERSION } from '../version';
 
 export class HTMLModel extends JupyterHTMLModel {
   defaults() {
     return {
       ...super.defaults(),
-      _view_name: "HTMLView",
-      _model_name: "HTMLModel",
+      _view_name: 'HTMLView',
+      _model_name: 'HTMLModel',
       _model_module: 'beakerx_widgets.outputs',
       _view_module: 'beakerx_widgets.outputs',
       _model_module_version: BEAKERX_MODULE_VERSION,
-      _view_module_version: BEAKERX_MODULE_VERSION
+      _view_module_version: BEAKERX_MODULE_VERSION,
     };
   }
 }
@@ -34,7 +34,7 @@ export class HTMLModel extends JupyterHTMLModel {
 export class HTMLView extends JupyteHTMLView {
   render() {
     super.render();
-    this.content.style.lineHeight = "20px";
-    this.content.style.fontSize = "14px";
+    this.content.style.lineHeight = '20px';
+    this.content.style.fontSize = '14px';
   }
 }

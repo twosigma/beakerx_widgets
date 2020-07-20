@@ -14,9 +14,8 @@
  *  limitations under the License.
  */
 
-
-import {BoxModel as JupyterBoxModel, BoxView as JupyterBoxView} from "@jupyter-widgets/controls";
-import {BEAKERX_MODULE_VERSION} from "../version";
+import { BoxModel as JupyterBoxModel, BoxView as JupyterBoxView } from '@jupyter-widgets/controls';
+import { BEAKERX_MODULE_VERSION } from '../version';
 
 let currentWidgetIndex = 0;
 
@@ -29,8 +28,8 @@ export class CyclingDisplayBoxModel extends JupyterBoxModel {
       _model_module: 'beakerx_widgets.outputs',
       _view_module: 'beakerx_widgets.outputs',
       _model_module_version: BEAKERX_MODULE_VERSION,
-      _view_module_version: BEAKERX_MODULE_VERSION
-    }
+      _view_module_version: BEAKERX_MODULE_VERSION,
+    };
   }
 }
 
@@ -41,7 +40,7 @@ export class CyclingDisplayBoxView extends JupyterBoxView {
   initialize() {
     super.initialize.apply(this, arguments);
     this.interval = undefined;
-    this.period = this.model.get("period");
+    this.period = this.model.get('period');
   }
 
   update_children() {
@@ -69,14 +68,13 @@ export class CyclingDisplayBoxView extends JupyterBoxView {
     const element = this.model.get('children')[currentWidgetIndex];
 
     if (element && this.children_views) {
-      this.children_views.update([element])
-        .then(function (views) {
-          let heights = views.map((view) => {
-            return view.$el.height();
-          });
-
-          views[0].$el.parent().css('min-height', Math.max.apply(null, heights));
+      this.children_views.update([element]).then(function (views) {
+        let heights = views.map((view) => {
+          return view.$el.height();
         });
+
+        views[0].$el.parent().css('min-height', Math.max.apply(null, heights));
+      });
     }
   }
 }

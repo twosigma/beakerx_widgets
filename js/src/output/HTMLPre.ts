@@ -14,19 +14,22 @@
  *  limitations under the License.
  */
 
-import {DescriptionView as JupyterDescriptionView, StringModel as JupyterStringModel} from "@jupyter-widgets/controls";
-import {BEAKERX_MODULE_VERSION} from "../version";
+import {
+  DescriptionView as JupyterDescriptionView,
+  StringModel as JupyterStringModel,
+} from '@jupyter-widgets/controls';
+import { BEAKERX_MODULE_VERSION } from '../version';
 
 export class HTMLPreModel extends JupyterStringModel {
   defaults() {
     return {
       ...super.defaults(),
-      _view_name: "HTMLPreView",
-      _model_name: "HTMLPreModel",
+      _view_name: 'HTMLPreView',
+      _model_name: 'HTMLPreModel',
       _model_module: 'beakerx_widgets.outputs',
       _view_module: 'beakerx_widgets.outputs',
       _model_module_version: BEAKERX_MODULE_VERSION,
-      _view_module_version: BEAKERX_MODULE_VERSION
+      _view_module_version: BEAKERX_MODULE_VERSION,
     };
   }
 }

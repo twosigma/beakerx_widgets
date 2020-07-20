@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-import {TabModel as JupyterTabModel, TabView as JupyterTabView} from "@jupyter-widgets/controls";
-import {BEAKERX_MODULE_VERSION} from "../version";
+import { TabModel as JupyterTabModel, TabView as JupyterTabView } from '@jupyter-widgets/controls';
+import { BEAKERX_MODULE_VERSION } from '../version';
 
 export class TabModel extends JupyterTabModel {
   defaults() {
@@ -26,8 +26,8 @@ export class TabModel extends JupyterTabModel {
       _model_module: 'beakerx_widgets.outputs',
       _view_module: 'beakerx_widgets.outputs',
       _model_module_version: BEAKERX_MODULE_VERSION,
-      _view_module_version: BEAKERX_MODULE_VERSION
-    }
+      _view_module_version: BEAKERX_MODULE_VERSION,
+    };
   }
 }
 
@@ -54,5 +54,5 @@ export class TabView extends JupyterTabView {
 
 export default {
   TabModel,
-  TabView
+  TabView,
 };
