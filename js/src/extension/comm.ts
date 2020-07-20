@@ -14,9 +14,9 @@
  *  limitations under the License.
  */
 
-import {BeakerXApi} from "../utils/api";
+import { BeakerXApi } from '../utils/api';
 const dialog = require('base/js/dialog');
-const {Comm} = require('services/kernels/comm');
+const { Comm } = require('services/kernels/comm');
 
 export const BEAKER_GETCODECELLS = 'beakerx_widgets.getcodecells';
 export const BEAKER_GET_URL_ARG = 'beakerx_widgets.geturlarg';
@@ -25,7 +25,7 @@ export const BEAKER_TAG_RUN = 'beakerx_widgets.tag.run';
 
 const msgHandlers = {
   [BEAKER_GETCODECELLS]: (msg) => {
-    if (msg.content.data.state.name == "CodeCells") {
+    if (msg.content.data.state.name == 'CodeCells') {
       sendJupyterCodeCells(JSON.parse(msg.content.data.state.value), msg.content.data.url);
     }
 
@@ -33,7 +33,7 @@ const msgHandlers = {
   },
 
   [BEAKER_GET_URL_ARG]: (msg) => {
-    if (msg.content.data.state.name == "URL_ARG") {
+    if (msg.content.data.state.name == 'URL_ARG') {
       sendArgUrl(msg.content.data.url, msg.content.data.type, msg.content.data.state.arg_name);
     }
   },
@@ -63,14 +63,14 @@ const msgHandlers = {
       dialog.modal({
         title: 'No cell with the tag !',
         body: 'Tag: ' + msg.content.data.state.runByTag,
-        buttons: {'OK': {'class': 'btn-primary'}},
+        buttons: { OK: { class: 'btn-primary' } },
         notebook: Jupyter.notebook,
         keyboard_manager: Jupyter.keyboard_manager,
       });
     } else {
       notebook.execute_cells(indexList);
     }
-  }
+  },
 };
 
 export const registerCommTargets = (kernel: any): void => {
@@ -90,20 +90,16 @@ export const registerCommTargets = (kernel: any): void => {
     comm.on_msg(msgHandlers[BEAKER_GET_URL_ARG]);
   });
 
-  kernel.comm_info(
-    null, (msg) => {
-      assignMsgHandlersToExistingComms(msg.content.comms, kernel);
-    }
-  );
+  kernel.comm_info(null, (msg) => {
+    assignMsgHandlersToExistingComms(msg.content.comms, kernel);
+  });
 };
 
 const sendJupyterCodeCells = (filter: string, url: string) => {
-
-  const data: { code_cells: any, url: string } =
-    {
-      code_cells: [],
-      url: url
-    };
+  const data: { code_cells: any; url: string } = {
+    code_cells: [],
+    url: url,
+  };
   data.code_cells = Jupyter.notebook.get_cells().filter(function (cell) {
     if (cell._metadata.tags) {
       return cell.cell_type == 'code' && cell._metadata.tags.includes(filter);
@@ -111,31 +107,28 @@ const sendJupyterCodeCells = (filter: string, url: string) => {
     return false;
   });
   const service = new BeakerxRestHandler();
-  service.post(data)
+  service.post(data);
 };
 
 const sendArgUrl = (url: string, type: string, argName: string) => {
-
-  const data: { url: string, type: string, argName: string, argValue: string } =
-    {
-      argName: argName,
-      argValue: "",
-      url: url,
-      type: type
-    };
+  const data: { url: string; type: string; argName: string; argValue: string } = {
+    argName: argName,
+    argValue: '',
+    url: url,
+    type: type,
+  };
 
   const parsedUrl = new URL(window.location.href);
   data.argValue = parsedUrl.searchParams.get(argName);
   const service = new BeakerxRestHandler();
-  service.post(data)
+  service.post(data);
 };
 
 class BeakerxRestHandler {
-
   private api: BeakerXApi;
 
   constructor() {
-    this.setApi()
+    this.setApi();
   }
 
   private setApi() {
@@ -157,13 +150,10 @@ class BeakerxRestHandler {
   }
 
   public post(data) {
-    this.api
-      .restService(data)
-      .catch((err) => {
-        console.log(err)
-      });
+    this.api.restService(data).catch((err) => {
+      console.log(err);
+    });
   }
-
 }
 
 const assignMsgHandlersToExistingComms = (comms, kernel) => {

@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-import {registerCommTargets} from './comm';
-import {BeakerXApi} from "../utils/api";
+import { registerCommTargets } from './comm';
+import { BeakerXApi } from '../utils/api';
 
 export function installHandler() {
   const kernel = Jupyter.notebook.kernel;
@@ -34,11 +34,10 @@ function interrupt() {
 }
 
 function interruptToKernel(url_to_interrupt: string) {
-  new BeakerXInterruptRestHandler().post({"url": url_to_interrupt})
+  new BeakerXInterruptRestHandler().post({ url: url_to_interrupt });
 }
 
 class BeakerXInterruptRestHandler {
-
   private readonly api: BeakerXApi;
 
   constructor() {
@@ -60,11 +59,8 @@ class BeakerXInterruptRestHandler {
   }
 
   public post(data) {
-    this.api
-      .restService(data)
-      .catch((err) => {
-        console.log(err)
-      });
+    this.api.restService(data).catch((err) => {
+      console.log(err);
+    });
   }
-
 }

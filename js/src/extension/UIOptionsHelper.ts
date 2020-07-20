@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-import {BeakerXApi} from "../utils/api";
+import { BeakerXApi } from '../utils/api';
 
 export function registerFeature(baseUrl: string): void {
   if (Jupyter.NotebookList) {
@@ -22,15 +22,14 @@ export function registerFeature(baseUrl: string): void {
   }
 
   const api = new BeakerXApi(baseUrl);
-  api.loadSettings()
+  api
+    .loadSettings()
     .then((data) => {
-
       setupAutoCloseBrackets(data.ui_options.auto_close);
       setupWideCells(data.ui_options.wide_cells);
       setupImproveFonts(data.ui_options.improve_fonts);
       setupShowCatalog(data.ui_options.show_catalog);
       setupAutoSave(data.ui_options.auto_save);
-
     })
     .catch((e) => {
       console.log(e);
@@ -52,7 +51,6 @@ function setupAutoCloseBrackets(autoCloseBrackets: boolean): void {
       cm.setOption('autoCloseBrackets', autoCloseBrackets);
     }
   }
-
 }
 
 function setupWideCells(wideCells: boolean): void {

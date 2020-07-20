@@ -18,7 +18,7 @@ export const LINE_COMMENT_CHAR = '//';
 export const LINE_MAGIC_MODE = 'line_magic';
 
 export function extendWithLineComment(Jupyter: any, CodeMirror: any) {
-  CodeMirror.extendMode('groovy', {lineComment: LINE_COMMENT_CHAR});
+  CodeMirror.extendMode('groovy', { lineComment: LINE_COMMENT_CHAR });
 
   Jupyter.notebook.get_cells().map(setCodeMirrorLineComment);
 }
@@ -41,14 +41,14 @@ function setCodeMirrorLineComment(cell: any) {
 export function extendHighlightModes(Jupyter: any) {
   Jupyter.CodeCell.options_default.highlight_modes = {
     ...Jupyter.CodeCell.options_default.highlight_modes,
-    magic_python: {reg: ['^%%python']},
-    magic_groovy: {reg: ['^%%groovy']},
-    magic_java: {reg: ['^%%java']},
-    magic_scala: {reg: ['^%%scala']},
-    magic_kotlin: {reg: ['^%%kotlin']},
-    magic_clojure: {reg: ['^%%clojure']},
-    magic_sql: {reg: ['^%%sql']},
-    magic_html: {reg: ['^%%html']}
+    magic_python: { reg: ['^%%python'] },
+    magic_groovy: { reg: ['^%%groovy'] },
+    magic_java: { reg: ['^%%java'] },
+    magic_scala: { reg: ['^%%scala'] },
+    magic_kotlin: { reg: ['^%%kotlin'] },
+    magic_clojure: { reg: ['^%%clojure'] },
+    magic_sql: { reg: ['^%%sql'] },
+    magic_html: { reg: ['^%%html'] },
   };
 
   Jupyter.notebook.get_cells().map(setLineMagicForCell);
@@ -62,7 +62,7 @@ function setLineMagicForCell(cell) {
 
 const lineMagicOverlay = {
   startState() {
-    return {firstMatched: false, inMagicLine: false};
+    return { firstMatched: false, inMagicLine: false };
   },
 
   token(stream, state) {
@@ -83,7 +83,7 @@ const lineMagicOverlay = {
     stream.skipToEnd();
 
     return null;
-  }
+  },
 };
 
 export function autoHighlightLineMagics(code_mirror) {
@@ -112,10 +112,10 @@ export function autoHighlightLineMagics(code_mirror) {
 
 export function addLineMagicsOverlay(code_mirror) {
   autoHighlightLineMagics(code_mirror);
-  code_mirror.off("focus", autoHighlightLineMagics);
-  code_mirror.on("focus", autoHighlightLineMagics);
-  code_mirror.off("change", autoHighlightLineMagics);
-  code_mirror.on("change", autoHighlightLineMagics);
-  code_mirror.off("blur", autoHighlightLineMagics);
-  code_mirror.on("blur", autoHighlightLineMagics);
+  code_mirror.off('focus', autoHighlightLineMagics);
+  code_mirror.on('focus', autoHighlightLineMagics);
+  code_mirror.off('change', autoHighlightLineMagics);
+  code_mirror.on('change', autoHighlightLineMagics);
+  code_mirror.off('blur', autoHighlightLineMagics);
+  code_mirror.on('blur', autoHighlightLineMagics);
 }

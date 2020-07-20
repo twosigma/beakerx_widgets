@@ -15,8 +15,8 @@
  */
 
 export interface IInitCellsOptions {
-  run_on_kernel_ready: boolean,
-  run_untrusted?: boolean
+  run_on_kernel_ready: boolean;
+  run_untrusted?: boolean;
 }
 
 /* eslint-disable @typescript-eslint/no-var-requires */
@@ -39,7 +39,7 @@ export const initCellUiCallback = CellToolbar.utils.checkbox_ui_generator(
       delete cell.metadata.init_cell;
     }
   },
-  (cell) => cell.metadata.init_cell // if init_cell is undefined, it'll be interpreted as false anyway
+  (cell) => cell.metadata.init_cell, // if init_cell is undefined, it'll be interpreted as false anyway
 );
 
 export function registerCelltoolbarPreset(): void {
@@ -56,7 +56,7 @@ export function enableInitializationCellsFeature(options: IInitCellsOptions) {
 
   if (modOptions !== undefined) {
     console.log(logPrefix, 'updating options from notebook metadata:', modOptions);
-    options = {...options, ...modOptions};
+    options = { ...options, ...modOptions };
   }
 
   registerCelltoolbarPreset();
@@ -84,13 +84,11 @@ export function runInitCells(options: IInitCellsOptions): void {
     num++;
   }
 
-  console.log(logPrefix, `finished running ${num} initialization cell${(num !== 1 ? 's' : '')}`);
+  console.log(logPrefix, `finished running ${num} initialization cell${num !== 1 ? 's' : ''}`);
 }
 
 export function getInitCells(): any[] {
-  return Jupyter.notebook
-    .get_cells()
-    .filter((cell) => (cell instanceof CodeCell) && cell.metadata.init_cell === true);
+  return Jupyter.notebook.get_cells().filter((cell) => cell instanceof CodeCell && cell.metadata.init_cell === true);
 }
 
 function canExecuteInitCells(options: IInitCellsOptions) {
@@ -107,8 +105,9 @@ function handleUntrustedKernelInitCells(cells, options) {
   if (!Jupyter.notebook.trusted && !options.run_untrusted && cells.length) {
     dialog.modal({
       title: 'Initialization cells in untrusted notebook',
-      body: 'This notebook is not trusted, so initialization cells will not be automatically run on kernel load. You can still run them manually, though.',
-      buttons: {'OK': {'class': 'btn-primary'}},
+      body:
+        'This notebook is not trusted, so initialization cells will not be automatically run on kernel load. You can still run them manually, though.',
+      buttons: { OK: { class: 'btn-primary' } },
       notebook: Jupyter.notebook,
       keyboard_manager: Jupyter.keyboard_manager,
     });
@@ -122,13 +121,9 @@ export function registerNotebookInitCellsAction(options): void {
     icon: 'fa-calculator',
     help: 'Run all initialization cells',
     help_index: 'zz',
-    handler: () => runInitCells({...options, run_untrusted: true})
+    handler: () => runInitCells({ ...options, run_untrusted: true }),
   };
-  const action_full_name = Jupyter.notebook.keyboard_manager.actions.register(
-    action,
-    action_name,
-    prefix
-  );
+  const action_full_name = Jupyter.notebook.keyboard_manager.actions.register(action, action_name, prefix);
 
   // add toolbar button
   Jupyter.toolbar.add_buttons_group([action_full_name]);

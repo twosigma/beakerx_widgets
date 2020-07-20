@@ -18,13 +18,13 @@
 // It contains some requirejs configuration and the `load_ipython_extension`
 // which is required for any notebook extension.
 
-import {extendHighlightModes, extendWithLineComment} from "./codeEditor";
-import {registerFeature} from './UIOptionsHelper';
-import {enableInitializationCellsFeature} from './initializationCells';
-import {Autotranslation} from './autotranslation';
-import {installHandler as installKernelHandler} from './kernel';
-import {displayHTML} from './htmlOutput';
-import {bkCoreManager} from "../utils/bk/bkCoreManager";
+import { extendHighlightModes, extendWithLineComment } from './codeEditor';
+import { registerFeature } from './UIOptionsHelper';
+import { enableInitializationCellsFeature } from './initializationCells';
+import { Autotranslation } from './autotranslation';
+import { installHandler as installKernelHandler } from './kernel';
+import { displayHTML } from './htmlOutput';
+import { bkCoreManager } from '../utils/bk/bkCoreManager';
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 const configmod = require('services/config');
@@ -40,12 +40,13 @@ window['Big'] = big;
 
 const base_url = utils.get_body_data('baseUrl');
 
-new configmod.ConfigSection('notebook', {base_url: base_url});
+new configmod.ConfigSection('notebook', { base_url: base_url });
 
 const MOD_NAME = 'init_cell';
 const log_prefix = `[${MOD_NAME}]`;
-let options = { // updated from server's config & nb metadata
-  run_on_kernel_ready: true
+let options = {
+  // updated from server's config & nb metadata
+  run_on_kernel_ready: true,
 };
 
 registerFeature(base_url);
@@ -66,7 +67,7 @@ function extendWindowObject() {
   const beakerxInstance = {
     ...plotApiList,
     displayHTML,
-    prefs: bkObject.beakerObj.prefs
+    prefs: bkObject.beakerObj.prefs,
   };
 
   if (!window.beakerx) {
@@ -82,11 +83,11 @@ function setupNotebook() {
   Jupyter.notebook.config.loaded
     .then(
       () => {
-        options = {...options, ...Jupyter.notebook.config.data[MOD_NAME]};
+        options = { ...options, ...Jupyter.notebook.config.data[MOD_NAME] };
       },
       (reason) => {
         console.warn(log_prefix, 'error loading config:', reason);
-      }
+      },
     )
     .then(() => {
       Jupyter.notebook._fully_loaded
@@ -105,4 +106,3 @@ export function load_ipython_extension(): void {
   extendWindowObject();
   setupNotebook();
 }
-

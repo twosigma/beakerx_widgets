@@ -14,24 +14,16 @@
  *  limitations under the License.
  */
 
-
-import {BEAKER_AUTOTRANSLATION} from "./comm";
-const utils = require("base/js/utils");
+import { BEAKER_AUTOTRANSLATION } from './comm';
+const utils = require('base/js/utils');
 
 export class Autotranslation {
   static readonly LOCK_PROXY = 'LOCK_PROXY';
   static readonly TABLE_FOCUSED = 'tableFocused';
 
   public static proxify(beakerxInstance: any): Record<string, unknown> {
-
     function createCommForAT() {
-      return Jupyter.notebook.kernel.comm_manager.new_comm(
-        BEAKER_AUTOTRANSLATION,
-        null,
-        null,
-        null,
-        utils.uuid()
-      );
+      return Jupyter.notebook.kernel.comm_manager.new_comm(BEAKER_AUTOTRANSLATION, null, null, null, utils.uuid());
     }
 
     let atComm = undefined;
@@ -42,15 +34,19 @@ export class Autotranslation {
 
       set(obj, prop, value) {
         obj[prop] = value;
-        if (prop !== Autotranslation.LOCK_PROXY && prop !== Autotranslation.TABLE_FOCUSED && !window.beakerx[Autotranslation.LOCK_PROXY]) {
+        if (
+          prop !== Autotranslation.LOCK_PROXY &&
+          prop !== Autotranslation.TABLE_FOCUSED &&
+          !window.beakerx[Autotranslation.LOCK_PROXY]
+        ) {
           if (!atComm) {
             atComm = createCommForAT();
           }
-          atComm.send({name: prop, value});
+          atComm.send({ name: prop, value });
         }
 
         return true;
-      }
+      },
     };
 
     return new Proxy<Record<string, unknown>>(beakerxInstance, handler);

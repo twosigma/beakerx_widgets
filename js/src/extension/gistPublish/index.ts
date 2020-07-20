@@ -15,9 +15,9 @@
  */
 
 import $ from 'jquery';
-import {GistPublishModal} from './gistPublishModal';
-import {GistPublisher, GistPublisherUtils} from "../../plots/publisher";
-import {AccessTokenProvider} from "../../plots/publisher/AccessTokenProvider";
+import { GistPublishModal } from './gistPublishModal';
+import { GistPublisher, GistPublisherUtils } from '../../plots/publisher';
+import { AccessTokenProvider } from '../../plots/publisher/AccessTokenProvider';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const dialog = require('base/js/dialog');
@@ -28,23 +28,21 @@ export function registerFeature(): void {
     return;
   }
 
-  Jupyter.toolbar.add_buttons_group([{
-    'label': ' ',
-    'id': 'btn_publish',
-    'icon': 'fa-share-alt',
-    'callback': openPublishDialog
-  }]);
+  Jupyter.toolbar.add_buttons_group([
+    {
+      label: ' ',
+      id: 'btn_publish',
+      icon: 'fa-share-alt',
+      callback: openPublishDialog,
+    },
+  ]);
 
   $('#btn_publish > span').remove();
   $('#btn_publish').attr({
-    'title': 'Publish...',
+    title: 'Publish...',
   });
 
-  const publish_menu = $('<li>')
-    .attr('id', 'publish_gist')
-    .append($('<a>')
-      .attr('href', '#')
-      .html('Publish...'));
+  const publish_menu = $('<li>').attr('id', 'publish_gist').append($('<a>').attr('href', '#').html('Publish...'));
 
   publish_menu.insertAfter($('#print_preview'));
   publish_menu.click(openPublishDialog);
@@ -73,14 +71,13 @@ function setupPublisher() {
 }
 
 function openPublishDialog(): void {
-  new GistPublishModal()
-    .show(personalAccessToken => {
-      saveWidgetsState()
-        .then(() => {
-          doPublish(personalAccessToken);
-        })
-        .catch((reason => console.log(reason)))
-    });
+  new GistPublishModal().show((personalAccessToken) => {
+    saveWidgetsState()
+      .then(() => {
+        doPublish(personalAccessToken);
+      })
+      .catch((reason) => console.log(reason));
+  });
 }
 
 function showErrorDialog(errorMsg) {
@@ -88,10 +85,10 @@ function showErrorDialog(errorMsg) {
     title: 'Gist publication error',
     body: `Uploading gist failed: ${errorMsg}`,
     buttons: {
-      'OK': {
-        'class': 'btn-primary'
-      }
-    }
+      OK: {
+        class: 'btn-primary',
+      },
+    },
   });
 }
 
@@ -99,7 +96,7 @@ export function saveWidgetsState(): Promise<string> {
   return new Promise((resolve, reject) => {
     if (Jupyter.menubar.actions.exists('widgets:save-with-widgets')) {
       Jupyter.menubar.actions.call('widgets:save-with-widgets');
-      console.log("widgets state has been saved");
+      console.log('widgets state has been saved');
 
       setTimeout(() => {
         resolve(Jupyter.notebook.notebook_name);
@@ -111,10 +108,7 @@ export function saveWidgetsState(): Promise<string> {
 }
 
 export function doPublish(personalAccessToken: string): void {
-  GistPublisher.doPublish(
-    personalAccessToken,
-    Jupyter.notebook.notebook_name,
-    Jupyter.notebook.toJSON(),
-    (errorMsg) => showErrorDialog(errorMsg)
+  GistPublisher.doPublish(personalAccessToken, Jupyter.notebook.notebook_name, Jupyter.notebook.toJSON(), (errorMsg) =>
+    showErrorDialog(errorMsg),
   );
 }

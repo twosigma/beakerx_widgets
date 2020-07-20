@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-import {template} from './modalTemplate';
+import { template } from './modalTemplate';
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 const dialog = require('base/js/dialog');
@@ -29,10 +29,9 @@ export class GistPublishModal {
   }
 
   show(submitCallback: (personalAccessToken: string) => void): void {
-    this.getGithubPersonalAccessToken()
-      .then(personalAccessToken => {
-        this.create(submitCallback, personalAccessToken);
-      });
+    this.getGithubPersonalAccessToken().then((personalAccessToken) => {
+      this.create(submitCallback, personalAccessToken);
+    });
   }
 
   create(submitCallback, personalAccessToken = ''): void {
@@ -72,16 +71,16 @@ export class GistPublishModal {
       body: modalContent,
       default_button: 'Publish',
       buttons: {
-        'Publish': {
-          'class': 'btn-primary',
-          'click': submitHandler
+        Publish: {
+          class: 'btn-primary',
+          click: submitHandler,
         },
-        'Cancel': {}
-      }
+        Cancel: {},
+      },
     });
 
     if (form) {
-      form.onsubmit = submitHandler
+      form.onsubmit = submitHandler;
     }
   }
 
@@ -106,30 +105,32 @@ export class GistPublishModal {
   }
 
   storePersonalAccessToken(githubPersonalAccessToken = ''): Promise<any> {
-    return this.getStoredSettings()
-      .then(storedSettings => {
-        storedSettings.beakerx.githubPersonalAccessToken = githubPersonalAccessToken;
-        utils.ajax(this.settingsUrl, {
+    return this.getStoredSettings().then((storedSettings) => {
+      storedSettings.beakerx.githubPersonalAccessToken = githubPersonalAccessToken;
+      utils
+        .ajax(this.settingsUrl, {
           type: 'POST',
           data: JSON.stringify({
-            ...storedSettings
-          })
-        }).fail(reason => {
-          console.log(reason);
+            ...storedSettings,
+          }),
         })
-      });
+        .fail((reason) => {
+          console.log(reason);
+        });
+    });
   }
 
   private getGithubPersonalAccessToken(): Promise<string> {
-    return this.getStoredSettings()
-      .then(settings => settings.beakerx.githubPersonalAccessToken || '');
+    return this.getStoredSettings().then((settings) => settings.beakerx.githubPersonalAccessToken || '');
   }
 
   private getStoredSettings(): Promise<any> {
-    return utils.ajax(this.settingsUrl, {
-      method: 'GET'
-    }).fail(reason => {
-      console.log(reason);
-    });
+    return utils
+      .ajax(this.settingsUrl, {
+        method: 'GET',
+      })
+      .fail((reason) => {
+        console.log(reason);
+      });
   }
 }

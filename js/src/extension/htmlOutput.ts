@@ -13,6 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+import $ from 'jquery';
 
 export function displayHTML(outputArea, html) {
   if (html && outputArea && outputArea.element) {
