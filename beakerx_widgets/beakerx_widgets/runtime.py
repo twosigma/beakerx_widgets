@@ -480,10 +480,10 @@ from .beakerx_server import BeakerxZMQServer
 from queue import Queue
 
 
-class BeakerXWidgets:
+class BeakerX:
 
     def __init__(self):
-        BeakerXWidgets.pandas_display_table()
+        BeakerX.pandas_display_table()
         self._comm = None
         self._queue = Queue()
         self._server = BeakerxZMQServer(self._queue)

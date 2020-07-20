@@ -69,8 +69,8 @@ function extendWindowObject() {
     prefs: bkObject.beakerObj.prefs
   };
 
-  if (!window.beakerx_widgets) {
-    window.beakerx_widgets = Autotranslation.proxify(beakerxInstance);
+  if (!window.beakerx) {
+    window.beakerx = Autotranslation.proxify(beakerxInstance);
   }
 }
 

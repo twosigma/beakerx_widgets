@@ -39,10 +39,9 @@ const msgHandlers = {
   },
 
   [BEAKER_AUTOTRANSLATION]: (msg) => {
-    console.log('at', msg);
-    window.beakerx_widgets['LOCK_PROXY'] = true;
-    window.beakerx_widgets[msg.content.data.state.name] = JSON.parse(msg.content.data.state.value);
-    window.beakerx_widgets['LOCK_PROXY'] = false;
+    window.beakerx['LOCK_PROXY'] = true;
+    window.beakerx[msg.content.data.state.name] = JSON.parse(msg.content.data.state.value);
+    window.beakerx['LOCK_PROXY'] = false;
   },
 
   [BEAKER_TAG_RUN]: (msg) => {

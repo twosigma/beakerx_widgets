@@ -21,7 +21,7 @@ import string
 import tornado.ioloop
 import tornado.web
 
-beakerx_widgets = {}
+beakerx = {}
 
 logging.getLogger('tornado.access').disabled = True
 
@@ -68,10 +68,10 @@ class MainSaveHandler(tornado.web.RequestHandler):
         session_id = input_json["sessionId"]
         name = input_json["name"]
         json = input_json["json"]
-        if session_id not in beakerx_widgets:
-            beakerx_widgets[session_id] = {}
+        if session_id not in beakerx:
+            beakerx[session_id] = {}
 
-        beakerx_widgets[session_id][name] = json
+        beakerx[session_id][name] = json
         return self.finish("ok")
 
     @staticmethod
@@ -84,8 +84,8 @@ class MainGetHandler(tornado.web.RequestHandler):
 
     @basic_auth
     def get(self, session_id, name):
-        if session_id in beakerx_widgets and name in beakerx_widgets[session_id]:
-            return self.finish(beakerx_widgets[session_id][name])
+        if session_id in beakerx and name in beakerx[session_id]:
+            return self.finish(beakerx[session_id][name])
         return self.finish("undefined")
 
 

@@ -42,7 +42,7 @@ export class Autotranslation {
 
       set(obj, prop, value) {
         obj[prop] = value;
-        if (prop !== Autotranslation.LOCK_PROXY && prop !== Autotranslation.TABLE_FOCUSED && !window.beakerx_widgets[Autotranslation.LOCK_PROXY]) {
+        if (prop !== Autotranslation.LOCK_PROXY && prop !== Autotranslation.TABLE_FOCUSED && !window.beakerx[Autotranslation.LOCK_PROXY]) {
           if (!atComm) {
             atComm = createCommForAT();
           }
