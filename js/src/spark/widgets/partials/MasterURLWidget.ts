@@ -14,28 +14,26 @@
  *  limitations under the License.
  */
 
-import {InputWithLabelWidget} from "./InputWithLabelWidget";
+import { InputWithLabelWidget } from './InputWithLabelWidget';
 
 export class MasterURLWidget extends InputWithLabelWidget {
-
   get LABEL_TEXT(): string {
-    return 'Master URL'
+    return 'Master URL';
   }
 
   get LABEL_TITLE(): string {
-    return 'Master URL'
+    return 'Master URL';
   }
 
   get INPUT_PLACEHOLDER(): string {
-    return ''
+    return '';
   }
 
   get INPUT_TITLE(): string {
-    return ''
+    return '';
   }
 
   constructor(value = 'local[10]') {
     super(value);
   }
-
 }

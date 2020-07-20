@@ -14,11 +14,11 @@
  *  limitations under the License.
  */
 
-import {Panel, Widget} from "@phosphor/widgets";
-import {MessageLoop} from "@phosphor/messaging";
-import {SparkUIMessage} from "../SparkUIMessage";
-import {SpinnerWidget} from "./SpinnerWidget";
-import { CommonUtils } from "../../utils";
+import { Panel, Widget } from '@phosphor/widgets';
+import { MessageLoop } from '@phosphor/messaging';
+import { SparkUIMessage } from '../SparkUIMessage';
+import { SpinnerWidget } from './SpinnerWidget';
+import { CommonUtils } from '../../utils';
 
 export class SessionWidget extends Panel {
   private readonly BUTTON_TEXT = 'Stop';
@@ -63,11 +63,13 @@ export class SessionWidget extends Panel {
     this.spinnerWidget.hide();
   }
 
-  public updateStats(data: {
-    isActive: boolean;
-    activeTasks: number;
-    memoryUsed: number
-  }[]): void {
+  public updateStats(
+    data: {
+      isActive: boolean;
+      activeTasks: number;
+      memoryUsed: number;
+    }[],
+  ): void {
     let activeTasks = 0;
     let deadExecutors = 0;
     let storageMemory = 0;
@@ -97,38 +99,38 @@ export class SessionWidget extends Panel {
       window.open(`${this._sparkUiWebUrl}/executors`, '_blank');
     });
 
-    const activeEl = this.statsActiveEl = document.createElement('div');
+    const activeEl = (this.statsActiveEl = document.createElement('div'));
     activeEl.classList.add('bx-label', 'active');
     activeEl.title = 'Active Tasks';
     activeEl.textContent = '0';
 
-    const deadEl = this.statsDeadEl = document.createElement('div');
+    const deadEl = (this.statsDeadEl = document.createElement('div'));
     deadEl.classList.add('bx-label', 'dead');
     deadEl.title = 'Dead Executors';
     deadEl.textContent = '0';
 
-    const memoryEl = this.statsMemoryEl = document.createElement('div');
+    const memoryEl = (this.statsMemoryEl = document.createElement('div'));
     memoryEl.classList.add('bx-label', 'memory');
     memoryEl.title = 'Storage Memory';
     memoryEl.textContent = '0 KB';
 
     el.append(connectionStatusEl, activeEl, deadEl, memoryEl);
 
-    const w = new Widget({node: el});
+    const w = new Widget({ node: el });
     w.addClass('bx-stats');
 
     return w;
   }
 
   private createStop(): Widget {
-    const el = this.stopEl = document.createElement('button');
+    const el = (this.stopEl = document.createElement('button'));
 
     el.textContent = this.BUTTON_TEXT;
     el.title = this.BUTTON_TITLE;
 
     el.addEventListener('click', (evt: MouseEvent) => this.onStopClicked(evt));
 
-    const w = new Widget({node: el});
+    const w = new Widget({ node: el });
 
     w.addClass('jupyter-button');
     w.addClass('widget-button');

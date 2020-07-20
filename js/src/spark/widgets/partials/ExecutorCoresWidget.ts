@@ -14,24 +14,23 @@
  *  limitations under the License.
  */
 
-import {InputWithLabelWidget} from "./InputWithLabelWidget";
+import { InputWithLabelWidget } from './InputWithLabelWidget';
 
 export class ExecutorCoresWidget extends InputWithLabelWidget {
-
   get LABEL_TEXT(): string {
-    return 'Executor Cores'
+    return 'Executor Cores';
   }
 
   get LABEL_TITLE(): string {
-    return 'Executor Cores'
+    return 'Executor Cores';
   }
 
   get INPUT_TITLE(): string {
-    return 'The number of cores to use on each executor'
+    return 'The number of cores to use on each executor';
   }
 
   get INPUT_PLACEHOLDER(): string {
-    return ''
+    return '';
   }
 
   constructor(value = '10') {

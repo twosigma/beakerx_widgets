@@ -14,15 +14,15 @@
  *  limitations under the License.
  */
 
-import {VBoxModel as JupyterVBoxModel, VBoxView as JupyterVBoxView} from "@jupyter-widgets/controls";
-import {BEAKERX_MODULE_VERSION} from "../version";
+import { VBoxModel as JupyterVBoxModel, VBoxView as JupyterVBoxView } from '@jupyter-widgets/controls';
+import { BEAKERX_MODULE_VERSION } from '../version';
 
 export class SparkConfigurationModel extends JupyterVBoxModel {
   defaults() {
     return {
       ...super.defaults(),
-      _view_name: "SparkConfigurationView",
-      _model_name: "SparkConfigurationModel",
+      _view_name: 'SparkConfigurationView',
+      _model_name: 'SparkConfigurationModel',
       _model_module: 'beakerx_widgets.spark',
       _view_module: 'beakerx_widgets.spark',
       _model_module_version: BEAKERX_MODULE_VERSION,
@@ -54,18 +54,17 @@ export class SparkConfigurationView extends JupyterVBoxView {
   }
 
   private setFormReadonly(configButtons, configurationInputs) {
-    configurationInputs && configurationInputs.forEach(input => input.setAttribute('readonly', 'readonly'));
-    configButtons && configButtons.forEach(button => button.setAttribute('disabled', 'disabled'));
+    configurationInputs && configurationInputs.forEach((input) => input.setAttribute('readonly', 'readonly'));
+    configButtons && configButtons.forEach((button) => button.setAttribute('disabled', 'disabled'));
   }
 
   private setFormEditable(configButtons, configurationInputs) {
-    configurationInputs && configurationInputs.forEach(input => input.removeAttribute('readonly'));
-    configButtons && configButtons.forEach(button => button.removeAttribute('readonly'));
+    configurationInputs && configurationInputs.forEach((input) => input.removeAttribute('readonly'));
+    configButtons && configButtons.forEach((button) => button.removeAttribute('readonly'));
   }
 
   private updateChildren() {
-    const noop = () => {
-    };
+    const noop = () => {};
     let updateTimer: NodeJS.Timer;
 
     this.resolveChildren(this).then((views) => {
@@ -96,13 +95,12 @@ export class SparkConfigurationView extends JupyterVBoxView {
         return;
       }
 
-      view.children_views.update(view.model.get('children'))
-        .then(views => resolve(views));
+      view.children_views.update(view.model.get('children')).then((views) => resolve(views));
     });
   }
 }
 
 export default {
   SparkConfigurationModel,
-  SparkConfigurationView
+  SparkConfigurationView,
 };

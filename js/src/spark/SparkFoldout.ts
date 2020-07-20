@@ -14,20 +14,20 @@
  *  limitations under the License.
  */
 
-import {BEAKERX_MODULE_VERSION} from "../version";
-import {BoxModel as JupyterBoxModel} from "@jupyter-widgets/controls";
-import {FoldoutView} from "./Foldout";
+import { BEAKERX_MODULE_VERSION } from '../version';
+import { BoxModel as JupyterBoxModel } from '@jupyter-widgets/controls';
+import { FoldoutView } from './Foldout';
 
 export class SparkFoldoutModel extends JupyterBoxModel {
   defaults() {
     return {
       ...super.defaults(),
-      _view_name: "SparkFoldoutView",
-      _model_name: "SparkFoldoutModel",
+      _view_name: 'SparkFoldoutView',
+      _model_name: 'SparkFoldoutModel',
       _model_module: 'beakerx_widgets.spark',
       _view_module: 'beakerx_widgets.spark',
       _model_module_version: BEAKERX_MODULE_VERSION,
-      _view_module_version: BEAKERX_MODULE_VERSION
+      _view_module_version: BEAKERX_MODULE_VERSION,
     };
   }
 }
@@ -42,5 +42,4 @@ export class SparkFoldoutView extends FoldoutView {
   addCustomStyleToPreviewContainer(node: HTMLElement): void {
     node.classList.add('spark-foldout-preview');
   }
-
 }

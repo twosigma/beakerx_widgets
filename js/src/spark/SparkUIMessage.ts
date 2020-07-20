@@ -14,19 +14,20 @@
  *  limitations under the License.
  */
 
-import {Message} from "@phosphor/messaging";
+import { Message } from '@phosphor/messaging';
 
-export type SparkUI2MessageTypes = 'start-clicked' |
-  'stop-clicked' |
-  'enable-hive-support-clicked' |
-  'profile-create-cancel-clicked' |
-  'profile-create-create-clicked' |
-  'add-new-property-clicked' |
-  'remove-property-clicked' |
-  'profile-save-clicked' |
-  'profile-create-new-clicked' |
-  'profile-remove-clicked' |
-  'profile-selection-changed';
+export type SparkUI2MessageTypes =
+  | 'start-clicked'
+  | 'stop-clicked'
+  | 'enable-hive-support-clicked'
+  | 'profile-create-cancel-clicked'
+  | 'profile-create-create-clicked'
+  | 'add-new-property-clicked'
+  | 'remove-property-clicked'
+  | 'profile-save-clicked'
+  | 'profile-create-new-clicked'
+  | 'profile-remove-clicked'
+  | 'profile-selection-changed';
 
 export class SparkUIMessage extends Message {
   private readonly _payload: any;

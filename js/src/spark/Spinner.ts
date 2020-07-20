@@ -14,19 +14,19 @@
  *  limitations under the License.
  */
 
-import {BEAKERX_MODULE_VERSION} from "../version";
-import {DOMWidgetModel, DOMWidgetView} from "@jupyter-widgets/base";
+import { BEAKERX_MODULE_VERSION } from '../version';
+import { DOMWidgetModel, DOMWidgetView } from '@jupyter-widgets/base';
 
 export class SpinnerModel extends DOMWidgetModel {
   defaults() {
     return {
       ...super.defaults(),
-      _view_name: "SpinnerView",
-      _model_name: "SpinnerModel",
+      _view_name: 'SpinnerView',
+      _model_name: 'SpinnerModel',
       _model_module: 'beakerx_widgets.spark',
       _view_module: 'beakerx_widgets.spark',
       _model_module_version: BEAKERX_MODULE_VERSION,
-      _view_module_version: BEAKERX_MODULE_VERSION
+      _view_module_version: BEAKERX_MODULE_VERSION,
     };
   }
 }

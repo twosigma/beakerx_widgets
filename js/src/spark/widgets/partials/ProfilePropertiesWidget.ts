@@ -14,12 +14,11 @@
  *  limitations under the License.
  */
 
-import {Panel, Widget} from "@phosphor/widgets";
-import {MessageLoop} from "@phosphor/messaging";
-import {SparkUIMessage} from "../../SparkUIMessage";
+import { Panel, Widget } from '@phosphor/widgets';
+import { MessageLoop } from '@phosphor/messaging';
+import { SparkUIMessage } from '../../SparkUIMessage';
 
 export class ProfilePropertiesWidget extends Panel {
-
   private readonly container: ProfilePropertiesContainer;
   private readonly toolbar: ProfilePropertiesToolbar;
 
@@ -52,7 +51,7 @@ export class ProfilePropertiesWidget extends Panel {
 }
 
 class ProfilePropertiesContainer extends Panel {
-  private properties: { name: string; value: string; widget: Widget; }[] = [];
+  private properties: { name: string; value: string; widget: Widget }[] = [];
 
   constructor() {
     super();
@@ -121,7 +120,7 @@ class ProfilePropertiesContainer extends Panel {
     elRemove.classList.add('jupyter-button', 'widget-button', 'bx-button', 'icon', 'icon-close');
 
     el.append(elName, elValue, elRemove);
-    const w = new Widget({node: el});
+    const w = new Widget({ node: el });
 
     w.addClass('bx-spark-property');
 
@@ -155,9 +154,12 @@ class ProfilePropertiesContainer extends Panel {
     if (p === null) {
       return;
     }
-    MessageLoop.sendMessage(this.parent.parent, new SparkUIMessage('remove-property-clicked', {
-      name: p.name
-    }))
+    MessageLoop.sendMessage(
+      this.parent.parent,
+      new SparkUIMessage('remove-property-clicked', {
+        name: p.name,
+      }),
+    );
   }
 
   private onNameChange(evt: Event, w: Widget): void {
@@ -175,7 +177,6 @@ class ProfilePropertiesContainer extends Panel {
     }
     p.value = (evt.target as HTMLInputElement).value;
   }
-
 }
 
 export class ProfilePropertiesToolbar extends Panel {
@@ -200,7 +201,7 @@ export class ProfilePropertiesToolbar extends Panel {
 
     el.append(linkEl);
 
-    const w = new Widget({node: el});
+    const w = new Widget({ node: el });
 
     w.addClass('widget-label');
     w.addClass('bx-spark-available-properties');
@@ -216,7 +217,7 @@ export class ProfilePropertiesToolbar extends Panel {
 
     el.addEventListener('click', (evt: MouseEvent) => this.onAddNewClicked(evt));
 
-    const w = new Widget({node: el});
+    const w = new Widget({ node: el });
 
     w.addClass('jupyter-button');
     w.addClass('widget-button');

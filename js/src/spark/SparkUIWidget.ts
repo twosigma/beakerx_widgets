@@ -14,14 +14,13 @@
  *  limitations under the License.
  */
 
-import {Panel} from "@phosphor/widgets";
-import {SparkUIMessage} from "./SparkUIMessage";
-import {ProfileSelectorWidget, SessionWidget, StartWidget} from "./widgets";
-import {SparkUIComm} from "./SparkUIComm";
-import {IProfileListItem} from "./IProfileListItem";
+import { Panel } from '@phosphor/widgets';
+import { SparkUIMessage } from './SparkUIMessage';
+import { ProfileSelectorWidget, SessionWidget, StartWidget } from './widgets';
+import { SparkUIComm } from './SparkUIComm';
+import { IProfileListItem } from './IProfileListItem';
 
 export class SparkUIWidget extends Panel {
-
   readonly comm: SparkUIComm;
   readonly startWidget: StartWidget;
   readonly profileSelectorWidget: ProfileSelectorWidget;
@@ -49,12 +48,12 @@ export class SparkUIWidget extends Panel {
   }
 
   public set userSparkConf(conf: {
-    "name": string;
-    "properties": { name: string; value: string; }[];
-    "spark.executor.cores": string;
-    "spark.executor.memory": string;
-    "spark.master": string;
-    "spark.app.name": string;
+    name: string;
+    properties: { name: string; value: string }[];
+    'spark.executor.cores': string;
+    'spark.executor.memory': string;
+    'spark.master': string;
+    'spark.app.name': string;
   }) {
     this.profileSelectorWidget.userSparkConf = conf;
   }
@@ -99,8 +98,8 @@ export class SparkUIWidget extends Panel {
     for (const propertyName in configuration.properties) {
       properties.push({
         name: propertyName,
-        value: configuration.properties[propertyName]
-      })
+        value: configuration.properties[propertyName],
+      });
     }
 
     this.startWidget.disableButton();
@@ -113,7 +112,7 @@ export class SparkUIWidget extends Panel {
       configuration.executorMemory,
       configuration.masterURL,
       configuration.executorCores,
-      properties
+      properties,
     );
   }
 

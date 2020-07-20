@@ -14,17 +14,16 @@
  *  limitations under the License.
  */
 
-import {Panel} from "@phosphor/widgets";
-import {ProfilePropertiesWidget} from "./ProfilePropertiesWidget";
-import {HiveSupportWidget} from "./HiveSupportWidget";
-import {MasterURLWidget} from "./MasterURLWidget";
-import {ExecutorCoresWidget} from "./ExecutorCoresWidget";
-import {ExecutorMemoryWidget} from "./ExecutorMemoryWidget";
-import {SparkUIMessage} from "../../SparkUIMessage";
-import {IProfileListItem} from "../../IProfileListItem";
+import { Panel } from '@phosphor/widgets';
+import { ProfilePropertiesWidget } from './ProfilePropertiesWidget';
+import { HiveSupportWidget } from './HiveSupportWidget';
+import { MasterURLWidget } from './MasterURLWidget';
+import { ExecutorCoresWidget } from './ExecutorCoresWidget';
+import { ExecutorMemoryWidget } from './ExecutorMemoryWidget';
+import { SparkUIMessage } from '../../SparkUIMessage';
+import { IProfileListItem } from '../../IProfileListItem';
 
 export class ProfileConfigurationWidget extends Panel {
-
   public readonly SPARK_LOCAL_MASTER_URL_PREFIX = 'local';
 
   private readonly propertiesWidget: ProfilePropertiesWidget;
@@ -62,13 +61,13 @@ export class ProfileConfigurationWidget extends Panel {
       executorCores: this.executorCoresWidget.value,
       executorMemory: this.executorMemoryWidget.value,
       properties: this.propertiesWidget.collectProperties(),
-    }
+    };
   }
 
   public updateConfiguration(selectedProfile: IProfileListItem) {
-    this.masterURLWidget.value = selectedProfile["spark.master"];
-    this.executorCoresWidget.value = selectedProfile["spark.executor.cores"];
-    this.executorMemoryWidget.value = selectedProfile["spark.executor.memory"];
+    this.masterURLWidget.value = selectedProfile['spark.master'];
+    this.executorCoresWidget.value = selectedProfile['spark.executor.cores'];
+    this.executorMemoryWidget.value = selectedProfile['spark.executor.memory'];
     this.propertiesWidget.updateProperties(selectedProfile.properties);
     let isHiveEnabled = false;
     for (const p of selectedProfile.properties) {
@@ -130,5 +129,4 @@ export class ProfileConfigurationWidget extends Panel {
 
     this.enableHiveSupportWidget.enabled = false;
   }
-
 }

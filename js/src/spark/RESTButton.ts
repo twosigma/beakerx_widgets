@@ -14,33 +14,32 @@
  *  limitations under the License.
  */
 
-import {ButtonModel as JupyterButtonModel, ButtonView as JupyterButtonView} from "@jupyter-widgets/controls";
-import {BEAKERX_MODULE_VERSION} from "../version";
-import {BeakerXApi} from "../utils/api";
+import { ButtonModel as JupyterButtonModel, ButtonView as JupyterButtonView } from '@jupyter-widgets/controls';
+import { BEAKERX_MODULE_VERSION } from '../version';
+import { BeakerXApi } from '../utils/api';
 
 export class RESTButtonModel extends JupyterButtonModel {
   defaults() {
     return {
       ...super.defaults(),
-      _view_name: "RESTButtonView",
-      _model_name: "RESTButtonModel",
+      _view_name: 'RESTButtonView',
+      _model_name: 'RESTButtonModel',
       _model_module: 'beakerx',
       _view_module: 'beakerx',
       _model_module_version: BEAKERX_MODULE_VERSION,
-      _view_module_version: BEAKERX_MODULE_VERSION
+      _view_module_version: BEAKERX_MODULE_VERSION,
     };
   }
 }
 
 export class RESTButtonView extends JupyterButtonView {
-
   private api: BeakerXApi;
   private url: string;
 
   initialize(parameters) {
     super.initialize(parameters);
     this.url = this.model.get('url');
-    this.setApi()
+    this.setApi();
   }
 
   update() {
@@ -67,7 +66,7 @@ export class RESTButtonView extends JupyterButtonView {
   }
 
   events(): { [e: string]: string } {
-    return {'click': '_handle_REST_click'};
+    return { click: '_handle_REST_click' };
   }
 
   /**
@@ -75,13 +74,9 @@ export class RESTButtonView extends JupyterButtonView {
    */
   _handle_REST_click(event) {
     event.preventDefault();
-    const data = {url: this.url};
-    this.api
-      .restService(data)
-      .catch((err) => {
-        console.log(err)
-      });
+    const data = { url: this.url };
+    this.api.restService(data).catch((err) => {
+      console.log(err);
+    });
   }
-
 }
-

@@ -14,10 +14,9 @@
  *  limitations under the License.
  */
 
-import {Panel, Widget} from "@phosphor/widgets";
+import { Panel, Widget } from '@phosphor/widgets';
 
 export abstract class InputWithLabelWidget extends Panel {
-
   private readonly labelWidget: Widget;
   private readonly inputWidget: Widget;
   private _value: string;
@@ -63,7 +62,7 @@ export abstract class InputWithLabelWidget extends Panel {
     el.textContent = this.LABEL_TEXT;
     el.title = this.LABEL_TITLE;
 
-    const w = new Widget({node: el});
+    const w = new Widget({ node: el });
 
     w.addClass('widget-label');
 
@@ -79,7 +78,7 @@ export abstract class InputWithLabelWidget extends Panel {
 
     el.addEventListener('change', (evt: Event) => this.onValueChanged(evt));
 
-    const w = new Widget({node: el});
+    const w = new Widget({ node: el });
 
     w.addClass('widget-text');
 

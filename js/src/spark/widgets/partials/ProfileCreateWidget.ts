@@ -14,12 +14,11 @@
  *  limitations under the License.
  */
 
-import {Panel, Widget} from "@phosphor/widgets";
-import {MessageLoop} from "@phosphor/messaging";
-import {SparkUIMessage} from "../../SparkUIMessage";
+import { Panel, Widget } from '@phosphor/widgets';
+import { MessageLoop } from '@phosphor/messaging';
+import { SparkUIMessage } from '../../SparkUIMessage';
 
 export class ProfileCreateWidget extends Panel {
-
   readonly LABEL_TEXT = 'New profile';
   readonly LABEL_TITLE = 'New profile';
   readonly INPUT_PLACEHOLDER = 'Enter profile name...';
@@ -44,7 +43,7 @@ export class ProfileCreateWidget extends Panel {
     el.textContent = this.LABEL_TEXT;
     el.title = this.LABEL_TITLE;
 
-    const w = new Widget({node: el});
+    const w = new Widget({ node: el });
 
     w.addClass('widget-label');
 
@@ -52,11 +51,11 @@ export class ProfileCreateWidget extends Panel {
   }
 
   private createInput(): Widget {
-    const el = this.input = document.createElement('input');
+    const el = (this.input = document.createElement('input'));
     el.type = 'text';
     el.placeholder = this.INPUT_PLACEHOLDER;
 
-    const w = new Widget({node: el});
+    const w = new Widget({ node: el });
 
     w.addClass('widget-text');
 
@@ -71,7 +70,7 @@ export class ProfileCreateWidget extends Panel {
 
     el.addEventListener('click', (evt: MouseEvent) => this.onCreateCreateClicked(evt));
 
-    const w = new Widget({node: el});
+    const w = new Widget({ node: el });
 
     w.addClass('jupyter-button');
     w.addClass('widget-button');
@@ -88,7 +87,7 @@ export class ProfileCreateWidget extends Panel {
 
     el.addEventListener('click', (evt: MouseEvent) => this.onCreateCancelClicked(evt));
 
-    const w = new Widget({node: el});
+    const w = new Widget({ node: el });
 
     w.addClass('jupyter-button');
     w.addClass('widget-button');
@@ -98,21 +97,19 @@ export class ProfileCreateWidget extends Panel {
   }
 
   private onCreateCreateClicked(ev: MouseEvent): void {
-    MessageLoop.sendMessage(this.parent,
+    MessageLoop.sendMessage(
+      this.parent,
       new SparkUIMessage('profile-create-create-clicked', {
-        profileName: this.input.value
-      })
+        profileName: this.input.value,
+      }),
     );
 
     this.input.value = '';
   }
 
   private onCreateCancelClicked(ev: MouseEvent): void {
-    MessageLoop.sendMessage(this.parent,
-      new SparkUIMessage('profile-create-cancel-clicked', {})
-    );
+    MessageLoop.sendMessage(this.parent, new SparkUIMessage('profile-create-cancel-clicked', {}));
 
     this.input.value = '';
   }
-
 }

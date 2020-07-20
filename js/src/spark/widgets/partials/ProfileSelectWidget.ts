@@ -14,13 +14,12 @@
  *  limitations under the License.
  */
 
-import {Panel, Widget} from "@phosphor/widgets";
-import {MessageLoop} from "@phosphor/messaging";
-import {IProfileListItem} from "../../IProfileListItem";
-import {SparkUIMessage} from "../../SparkUIMessage";
+import { Panel, Widget } from '@phosphor/widgets';
+import { MessageLoop } from '@phosphor/messaging';
+import { IProfileListItem } from '../../IProfileListItem';
+import { SparkUIMessage } from '../../SparkUIMessage';
 
 export class ProfileSelectWidget extends Panel {
-
   readonly LABEL_TEXT = 'Profile';
   readonly LABEL_TITLE = 'Profile';
   readonly SELECT_TITLE = 'Set all properties from a named profile';
@@ -56,7 +55,7 @@ export class ProfileSelectWidget extends Panel {
     el.textContent = this.LABEL_TEXT;
     el.title = this.LABEL_TITLE;
 
-    const w = new Widget({node: el});
+    const w = new Widget({ node: el });
 
     w.addClass('widget-label');
 
@@ -64,7 +63,7 @@ export class ProfileSelectWidget extends Panel {
   }
 
   private createSelect(profiles: IProfileListItem[]): Widget {
-    const el = this.selectEl = document.createElement('select');
+    const el = (this.selectEl = document.createElement('select'));
     const options = [];
     let optionElement;
 
@@ -82,7 +81,7 @@ export class ProfileSelectWidget extends Panel {
 
     el.append(...options);
 
-    const w = new Widget({node: el});
+    const w = new Widget({ node: el });
 
     w.addClass('widget-dropdown');
 
@@ -97,7 +96,7 @@ export class ProfileSelectWidget extends Panel {
 
     el.addEventListener('click', (evt: MouseEvent) => this.onSaveClicked(evt));
 
-    const w = new Widget({node: el});
+    const w = new Widget({ node: el });
 
     w.addClass('jupyter-button');
     w.addClass('widget-button');
@@ -114,7 +113,7 @@ export class ProfileSelectWidget extends Panel {
 
     el.addEventListener('click', (evt: MouseEvent) => this.onCreateNewClicked(evt));
 
-    const w = new Widget({node: el});
+    const w = new Widget({ node: el });
 
     w.addClass('jupyter-button');
     w.addClass('widget-button');
@@ -133,7 +132,7 @@ export class ProfileSelectWidget extends Panel {
 
     el.addEventListener('click', (evt: MouseEvent) => this.onRemoveClicked(evt));
 
-    const w = new Widget({node: el});
+    const w = new Widget({ node: el });
 
     w.addClass('jupyter-button');
     w.addClass('widget-button');
@@ -157,10 +156,11 @@ export class ProfileSelectWidget extends Panel {
   }
 
   private onSelectionChanged(evt: Event): void {
-    MessageLoop.sendMessage(this.parent,
+    MessageLoop.sendMessage(
+      this.parent,
       new SparkUIMessage('profile-selection-changed', {
-        selectedProfile: (evt.target as HTMLSelectElement).value
-      })
+        selectedProfile: (evt.target as HTMLSelectElement).value,
+      }),
     );
   }
 
@@ -170,16 +170,16 @@ export class ProfileSelectWidget extends Panel {
     optionElement.value = profile.name;
     optionElement.setAttribute('data-value', profile.name);
     this.selectEl.add(optionElement);
-
   }
 
   public selectProfile(name: string) {
     (this.selectEl.querySelector(`option[value="${name}"]`) as HTMLOptionElement).selected = true;
 
-    MessageLoop.sendMessage(this.parent,
+    MessageLoop.sendMessage(
+      this.parent,
       new SparkUIMessage('profile-selection-changed', {
-        selectedProfile: this.selectEl.value
-      })
+        selectedProfile: this.selectEl.value,
+      }),
     );
   }
 }

@@ -14,94 +14,90 @@
  *  limitations under the License.
  */
 
-import {Panel, Widget} from "@phosphor/widgets";
-import {MessageLoop} from "@phosphor/messaging";
-import {SparkUIMessage} from "../SparkUIMessage";
-import {SpinnerWidget} from "./SpinnerWidget";
+import { Panel, Widget } from '@phosphor/widgets';
+import { MessageLoop } from '@phosphor/messaging';
+import { SparkUIMessage } from '../SparkUIMessage';
+import { SpinnerWidget } from './SpinnerWidget';
 
 export class StartWidget extends Panel {
+  readonly BUTTON_TEXT: string = 'Start';
+  readonly BUTTON_TITLE: string = 'Start a session with cluster (or a local instance)';
 
-    readonly BUTTON_TEXT: string = 'Start';
-    readonly BUTTON_TITLE: string = 'Start a session with cluster (or a local instance)';
+  private buttonEl: HTMLButtonElement;
+  private readonly errorWidget: Private.ErrorWidget;
+  private readonly spinnerWidget: SpinnerWidget;
 
-    private buttonEl: HTMLButtonElement;
-    private readonly errorWidget: Private.ErrorWidget;
-    private readonly spinnerWidget: SpinnerWidget;
+  constructor() {
+    super();
 
-    constructor() {
-        super();
+    this.addClass('bx-spark-start');
 
-        this.addClass('bx-spark-start')
+    this.errorWidget = new Private.ErrorWidget();
+    this.spinnerWidget = new SpinnerWidget();
 
-        this.errorWidget = new Private.ErrorWidget();
-        this.spinnerWidget = new SpinnerWidget();
+    this.addWidget(this.createButton());
+    this.addWidget(this.spinnerWidget);
+    this.addWidget(this.errorWidget);
+  }
 
-        this.addWidget(this.createButton());
-        this.addWidget(this.spinnerWidget);
-        this.addWidget(this.errorWidget);
-    }
+  public disableButton() {
+    this.buttonEl.disabled = true;
+  }
 
-    public disableButton() {
-        this.buttonEl.disabled = true;
-    }
+  public enableButton() {
+    this.buttonEl.disabled = false;
+  }
 
-    public enableButton() {
-        this.buttonEl.disabled = false;
-    }
+  public showError(errorMessage: string) {
+    this.errorWidget.setMessage(errorMessage);
+    this.errorWidget.show();
+  }
 
-    public showError(errorMessage: string) {
-        this.errorWidget.setMessage(errorMessage);
-        this.errorWidget.show();
-    }
+  public clearError() {
+    this.errorWidget.setMessage('');
+    this.errorWidget.hide();
+  }
 
-    public clearError() {
-        this.errorWidget.setMessage('');
-        this.errorWidget.hide();
-    }
+  public showSpinner() {
+    this.spinnerWidget.show();
+  }
 
-    public showSpinner() {
-        this.spinnerWidget.show();
-    }
+  public hideSpinner() {
+    this.spinnerWidget.hide();
+  }
 
-    public hideSpinner() {
-        this.spinnerWidget.hide();
-    }
+  private createButton(): Widget {
+    let el = (this.buttonEl = document.createElement('button'));
 
-    private createButton(): Widget {
-        let el = this.buttonEl = document.createElement('button');
+    el.textContent = this.BUTTON_TEXT;
+    el.title = this.BUTTON_TITLE;
 
-        el.textContent = this.BUTTON_TEXT;
-        el.title = this.BUTTON_TITLE;
+    el.addEventListener('click', (evt: MouseEvent) => this.onStartClicked(evt));
 
-        el.addEventListener('click', (evt: MouseEvent) => this.onStartClicked(evt));
+    let w = new Widget({ node: el });
 
-        let w = new Widget({ node: el });
+    w.addClass('jupyter-button');
+    w.addClass('widget-button');
+    w.addClass('bx-spark-connect');
+    w.addClass('bx-spark-connect-start');
 
-        w.addClass('jupyter-button');
-        w.addClass('widget-button');
-        w.addClass('bx-spark-connect');
-        w.addClass('bx-spark-connect-start');
+    return w;
+  }
 
-        return w;
-    }
-
-    private onStartClicked(evt: MouseEvent): void {
-        MessageLoop.sendMessage(this.parent, new SparkUIMessage('start-clicked'));
-    }
+  private onStartClicked(evt: MouseEvent): void {
+    MessageLoop.sendMessage(this.parent, new SparkUIMessage('start-clicked'));
+  }
 }
 
 namespace Private {
-    export class ErrorWidget extends Widget {
-
-        constructor() {
-            super();
-            this.addClass('bx-spark-error');
-        }
-
-        public setMessage(message: string) {
-            this.node.textContent = message;
-        }
-
+  export class ErrorWidget extends Widget {
+    constructor() {
+      super();
+      this.addClass('bx-spark-error');
     }
 
+    public setMessage(message: string) {
+      this.node.textContent = message;
+    }
+  }
 }

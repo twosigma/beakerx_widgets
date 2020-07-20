@@ -14,12 +14,11 @@
  *  limitations under the License.
  */
 
-import {Panel, Widget} from "@phosphor/widgets";
-import {MessageLoop} from "@phosphor/messaging";
-import {SparkUIMessage} from "../../SparkUIMessage";
+import { Panel, Widget } from '@phosphor/widgets';
+import { MessageLoop } from '@phosphor/messaging';
+import { SparkUIMessage } from '../../SparkUIMessage';
 
 export class HiveSupportWidget extends Panel {
-
   readonly INPUT_TITLE = 'Enable Hive Support';
   readonly LABEL_TEXT = 'Enable Hive Support';
 
@@ -49,7 +48,7 @@ export class HiveSupportWidget extends Panel {
 
     el.addEventListener('click', (evt: MouseEvent) => this.onEnableHiveSupportClicked(evt));
 
-    const w = new Widget({node: el});
+    const w = new Widget({ node: el });
 
     w.addClass('widget-checkbox');
     w.addClass('bx-spark-enable-hive-checkbox');
@@ -62,7 +61,7 @@ export class HiveSupportWidget extends Panel {
 
     el.textContent = this.LABEL_TEXT;
 
-    const w = new Widget({node: el});
+    const w = new Widget({ node: el });
 
     w.addClass('widget-label');
 
@@ -70,10 +69,11 @@ export class HiveSupportWidget extends Panel {
   }
 
   private onEnableHiveSupportClicked(evt: MouseEvent): void {
-    MessageLoop.sendMessage(this.parent,
+    MessageLoop.sendMessage(
+      this.parent,
       new SparkUIMessage('enable-hive-support-clicked', {
-        hiveEnabled: (evt.target as HTMLInputElement).checked
-      })
+        hiveEnabled: (evt.target as HTMLInputElement).checked,
+      }),
     );
   }
 }

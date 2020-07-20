@@ -14,28 +14,26 @@
  *  limitations under the License.
  */
 
-import {InputWithLabelWidget} from "./InputWithLabelWidget";
+import { InputWithLabelWidget } from './InputWithLabelWidget';
 
 export class ExecutorMemoryWidget extends InputWithLabelWidget {
-
   get LABEL_TEXT(): string {
-    return 'Executor Memory'
+    return 'Executor Memory';
   }
 
   get LABEL_TITLE(): string {
-    return 'Executor Memory'
+    return 'Executor Memory';
   }
 
   get INPUT_TITLE(): string {
-    return 'Amount of memory to use per executor process, in MiB unless otherwise specified. (e.g. 2g, 8g).'
+    return 'Amount of memory to use per executor process, in MiB unless otherwise specified. (e.g. 2g, 8g).';
   }
 
   get INPUT_PLACEHOLDER(): string {
-    return ''
+    return '';
   }
 
   constructor(value = '8g') {
     super(value);
   }
-
 }

@@ -14,10 +14,10 @@
  *  limitations under the License.
  */
 
-import {Panel, Widget} from '@phosphor/widgets';
-import {BoxModel as JupyterBoxModel, BoxView as JupyterBoxView, reject} from "@jupyter-widgets/controls";
-import {BEAKERX_MODULE_VERSION} from "../version";
-import {DOMWidgetView as JupyterDOMWidgetView} from "@jupyter-widgets/base";
+import { Panel, Widget } from '@phosphor/widgets';
+import { BoxModel as JupyterBoxModel, BoxView as JupyterBoxView, reject } from '@jupyter-widgets/controls';
+import { BEAKERX_MODULE_VERSION } from '../version';
+import { DOMWidgetView as JupyterDOMWidgetView } from '@jupyter-widgets/base';
 
 const DEFAULT_LABEL_TEXT = 'Output';
 const ANIMATION_DURATION = 300;
@@ -27,12 +27,12 @@ export class FoldoutModel extends JupyterBoxModel {
   defaults() {
     return {
       ...super.defaults(),
-      _view_name: "FoldoutView",
-      _model_name: "FoldoutModel",
+      _view_name: 'FoldoutView',
+      _model_name: 'FoldoutModel',
       _model_module: 'beakerx_widgets.spark',
       _view_module: 'beakerx_widgets.spark',
       _model_module_version: BEAKERX_MODULE_VERSION,
-      _view_module_version: BEAKERX_MODULE_VERSION
+      _view_module_version: BEAKERX_MODULE_VERSION,
     };
   }
 }
@@ -61,16 +61,18 @@ export class FoldoutView extends JupyterBoxView {
   }
 
   add_child_model(model) {
-    return this.create_child_view(model).then((view: JupyterDOMWidgetView) => {
-      this.restorePreviewContent();
+    return this.create_child_view(model)
+      .then((view: JupyterDOMWidgetView) => {
+        this.restorePreviewContent();
 
-      this.content.layout && this.content.addWidget(view.pWidget);
+        this.content.layout && this.content.addWidget(view.pWidget);
 
-      this.updateHiddenContainer();
-      this.renderPreview();
+        this.updateHiddenContainer();
+        this.renderPreview();
 
-      return view;
-    }).catch(reject('Could not add child view to box', true));
+        return view;
+      })
+      .catch(reject('Could not add child view to box', true));
   }
 
   addLabel() {
@@ -102,12 +104,11 @@ export class FoldoutView extends JupyterBoxView {
     this.previewContainer = new Widget();
     this.previewContent = document.createElement('div');
     this.previewContainer.node.classList.add('foldout-preview');
-    this.addCustomStyleToPreviewContainer(this.previewContainer.node)
+    this.addCustomStyleToPreviewContainer(this.previewContainer.node);
     this.label.addWidget(this.previewContainer);
   }
 
-  addCustomStyleToPreviewContainer(node: HTMLElement): void {
-  }
+  addCustomStyleToPreviewContainer(node: HTMLElement): void {}
 
   addHiddenContainer() {
     this.hiddenContainer = document.createElement('div');
@@ -133,10 +134,7 @@ export class FoldoutView extends JupyterBoxView {
       this.previewContainer.node.style.opacity = '0';
     }
 
-    this.timeoutId = setTimeout(
-      this.activateFoldoutCallback.bind(this),
-      PREVIEW_ANIMATION_DURATION
-    ) as any;
+    this.timeoutId = setTimeout(this.activateFoldoutCallback.bind(this), PREVIEW_ANIMATION_DURATION) as any;
   }
 
   deactivateFoldout() {
@@ -144,10 +142,7 @@ export class FoldoutView extends JupyterBoxView {
 
     setTimeout(() => {
       this.content.node.style.height = `0px`;
-      this.timeoutId = setTimeout(
-        this.deactivateFoldoutCallback.bind(this),
-        ANIMATION_DURATION
-      ) as any;
+      this.timeoutId = setTimeout(this.deactivateFoldoutCallback.bind(this), ANIMATION_DURATION) as any;
     });
   }
 
@@ -162,12 +157,9 @@ export class FoldoutView extends JupyterBoxView {
 
     this.content.node.style.height = `${this.hiddenContainer.clientHeight}px`;
 
-    this.timeoutId = setTimeout(
-      () => {
-        this.content.node.style.height = 'auto'
-      },
-      ANIMATION_DURATION
-    ) as any;
+    this.timeoutId = setTimeout(() => {
+      this.content.node.style.height = 'auto';
+    }, ANIMATION_DURATION) as any;
   }
 
   deactivateFoldoutCallback() {
@@ -192,7 +184,7 @@ export class FoldoutView extends JupyterBoxView {
     this.children_views.update(this.model.get('children')).then((views) => {
       setTimeout(() => {
         this.renderPreview();
-      }, 100)
+      }, 100);
     });
   }
 

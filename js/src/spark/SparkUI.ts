@@ -14,30 +14,34 @@
  *  limitations under the License.
  */
 
-import {BoxModel as JupyterBoxModel, BoxView as JupyterBoxView} from "@jupyter-widgets/controls";
-import {BEAKERX_MODULE_VERSION} from "../version";
-import {SparkUIComm} from "./SparkUIComm";
-import {SparkUIWidget} from "./SparkUIWidget";
+import { BoxModel as JupyterBoxModel, BoxView as JupyterBoxView } from '@jupyter-widgets/controls';
+import { BEAKERX_MODULE_VERSION } from '../version';
+import { SparkUIComm } from './SparkUIComm';
+import { SparkUIWidget } from './SparkUIWidget';
 
 export class SparkUIModel extends JupyterBoxModel {
   private spark_comm: SparkUIComm;
 
   initialize(attributes: any, options: { model_id: string; comm?: any; widget_manager: any }): void {
-    const comm = this.spark_comm = new SparkUIComm();
+    const comm = (this.spark_comm = new SparkUIComm());
 
     this.listenTo(this, 'beakerx:spark.started', async (opts: { sparkUiWebUrl: string }) => {
       await comm.ready;
-      comm.started.emit({...opts});
+      comm.started.emit({ ...opts });
     });
 
-    this.listenTo(this, 'beakerx:spark.start-stats-changed', async (opts: { sparkAppId: string; sparkUiWebUrl: string }) => {
-      await comm.ready;
-      comm.startStatsChanged(opts.sparkAppId, opts.sparkUiWebUrl)
-    });
+    this.listenTo(
+      this,
+      'beakerx:spark.start-stats-changed',
+      async (opts: { sparkAppId: string; sparkUiWebUrl: string }) => {
+        await comm.ready;
+        comm.startStatsChanged(opts.sparkAppId, opts.sparkUiWebUrl);
+      },
+    );
 
     this.listenTo(this, 'beakerx:spark.autostarted', async (opts: { sparkUiWebUrl: string }) => {
       await comm.ready;
-      comm.autoStarted.emit({...opts});
+      comm.autoStarted.emit({ ...opts });
     });
 
     this.listenTo(this, 'beakerx:spark.stopped', async () => {
@@ -77,53 +81,53 @@ export class SparkUIModel extends JupyterBoxModel {
       _view_module: 'beakerx_widgets.spark',
       _model_module_version: BEAKERX_MODULE_VERSION,
       _view_module_version: BEAKERX_MODULE_VERSION,
-    }
+    };
   }
 
   _handle_comm_msg(msg: any): Promise<void> {
     const data = msg.content.data;
 
-    if (data.method !== "update") {
+    if (data.method !== 'update') {
       return Promise.resolve();
     }
 
-    if (data.event?.start === "done") {
-      this.trigger('beakerx:spark.started', {sparkUiWebUrl: data.event.sparkUiWebUrl});
+    if (data.event?.start === 'done') {
+      this.trigger('beakerx:spark.started', { sparkUiWebUrl: data.event.sparkUiWebUrl });
       this.trigger('beakerx:spark.start-stats-changed', {
         sparkAppId: data.event.sparkAppId,
-        sparkUiWebUrl: data.event.sparkUiWebUrl
+        sparkUiWebUrl: data.event.sparkUiWebUrl,
       });
       return Promise.resolve();
     }
 
-    if (data.event?.auto_start === "done") {
-      this.trigger('beakerx:spark.autostarted', {sparkUiWebUrl: data.event.sparkUiWebUrl});
+    if (data.event?.auto_start === 'done') {
+      this.trigger('beakerx:spark.autostarted', { sparkUiWebUrl: data.event.sparkUiWebUrl });
       this.trigger('beakerx:spark.start-stats-changed', {
         sparkAppId: data.event.sparkAppId,
-        sparkUiWebUrl: data.event.sparkUiWebUrl
+        sparkUiWebUrl: data.event.sparkUiWebUrl,
       });
       return Promise.resolve();
     }
 
-    if (data.event?.stop_from_spark_ui_form_button === "done") {
+    if (data.event?.stop_from_spark_ui_form_button === 'done') {
       this.trigger('beakerx:spark.stopped');
       this.trigger('beakerx:spark.stop-stats-changed');
       return Promise.resolve();
     }
 
-    if (data.event?.stop === "done") {
+    if (data.event?.stop === 'done') {
       this.trigger('beakerx:spark.global_stopped');
       this.trigger('beakerx:spark.stop-stats-changed');
       return Promise.resolve();
     }
 
-    if (data.event?.save_profiles === "done") {
+    if (data.event?.save_profiles === 'done') {
       this.trigger('beakerx:spark.saved');
       return Promise.resolve();
     }
 
     if (Object.prototype.hasOwnProperty.call(data, 'error')) {
-      this.trigger('beakerx:spark.errored', {message: data.error.message});
+      this.trigger('beakerx:spark.errored', { message: data.error.message });
       return Promise.resolve();
     }
 
@@ -135,7 +139,7 @@ export class SparkUIView extends JupyterBoxView {
   private comm: SparkUIComm;
 
   initialize(parameters: any): void {
-    const comm = this.comm = (this.model as SparkUIModel)['spark_comm'];
+    const comm = (this.comm = (this.model as SparkUIModel)['spark_comm']);
     comm.view = this;
 
     super.initialize(parameters);
@@ -148,9 +152,7 @@ export class SparkUIView extends JupyterBoxView {
   }
 
   async createWidget() {
-    const w = new SparkUIWidget(
-      this.comm
-    );
+    const w = new SparkUIWidget(this.comm);
 
     w.profiles = this.model.get('profiles');
     w.currentProfileName = this.model.get('current_profile');

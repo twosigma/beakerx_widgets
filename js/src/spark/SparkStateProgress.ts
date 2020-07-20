@@ -14,9 +14,9 @@
  *  limitations under the License.
  */
 
-import $ from "jquery";
-import {HBoxModel as JupyterHBoxModel, VBoxView as JupyterVBoxView} from "@jupyter-widgets/controls";
-import {BEAKERX_MODULE_VERSION} from "../version";
+import $ from 'jquery';
+import { HBoxModel as JupyterHBoxModel, VBoxView as JupyterVBoxView } from '@jupyter-widgets/controls';
+import { BEAKERX_MODULE_VERSION } from '../version';
 
 interface IState {
   done: number;
@@ -33,8 +33,8 @@ export class SparkStateProgressModel extends JupyterHBoxModel {
   defaults() {
     return {
       ...super.defaults(),
-      _view_name: "SparkStateProgressView",
-      _model_name: "SparkStateProgressModel",
+      _view_name: 'SparkStateProgressView',
+      _model_name: 'SparkStateProgressModel',
       _model_module: 'beakerx_widgets.spark',
       _view_module: 'beakerx_widgets.spark',
       _model_module_version: BEAKERX_MODULE_VERSION,
@@ -46,10 +46,10 @@ export class SparkStateProgressModel extends JupyterHBoxModel {
         cancelled: 0,
         jobId: 0,
         stageId: 0,
-        stageLink: "",
-        jobLink: ""
+        stageLink: '',
+        jobLink: '',
       },
-      hide: false
+      hide: false,
     };
   }
 }
@@ -83,8 +83,8 @@ export class SparkStateProgressView extends JupyterVBoxView {
     const valueCancelled = state.cancelled;
     const valueWaiting = max - (valueDone + valueActive) - valueCancelled;
 
-    let percentDone = 100.0 * valueDone / max;
-    let percentActive = 100.0 * valueActive / max;
+    let percentDone = (100.0 * valueDone) / max;
+    let percentActive = (100.0 * valueActive) / max;
     let percentWaiting = 100.0 - (percentDone + percentActive);
     let percentCancelled = 0;
     if (valueCancelled > 0) {
@@ -157,10 +157,10 @@ export class SparkStateProgressView extends JupyterVBoxView {
     const progressBar = this.createStageProgressBar(state);
     const progressLabels = this.createStageProgressLabels(state);
 
-    return $('<div>', {class: 'bx-row'}).append(
-      $('<div>', {class: 'bx-text-right'}).append(stageLink),
-      $('<div>', {class: 'bx-col-xs-6'}).append(progressBar),
-      $('<div>', {class: 'bx-col-xs-4'}).append(progressLabels),
+    return $('<div>', { class: 'bx-row' }).append(
+      $('<div>', { class: 'bx-text-right' }).append(stageLink),
+      $('<div>', { class: 'bx-col-xs-6' }).append(progressBar),
+      $('<div>', { class: 'bx-col-xs-4' }).append(progressLabels),
     );
   }
 
@@ -178,8 +178,8 @@ export class SparkStateProgressView extends JupyterVBoxView {
     const valueActive = state.active;
     const valueCancelled = state.cancelled;
 
-    let percentDone = 100.0 * valueDone / max;
-    let percentActive = 100.0 * valueActive / max;
+    let percentDone = (100.0 * valueDone) / max;
+    let percentActive = (100.0 * valueActive) / max;
     let percentWaiting = 100.0 - (percentDone + percentActive);
     let percentCancelled = 0;
     if (valueCancelled > 0) {
@@ -233,5 +233,4 @@ export class SparkStateProgressView extends JupyterVBoxView {
 
     return $(this.progressLabels);
   }
-
 }
