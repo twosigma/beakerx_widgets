@@ -14,12 +14,15 @@
  *  limitations under the License.
  */
 
+import 'flatpickr/dist/flatpickr.css';
+import 'jquery-ui/themes/base/all.css';
+import '@phosphor/widgets/style/index.css';
+import './../css/beakerx_widgets.css';
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 if ((window as any).require) {
   (window as any).require.config({
     map: {
-      "*" : {
+      "*": {
         "beakerx_widgets": "nbextensions/beakerx_widgets/index",
         "jupyter-js-widgets": "nbextensions/jupyter-js-widgets/extension",
         "@jupyter-widgets/base": "nbextensions/jupyter-js-widgets/extension",
