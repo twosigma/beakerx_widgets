@@ -20,8 +20,8 @@ export interface IJVMOptions extends IDefaultJVMOptions {
 }
 
 export interface IDefaultJVMOptions {
-  heap_GB: number|null;
+  heap_GB: number | null;
 }
 
 export interface IOtherJVMOptions extends Array<any> {}
-export interface IPropertiesJVMOptions extends Array<{ name: string; value: string; }> {}
+export interface IPropertiesJVMOptions extends Array<{ name: string; value: string }> {}

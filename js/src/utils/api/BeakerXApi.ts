@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-import {IApiSettingsResponse} from "./IApiSettingsResponse";
-import $ from "jquery";
+import { IApiSettingsResponse } from './IApiSettingsResponse';
+import $ from 'jquery';
 
 function getCookie(name: string) {
   // from tornado docs: http://www.tornadoweb.org/en/stable/guide/security.html
@@ -24,12 +24,11 @@ function getCookie(name: string) {
 }
 
 export class BeakerXApi {
-
   readonly DEFAULT_SETTINGS: IApiSettingsResponse = {
     jvm_options: {
       heap_GB: null,
       other: [],
-      properties: []
+      properties: [],
     },
     ui_options: {
       auto_close: true,
@@ -39,7 +38,7 @@ export class BeakerXApi {
       auto_save: true,
       use_data_grid: true,
     },
-    version: 2
+    version: 2,
   };
 
   private readonly apiUrl: string;
@@ -53,7 +52,6 @@ export class BeakerXApi {
   }
 
   public getVersion(): Promise<string> {
-
     return new Promise((resolve, reject) => {
       $.ajax(this.getApiUrl('version'), {
         success: (data, status) => {
@@ -61,7 +59,7 @@ export class BeakerXApi {
         },
         error: (jqXHR, status, err) => {
           reject();
-        }
+        },
       });
     });
   }
@@ -74,9 +72,8 @@ export class BeakerXApi {
         },
         error: (jqXHR, status, err) => {
           reject();
-        }
+        },
       });
-
     });
   }
 
@@ -88,11 +85,11 @@ export class BeakerXApi {
     }
 
     if (Object.prototype.hasOwnProperty.call(settings, 'ui_options')) {
-      merged.ui_options = {...merged.ui_options, ...settings.ui_options};
+      merged.ui_options = { ...merged.ui_options, ...settings.ui_options };
     }
 
     if (Object.prototype.hasOwnProperty.call(settings, 'jvm_options')) {
-      merged.jvm_options = {...merged.jvm_options, ...settings.jvm_options};
+      merged.jvm_options = { ...merged.jvm_options, ...settings.jvm_options };
     }
 
     return merged;
@@ -100,50 +97,45 @@ export class BeakerXApi {
 
   public saveSettings(data: any): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-
       $.ajax(this.getApiUrl('settings'), {
-        method: "POST",
+        method: 'POST',
         cache: false,
-        contentType: "aplication/json; charset=utf-8",
-        dataType: "json",
+        contentType: 'aplication/json; charset=utf-8',
+        dataType: 'json',
         processData: false,
         data: JSON.stringify(data),
         headers: {
-          'X-XSRFToken': getCookie('_xsrf')
+          'X-XSRFToken': getCookie('_xsrf'),
         },
         success: (data, status) => {
           resolve();
         },
         error: (jqXHR, status, err) => {
           reject();
-        }
+        },
       });
-
     });
   }
 
   public restService(data: any): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-
       $.ajax(this.getApiUrl('rest'), {
-        method: "POST",
+        method: 'POST',
         cache: false,
-        contentType: "aplication/json; charset=utf-8",
-        dataType: "text",
+        contentType: 'aplication/json; charset=utf-8',
+        dataType: 'text',
         processData: false,
         data: JSON.stringify(data),
         headers: {
-          'X-XSRFToken': getCookie('_xsrf')
+          'X-XSRFToken': getCookie('_xsrf'),
         },
         success: (data, status) => {
           resolve();
         },
         error: (jqXHR, status, err) => {
           reject(err);
-        }
+        },
       });
-
     });
   }
-
 }

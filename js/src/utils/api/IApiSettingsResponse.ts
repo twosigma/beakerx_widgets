@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-import {IJVMOptions} from "./IJVMOptions";
-import {IUIOptions} from "./IUIOptions";
+import { IJVMOptions } from './IJVMOptions';
+import { IUIOptions } from './IUIOptions';
 
 export interface IApiSettingsResponse {
   jvm_options: IJVMOptions;

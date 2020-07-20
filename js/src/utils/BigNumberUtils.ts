@@ -16,7 +16,6 @@
 import Big from 'big.js';
 
 export class BigNumberUtils {
-
   public static lt(n1: BigJs.BigSource, n2: BigJs.BigSource): boolean {
     if (n1 === Infinity) {
       return false;
@@ -146,10 +145,10 @@ export class BigNumberUtils {
     if (this.isBig(n2)) {
       return Big(n1).times(n2);
     }
-    if (typeof n1 === "string") {
+    if (typeof n1 === 'string') {
       return Big(n1).times(n2);
     }
-    if (typeof n2 === "string") {
+    if (typeof n2 === 'string') {
       return Big(n1).times(n2);
     }
     return (n1 as number) * (n2 as number);
@@ -161,12 +160,11 @@ export class BigNumberUtils {
     }
     if (this.isBig(n2)) {
       return Big(n1).div(n2);
-
     }
-    if (typeof n1 === "string") {
+    if (typeof n1 === 'string') {
       return Big(n1).div(n2);
     }
-    if (typeof n2 === "string") {
+    if (typeof n2 === 'string') {
       return Big(n1).div(n2);
     }
     return (n1 as number) / (n2 as number);
@@ -181,17 +179,22 @@ export class BigNumberUtils {
   }
 
   public static isBig(n1: unknown): boolean {
-    if (typeof n1 !== "object") {
+    if (typeof n1 !== 'object') {
       return false;
     }
 
     const propertyNames = Object.getOwnPropertyNames(n1);
 
-    if(!propertyNames.includes('s')) { return false; }
-    if(!propertyNames.includes('e')) { return false; }
-    if(!propertyNames.includes('c')) { return false; }
+    if (!propertyNames.includes('s')) {
+      return false;
+    }
+    if (!propertyNames.includes('e')) {
+      return false;
+    }
+    if (!propertyNames.includes('c')) {
+      return false;
+    }
 
     return true;
   }
-
 }

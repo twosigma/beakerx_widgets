@@ -14,14 +14,13 @@
  *  limitations under the License.
  */
 
-import moment from "moment-timezone";
+import moment from 'moment-timezone';
 
 export class CommonUtils {
-
   public static applyTimezone(timestamp: number, tz: string): moment.Moment {
     const time = moment(timestamp);
     if (tz) {
-      if (tz.startsWith("GMT")) {
+      if (tz.startsWith('GMT')) {
         time.utcOffset(tz);
       } else {
         time.tz(tz);
@@ -35,7 +34,7 @@ export class CommonUtils {
   }
 
   public static randomString(length = 6): string {
-    const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const textArray: string[] = [];
 
     for (let i = 0; i < length; i++) {
@@ -49,13 +48,10 @@ export class CommonUtils {
     return this.randomString(lengt);
   }
 
-  public static rgbaToHex(r: number, g: number, b: number, a = 0xFF): string {
-    let num = ((a & 0xFF) << 24) |
-      ((r & 0xFF) << 16) |
-      ((g & 0xFF) << 8) |
-      ((b & 0xFF));
+  public static rgbaToHex(r: number, g: number, b: number, a = 0xff): string {
+    let num = ((a & 0xff) << 24) | ((r & 0xff) << 16) | ((g & 0xff) << 8) | (b & 0xff);
     if (num < 0) {
-      num = 0xFFFFFFFF + num + 1;
+      num = 0xffffffff + num + 1;
     }
 
     return `#${num.toString(16)}`;

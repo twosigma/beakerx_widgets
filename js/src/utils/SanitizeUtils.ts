@@ -35,17 +35,14 @@ export class SanitizeUtils {
 
       SanitizeUtils.fixCaja();
 
-      return styleString => caja.sanitizeStylesheet(
-        window.location.pathname,
-        styleString,
-        {
+      return (styleString) =>
+        caja.sanitizeStylesheet(window.location.pathname, styleString, {
           containerClass: null,
           idSuffox: '',
-          virtualizeAttrName: (x: any) => x
-        }
-      );
+          virtualizeAttrName: (x: any) => x,
+        });
     } catch (e) {
-      return original => original
+      return (original) => original;
     }
   }
 
@@ -69,41 +66,39 @@ export class SanitizeUtils {
       const ATTRIBS = window.cssSchema;
 
       ATTRIBS['color-rendering'] = deepcopy(ATTRIBS['speak']);
-      ATTRIBS['color-rendering'].cssLitGroup[0][0] = "auto";
-      ATTRIBS['color-rendering'].cssLitGroup[1][0] = "optimizeSpeed";
-      ATTRIBS['color-rendering'].cssLitGroup[2][0] = "optimizeQuality";
+      ATTRIBS['color-rendering'].cssLitGroup[0][0] = 'auto';
+      ATTRIBS['color-rendering'].cssLitGroup[1][0] = 'optimizeSpeed';
+      ATTRIBS['color-rendering'].cssLitGroup[2][0] = 'optimizeQuality';
       ATTRIBS['fill'] = ATTRIBS['color'];
       ATTRIBS['fill-opacity'] = ATTRIBS['opacity'];
       ATTRIBS['fill-rule'] = deepcopy(ATTRIBS['speak-header']);
-      ATTRIBS['fill-rule'].cssLitGroup[0][0] = "nonzero";
-      ATTRIBS['fill-rule'].cssLitGroup[1][0] = "evenodd";
+      ATTRIBS['fill-rule'].cssLitGroup[0][0] = 'nonzero';
+      ATTRIBS['fill-rule'].cssLitGroup[1][0] = 'evenodd';
       ATTRIBS['image-rendering'] = ATTRIBS['color-rendering'];
       ATTRIBS['marker-start'] = ATTRIBS['cue-before'];
       ATTRIBS['marker-mid'] = ATTRIBS['cue-before'];
       ATTRIBS['marker-end'] = ATTRIBS['cue-before'];
       ATTRIBS['shape-rendering'] = deepcopy(ATTRIBS['text-transform']);
-      ATTRIBS['shape-rendering'].cssLitGroup[0][0] = "optimizeSpeed";
-      ATTRIBS['shape-rendering'].cssLitGroup[0][1] = "crispEdges";
-      ATTRIBS['shape-rendering'].cssLitGroup[0][2] = "geometricPrecision";
-      ATTRIBS['shape-rendering'].cssLitGroup[1][0] = "auto";
+      ATTRIBS['shape-rendering'].cssLitGroup[0][0] = 'optimizeSpeed';
+      ATTRIBS['shape-rendering'].cssLitGroup[0][1] = 'crispEdges';
+      ATTRIBS['shape-rendering'].cssLitGroup[0][2] = 'geometricPrecision';
+      ATTRIBS['shape-rendering'].cssLitGroup[1][0] = 'auto';
       ATTRIBS['stroke'] = ATTRIBS['color'];
       ATTRIBS['stroke-linecap'] = deepcopy(ATTRIBS['speak']);
-      ATTRIBS['stroke-linecap'].cssLitGroup[0][0] = "butt";
-      ATTRIBS['stroke-linecap'].cssLitGroup[1][0] = "round";
-      ATTRIBS['stroke-linecap'].cssLitGroup[2][0] = "square";
+      ATTRIBS['stroke-linecap'].cssLitGroup[0][0] = 'butt';
+      ATTRIBS['stroke-linecap'].cssLitGroup[1][0] = 'round';
+      ATTRIBS['stroke-linecap'].cssLitGroup[2][0] = 'square';
       ATTRIBS['stroke-linejoin'] = deepcopy(ATTRIBS['speak']);
-      ATTRIBS['stroke-linejoin'].cssLitGroup[0][0] = "miter";
-      ATTRIBS['stroke-linejoin'].cssLitGroup[1][0] = "round";
-      ATTRIBS['stroke-linejoin'].cssLitGroup[2][0] = "bevel";
+      ATTRIBS['stroke-linejoin'].cssLitGroup[0][0] = 'miter';
+      ATTRIBS['stroke-linejoin'].cssLitGroup[1][0] = 'round';
+      ATTRIBS['stroke-linejoin'].cssLitGroup[2][0] = 'bevel';
       ATTRIBS['stroke-miterlimit'] = ATTRIBS['stress'];
       ATTRIBS['stroke-opacity'] = ATTRIBS['opacity'];
       ATTRIBS['stroke-width'] = ATTRIBS['max-width'];
       ATTRIBS['text-rendering'] = deepcopy(ATTRIBS['shape-rendering']);
-      ATTRIBS['text-rendering'].cssLitGroup[0][1] = "optimizeLegibility";
+      ATTRIBS['text-rendering'].cssLitGroup[0][1] = 'optimizeLegibility';
 
       window.cssSchemaFixed = true;
     }
   }
-
-
 }

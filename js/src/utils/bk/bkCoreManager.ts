@@ -14,7 +14,8 @@
  *  limitations under the License.
  */
 
-const beakerObj = { //TODO MOCK - replace
+const beakerObj = {
+  //TODO MOCK - replace
   beakerObj: {
     prefs: {
       outputColumnLimit: 500,
@@ -22,47 +23,47 @@ const beakerObj = { //TODO MOCK - replace
       theme: {
         name: 'default',
         plotColors: [
-          "#FF1F77B4", // blue
-          "#FFFF7F0E", // orange
-          "#FF2CA02C", // green
-          "#FFD62728", // red
-          "#FF9467BD", // purple
-          "#FF8C564B", // brown
-          "#FFE377C2", // pink
-          "#FF7F7F7F", // gray
-          "#FFBCBD22", // pear
-          "#FF17BECF",  // aqua
-          "#FFAEC7E8",
-          "#FFFFBB78",
-          "#FF98DF8A",
-          "#FFFF9896",
-          "#FFC5B0D5",
-          "#FFC49C94",
-          "#FFF7B6D2",
-          "#FFC7C7C7",
-          "#FFDBDB8D",
-          "#FF9EDAE5"
-        ]
-      }
-    }
-  }
+          '#FF1F77B4', // blue
+          '#FFFF7F0E', // orange
+          '#FF2CA02C', // green
+          '#FFD62728', // red
+          '#FF9467BD', // purple
+          '#FF8C564B', // brown
+          '#FFE377C2', // pink
+          '#FF7F7F7F', // gray
+          '#FFBCBD22', // pear
+          '#FF17BECF', // aqua
+          '#FFAEC7E8',
+          '#FFFFBB78',
+          '#FF98DF8A',
+          '#FFFF9896',
+          '#FFC5B0D5',
+          '#FFC49C94',
+          '#FFF7B6D2',
+          '#FFC7C7C7',
+          '#FFDBDB8D',
+          '#FF9EDAE5',
+        ],
+      },
+    },
+  },
 };
 
 export const bkCoreManager = {
   _bkAppImpl: {
     getBeakerObject: function () {
       return beakerObj;
-    }
+    },
   },
 
   _prefs: {
     getTheme: function (): string {
       if (this.theme === undefined) {
-        return "default";
+        return 'default';
       }
 
       return this.theme;
-    }
+    },
   },
 
   getTheme: function (): string {
@@ -71,5 +72,5 @@ export const bkCoreManager = {
 
   getBkApp: function () {
     return this._bkAppImpl;
-  }
+  },
 };

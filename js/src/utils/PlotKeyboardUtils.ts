@@ -64,13 +64,11 @@ enum KeyboardCodes {
   OPEN_BRACKET = 219,
   BACK_SLASH = 220,
   CLOSE_BRAKET = 221,
-  SINGLE_QUOTE = 222
+  SINGLE_QUOTE = 222,
 }
 
 export class PlotKeyboardUtils {
   public static getKeyCodeConstant(keyCode: number): string {
-    return (keyCode > 46 && keyCode < 90) ?
-      String.fromCharCode(keyCode).toUpperCase() :
-      KeyboardCodes[keyCode];
+    return keyCode > 46 && keyCode < 90 ? String.fromCharCode(keyCode).toUpperCase() : KeyboardCodes[keyCode];
   }
 }

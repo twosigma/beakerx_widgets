@@ -31,9 +31,7 @@ export class PlotStyleUtils {
     if (includeMargin) {
       properties.push('margin-left', 'margin-right');
     }
-    return properties
-      .map(property => this.getComputedStyle(e, property) as number)
-      .reduce((p, c) => p + c, 0);
+    return properties.map((property) => this.getComputedStyle(e, property) as number).reduce((p, c) => p + c, 0);
   }
 
   public static outerHeight(e: JQuery<Element>, includeMargin = false): number | null {
@@ -44,20 +42,18 @@ export class PlotStyleUtils {
     if (includeMargin) {
       properties.push('margin-top', 'margin-bottom');
     }
-    return properties
-      .map(property => this.getComputedStyle(e, property) as number)
-      .reduce((p, c) => p + c, 0);
+    return properties.map((property) => this.getComputedStyle(e, property) as number).reduce((p, c) => p + c, 0);
   }
 
   public static convertToXHTML(html: string): string {
     const doc = document.implementation.createHTMLDocument('');
     doc.documentElement.setAttribute('xmlns', doc.documentElement.namespaceURI as string);
     doc.write(html);
-    return (new XMLSerializer).serializeToString(doc.body.firstChild as ChildNode);
+    return new XMLSerializer().serializeToString(doc.body.firstChild as ChildNode);
   }
 
   public static getElementStyles(element: Element): string {
-    let elementStyles = "";
+    let elementStyles = '';
 
     for (const styleSheet of <CSSStyleSheet[]>Array.from(document.styleSheets)) {
       for (const cssRule of <CSSStyleRule[]>Array.from(styleSheet.cssRules)) {
@@ -77,20 +73,24 @@ export class PlotStyleUtils {
     return elementStyles;
   }
 
-  public static getActualCss(jqElement: JQuery<Element>, jqFunction: keyof JQuery, jqFunctionParams?: unknown): unknown {
+  public static getActualCss(
+    jqElement: JQuery<Element>,
+    jqFunction: keyof JQuery,
+    jqFunctionParams?: unknown,
+  ): unknown {
     //to get actual size/position/etc values of hidden elements
     let value;
     const getValue = () => {
-      const fn = (jqElement[jqFunction]) as () => unknown;
+      const fn = jqElement[jqFunction] as () => unknown;
       return jqFunctionParams !== undefined ? fn.call(jqElement, jqFunctionParams) : fn.call(jqElement);
     };
-    if (jqElement.is(":visible")) {
+    if (jqElement.is(':visible')) {
       value = getValue();
     } else {
-      const hiddenParent = jqElement.parents(".ng-hide:first");
-      hiddenParent.removeClass("ng-hide");
+      const hiddenParent = jqElement.parents('.ng-hide:first');
+      hiddenParent.removeClass('ng-hide');
       value = getValue();
-      hiddenParent.addClass("ng-hide");
+      hiddenParent.addClass('ng-hide');
     }
     return value;
   }
@@ -101,24 +101,22 @@ export class PlotStyleUtils {
     }
 
     const getValue: (e: JQuery<Element>) => string = (e: JQuery<Element>) => {
-      const value = window.getComputedStyle(e.get()[0], null)
-        .getPropertyValue(styleName)
-        .match(/\d+/);
+      const value = window.getComputedStyle(e.get()[0], null).getPropertyValue(styleName).match(/\d+/);
       if (!value || value.length === 0) {
         return '';
       }
       return value[0];
     };
 
-    const hiddenParent = e.parents(".ng-hide:first");
+    const hiddenParent = e.parents('.ng-hide:first');
     let value;
 
     if (hiddenParent.length === 0) {
       value = getValue(e);
     } else {
-      hiddenParent.removeClass("ng-hide");
+      hiddenParent.removeClass('ng-hide');
       value = getValue(e);
-      hiddenParent.addClass("ng-hide");
+      hiddenParent.addClass('ng-hide');
     }
     return parseInt(value) || defaultValue;
   }
