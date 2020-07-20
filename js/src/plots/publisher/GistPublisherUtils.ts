@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-import {GistPublisher} from "./GistPublisher";
+import { GistPublisher } from './GistPublisher';
 
 interface GistPublisherOptions {
   accessTokenProvider: GistPublisherAccessTokenProviderInterface;
@@ -49,9 +49,7 @@ export class GistPublisherUtils {
     window.bxPublisherOptions = options;
   }
 
-  public static publishScope(
-    scope: any
-  ): void {
+  public static publishScope(scope: any): void {
     if (null === window.bxPublisherOptions) {
       console.log('gist publisher was not configured');
       return;
@@ -70,8 +68,7 @@ export class GistPublisherUtils {
           notebook_name,
           this.prepareContentToPublish(scope),
           // eslint-disable-next-line @typescript-eslint/no-empty-function
-          (errorMsg) => {
-          }
+          (errorMsg) => {},
         );
       });
   }
@@ -79,4 +76,4 @@ export class GistPublisherUtils {
 
 export default {
   GistPublisherUtils,
-}
+};

@@ -22,10 +22,10 @@ export class PlotMessage {
   }
 
   render(title, msgs, msgid, callbacky, callbackn) {
-    const message = $("<div></div>")
+    const message = $('<div></div>')
       .appendTo(this.scope.jqcontainer)
-      .attr("id", msgid)
-      .attr("class", "plot-message")
+      .attr('id', msgid)
+      .attr('class', 'plot-message')
       .on('mousedown', function (e) {
         if (e.which === 3) {
           if (callbackn != null) {
@@ -40,30 +40,28 @@ export class PlotMessage {
         $(this).remove();
       });
 
-    if (title != null && title != "") {
-      $("<div></div>").appendTo(message)
-        .attr("class", "plot-message-title")
-        .text(title);
+    if (title != null && title != '') {
+      $('<div></div>').appendTo(message).attr('class', 'plot-message-title').text(title);
     }
 
-    const content = $("<div></div>").appendTo(message).attr("class", "plot-message-content");
+    const content = $('<div></div>').appendTo(message).attr('class', 'plot-message-content');
 
-    if (typeof(msgs) === "string") {
-      msgs = [ msgs ];
+    if (typeof msgs === 'string') {
+      msgs = [msgs];
     }
 
     for (let i = 0; i < msgs.length; i++) {
-      $("<div></div>").appendTo(content)
-        .text(msgs[i]);
+      $('<div></div>').appendTo(content).text(msgs[i]);
     }
 
-    const w = message.outerWidth(), h = message.outerHeight();
+    const w = message.outerWidth(),
+      h = message.outerHeight();
     const lMargin = this.scope.layout.leftLayoutMargin;
     const bMargin = this.scope.layout.bottomLayoutMargin;
 
     message.css({
-      "left" : (this.scope.jqcontainer.width() - lMargin) / 2 - w / 2 + lMargin,
-      "top" : (this.scope.jqcontainer.height() - bMargin) / 2 - h / 2
+      left: (this.scope.jqcontainer.width() - lMargin) / 2 - w / 2 + lMargin,
+      top: (this.scope.jqcontainer.height() - bMargin) / 2 - h / 2,
     });
   }
 }

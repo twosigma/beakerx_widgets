@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-import {Big, BigSource} from "big.js"
-import {BigNumberUtils} from "../../../../utils";
+import { Big, BigSource } from 'big.js';
+import { BigNumberUtils } from '../../../../utils';
 
 const NANOTIME_TYPE = 'nanotime';
 
@@ -46,18 +46,18 @@ export class DefaultAxis {
   axisLabelWithCommon: any;
   showGridlineLabels: boolean;
 
-  constructor(type: "linear" | "log" | "time" | "category" | "nanotime" = "linear") {
-    this.axisType = "linear";
+  constructor(type: 'linear' | 'log' | 'time' | 'category' | 'nanotime' = 'linear') {
+    this.axisType = 'linear';
     this.axisBase = 10;
     this.axisTime = 0;
-    this.axisTimezone = "UTC";
+    this.axisTimezone = 'UTC';
     this.axisValL = type === NANOTIME_TYPE ? new Big(0) : 0;
     this.axisValR = type === NANOTIME_TYPE ? new Big(1) : 1;
     this.axisValSpan = type === NANOTIME_TYPE ? new Big(1) : 1;
     this.axisPctL = 0;
     this.axisPctR = 1;
     this.axisPctSpan = 1;
-    this.label = "";
+    this.label = '';
     this.axisGridlines = [];
     this.axisGridlineLabels = [];
     this.axisStep = 1;
@@ -75,7 +75,7 @@ export class DefaultAxis {
 
   setNumFixs(): void {
     let numFixs = [];
-    const min = this.axisType === "log" ? 1 : 0;
+    const min = this.axisType === 'log' ? 1 : 0;
 
     for (let i = 0; i < 18; i++) {
       const f = Math.max(6 - i, min);
@@ -101,7 +101,7 @@ export class DefaultAxis {
       this.axisValR = vr;
     }
 
-    if (this.axisType === "log") {
+    if (this.axisType === 'log') {
       this.setLogAxisBase(axisBase);
     }
 
@@ -115,7 +115,7 @@ export class DefaultAxis {
 
     if (this.axisBase <= 1) {
       this.axisBase = 10;
-      console.error("cannot set base to <= 1");
+      console.error('cannot set base to <= 1');
     }
   }
 
@@ -130,7 +130,7 @@ export class DefaultAxis {
 
   setGridlines(pointLeft, pointRight, count, marginLeft, marginRight): void {
     if (pointRight < pointLeft) {
-      console.error("cannot set right coord < left coord");
+      console.error('cannot set right coord < left coord');
 
       return;
     }
@@ -160,12 +160,12 @@ export class DefaultAxis {
   setAxisSteps(span, intervals, fixs, count): void {
     let axisStep;
     let axisFixed;
-    let mindiff = 1E100;
+    let mindiff = 1e100;
     let diff = mindiff;
     let i = 0;
 
     if (count == null) {
-      console.error("missing setCoords count");
+      console.error('missing setCoords count');
       count = 1;
     }
 
@@ -229,7 +229,7 @@ export class DefaultAxis {
   }
 
   addDefaultIntervals(i: number, intervals: number[], prev: number): void {
-    const bs = (i === 0) ? 1E-6 : (prev / 5.0) * 10;
+    const bs = i === 0 ? 1e-6 : (prev / 5.0) * 10;
 
     intervals.push(1.0 * bs);
     intervals.push(2.5 * bs);
@@ -237,7 +237,7 @@ export class DefaultAxis {
   }
 
   calcLines(pointLeft, pointRight, axisStep): number[] {
-    if (this.axisType === "category") {
+    if (this.axisType === 'category') {
       return this.getCategoryAxisLines(pointLeft, pointRight);
     }
 
@@ -251,10 +251,7 @@ export class DefaultAxis {
     for (let i = 0; i < this.fixedLines.length; i++) {
       const pointCoords = this.fixedLines[i];
 
-      if (
-        pointCoords >= this.getPercent(this.getValue(pointLeft))
-        && pointCoords <= this.getPercent(valueRight)
-      ) {
+      if (pointCoords >= this.getPercent(this.getValue(pointLeft)) && pointCoords <= this.getPercent(valueRight)) {
         lines.push(pointCoords);
       }
     }
@@ -268,10 +265,12 @@ export class DefaultAxis {
     let value: BigSource = this.getValue(pointLeft);
 
     if (BigNumberUtils.isBig(value)) {
-      value = (value as BigJs.Big);
-      value = value.gte(0) ? value.div(axisStep).round(0, 3).times(axisStep) : value.div(axisStep).round(0, 0).times(axisStep);
+      value = value as BigJs.Big;
+      value = value.gte(0)
+        ? value.div(axisStep).round(0, 3).times(axisStep)
+        : value.div(axisStep).round(0, 0).times(axisStep);
     } else {
-      value = Math.ceil(value as number / axisStep) * axisStep;
+      value = Math.ceil((value as number) / axisStep) * axisStep;
     }
 
     while (BigNumberUtils.lte(value, valueRight) || BigNumberUtils.lte(value, BigNumberUtils.plus(valueRight, 1e-12))) {
@@ -287,7 +286,7 @@ export class DefaultAxis {
   calcLabels(lines: number[], span: number): { common: string; labels: string[] } {
     let labels = [];
 
-    if (this.axisType === "category") {
+    if (this.axisType === 'category') {
       labels = this.getCategoryAxisLabels(lines);
     } else {
       labels = this.getDefaultAxisLabels(lines, span);
@@ -295,7 +294,7 @@ export class DefaultAxis {
 
     return {
       common: '',
-      labels: labels
+      labels: labels,
     };
   }
 
@@ -373,7 +372,7 @@ export class DefaultAxis {
     let standardResult = 0;
     const value: number = parseFloat(this.getValue(pointCoords).toString());
 
-    if (this.axisType === "log") {
+    if (this.axisType === 'log') {
       standardResult = Math.pow(this.axisBase, value);
     } else {
       standardResult = value;
@@ -381,7 +380,7 @@ export class DefaultAxis {
 
     return standardResult.toLocaleString(undefined, {
       minimumFractionDigits: this.axisFixed,
-      maximumFractionDigits: this.axisFixed
+      maximumFractionDigits: this.axisFixed,
     });
   }
 }

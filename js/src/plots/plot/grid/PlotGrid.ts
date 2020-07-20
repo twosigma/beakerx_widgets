@@ -14,11 +14,11 @@
  *  limitations under the License.
  */
 
-import {GridLabels} from "./GridLabels";
-import {GridTics} from "./GridTics";
-import {GridLines} from "./GridLines";
-import {PlotScope} from "../PlotScope";
-import {CombinedPlotScope} from "../CombinedPlotScope";
+import { GridLabels } from './GridLabels';
+import { GridTics } from './GridTics';
+import { GridLines } from './GridLines';
+import { PlotScope } from '../PlotScope';
+import { CombinedPlotScope } from '../CombinedPlotScope';
 
 export class PlotGrid {
   gridLines: GridLines;

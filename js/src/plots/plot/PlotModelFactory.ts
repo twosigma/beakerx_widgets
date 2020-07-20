@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-import {DefaultPlotModel, TreeMapPlotModel} from "./model";
+import { DefaultPlotModel, TreeMapPlotModel } from './model';
 
 export class PlotModelFactory {
   static getPlotModel(model, settings): TreeMapPlotModel | DefaultPlotModel {

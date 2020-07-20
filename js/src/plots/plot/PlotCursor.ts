@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-import {PlotStyleUtils, PlotUtils} from "../../utils";
-import {PlotScope} from "./PlotScope";
+import { PlotStyleUtils, PlotUtils } from '../../utils';
+import { PlotScope } from './PlotScope';
 
 export class PlotCursor {
   scope: PlotScope;
@@ -40,13 +40,13 @@ export class PlotCursor {
     const model = this.scope.stdmodel;
 
     if (
-      x < leftMargin
-      || model.yAxisR != null && x > width - rightMargin
-      || y > height - bottomMargin
-      || y < topMargin
+      x < leftMargin ||
+      (model.yAxisR != null && x > width - rightMargin) ||
+      y > height - bottomMargin ||
+      y < topMargin
     ) {
-      this.scope.svg.selectAll(".plot-cursor").remove();
-      this.scope.jqcontainer.find(".plot-cursorlabel").remove();
+      this.scope.svg.selectAll('.plot-cursor').remove();
+      this.scope.jqcontainer.find('.plot-cursorlabel').remove();
 
       return;
     }
@@ -64,24 +64,26 @@ export class PlotCursor {
     const opt = model.xCursor;
     const mapX = this.scope.plotRange.scr2dataX;
 
-    this.scope.svg.selectAll("#cursor_x")
+    this.scope.svg
+      .selectAll('#cursor_x')
       .data([{}])
       .enter()
-      .append("line")
-      .attr("id", "cursor_x")
-      .attr("class", "plot-cursor")
-      .style("stroke", opt.color)
-      .style("stroke-opacity", opt.color_opacity)
-      .style("stroke-width", opt.width)
-      .style("stroke-dasharray", opt.stroke_dasharray);
+      .append('line')
+      .attr('id', 'cursor_x')
+      .attr('class', 'plot-cursor')
+      .style('stroke', opt.color)
+      .style('stroke-opacity', opt.color_opacity)
+      .style('stroke-width', opt.width)
+      .style('stroke-dasharray', opt.stroke_dasharray);
 
-    this.scope.svg.select("#cursor_x")
-      .attr("x1", x)
-      .attr("y1", topMargin)
-      .attr("x2", x)
-      .attr("y2", height - bottomMargin);
+    this.scope.svg
+      .select('#cursor_x')
+      .attr('x1', x)
+      .attr('y1', topMargin)
+      .attr('x2', x)
+      .attr('y2', height - bottomMargin);
 
-    this.scope.jqcontainer.find("#cursor_xlabel").remove();
+    this.scope.jqcontainer.find('#cursor_xlabel').remove();
 
     const label = $(`<div id="cursor_xlabel" class="plot-cursorlabel"></div>`)
       .appendTo(this.scope.jqcontainer)
@@ -91,13 +93,13 @@ export class PlotCursor {
     const labelHeight = label.outerHeight();
     const point = {
       x: x - width / 2,
-      y: height - bottomMargin - this.scope.labelPadding.y - labelHeight
+      y: height - bottomMargin - this.scope.labelPadding.y - labelHeight,
     };
 
     label.css({
-      "left": point.x,
-      "top": point.y,
-      "background-color": opt.color != null ? opt.color : "black"
+      left: point.x,
+      top: point.y,
+      'background-color': opt.color != null ? opt.color : 'black',
     });
   }
 
@@ -109,24 +111,29 @@ export class PlotCursor {
     const model = this.scope.stdmodel;
     const opt = model.yCursor;
 
-    this.scope.svg.selectAll("#cursor_y").data([{}]).enter().append("line")
-      .attr("id", "cursor_y")
-      .attr("class", "plot-cursor")
-      .style("stroke", opt.color)
-      .style("stroke-opacity", opt.color_opacity)
-      .style("stroke-width", opt.width)
-      .style("stroke-dasharray", opt.stroke_dasharray);
+    this.scope.svg
+      .selectAll('#cursor_y')
+      .data([{}])
+      .enter()
+      .append('line')
+      .attr('id', 'cursor_y')
+      .attr('class', 'plot-cursor')
+      .style('stroke', opt.color)
+      .style('stroke-opacity', opt.color_opacity)
+      .style('stroke-width', opt.width)
+      .style('stroke-dasharray', opt.stroke_dasharray);
 
-    this.scope.svg.select("#cursor_y")
-      .attr("x1", leftMargin)
-      .attr("y1", y)
-      .attr("x2", width - rightMargin)
-      .attr("y2", y);
+    this.scope.svg
+      .select('#cursor_y')
+      .attr('x1', leftMargin)
+      .attr('y1', y)
+      .attr('x2', width - rightMargin)
+      .attr('y2', y);
 
-    this.renderCursorLabel(model.yAxis, "cursor_ylabel", y, false);
+    this.renderCursorLabel(model.yAxis, 'cursor_ylabel', y, false);
 
     if (model.yAxisR) {
-      this.renderCursorLabel(model.yAxisR, "cursor_yrlabel", y, true);
+      this.renderCursorLabel(model.yAxisR, 'cursor_yrlabel', y, true);
     }
   }
 
@@ -141,24 +148,24 @@ export class PlotCursor {
     const rMargin = this.scope.layout.rightLayoutMargin;
     const mapY = this.scope.plotRange.scr2dataY;
 
-    this.scope.jqcontainer.find("#" + id).remove();
+    this.scope.jqcontainer.find('#' + id).remove();
 
     const label = $(`<div id="${id}" class='plot-cursorlabel'></div>`)
       .appendTo(this.scope.jqcontainer)
       .text(PlotUtils.getTipStringPercent(mapY(y), axis));
 
     const height = label.outerHeight();
-    const point = {x: (alignRight ? rMargin : lMargin) + this.scope.labelPadding.x, y: y - height / 2};
+    const point = { x: (alignRight ? rMargin : lMargin) + this.scope.labelPadding.x, y: y - height / 2 };
 
     label.css({
-      "top": point.y,
-      "background-color": opt.color != null ? opt.color : "black",
-      [alignRight ? "right" : "left"]: point.x
+      top: point.y,
+      'background-color': opt.color != null ? opt.color : 'black',
+      [alignRight ? 'right' : 'left']: point.x,
     });
   }
 
   clear(): void {
-    this.scope.svg.selectAll(".plot-cursor").remove();
-    this.scope.jqcontainer.find(".plot-cursorlabel").remove();
+    this.scope.svg.selectAll('.plot-cursor').remove();
+    this.scope.jqcontainer.find('.plot-cursorlabel').remove();
   }
 }

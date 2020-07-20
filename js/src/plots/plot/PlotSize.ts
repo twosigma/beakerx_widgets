@@ -31,8 +31,8 @@ export class PlotSize {
     }
 
     this.scope.width = newWidth;
-    this.scope.jqcontainer.css("width", newWidth);
-    this.scope.jqsvg.css("width", newWidth);
+    this.scope.jqcontainer.css('width', newWidth);
+    this.scope.jqsvg.css('width', newWidth);
     this.scope.plotRange.calcMapping(false);
     this.scope.legendDone = false;
     this.scope.legendResetPosition = true;
@@ -41,15 +41,15 @@ export class PlotSize {
 
   getPlotWithLegendWidth() {
     const containerWidth = this.scope.jqcontainer.parents('.output_subarea').width();
-    const plotWidth = containerWidth && containerWidth < this.scope.layout.plotSize.width
-      ? containerWidth
-      : this.scope.layout.plotSize.width;
+    const plotWidth =
+      containerWidth && containerWidth < this.scope.layout.plotSize.width
+        ? containerWidth
+        : this.scope.layout.plotSize.width;
     const legendPosition = this.scope.stdmodel.legendPosition.position;
     // Logic based on updateLegendPosition method
-    const isLegendPlacedHorizontaly = (
-      (["LEFT", "RIGHT"].indexOf(legendPosition) !== -1)
-      || (["TOP", "BOTTOM"].indexOf(legendPosition) === -1 && this.scope.stdmodel.legendLayout === "VERTICAL")
-    );
+    const isLegendPlacedHorizontaly =
+      ['LEFT', 'RIGHT'].indexOf(legendPosition) !== -1 ||
+      (['TOP', 'BOTTOM'].indexOf(legendPosition) === -1 && this.scope.stdmodel.legendLayout === 'VERTICAL');
 
     let legendWidth = this.scope.jqlegendcontainer.find('.plot-legend').width() || 0;
 
@@ -60,15 +60,15 @@ export class PlotSize {
 
   getPlotWithLegendHeight() {
     const containerHeight = this.scope.jqcontainer.parents('.output_subarea').height();
-    const plotHeight = containerHeight && containerHeight < this.scope.layout.plotSize.height
-      ? containerHeight
-      : this.scope.layout.plotSize.height;
+    const plotHeight =
+      containerHeight && containerHeight < this.scope.layout.plotSize.height
+        ? containerHeight
+        : this.scope.layout.plotSize.height;
     const legendPosition = this.scope.stdmodel.legendPosition.position;
     // Logic based on updateLegendPosition method
-    const isLegendPlacedHorizontaly = (
-      (["LEFT", "RIGHT"].indexOf(legendPosition) !== -1)
-      || (["TOP", "BOTTOM"].indexOf(legendPosition) === -1 && this.scope.stdmodel.legendLayout === "VERTICAL")
-    );
+    const isLegendPlacedHorizontaly =
+      ['LEFT', 'RIGHT'].indexOf(legendPosition) !== -1 ||
+      (['TOP', 'BOTTOM'].indexOf(legendPosition) === -1 && this.scope.stdmodel.legendLayout === 'VERTICAL');
 
     let legendHeight = this.scope.jqlegendcontainer.find('.plot-legend').height() || 0;
 
@@ -82,18 +82,18 @@ export class PlotSize {
       maxWidth: this.scope.element.parent().width(), // no wider than the width of the cell
       minWidth: 150,
       minHeight: 150,
-      handles: "e, s, se",
+      handles: 'e, s, se',
       resize: (event, ui) => {
         this.scope.width = ui.size.width;
         this.scope.height = ui.size.height;
 
         _.extend(this.scope.layout.plotSize, ui.size);
 
-        this.scope.jqsvg.css({"width": this.scope.width, "height": this.scope.height});
-        this.scope.jqplottitle.css({"width": this.scope.width});
+        this.scope.jqsvg.css({ width: this.scope.width, height: this.scope.height });
+        this.scope.jqplottitle.css({ width: this.scope.width });
         this.scope.numIntervals = {
           x: this.scope.width / this.scope.intervalStepHint.x,
-          y: this.scope.height / this.scope.intervalStepHint.y
+          y: this.scope.height / this.scope.intervalStepHint.y,
         };
         this.scope.plotRange.calcRange();
         this.scope.plotRange.calcMapping(false);
@@ -102,12 +102,12 @@ export class PlotSize {
         this.scope.legendResetPosition = true;
 
         this.scope.update();
-      }
+      },
     });
   }
 
   resizeFunction() {
     // update resize maxWidth when the browser window resizes
-    this.scope.jqcontainer.resizable("option", "maxWidth", this.scope.element.parent().width());
-  };
+    this.scope.jqcontainer.resizable('option', 'maxWidth', this.scope.element.parent().width());
+  }
 }

@@ -14,9 +14,9 @@
  *  limitations under the License.
  */
 
-import {PlotRange} from "../range";
-import {PlotFocus} from "../zoom";
-import {TickData} from "./interfaces";
+import { PlotRange } from '../range';
+import { PlotFocus } from '../zoom';
+import { TickData } from './interfaces';
 
 export class GridTics {
   scope: any;
@@ -49,15 +49,18 @@ export class GridTics {
   }
 
   plotTicks(): void {
-    this.scope.labelg.selectAll("line").remove();
-    this.scope.labelg.selectAll("line")
-      .data(this.rpipeTicks, d => d.id).enter().append("line")
-      .attr("id", d => d.id)
-      .attr("class", d => d.class)
-      .attr("x1", d => d.x1)
-      .attr("x2", d => d.x2)
-      .attr("y1", d => d.y1)
-      .attr("y2", d => d.y2);
+    this.scope.labelg.selectAll('line').remove();
+    this.scope.labelg
+      .selectAll('line')
+      .data(this.rpipeTicks, (d) => d.id)
+      .enter()
+      .append('line')
+      .attr('id', (d) => d.id)
+      .attr('class', (d) => d.class)
+      .attr('x1', (d) => d.x1)
+      .attr('x2', (d) => d.x2)
+      .attr('y1', (d) => d.y1)
+      .attr('y2', (d) => d.y2);
   }
 
   renderAxisXTics(model, focus, mapX, mapY): void {
@@ -73,12 +76,12 @@ export class GridTics {
       const x = lines[i];
 
       this.rpipeTicks.push({
-        id: "tick_x_" + i,
-        class: "plot-tick",
+        id: 'tick_x_' + i,
+        class: 'plot-tick',
         x1: mapX(x),
         y1: mapY(focus.yl),
         x2: mapX(x),
-        y2: mapY(focus.yl) + tickLength
+        y2: mapY(focus.yl) + tickLength,
       });
     }
   }
@@ -96,12 +99,12 @@ export class GridTics {
       const y = lines[i];
 
       this.rpipeTicks.push({
-        id: "tick_y_" + i,
-        class: "plot-tick",
+        id: 'tick_y_' + i,
+        class: 'plot-tick',
         x1: mapX(focus.xl) - tickLength,
         y1: mapY(y),
         x2: mapX(focus.xl),
-        y2: mapY(y)
+        y2: mapY(y),
       });
     }
   }
@@ -120,12 +123,12 @@ export class GridTics {
       const y = lines[i];
 
       this.rpipeTicks.push({
-        id: "tick_yr_" + i,
-        class: "plot-tick",
+        id: 'tick_yr_' + i,
+        class: 'plot-tick',
         x1: mapX(focus.xr),
         y1: mapY_r(y),
         x2: mapX(focus.xr) + tickLength,
-        y2: mapY_r(y)
+        y2: mapY_r(y),
       });
     }
   }

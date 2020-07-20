@@ -16,11 +16,11 @@
 
 import * as d3 from 'd3';
 import * as _ from 'underscore';
-import {PointShapeHelper} from '../std';
-import {LegendPosition} from "./LegendPosition";
-import {PlotMessage} from "../PlotMessage";
-import {CommonUtils, PlotColorUtils, PlotStyleUtils} from "../../../utils";
-const GradientLegend = require("../_js/gradientlegend.js");
+import { PointShapeHelper } from '../std';
+import { LegendPosition } from './LegendPosition';
+import { PlotMessage } from '../PlotMessage';
+import { CommonUtils, PlotColorUtils, PlotStyleUtils } from '../../../utils';
+const GradientLegend = require('../_js/gradientlegend.js');
 
 export class PlotLegend {
   scope: any;
@@ -34,52 +34,49 @@ export class PlotLegend {
   }
 
   appendLegendToSvg(svg: d3.Selection<SVGElement, any, HTMLElement, any>) {
-    const legend = this.scope.jqlegendcontainer.find("#plotLegend");
+    const legend = this.scope.jqlegendcontainer.find('#plotLegend');
 
-    if (
-      this.scope.legendableItem === 0
-      || this.scope.stdmodel.showLegend === false
-      || !legend.length
-    ) {
+    if (this.scope.legendableItem === 0 || this.scope.stdmodel.showLegend === false || !legend.length) {
       return;
     }
 
-    const legendCopy = this.scope.jqlegendcontainer.find("#plotLegend").clone();
+    const legendCopy = this.scope.jqlegendcontainer.find('#plotLegend').clone();
 
-    legendCopy.find(".plot-legendcheckbox").each((i, item) => {
+    legendCopy.find('.plot-legendcheckbox').each((i, item) => {
       if (item.checked) {
-        item.setAttribute("checked", true);
+        item.setAttribute('checked', true);
       }
 
-      item.setAttribute("onclick", "return false");
+      item.setAttribute('onclick', 'return false');
     });
 
-    legendCopy.css("position", "inherit");
-    legendCopy.css("top", "auto");
-    legendCopy.css("left", "auto");
-    legendCopy.css("bottom", "auto");
-    legendCopy.css("right", "auto");
+    legendCopy.css('position', 'inherit');
+    legendCopy.css('top', 'auto');
+    legendCopy.css('left', 'auto');
+    legendCopy.css('bottom', 'auto');
+    legendCopy.css('right', 'auto');
 
     //remove base from urls
     legendCopy.find("[style*='url']").each((i, item) => {
-      const style = $(item).attr('style').replace("/beaker/", "");
+      const style = $(item).attr('style').replace('/beaker/', '');
 
       $(item).attr('style', style);
     });
 
-    const getPositive = (value) => value > 0 ? value : 0;
+    const getPositive = (value) => (value > 0 ? value : 0);
     const position = PlotStyleUtils.getActualCss(legend, 'position') as { top: number; left: number };
     const x = getPositive(position.left);
     const y = getPositive(position.top);
 
-    svg.append("foreignObject")
-      .attr("width", PlotStyleUtils.getActualCss(legend, 'outerWidth', true) as number + 1)//add 1 because jQuery round size
-      .attr("height", PlotStyleUtils.getActualCss(legend, 'outerHeight', true) as number + 1)
-      .attr("x", x)
-      .attr("y", y)
-      .append("xhtml:body")
+    svg
+      .append('foreignObject')
+      .attr('width', (PlotStyleUtils.getActualCss(legend, 'outerWidth', true) as number) + 1) //add 1 because jQuery round size
+      .attr('height', (PlotStyleUtils.getActualCss(legend, 'outerHeight', true) as number) + 1)
+      .attr('x', x)
+      .attr('y', y)
+      .append('xhtml:body')
       .attr('style', 'position: relative;')
-      .attr("xmlns", "http://www.w3.org/1999/xhtml")
+      .attr('xmlns', 'http://www.w3.org/1999/xhtml')
       .html(legendCopy[0].outerHTML);
 
     this.adjustSvgWithLegendDimensions(svg);
@@ -102,7 +99,7 @@ export class PlotLegend {
       return;
     }
     if (this.scope.stdmodel.showLegend === false) {
-      this.scope.jqlegendcontainer.find("#plotLegend").remove();
+      this.scope.jqlegendcontainer.find('#plotLegend').remove();
       return;
     }
     if (this.scope.legendDone === true) {
@@ -110,20 +107,20 @@ export class PlotLegend {
     }
 
     const data = this.scope.stdmodel.data;
-    const isHorizontal = this.scope.stdmodel.legendLayout === "HORIZONTAL";
+    const isHorizontal = this.scope.stdmodel.legendLayout === 'HORIZONTAL';
 
-    this.scope.jqlegendcontainer.find("#plotLegend").remove();
+    this.scope.jqlegendcontainer.find('#plotLegend').remove();
     this.scope.legendDone = true;
 
     let legendContainer;
 
-    if (this.scope.model.getCellModel().type === "HeatMap") {
+    if (this.scope.model.getCellModel().type === 'HeatMap') {
       legendContainer = this.createLegendContainer();
     } else {
-      legendContainer = this.createLegendContainer("plot-legendscrollablecontainer", "#legendDraggableContainer");
+      legendContainer = this.createLegendContainer('plot-legendscrollablecontainer', '#legendDraggableContainer');
     }
 
-    if (this.scope.model.getCellModel().type === "HeatMap") {
+    if (this.scope.model.getCellModel().type === 'HeatMap') {
       this.scope.gradientLegend = new GradientLegend(data);
       this.scope.gradientLegend.render(legendContainer, data[0].colors);
       this.legendPosition.updateLegendPosition();
@@ -131,19 +128,17 @@ export class PlotLegend {
       return;
     }
 
-    const legendDraggableContainer = $("<div></div>")
+    const legendDraggableContainer = $('<div></div>')
       .appendTo(legendContainer)
-      .attr("id", "legendDraggableContainer")
-      .attr("class", "plot-legenddraggable");
+      .attr('id', 'legendDraggableContainer')
+      .attr('class', 'plot-legenddraggable');
 
-    const legendUnit = "<div></div>";
+    const legendUnit = '<div></div>';
     const legendLineUnit = isHorizontal
       ? "<div class='plot-legenditeminline'></div>"
       : "<div class='plot-legenditeminrow'></div>";
 
-    const legend = $(legendUnit)
-      .appendTo(legendDraggableContainer)
-      .attr("id", "legends");
+    const legend = $(legendUnit).appendTo(legendDraggableContainer).attr('id', 'legends');
 
     this.scope.legendMergedLines = this.prepareMergedLegendData();
 
@@ -160,30 +155,32 @@ export class PlotLegend {
 
   createLegendContainer(className?: string, handle?) {
     const scope = this.scope;
-    const isHorizontal = this.scope.stdmodel.legendLayout === "HORIZONTAL";
+    const isHorizontal = this.scope.stdmodel.legendLayout === 'HORIZONTAL';
     const draggable = {
       containment: 'parent',
       start: function (event, ui) {
-        $(this).css({//avoid resizing for bottom-stacked legend
-          "bottom": "auto"
+        $(this).css({
+          //avoid resizing for bottom-stacked legend
+          bottom: 'auto',
         });
       },
       stop: function (event, ui) {
         scope.legendPosition = {
-          "left": ui.position.left,
-          "top": ui.position.top
+          left: ui.position.left,
+          top: ui.position.top,
         };
-      }
+      },
     };
 
     const layout = this.scope.layout;
-    const legendContainer = ($("<div></div>")
+    const legendContainer = ($('<div></div>')
       .appendTo(this.scope.jqlegendcontainer)
-      .attr("id", "plotLegend")
-      .attr("class", "plot-legend") as any)
+      .attr('id', 'plotLegend')
+      .attr('class', 'plot-legend') as any)
       .draggable(draggable)
       .css(
-        "max-height", PlotStyleUtils.safeHeight(this.scope.jqsvg) - layout.bottomLayoutMargin - layout.topLayoutMargin
+        'max-height',
+        PlotStyleUtils.safeHeight(this.scope.jqsvg) - layout.bottomLayoutMargin - layout.topLayoutMargin,
       );
 
     if (className != null) {
@@ -193,11 +190,11 @@ export class PlotLegend {
     if (handle != null) {
       draggable['handle'] = handle;
     } else {
-      legendContainer.addClass("plot-legenddraggable");
+      legendContainer.addClass('plot-legenddraggable');
     }
 
     if (isHorizontal) {
-      legendContainer.css("max-width", this.scope.jqcontainer.width());
+      legendContainer.css('max-width', this.scope.jqcontainer.width());
     }
 
     return legendContainer;
@@ -211,26 +208,16 @@ export class PlotLegend {
     for (let i = 0; i < data.length; i++) {
       const item = data[i];
 
-      if (item.legend == null || item.legend === "") {
+      if (item.legend == null || item.legend === '') {
         continue;
       }
 
       const lineUniqueIndex = item.legend + this.getColorInfoUid(item);
 
       if (lineUniqueAttributesSet[lineUniqueIndex] == null) {
-        this.addNewLegendLineData(
-          item,
-          lineUniqueIndex,
-          mergedLines,
-          lineUniqueAttributesSet,
-          i
-        );
+        this.addNewLegendLineData(item, lineUniqueIndex, mergedLines, lineUniqueAttributesSet, i);
       } else {
-        this.addDataForExistingLegendLine(
-          item,
-          mergedLines[lineUniqueAttributesSet[lineUniqueIndex]],
-          i
-        )
+        this.addDataForExistingLegendLine(item, mergedLines[lineUniqueAttributesSet[lineUniqueIndex]], i);
       }
     }
 
@@ -254,7 +241,7 @@ export class PlotLegend {
       color_opacity: item.color_opacity,
       stroke: item.stroke,
       stroke_opacity: item.stroke_opacity,
-      shape: item.type === "point" ? item.shape : 'rect',
+      shape: item.type === 'point' ? item.shape : 'rect',
     };
 
     if (item.isLodItem === true) {
@@ -283,45 +270,39 @@ export class PlotLegend {
     }
 
     if (line.showItem !== true) {
-      line.showItem = dat.showItem
+      line.showItem = dat.showItem;
     }
   }
 
   renderCheckboxes(legendLineUnit, legend) {
     const scope = this.scope;
 
-    if (
-      this.scope.stdmodel.omitCheckboxes
-      || Object.keys(this.scope.legendMergedLines).length <= 1
-    ) {
+    if (this.scope.stdmodel.omitCheckboxes || Object.keys(this.scope.legendMergedLines).length <= 1) {
       // skip "All" check when there is only one line
       return;
     }
 
     const allLegendId = CommonUtils.randomString(32);
-    const unit = $(legendLineUnit)
-      .appendTo(legend)
-      .attr("id", "legend_all")
-      .addClass("plot-legendline");
+    const unit = $(legendLineUnit).appendTo(legend).attr('id', 'legend_all').addClass('plot-legendline');
 
     $("<input type='checkbox' />")
-      .attr("id", "legendcheck_all_" + allLegendId)
-      .attr("class", "plot-legendcheckbox beforeCheckbox")
-      .prop("checked", this.scope.showAllItems)
+      .attr('id', 'legendcheck_all_' + allLegendId)
+      .attr('class', 'plot-legendcheckbox beforeCheckbox')
+      .prop('checked', this.scope.showAllItems)
       .click(scope.plotInteraction.toggleVisibility)
       .appendTo($(unit));
 
-    $("<span></span>")
-      .attr("id", "legendbox_all")
-      .attr("class", "plot-legendbox")
-      .css("background-color", "none")
+    $('<span></span>')
+      .attr('id', 'legendbox_all')
+      .attr('class', 'plot-legendbox')
+      .css('background-color', 'none')
       .appendTo($(unit));
 
-    $("<label></label>")
-      .attr("id", "legendtext_all")
-      .attr("for", "legendcheck_all_" + allLegendId)
-      .attr("class", "plot-label")
-      .text("All")
+    $('<label></label>')
+      .attr('id', 'legendtext_all')
+      .attr('for', 'legendcheck_all_' + allLegendId)
+      .attr('class', 'plot-label')
+      .text('All')
       .appendTo($(unit));
   }
 
@@ -332,7 +313,7 @@ export class PlotLegend {
 
     const line = this.scope.legendMergedLines[id];
 
-    if (line.legend == null || line.legend === "") {
+    if (line.legend == null || line.legend === '') {
       return;
     }
 
@@ -341,35 +322,36 @@ export class PlotLegend {
 
     const unit = $(legendLineUnit)
       .appendTo(legend)
-      .attr("id", "legend_" + id)
-      .addClass("plot-legendline")
+      .attr('id', 'legend_' + id)
+      .addClass('plot-legendline')
       .mouseenter(function (e) {
         const legendLine = $(this)[0];
 
         highlightTimeoutId = setTimeout(() => {
-          self.highlightElements(legendLine.id.split("_")[1], true);
+          self.highlightElements(legendLine.id.split('_')[1], true);
         }, 300);
       })
       .mouseleave(function (e) {
         clearTimeout(highlightTimeoutId);
-        self.highlightElements($(this)[0].id.split("_")[1], false);
+        self.highlightElements($(this)[0].id.split('_')[1], false);
       });
 
     this.renderCheckbox(line, unit, id);
 
     // color box
-    $("<span></span>")
-      .attr("id", "legendbox_" + id)
-      .attr("class", "plot-legendbox")
-      .attr("title", line.color == null ? "Element-based colored item" : "")
+    $('<span></span>')
+      .attr('id', 'legendbox_' + id)
+      .attr('class', 'plot-legendbox')
+      .attr('title', line.color == null ? 'Element-based colored item' : '')
       .appendTo(unit)
       .append(PointShapeHelper.createLegendMarker(line));
 
     // legend text
-    $("<label></label>").appendTo(unit)
-      .attr("id", "legendtext_" + id)
-      .attr("for", "legendcheck_" + id)
-      .attr("class", "plot-label")
+    $('<label></label>')
+      .appendTo(unit)
+      .attr('id', 'legendtext_' + id)
+      .attr('for', 'legendcheck_' + id)
+      .attr('class', 'plot-label')
       .text(line.legend);
 
     this.renderLodItem(line, unit, id);
@@ -383,9 +365,9 @@ export class PlotLegend {
     }
 
     $("<input type='checkbox'/>")
-      .attr("id", "legendcheck_" + id)
-      .attr("class", "plot-legendcheckbox beforeCheckbox")
-      .prop("checked", line.showItem)
+      .attr('id', 'legendcheck_' + id)
+      .attr('class', 'plot-legendcheckbox beforeCheckbox')
+      .prop('checked', line.showItem)
       .click(scope.plotInteraction.toggleVisibility)
       .appendTo(unit);
   }
@@ -417,7 +399,7 @@ export class PlotLegend {
       lodType: lodType,
       lineId: lineId,
       name: this.getLodLabel(lodType),
-      action: () => this.applyLodType(lodType, lineId)
+      action: () => this.applyLodType(lodType, lineId),
     };
   }
 
@@ -452,19 +434,19 @@ export class PlotLegend {
   }
 
   renderLodOffType(dataIds, legendLineId) {
-    if (this.scope.getMergedLodInfo(dataIds).lodType === "off") {
+    if (this.scope.getMergedLodInfo(dataIds).lodType === 'off') {
       return;
     }
 
-    this.scope.removePipe.push("msg_lodoff");
+    this.scope.removePipe.push('msg_lodoff');
     this.plotMessage.render(
-      "LOD is being turned off. Are you sure?",
+      'LOD is being turned off. Are you sure?',
       [
-        "You are trying to turning off LOD. Loading full resolution data is " +
-        "going to take time and may potentially crash the browser.",
-        "PROCEED (left click) / CANCEL (right click)"
+        'You are trying to turning off LOD. Loading full resolution data is ' +
+          'going to take time and may potentially crash the browser.',
+        'PROCEED (left click) / CANCEL (right click)',
       ],
-      "msg_lodoff",
+      'msg_lodoff',
       () => {
         dataIds.forEach((dataId) => {
           const loadLoader = this.scope.stdmodel.data[dataId];
@@ -475,7 +457,7 @@ export class PlotLegend {
         this.scope.update();
         this.scope.setMergedLodHint(dataIds, legendLineId);
       },
-      null
+      null,
     );
   }
 
@@ -486,7 +468,7 @@ export class PlotLegend {
           <a class="dropdown-toggle plot-legendlodtype"></a>
           <ul class="dropdown-menu"></ul>
         </div>
-      </div>`
+      </div>`,
     );
 
     const dropdownMenuElement = lodhint.find('ul.dropdown-menu');
@@ -512,7 +494,7 @@ export class PlotLegend {
     this.scope.lodTypeMenuItems[id] = lodTypeMenuItems;
 
     unit.append(lodhint);
-    lodhint.attr("id", "hint_" + id).attr("class", "plot-legendlod");
+    lodhint.attr('id', 'hint_' + id).attr('class', 'plot-legendlod');
 
     this.scope.setMergedLodHint(line.lodDataIds, id);
   }

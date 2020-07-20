@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-import {DefaultAxis, TimeAxis} from "./axis";
+import { DefaultAxis, TimeAxis } from './axis';
 
 export class PlotAxisFactory {
   static getPlotAxis(type = 'linear'): TimeAxis | DefaultAxis {
@@ -25,7 +25,7 @@ export class PlotAxisFactory {
       case 'linear':
       case 'log':
       case 'category':
-        return new DefaultAxis(type)
+        return new DefaultAxis(type);
     }
   }
 }

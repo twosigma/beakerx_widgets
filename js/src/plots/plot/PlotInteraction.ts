@@ -16,9 +16,9 @@
 
 import * as _ from 'underscore';
 import * as d3 from 'd3';
-import {PlotTip} from './PlotTip';
-import {PlotKeyboardUtils, PlotUtils} from "../../utils";
-import {disableZoomWheel, enableZoomWheel} from "./zoom";
+import { PlotTip } from './PlotTip';
+import { PlotKeyboardUtils, PlotUtils } from '../../utils';
+import { disableZoomWheel, enableZoomWheel } from './zoom';
 
 export class PlotInteraction {
   scope: any;
@@ -43,35 +43,32 @@ export class PlotInteraction {
   bindEvents() {
     const scope = this.scope;
 
-    this.scope.svg
-      .on("mousedown", () => {
-        scope.jqcontainer.addClass('bko-focused');
+    this.scope.svg.on('mousedown', () => {
+      scope.jqcontainer.addClass('bko-focused');
 
-        return scope.plotInteraction.mouseDown();
-      });
+      return scope.plotInteraction.mouseDown();
+    });
 
-    scope.jqcontainer.on("mouseleave", () => {
+    scope.jqcontainer.on('mouseleave', () => {
       scope.jqcontainer.removeClass('bko-focused');
 
       return disableZoomWheel(scope);
     });
 
-    scope.jqsvg
-      .mousemove((e) => scope.plotCursor.render(e))
-      .mouseleave((e) => scope.plotCursor.clear());
+    scope.jqsvg.mousemove((e) => scope.plotCursor.render(e)).mouseleave((e) => scope.plotCursor.clear());
   }
 
   mouseDown() {
-    if (this.scope.interactMode === "other") {
-      this.scope.interactMode = "zoom";
+    if (this.scope.interactMode === 'other') {
+      this.scope.interactMode = 'zoom';
       return;
-    } else if (this.scope.interactMode === "remove") {
-      this.scope.interactMode = "other";
+    } else if (this.scope.interactMode === 'remove') {
+      this.scope.interactMode = 'other';
       return;
     }
 
-    if (d3.event.target.nodeName.toLowerCase() === "div") {
-      this.scope.interactMode = "other";
+    if (d3.event.target.nodeName.toLowerCase() === 'div') {
+      this.scope.interactMode = 'other';
       disableZoomWheel(this.scope);
       return;
     }
@@ -97,12 +94,13 @@ export class PlotInteraction {
   prepare() {
     const model = this.scope.stdmodel;
 
-    this.scope.svg.selectAll(".item-clickable").on('click.action', this.onClickAction);
+    this.scope.svg.selectAll('.item-clickable').on('click.action', this.onClickAction);
 
     //TODO add listeners only for elements that have keys or keyTags
-    this.scope.svg.selectAll(".item-onkey")
-      .on("mouseenter.plot-click", this.onMouseEnter)
-      .on("mouseleave.plot-click", this.onMouseLeave);
+    this.scope.svg
+      .selectAll('.item-onkey')
+      .on('mouseenter.plot-click', this.onMouseEnter)
+      .on('mouseleave.plot-click', this.onMouseLeave);
 
     if (model.useToolTip) {
       this.bindTooltipEvents();
@@ -118,7 +116,7 @@ export class PlotInteraction {
       this.onKeyAction(item, onKeyEvent);
     };
 
-    $(document).on("keydown.plot-action", this.onKeyListeners[item.id]);
+    $(document).on('keydown.plot-action', this.onKeyListeners[item.id]);
   }
 
   onMouseLeave(item) {
@@ -127,7 +125,7 @@ export class PlotInteraction {
     if (keyListener) {
       delete this.onKeyListeners[item.id];
 
-      $(document).off("keydown.plot-action", keyListener);
+      $(document).off('keydown.plot-action', keyListener);
     }
   }
 
@@ -140,10 +138,7 @@ export class PlotInteraction {
   }
 
   runClickAction(event, item) {
-    if (
-      !item.hasClickAction
-      || (item.id !== event.id && event.id.indexOf(item.id + "_") !== 0)
-    ) {
+    if (!item.hasClickAction || (item.id !== event.id && event.id.indexOf(item.id + '_') !== 0)) {
       return;
     }
 
@@ -151,7 +146,7 @@ export class PlotInteraction {
       return this.sendOnClickTagAction(event, item);
     }
 
-    this.runOnClickAction(event, item)
+    this.runOnClickAction(event, item);
   }
 
   sendOnClickTagAction(event, item) {
@@ -167,12 +162,15 @@ export class PlotInteraction {
     params.actionType = 'onclick';
     params.tag = item.clickTag;
 
-    this.scope.plotDisplayModel.send({
-      event: 'actiondetails',
-      plotId: plotId,
-      itemId: item.uid,
-      params: params
-    }, this.scope.plotDisplayView.callbacks());
+    this.scope.plotDisplayModel.send(
+      {
+        event: 'actiondetails',
+        plotId: plotId,
+        itemId: item.uid,
+        params: params,
+      },
+      this.scope.plotDisplayView.callbacks(),
+    );
   }
 
   runOnClickAction(event, item) {
@@ -187,12 +185,15 @@ export class PlotInteraction {
       return this.scope.model.onClick(plotIndex, item, event);
     }
 
-    this.scope.plotDisplayModel.send({
-      event: 'onclick',
-      plotId: plotId,
-      itemId: item.uid,
-      params: PlotUtils.getActionObject(this.scope.model.getCellModel().type, event)
-    }, this.scope.plotDisplayView.callbacks());
+    this.scope.plotDisplayModel.send(
+      {
+        event: 'onclick',
+        plotId: plotId,
+        itemId: item.uid,
+        params: PlotUtils.getActionObject(this.scope.model.getCellModel().type, event),
+      },
+      this.scope.plotDisplayView.callbacks(),
+    );
   }
 
   onKeyAction(item, onKeyEvent) {
@@ -201,7 +202,7 @@ export class PlotInteraction {
     for (let i = 0; i < this.scope.stdmodel.data.length; i++) {
       const data = this.scope.stdmodel.data[i];
 
-      if (data.id !== item.id && item.id.indexOf(data.id + "_") !== 0) {
+      if (data.id !== item.id && item.id.indexOf(data.id + '_') !== 0) {
         continue;
       }
 
@@ -224,9 +225,10 @@ export class PlotInteraction {
         },
         () => {
           console.error('set action details error');
-        });
+        },
+      );
 
-      return
+      return;
     }
 
     const plotId = this.scope.stdmodel.plotId;
@@ -236,12 +238,15 @@ export class PlotInteraction {
     params.key = key;
     params.tag = data.keyTags[key];
 
-    this.scope.plotDisplayModel.send({
-      event: 'actiondetails',
-      plotId: plotId,
-      itemId: data.uid,
-      params: params
-    }, this.scope.plotDisplayView.callbacks());
+    this.scope.plotDisplayModel.send(
+      {
+        event: 'actiondetails',
+        plotId: plotId,
+        itemId: data.uid,
+        params: params,
+      },
+      this.scope.plotDisplayView.callbacks(),
+    );
   }
 
   runOnKeyAction(key, data, item) {
@@ -267,16 +272,16 @@ export class PlotInteraction {
         event: 'onkey',
         plotId: this.scope.stdmodel.plotId,
         itemId: data.uid,
-        params: params
+        params: params,
       },
-      this.scope.plotDisplayView.callbacks()
+      this.scope.plotDisplayView.callbacks(),
     );
   }
 
   removeOnKeyListeners() {
     for (const listener in this.onKeyListeners) {
       if (Object.prototype.hasOwnProperty.call(this.onKeyListeners, listener)) {
-        $(document).off("keydown.plot-action", this.onKeyListeners[listener]);
+        $(document).off('keydown.plot-action', this.onKeyListeners[listener]);
       }
     }
 
@@ -284,11 +289,12 @@ export class PlotInteraction {
   }
 
   bindTooltipEvents() {
-    this.scope.svg.selectAll(".plot-resp")
+    this.scope.svg
+      .selectAll('.plot-resp')
       .on('mouseenter', this.onMouseEnterTooltip)
       .on('mousemove', this.onMouseMoveTooltip)
-      .on("mouseleave", this.onMouseLeaveTooltip)
-      .on("click.resp", this.onClickrespTooltip);
+      .on('mouseleave', this.onMouseLeaveTooltip)
+      .on('click.resp', this.onClickrespTooltip);
   }
 
   onMouseEnterTooltip(d) {
@@ -329,7 +335,7 @@ export class PlotInteraction {
     for (let i = 0; i < model.data.length; i++) {
       const item = model.data[i];
 
-      if (item.hasClickAction === true && (item.id === d.id || d.id.indexOf(item.id + "_") === 0)) {
+      if (item.hasClickAction === true && (item.id === d.id || d.id.indexOf(item.id + '_') === 0)) {
         hasClickAction = true;
 
         break;
@@ -340,11 +346,11 @@ export class PlotInteraction {
   }
 
   toggleVisibility(e) {
-    const id = e.target.id.split("_")[1];
+    const id = e.target.id.split('_')[1];
     const data = this.scope.stdmodel.data;
     // id in the format "legendcheck_id"
 
-    if (id == "all") {
+    if (id == 'all') {
       return this.toggleAllLines(data);
     }
 
@@ -355,14 +361,14 @@ export class PlotInteraction {
   }
 
   toggleAllLines(data) {
-    this.scope.showAllItems = this.findLegendCheckAllElement().prop("checked");
+    this.scope.showAllItems = this.findLegendCheckAllElement().prop('checked');
 
     for (const lineId in this.scope.legendMergedLines) {
       this.toggleLine(data, lineId, this.scope.showAllItems);
 
       this.scope.jqlegendcontainer
-        .find("#legendcheck_" + lineId)
-        .prop("checked", this.scope.legendMergedLines[lineId].showItem);
+        .find('#legendcheck_' + lineId)
+        .prop('checked', this.scope.legendMergedLines[lineId].showItem);
     }
 
     this.scope.plotRange.calcRange();
@@ -401,19 +407,20 @@ export class PlotInteraction {
 
   updateShowAllLines(): void {
     this.scope.showAllLines = this.calculateShowAllLines();
-    this.findLegendCheckAllElement()
-      .prop("checked", this.scope.showAllLines);
+    this.findLegendCheckAllElement().prop('checked', this.scope.showAllLines);
   }
 
   calculateShowAllLines(): boolean {
-    return Object.entries(this.scope.legendMergedLines)
-      .reduce((total, pair: [string, { showItem: boolean; [k: string]: unknown }]) => {
+    return Object.entries(this.scope.legendMergedLines).reduce(
+      (total, pair: [string, { showItem: boolean; [k: string]: unknown }]) => {
         const [, value] = pair;
         return total && value.showItem;
-      }, true);
+      },
+      true,
+    );
   }
 
   findLegendCheckAllElement(): JQuery<HTMLElement> {
-    return this.scope.jqlegendcontainer.find("[id^=legendcheck_all]");
+    return this.scope.jqlegendcontainer.find('[id^=legendcheck_all]');
   }
 }

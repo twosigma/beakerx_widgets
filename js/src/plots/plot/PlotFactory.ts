@@ -14,9 +14,9 @@
  *  limitations under the License.
  */
 
-import {BigNumberUtils} from "../../utils";
-import {PlotLine} from "./std/PlotLine";
-import {TimeAxis} from "./std/axis";
+import { BigNumberUtils } from '../../utils';
+import { PlotLine } from './std/PlotLine';
+import { TimeAxis } from './std/axis';
 
 const PlotBar = require('./_js/std/plotbar.js');
 const PlotStem = require('./_js/std/plotstem.js');
@@ -35,14 +35,13 @@ const PlotAreaLodLoader = require('./_js/lodloader/plotAreaLodLoader');
 const PlotPointLodLoader = require('./_js/lodloader/plotPointLodLoader.js');
 
 export class PlotFactory {
-
   static createPlotItem(item: any, lodThreshold = 1500) {
     const size = item.elements.length ?? 0;
     let shouldApplyLod = size >= lodThreshold;
     if (shouldApplyLod) {
       for (let j = 1; j < item.elements.length; j++) {
         if (BigNumberUtils.lt(item.elements[j].x, item.elements[j - 1].x)) {
-          console.warn("x values are not monotonic, LOD is disabled");
+          console.warn('x values are not monotonic, LOD is disabled');
           shouldApplyLod = false;
           break;
         }
@@ -51,41 +50,41 @@ export class PlotFactory {
 
     let plotItem;
     switch (item.type) {
-      case "line":
+      case 'line':
         plotItem = shouldApplyLod ? new PlotLineLodLoader(item, lodThreshold) : new PlotLine(item);
         break;
-      case "bar":
+      case 'bar':
         plotItem = shouldApplyLod ? new PlotBarLodLoader(item, lodThreshold) : new PlotBar(item);
         break;
-      case "stem":
+      case 'stem':
         plotItem = shouldApplyLod ? new PlotStemLodLoader(item, lodThreshold) : new PlotStem(item);
         break;
-      case "area":
+      case 'area':
         plotItem = shouldApplyLod ? new PlotAreaLodLoader(item, lodThreshold) : new PlotArea(item);
         break;
-      case "point":
+      case 'point':
         plotItem = shouldApplyLod ? new PlotPointLodLoader(item, lodThreshold) : new PlotPoint(item);
         break;
-      case "constline":
+      case 'constline':
         plotItem = new PlotConstline(item);
         break;
-      case "constband":
+      case 'constband':
         plotItem = new PlotConstband(item);
         break;
-      case "text":
+      case 'text':
         plotItem = new PlotText(item);
         break;
-      case "treemapnode":
+      case 'treemapnode':
         plotItem = new PlotTreeMapNode(item);
         break;
-      case "heatmap":
+      case 'heatmap':
         plotItem = new HeatMap(item);
         break;
-      case "raster":
+      case 'raster':
         plotItem = new PlotRaster(item);
         break;
       default:
-        console.error("no type specified for item creation");
+        console.error('no type specified for item creation');
     }
 
     return plotItem;
@@ -93,61 +92,61 @@ export class PlotFactory {
 
   static recreatePlotItem(item: any) {
     switch (item.type) {
-      case "line":
+      case 'line':
         if (item.isLodItem === true) {
           item.__proto__ = PlotLineLodLoader.prototype;
         } else {
           item.__proto__ = PlotLine.prototype;
         }
         break;
-      case "bar":
+      case 'bar':
         if (item.isLodItem === true) {
           item.__proto__ = PlotBarLodLoader.prototype;
         } else {
           item.__proto__ = PlotBar.prototype;
         }
         break;
-      case "stem":
+      case 'stem':
         if (item.isLodItem === true) {
           item.__proto__ = PlotStemLodLoader.prototype;
         } else {
           item.__proto__ = PlotStem.prototype;
         }
         break;
-      case "area":
+      case 'area':
         if (item.isLodItem === true) {
           item.__proto__ = PlotAreaLodLoader.prototype;
         } else {
           item.__proto__ = PlotArea.prototype;
         }
         break;
-      case "point":
+      case 'point':
         if (item.isLodItem === true) {
           item.__proto__ = PlotPointLodLoader.prototype;
         } else {
           item.__proto__ = PlotPoint.prototype;
         }
         break;
-      case "constline":
+      case 'constline':
         item.__proto__ = PlotConstline.prototype;
         break;
-      case "constband":
+      case 'constband':
         item.__proto__ = PlotConstband.prototype;
         break;
-      case "text":
+      case 'text':
         item.__proto__ = PlotText.prototype;
         break;
-      case "axis":
+      case 'axis':
         item.__proto__ = TimeAxis.prototype;
         break;
-      case "treemapnode":
+      case 'treemapnode':
         item.__proto__ = PlotTreeMapNode.prototype;
         break;
-      case "raster":
+      case 'raster':
         item.__proto__ = PlotRaster.prototype;
         break;
       default:
-        console.error("no type specified for item recreation");
+        console.error('no type specified for item recreation');
     }
   }
 }

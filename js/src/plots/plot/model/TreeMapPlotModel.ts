@@ -14,9 +14,9 @@
  *  limitations under the License.
  */
 
-import {AbstractPlotModel} from "./AbstractPlotModel";
-import {DefaultKernelMapping, GroovyKernelMapping, TreeMapModelData} from "../mapping";
-import {PlotFactory} from "../PlotFactory";
+import { AbstractPlotModel } from './AbstractPlotModel';
+import { DefaultKernelMapping, GroovyKernelMapping, TreeMapModelData } from '../mapping';
+import { PlotFactory } from '../PlotFactory';
 
 export class TreeMapPlotModel extends AbstractPlotModel {
   format(newModel) {
@@ -28,7 +28,8 @@ export class TreeMapPlotModel extends AbstractPlotModel {
   }
 
   createNewModel(model): TreeMapModelData {
-    if (model.version === "groovy") {  // model returned from serializer
+    if (model.version === 'groovy') {
+      // model returned from serializer
       return GroovyKernelMapping.mapTreeMapModelData(model);
     }
 

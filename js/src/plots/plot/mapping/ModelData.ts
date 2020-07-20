@@ -22,7 +22,7 @@ export interface ModelData {
   elementStyles?: string;
   margin: Record<string, unknown>;
   showLegend: boolean;
-  legendPosition: { position: string; };
+  legendPosition: { position: string };
   legendLayout: string;
   useToolTip: boolean;
   plotSize: {

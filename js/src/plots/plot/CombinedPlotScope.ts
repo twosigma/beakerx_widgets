@@ -14,21 +14,21 @@
  *  limitations under the License.
  */
 
-import * as _ from "underscore";
-import $ from "jquery";
+import * as _ from 'underscore';
+import $ from 'jquery';
 
-import {PlotLayout} from "./PlotLayout";
-import {CombinedPlotModel} from "./model";
-import {PlotScope} from './PlotScope';
-import {CombinedPlotScopeUtils} from './CombinedPlotScopeUtils';
-import {Focus, PlotFocus} from './zoom';
-import {PlotContextMenu} from './contextMenu';
-import {GistPublisherUtils} from "../publisher";
-import {CombinedPlotFormatter} from "./formater";
-import {CommonUtils, PlotStyleUtils, PlotUtils} from "../../utils";
+import { PlotLayout } from './PlotLayout';
+import { CombinedPlotModel } from './model';
+import { PlotScope } from './PlotScope';
+import { CombinedPlotScopeUtils } from './CombinedPlotScopeUtils';
+import { Focus, PlotFocus } from './zoom';
+import { PlotContextMenu } from './contextMenu';
+import { GistPublisherUtils } from '../publisher';
+import { CombinedPlotFormatter } from './formater';
+import { CommonUtils, PlotStyleUtils, PlotUtils } from '../../utils';
 
-import "jquery-ui/ui/widgets/resizable";
-import {ChartExtender} from "./ChartExtender";
+import 'jquery-ui/ui/widgets/resizable';
+import { ChartExtender } from './ChartExtender';
 
 export class CombinedPlotScope {
   wrapperId: string;
@@ -48,10 +48,10 @@ export class CombinedPlotScope {
   canvas: HTMLCanvasElement;
 
   model: {
-    model: any,
-    getCellModel: () => any,
-    getDumpState?: () => any,
-    setDumpState?: (state: any) => any
+    model: any;
+    getCellModel: () => any;
+    getDumpState?: () => any;
+    setDumpState?: (state: any) => any;
   };
 
   constructor(wrapperId: string) {
@@ -66,7 +66,7 @@ export class CombinedPlotScope {
       model: {},
       getCellModel: function () {
         return this.model;
-      }
+      },
     };
   }
 
@@ -75,9 +75,10 @@ export class CombinedPlotScope {
       return;
     }
 
-    this.element.find("#combplotTitle")
+    this.element
+      .find('#combplotTitle')
       .text(this.stdmodel.title)
-      .css("width", this.width || this.stdmodel.plotSize.width);
+      .css('width', this.width || this.stdmodel.plotSize.width);
   }
 
   standardizeData(): void {
@@ -108,13 +109,14 @@ export class CombinedPlotScope {
   }
 
   sendEvent(eventName, plotId, itemId, params): void {
-    this.plotDisplayView.model.send({
+    this.plotDisplayView.model.send(
+      {
         event: eventName,
         plotId: plotId,
         itemId: itemId,
-        params: params
+        params: params,
       },
-      this.plotDisplayView.model.callbacks(this.plotDisplayView)
+      this.plotDisplayView.model.callbacks(this.plotDisplayView),
     );
   }
 
@@ -140,8 +142,8 @@ export class CombinedPlotScope {
     this.childScopeNumber = 1;
   }
 
-  calcRange(): { xl: number, xr: number } {
-    let xl = 1E100;
+  calcRange(): { xl: number; xr: number } {
+    let xl = 1e100;
     let xr = 0;
     const plotModels = this.stdmodel.plots;
 
@@ -155,14 +157,14 @@ export class CombinedPlotScope {
       xr = Math.max(xr, ret.defaultFocus.xr as number);
     }
 
-    return {xl, xr};
+    return { xl, xr };
   }
 
-  dumpState(): { focus: Focus; width: number, subplots: any[] } {
+  dumpState(): { focus: Focus; width: number; subplots: any[] } {
     const ret = {
       focus: this.plotFocus.getFocus(),
       width: this.width,
-      subplots: []
+      subplots: [],
     };
 
     for (let i = 0; i < this.models.length; i++) {
@@ -175,9 +177,7 @@ export class CombinedPlotScope {
   getMinScopesWidth(): number {
     return Math.min.apply(
       null,
-      this.scopes
-        .map(scope => scope.width)
-        .filter(width => !!width)
+      this.scopes.map((scope) => scope.width).filter((width) => !!width),
     );
   }
 
@@ -186,8 +186,8 @@ export class CombinedPlotScope {
   }
 
   init(): void {
-    this.canvas = <HTMLCanvasElement>this.element.find("canvas")[0];
-    this.canvas.style.display = "none";
+    this.canvas = <HTMLCanvasElement>this.element.find('canvas')[0];
+    this.canvas.style.display = 'none';
 
     this.id = `bko-plot-${CommonUtils.generateId(6)}`;
     this.element.find('.combplot-plotcontainer').attr('id', this.id);
@@ -242,35 +242,33 @@ export class CombinedPlotScope {
 
   getSvgToSave(): HTMLElement {
     const plots = this.stdmodel.plots;
-    const combinedSvg = $("<svg></svg>")
-      .attr('xmlns', 'http://www.w3.org/2000/svg')
-      .attr('class', 'svg-export');
+    const combinedSvg = $('<svg></svg>').attr('xmlns', 'http://www.w3.org/2000/svg').attr('class', 'svg-export');
 
     if (document.body.classList.contains('improveFonts')) {
       combinedSvg.addClass('improveFonts');
     }
 
-    const plotTitle = this.element.find("#combplotTitle");
+    const plotTitle = this.element.find('#combplotTitle');
 
     PlotUtils.addTitleToSvg(combinedSvg[0], plotTitle, {
       width: plotTitle.width(),
-      height: PlotStyleUtils.getActualCss(plotTitle, "outerHeight")
+      height: PlotStyleUtils.getActualCss(plotTitle, 'outerHeight'),
     });
 
-    let combinedSvgHeight = PlotStyleUtils.getActualCss(plotTitle, "outerHeight", true) as number;
+    let combinedSvgHeight = PlotStyleUtils.getActualCss(plotTitle, 'outerHeight', true) as number;
     let combinedSvgWidth = 0;
 
     for (let i = 0; i < plots.length; i++) {
       const svg = plots[i].getSvgToSave();
 
       PlotUtils.translateChildren(svg, 0, combinedSvgHeight);
-      combinedSvgHeight += parseInt(svg.getAttribute("height"));
-      combinedSvgWidth = Math.max(parseInt(svg.getAttribute("width")), combinedSvgWidth);
+      combinedSvgHeight += parseInt(svg.getAttribute('height'));
+      combinedSvgWidth = Math.max(parseInt(svg.getAttribute('width')), combinedSvgWidth);
       combinedSvg.append(svg.children);
     }
 
-    combinedSvg.attr("width", combinedSvgWidth);
-    combinedSvg.attr("height", combinedSvgHeight);
+    combinedSvg.attr('width', combinedSvgWidth);
+    combinedSvg.attr('height', combinedSvgHeight);
 
     return combinedSvg[0];
   }
@@ -283,18 +281,15 @@ export class CombinedPlotScope {
     const html = PlotStyleUtils.convertToXHTML(svgToSave.outerHTML);
     const fileName = _.isEmpty(this.stdmodel.title) ? 'combinedplot' : this.stdmodel.title;
 
-    PlotUtils.download(
-      `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(html)))}`,
-      `${fileName}.svg`
-    );
+    PlotUtils.download(`data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(html)))}`, `${fileName}.svg`);
   }
 
   saveAsPng(scale = 1.0): void {
     const svg = this.getSvgToSave();
     PlotUtils.addInlineFonts(svg);
 
-    this.canvas.width = Number(svg.getAttribute("width")) * scale;
-    this.canvas.height = Number(svg.getAttribute("height")) * scale;
+    this.canvas.width = Number(svg.getAttribute('width')) * scale;
+    this.canvas.height = Number(svg.getAttribute('height')) * scale;
 
     const html = PlotStyleUtils.convertToXHTML(svg.outerHTML);
     const imgSrc = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(html)));
@@ -325,7 +320,7 @@ export class CombinedPlotScope {
       this.model.model = data;
     }
 
-    if (this.model.getCellModel().type === "TreeMap") {
+    if (this.model.getCellModel().type === 'TreeMap') {
       ChartExtender.extend(this, this.element);
     }
   }

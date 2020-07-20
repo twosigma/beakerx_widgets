@@ -14,11 +14,11 @@
  *  limitations under the License.
  */
 
-import {ZoomLevel} from "./ZoomLevel";
+import { ZoomLevel } from './ZoomLevel';
 
 export const INITIAL_ZOOM_LEVEL: ZoomLevel = {
-  minSpanX: 1E-8,
-  minSpanY: 1E-8,
+  minSpanX: 1e-8,
+  minSpanY: 1e-8,
   maxScaleX: 1,
-  maxScaleY: 1
+  maxScaleY: 1,
 };

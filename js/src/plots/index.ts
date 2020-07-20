@@ -14,6 +14,6 @@
  *  limitations under the License.
  */
 
-export * from "./plot"
-export * from "./publisher"
-export * from "./Plot"
+export * from './plot';
+export * from './publisher';
+export * from './Plot';

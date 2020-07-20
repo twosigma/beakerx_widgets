@@ -16,37 +16,35 @@
 
 import * as _ from 'underscore';
 import * as d3 from 'd3';
-import {PlotStyleUtils} from "../../utils";
-import {PlotLayout} from "./PlotLayout";
+import { PlotStyleUtils } from '../../utils';
+import { PlotLayout } from './PlotLayout';
 
 export class ChartExtender {
   static extend(scope, element) {
     // rendering code
-    element.find(".plot-plotcontainer").resizable({
+    element.find('.plot-plotcontainer').resizable({
       maxWidth: element.parent().width(), // no wider than the width of the cell
       minWidth: 450,
       minHeight: 150,
-      handles: "e, s, se",
+      handles: 'e, s, se',
       resize: function (event, ui) {
         scope.width = ui.size.width;
         scope.height = ui.size.height;
         _.extend(scope.layout.plotSize, ui.size);
 
-        scope.jqsvg.css({"width": scope.width, "height": scope.height});
-        scope.jqplottitle.css({"width": scope.width});
+        scope.jqsvg.css({ width: scope.width, height: scope.height });
+        scope.jqplottitle.css({ width: scope.width });
         scope.emitSizeChange();
         scope.legendDone = false;
         scope.legendResetPosition = true;
 
         scope.update();
-      }
+      },
     });
 
-    scope.plotRange.calcMapping = function () {
-    };
+    scope.plotRange.calcMapping = function () {};
 
-    scope.plotRange.calcRange = function () {
-    };
+    scope.plotRange.calcRange = function () {};
 
     scope.calcLegendableItem = function () {
       scope.legendableItem = 0;
@@ -56,13 +54,12 @@ export class ChartExtender {
           if (node.legend) {
             scope.legendableItem++;
           }
-        }
+        },
       };
       scope.stdmodel.process(visitor);
     };
 
     scope.init = function () {
-
       // first standardize data
       scope.standardizeData();
       // init flags
@@ -92,21 +89,23 @@ export class ChartExtender {
     };
 
     scope.updateClipPath = function () {
-      scope.svg.select('#clipPath_' + scope.wrapperId + ' rect')
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("height", PlotStyleUtils.safeHeight(scope.jqsvg))
-        .attr("width", PlotStyleUtils.safeWidth(scope.jqsvg));
+      scope.svg
+        .select('#clipPath_' + scope.wrapperId + ' rect')
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('height', PlotStyleUtils.safeHeight(scope.jqsvg))
+        .attr('width', PlotStyleUtils.safeWidth(scope.jqsvg));
     };
 
     scope.initLayout = function () {
       scope.layout = new PlotLayout(scope);
 
-      $("<div></div>").appendTo(scope.jqlegendcontainer)
-        .attr("id", "tooltip")
-        .attr("class", "plot-tooltip")
-        .attr("style", "visibility: hidden");
-      scope.tooltip = d3.select(element[0]).select("#tooltip");
+      $('<div></div>')
+        .appendTo(scope.jqlegendcontainer)
+        .attr('id', 'tooltip')
+        .attr('class', 'plot-tooltip')
+        .attr('style', 'visibility: hidden');
+      scope.tooltip = d3.select(element[0]).select('#tooltip');
     };
 
     scope.dumpState = function () {

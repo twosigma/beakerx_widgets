@@ -17,17 +17,17 @@
 import * as d3 from 'd3';
 import * as _ from 'underscore';
 import moment from 'moment-timezone';
-import {enableZoomWheel} from "./helpers";
-import {BoxZoom} from "./BoxZoom";
-import {EventDispatcher} from "./EventDispatcher";
-import {PlotScale} from "./PlotScale";
-import {PlotStyleUtils} from "../../../utils";
+import { enableZoomWheel } from './helpers';
+import { BoxZoom } from './BoxZoom';
+import { EventDispatcher } from './EventDispatcher';
+import { PlotScale } from './PlotScale';
+import { PlotStyleUtils } from '../../../utils';
 
 export class PlotZoom {
   scope: any;
   boxZoom: BoxZoom;
   zoomStarted: number;
-  lastTransform: { x: number, y: number, k: number };
+  lastTransform: { x: number; y: number; k: number };
   eventDispatcher: EventDispatcher;
 
   zoomObj: any = null;
@@ -47,12 +47,9 @@ export class PlotZoom {
   }
 
   init(): void {
-    this.zoomObj
-      .on("start", this.zoomStart)
-      .on("zoom", this.zooming)
-      .on("end", this.zoomEnd);
+    this.zoomObj.on('start', this.zoomStart).on('zoom', this.zooming).on('end', this.zoomEnd);
 
-    this.scope.svg.on("dblclick", () => this.scope.plotFocus.reset());
+    this.scope.svg.on('dblclick', () => this.scope.plotFocus.reset());
 
     const svgElement = this.scope.svg.node();
 
@@ -65,11 +62,11 @@ export class PlotZoom {
     this.scope.svg.call(this.zoomObj);
 
     // disbale zoom events on double click
-    this.scope.svg.on("dblclick.zoom", null);
+    this.scope.svg.on('dblclick.zoom', null);
   }
 
   zoomStart(): void {
-    if (this.scope.interactMode === "other") {
+    if (this.scope.interactMode === 'other') {
       return;
     }
 
@@ -85,24 +82,24 @@ export class PlotZoom {
     const mousep2 = this.scope.mousep2 || {};
 
     this.scope.mousep1 = {
-      "x": d3.mouse(svgNode)[0],
-      "y": d3.mouse(svgNode)[1]
+      x: d3.mouse(svgNode)[0],
+      y: d3.mouse(svgNode)[1],
     };
 
     this.scope.mousep2 = {
       ...mousep2,
-      ...this.scope.mousep1
+      ...this.scope.mousep1,
     };
 
-    this.scope.jqsvg.css("cursor", "auto");
+    this.scope.jqsvg.css('cursor', 'auto');
   }
 
   zooming() {
-    if (this.scope.interactMode === "other" || !this.scope.zoom) {
+    if (this.scope.interactMode === 'other' || !this.scope.zoom) {
       return;
     }
 
-    if (this.scope.interactMode === "zoom") {
+    if (this.scope.interactMode === 'zoom') {
       this.zoom();
     }
 
@@ -112,30 +109,30 @@ export class PlotZoom {
   }
 
   zoomEnd() {
-    if (this.scope.interactMode !== "locate") {
-      this.scope.jqsvg.css("cursor", "auto");
+    if (this.scope.interactMode !== 'locate') {
+      this.scope.jqsvg.css('cursor', 'auto');
 
       return;
     }
 
     // trigger 'show' for save-as context menu
     if (
-      _.isMatch(this.scope.mousep1, this.scope.mousep2)
-      && this.scope.saveAsMenuContainer
-      && this.scope.saveAsMenuContainer.contextMenu
+      _.isMatch(this.scope.mousep1, this.scope.mousep2) &&
+      this.scope.saveAsMenuContainer &&
+      this.scope.saveAsMenuContainer.contextMenu
     ) {
       const mousePosition = d3.mouse(document.body);
 
       this.scope.saveAsMenuContainer.contextMenu({
         x: mousePosition[0],
-        y: mousePosition[1]
+        y: mousePosition[1],
       });
     } else if (this.boxZoom.shouldStartBoxZooming(this.zoomStarted)) {
       // draw rectangle for zoom-area and update chart
       this.boxZoom.locateFocus();
       this.boxZoom.resetLocateBox();
       this.scope.update();
-      this.scope.interactMode = "zoom";
+      this.scope.interactMode = 'zoom';
     } else {
       this.boxZoom.resetLocateBox();
     }
@@ -144,11 +141,7 @@ export class PlotZoom {
 
     const isDispatchedAsSecond = this.eventDispatcher.contains('contextMenu');
 
-    if (
-      isDispatchedAsSecond
-      && this.scope.contexteMenuEvent
-      && !this.boxZoom.shouldStartBoxZooming(this.zoomStarted)
-    ) {
+    if (isDispatchedAsSecond && this.scope.contexteMenuEvent && !this.boxZoom.shouldStartBoxZooming(this.zoomStarted)) {
       this.scope.jqcontainer[0] && this.scope.jqcontainer[0].dispatchEvent(this.scope.contexteMenuEvent);
     }
 
@@ -159,7 +152,7 @@ export class PlotZoom {
     }
 
     this.scope.contexteMenuEvent = null;
-    this.scope.jqsvg.css("cursor", "auto");
+    this.scope.jqsvg.css('cursor', 'auto');
   }
 
   private handleContextMenuEvent(event) {
@@ -173,7 +166,7 @@ export class PlotZoom {
       this.eventDispatcher.add('contextMenu');
     }
 
-    if (!isDispatchedAsSecond || isDispatchedAsSecond && (locateBox.w > 1 || locateBox.h > 1)) {
+    if (!isDispatchedAsSecond || (isDispatchedAsSecond && (locateBox.w > 1 || locateBox.h > 1))) {
       event.stopPropagation();
       event.preventDefault();
     }
@@ -200,7 +193,7 @@ export class PlotZoom {
     }
 
     this.scope.plotRange.calcMapping(true);
-    this.scope.plotCursor.render({offsetX: mx, offsetY: my});
+    this.scope.plotCursor.render({ offsetX: mx, offsetY: my });
     this.scope.plotFocus.fix(this.scope.plotFocus.getFocus());
     this.scope.update();
   }
@@ -212,9 +205,9 @@ export class PlotZoom {
     const H = PlotStyleUtils.safeHeight(this.scope.jqsvg) - bMargin;
     const deltaX = d3trans.x - this.lastTransform.x;
     const deltaY = d3trans.y - this.lastTransform.y;
-    const transformX = -deltaX / W * focus.xspan;
-    const transformY = deltaY / H * focus.yspan;
-    const transformY_r = deltaY / H * focus.yspan_r;
+    const transformX = (-deltaX / W) * focus.xspan;
+    const transformY = (deltaY / H) * focus.yspan;
+    const transformY_r = (deltaY / H) * focus.yspan_r;
 
     this.setLastTransform(d3trans);
 
@@ -223,7 +216,7 @@ export class PlotZoom {
     this.scope.plotFocus.transformY(focus, transformY);
     this.scope.plotFocus.transformYRight(focus, transformY_r, transformY);
 
-    this.scope.jqsvg.css("cursor", "move");
+    this.scope.jqsvg.css('cursor', 'move');
   }
 
   private scaleGraph(mouseX, mouseY, zoomRate, d3trans) {
@@ -239,6 +232,6 @@ export class PlotZoom {
   }
 
   private setLastTransform(d3trans) {
-    this.lastTransform = {...d3trans};
+    this.lastTransform = { ...d3trans };
   }
 }

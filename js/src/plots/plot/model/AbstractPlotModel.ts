@@ -15,18 +15,18 @@
  */
 
 import * as _ from 'underscore';
-import {HeatmapConverter} from "../HeatmapConverter";
-import {PlotConverter} from "../PlotConverter";
+import { HeatmapConverter } from '../HeatmapConverter';
+import { PlotConverter } from '../PlotConverter';
 
 export abstract class AbstractPlotModel {
   model: any;
   settings: any;
   lineDasharrayMap = {
-    solid: "",
-    dash: "9,5",
-    dot: "2,2",
-    dashdot: "9,5,2,5",
-    longdash: "20,5"
+    solid: '',
+    dash: '9,5',
+    dot: '2,2',
+    dashdot: '9,5,2,5',
+    longdash: '20,5',
   };
 
   abstract format(newModel: any): void;
@@ -43,29 +43,32 @@ export abstract class AbstractPlotModel {
   }
 
   standardize(originalModel, settings): any {
-    const model = {...originalModel};
+    const model = { ...originalModel };
 
     if (model.graphics_list != null) {
-      model.version = "groovy";  // TODO, a hack now to check DS source
+      model.version = 'groovy'; // TODO, a hack now to check DS source
     }
 
-    if (model.version === "complete") { // skip standardized model in combined plot
+    if (model.version === 'complete') {
+      // skip standardized model in combined plot
       return model;
     }
 
-    if (model.version !== "groovy") {
-      model.version = "direct";
+    if (model.version !== 'groovy') {
+      model.version = 'direct';
     }
 
     const newModel = this.createNewModel(model);
 
     newModel.lodThreshold = model.lodThreshold
       ? model.lodThreshold
-      : (settings && settings.lodThreshold !== undefined ? settings.lodThreshold : 4000);
+      : settings && settings.lodThreshold !== undefined
+      ? settings.lodThreshold
+      : 4000;
 
     newModel.data = [];
 
-    if (model.version === "groovy") {
+    if (model.version === 'groovy') {
       switch (model.type) {
         case 'HeatMap':
           HeatmapConverter.convertGroovyData(newModel, model);
@@ -74,13 +77,14 @@ export abstract class AbstractPlotModel {
           PlotConverter.convertGroovyData(newModel, model);
           break;
       }
-    } else {  // DS generated directly
+    } else {
+      // DS generated directly
       _.extend(newModel, model);
     }
 
     this.format(newModel);
 
-    newModel.version = "complete";
+    newModel.version = 'complete';
 
     return newModel;
   }

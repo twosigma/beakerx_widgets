@@ -14,10 +14,10 @@
  *  limitations under the License.
  */
 
-import {createPublishMenuItems, createSaveAsMenuItems} from "./createMenuItems";
-import {BkoContextMenu} from "./BkoContextMenu";
-import {PlotScope} from "../PlotScope";
-import {CombinedPlotScope} from "../CombinedPlotScope";
+import { createPublishMenuItems, createSaveAsMenuItems } from './createMenuItems';
+import { BkoContextMenu } from './BkoContextMenu';
+import { PlotScope } from '../PlotScope';
+import { CombinedPlotScope } from '../CombinedPlotScope';
 
 function selectShowPublication(scope: PlotScope | CombinedPlotScope): boolean {
   // TODO
@@ -29,18 +29,16 @@ export class PlotContextMenu extends BkoContextMenu {
 
   constructor(scope: PlotScope | CombinedPlotScope) {
     super(scope);
-    this.showPublication = selectShowPublication(scope)
+    this.showPublication = selectShowPublication(scope);
   }
 
   protected buildMenu(): void {
     this.inLab ? this.buildLabMenu() : this.buildBkoMenu();
 
-    const menuItems = [
-      ...createSaveAsMenuItems(this.scope),
-    ];
+    const menuItems = [...createSaveAsMenuItems(this.scope)];
 
     if (this.showPublication) {
-      menuItems.push(...createPublishMenuItems(this.scope))
+      menuItems.push(...createPublishMenuItems(this.scope));
     }
     this.createItems(menuItems, this.contextMenu as any); //FIXME
     this.bindEvents();

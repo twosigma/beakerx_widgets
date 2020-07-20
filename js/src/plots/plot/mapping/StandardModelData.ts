@@ -14,10 +14,10 @@
  *  limitations under the License.
  */
 
-import {ModelData} from "./ModelData";
+import { ModelData } from './ModelData';
 
 export interface StandardModelData extends ModelData {
-  orientation: "VERTICAL" | "HORIZONTAL";
+  orientation: 'VERTICAL' | 'HORIZONTAL';
   omitCheckboxes: boolean;
   xAxis: any;
   yAxis: any;

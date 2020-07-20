@@ -16,7 +16,7 @@
 
 import * as _ from 'underscore';
 import * as d3 from 'd3';
-import {PlotStyleUtils, PlotUtils} from "../../utils";
+import { PlotStyleUtils, PlotUtils } from '../../utils';
 
 export class PlotTip {
   static readonly TOOLTIP_ANIMATION_TIME = 300;
@@ -25,7 +25,7 @@ export class PlotTip {
     const data = scope.stdmodel.data;
     const svg = scope.maing;
 
-    svg.selectAll(".plot-tooltip-line").remove();
+    svg.selectAll('.plot-tooltip-line').remove();
 
     _.each(scope.tips, (d, key) => {
       PlotTip.renderTip(scope, d, key, data);
@@ -68,16 +68,14 @@ export class PlotTip {
       PlotTip.renderTips(scope);
     };
 
-    tipdiv.draggable({drag, stop: drag});
+    tipdiv.draggable({ drag, stop: drag });
 
-    tipdiv
-      .css("left", x + PlotUtils.fonts.tooltipWidth)
-      .css("top", y);
+    tipdiv.css('left', x + PlotUtils.fonts.tooltipWidth).css('top', y);
 
     if (d.isresp === true) {
-      scope.jqsvg.find("#" + d.id).attr("opacity", 1);
+      scope.jqsvg.find('#' + d.id).attr('opacity', 1);
     } else {
-      scope.jqsvg.find("#" + d.id).attr("font-weight", "bold");
+      scope.jqsvg.find('#' + d.id).attr('font-weight', 'bold');
     }
 
     if (d.sticking == true) {
@@ -90,11 +88,11 @@ export class PlotTip {
     const tipid = `tip_${d.id}`;
     const tiptext = data[d.idx].createTip(d.ele, d.g, scope.stdmodel);
 
-    const tipdiv = $("<div></div>")
+    const tipdiv = $('<div></div>')
       .appendTo(scope.jqcontainer)
-      .css({"border-color": data[d.idx].tip_color})
-      .attr("id", tipid)
-      .attr("class", "plot-tooltip")
+      .css({ 'border-color': data[d.idx].tip_color })
+      .attr('id', tipid)
+      .attr('class', 'plot-tooltip')
       .append(tiptext)
       .on('mouseup', function (e) {
         if (e.which == 3) {
@@ -104,9 +102,9 @@ export class PlotTip {
       });
 
     if (!scope.tipmoving) {
-      setTimeout(() => tipdiv.css({opacity: 1, transition: 'opacity 0.4s'}));
+      setTimeout(() => tipdiv.css({ opacity: 1, transition: 'opacity 0.4s' }));
     } else {
-      tipdiv.css({opacity: 1, transition: 'opacity 0s'});
+      tipdiv.css({ opacity: 1, transition: 'opacity 0s' });
       scope.tipmoving = false;
     }
 
@@ -118,9 +116,8 @@ export class PlotTip {
   }
 
   static hideTips(scope, itemid, hidden = true) {
-
     _.each(scope.tips, (value, key: string) => {
-      if (key.search("" + itemid) === 0) {
+      if (key.search('' + itemid) === 0) {
         scope.tips[key].hidden = hidden;
       }
     });
@@ -136,7 +133,7 @@ export class PlotTip {
     }
 
     if (d.isresp === true) {
-      scope.jqsvg.find("#" + d.id).css("opacity", 1);
+      scope.jqsvg.find('#' + d.id).css('opacity', 1);
     }
 
     scope.tips[d.id] = {};
@@ -185,13 +182,14 @@ export class PlotTip {
 
     d = PlotTip.extendTipsData(scope, d, mousePos);
 
-    scope.jqcontainer.find("#tip_" + d.id)
-      .css("left", x + PlotUtils.fonts.tooltipWidth)
-      .css("top", y);
+    scope.jqcontainer
+      .find('#tip_' + d.id)
+      .css('left', x + PlotUtils.fonts.tooltipWidth)
+      .css('top', y);
   }
 
   static appendTooltipsToSvg(scope, svg) {
-    const tooltipElements = scope.jqcontainer.find(".plot-tooltip").toArray();
+    const tooltipElements = scope.jqcontainer.find('.plot-tooltip').toArray();
     const scopeTipsSize = Object.keys(scope.tips).length;
 
     if (scopeTipsSize <= 0 || tooltipElements.length <= 0) {
@@ -207,19 +205,20 @@ export class PlotTip {
         top: 'auto',
         left: 'auto',
         bottom: 'auto',
-        right: 'auto'
+        right: 'auto',
       });
 
-      const getPositive = (value) => value > 0 ? value : 0;
+      const getPositive = (value) => (value > 0 ? value : 0);
       const position = PlotStyleUtils.getActualCss(tooltip, 'position') as JQuery.Coordinates;
       const x = getPositive(position.left);
       const y = getPositive(position.top);
 
-      svg.append('foreignObject')
-        .attr("width", PlotStyleUtils.getActualCss(tooltip, 'outerWidth', true) as number + 1)//add 1 because jQuery round size
-        .attr("height", PlotStyleUtils.getActualCss(tooltip, 'outerHeight', true) as number + 1)
-        .attr("x", x)
-        .attr("y", y)
+      svg
+        .append('foreignObject')
+        .attr('width', (PlotStyleUtils.getActualCss(tooltip, 'outerWidth', true) as number) + 1) //add 1 because jQuery round size
+        .attr('height', (PlotStyleUtils.getActualCss(tooltip, 'outerHeight', true) as number) + 1)
+        .attr('x', x)
+        .attr('y', y)
         .append('xhtml:body')
         .attr('style', 'position: relative;')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
@@ -264,30 +263,29 @@ export class PlotTip {
     if (!hide) {
       tip.remove();
     } else {
-      tip.css({opacity: 0, transition: 'opacity 0.4s'});
+      tip.css({ opacity: 0, transition: 'opacity 0.4s' });
       setTimeout(() => tip.remove(), PlotTip.TOOLTIP_ANIMATION_TIME);
     }
 
     if (d.isresp === true) {
-      scope.jqsvg.find(`#${d.id}`).css("opacity", 0);
+      scope.jqsvg.find(`#${d.id}`).css('opacity', 0);
     } else {
-      scope.jqsvg.find(`#${d.id}`).removeAttr("font-weight");
+      scope.jqsvg.find(`#${d.id}`).removeAttr('font-weight');
     }
   }
 
   private static pinCloseIcon(scope, d) {
     const tip = PlotTip.getTipElement(scope, d);
 
-    if (tip.has("i").length > 0) {
+    if (tip.has('i').length > 0) {
       return;
     }
 
-    const closeIcon = $('<i/>', {class: 'fa fa-times'})
-      .on('click', function () {
-        PlotTip.clear(scope, d);
-        $(this).parent('.plot-tooltip').remove();
-        scope.maing.selectAll('#' + d.id + "_line").remove();
-      });
+    const closeIcon = $('<i/>', { class: 'fa fa-times' }).on('click', function () {
+      PlotTip.clear(scope, d);
+      $(this).parent('.plot-tooltip').remove();
+      scope.maing.selectAll('#' + d.id + '_line').remove();
+    });
 
     tip.prepend(closeIcon);
   }
@@ -296,7 +294,7 @@ export class PlotTip {
     attachments.push({
       x: x,
       y: y,
-      dist: Math.sqrt(Math.pow(x - x2, 2) + Math.pow(y - y2, 2))
+      dist: Math.sqrt(Math.pow(x - x2, 2) + Math.pow(y - y2, 2)),
     });
   }
 
@@ -327,14 +325,15 @@ export class PlotTip {
     const x1 = attachment.x;
     const y1 = attachment.y;
 
-    svg.append("line")
-      .style("stroke", data[d.idx].tip_color)
-      .attr("class", "plot-tooltip-line")
-      .attr("id", d.id + "_line")
-      .attr("x2", x2)
-      .attr("y2", y2)
-      .attr("x1", x1)
-      .attr("y1", y1);
+    svg
+      .append('line')
+      .style('stroke', data[d.idx].tip_color)
+      .attr('class', 'plot-tooltip-line')
+      .attr('id', d.id + '_line')
+      .attr('x2', x2)
+      .attr('y2', y2)
+      .attr('x1', x1)
+      .attr('y1', y1);
   }
 
   private static extendTipsData(scope, d, mousePos) {
@@ -355,5 +354,4 @@ export class PlotTip {
 
     return tipData;
   }
-
 }

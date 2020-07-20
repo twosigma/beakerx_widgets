@@ -17,7 +17,7 @@
 import * as _ from 'underscore';
 import $ from 'jquery';
 
-import { html } from "./pointsLimitModal.html";
+import { html } from './pointsLimitModal.html';
 
 export class PointsLimitModal {
   scope: any;
@@ -37,7 +37,7 @@ export class PointsLimitModal {
       scopeId: this.scope.id,
       outputPointsLimit: plotModel.rowsLimitItems.toLocaleString('en'),
       outputPointsPreviewNumber: plotModel.numberOfPointsToDisplay.toLocaleString('en'),
-      numberOfPoints: plotModel.totalNumberOfPoints.toLocaleString('en')
+      numberOfPoints: plotModel.totalNumberOfPoints.toLocaleString('en'),
     });
     const $modal = $(compiled);
 

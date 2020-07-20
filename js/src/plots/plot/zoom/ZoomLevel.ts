@@ -15,8 +15,8 @@
  */
 
 export interface ZoomLevel {
-  minSpanX: number,
-  minSpanY: number,
-  maxScaleX: number,
-  maxScaleY: number
+  minSpanX: number;
+  minSpanY: number;
+  maxScaleX: number;
+  maxScaleY: number;
 }

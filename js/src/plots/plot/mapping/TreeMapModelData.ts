@@ -14,10 +14,10 @@
  *  limitations under the License.
  */
 
-import {ModelData} from "./ModelData";
+import { ModelData } from './ModelData';
 
 export interface TreeMapModelData extends ModelData {
-  mode: "squarify" | "dice" | "binary" | "slice" | "slice-dic" | "resquarify";
+  mode: 'squarify' | 'dice' | 'binary' | 'slice' | 'slice-dic' | 'resquarify';
   ratio: number;
   sticky: boolean;
   round: boolean;

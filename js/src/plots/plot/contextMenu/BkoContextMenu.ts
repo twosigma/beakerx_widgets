@@ -19,12 +19,12 @@ declare let lab: { contextMenu: ContextMenu };
 import { CommandRegistry } from '@phosphor/commands';
 import { IDisposable } from '@phosphor/disposable';
 import { ContextMenu, Menu } from '@phosphor/widgets';
-import { IContextMenuItem } from "./IContextMenuItem";
-import { IMenu } from "./IMenu";
-import { IMenuItem } from "./IMenuItem";
+import { IContextMenuItem } from './IContextMenuItem';
+import { IMenu } from './IMenu';
+import { IMenuItem } from './IMenuItem';
 
 export interface addItem {
-  addItem: (options: any) => Menu.IItem
+  addItem: (options: any) => Menu.IItem;
 }
 
 export abstract class BkoContextMenu implements IMenu {
@@ -54,8 +54,7 @@ export abstract class BkoContextMenu implements IMenu {
     try {
       inLab = lab && lab.contextMenu instanceof ContextMenu;
       // eslint-disable-next-line no-empty
-    } catch (e) {
-    }
+    } catch (e) {}
 
     return inLab;
   }
@@ -84,7 +83,7 @@ export abstract class BkoContextMenu implements IMenu {
 
   protected buildBkoMenu(): void {
     this.commands = new CommandRegistry();
-    this.contextMenu = new ContextMenu({commands: this.commands});
+    this.contextMenu = new ContextMenu({ commands: this.commands });
     this.contextMenu.menu.addClass('bko-table-menu');
   }
 
@@ -95,7 +94,7 @@ export abstract class BkoContextMenu implements IMenu {
   }
 
   protected createMenuItem(menuItem: IContextMenuItem, menu: addItem): void {
-    const subitems = (typeof menuItem.items == 'function') ? menuItem.items() : menuItem.items;
+    const subitems = typeof menuItem.items == 'function' ? menuItem.items() : menuItem.items;
     const hasSubitems = Array.isArray(subitems) && subitems.length;
 
     menuItem.separator && this.addSeparatorItem(menuItem, menu);
@@ -107,18 +106,18 @@ export abstract class BkoContextMenu implements IMenu {
     this.addCommand(menuItem);
     this.addKeyBinding(menuItem);
 
-    return menu.addItem({command: menuItem.id, selector: menuItem.selector});
+    return menu.addItem({ command: menuItem.id, selector: menuItem.selector });
   }
 
   protected addSeparatorItem(menuItem: IContextMenuItem, menu: addItem): Menu.IItem {
-    return menu.addItem({type: 'separator', selector: menuItem.selector});
+    return menu.addItem({ type: 'separator', selector: menuItem.selector });
   }
 
   protected addSubmenuItem(menuItem: IContextMenuItem, menu: addItem, subitems: IContextMenuItem[]): Menu.IItem {
     return menu.addItem({
       type: 'submenu',
       submenu: this.createSubmenu(menuItem, subitems),
-      selector: menuItem.selector
+      selector: menuItem.selector,
     });
   }
 
@@ -131,17 +130,19 @@ export abstract class BkoContextMenu implements IMenu {
     }
 
     const self = this;
-    this.disposables.push(this.commands.addCommand(menuItem.id, {
-      label: menuItem.title,
-      usage: menuItem.tooltip || '',
-      iconClass: () => menuItem.icon ?? '',
-      isVisible: menuItem.isVisible,
-      execute: (): void => {
-        if (menuItem.action && typeof menuItem.action == 'function') {
-          menuItem.action(self.event);
-        }
-      }
-    }));
+    this.disposables.push(
+      this.commands.addCommand(menuItem.id, {
+        label: menuItem.title,
+        usage: menuItem.tooltip || '',
+        iconClass: () => menuItem.icon ?? '',
+        isVisible: menuItem.isVisible,
+        execute: (): void => {
+          if (menuItem.action && typeof menuItem.action == 'function') {
+            menuItem.action(self.event);
+          }
+        },
+      }),
+    );
   }
 
   protected addKeyBinding(menuItem: IContextMenuItem): void {
@@ -149,15 +150,17 @@ export abstract class BkoContextMenu implements IMenu {
       return;
     }
 
-    this.disposables.push(this.commands.addKeyBinding({
-      keys: [menuItem.shortcut],
-      selector: menuItem.selector,
-      command: menuItem.id
-    }));
+    this.disposables.push(
+      this.commands.addKeyBinding({
+        keys: [menuItem.shortcut],
+        selector: menuItem.selector,
+        command: menuItem.id,
+      }),
+    );
   }
 
   protected createSubmenu(menuItem: IMenuItem, subitems: IContextMenuItem[]): Menu {
-    const submenu = new Menu({commands: this.commands});
+    const submenu = new Menu({ commands: this.commands });
 
     !this.inLab && submenu.addClass('bko-table-menu');
     submenu.title.label = menuItem.title;
@@ -179,11 +182,11 @@ export abstract class BkoContextMenu implements IMenu {
   }
 
   removeMenuItems(): void {
-    this.menuItems.forEach(item => this.contextMenu.menu.removeItem(item));
+    this.menuItems.forEach((item) => this.contextMenu.menu.removeItem(item));
   }
 
   dispose(): void {
-    this.disposables.forEach(disposable => disposable.dispose());
+    this.disposables.forEach((disposable) => disposable.dispose());
   }
 
   unbind(): void {

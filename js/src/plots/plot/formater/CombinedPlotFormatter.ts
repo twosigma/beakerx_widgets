@@ -14,37 +14,37 @@
  *  limitations under the License.
  */
 
-import {PlotModelFactory} from "../PlotModelFactory";
-import {PlotUtils} from "../../../utils";
+import { PlotModelFactory } from '../PlotModelFactory';
+import { PlotUtils } from '../../../utils';
 
 export class CombinedPlotFormatter {
   static standardizeModel(model, prefs) {
     const newModel: {
       title: string;
       plots: any[];
-      plotSize: { width: number; height: number; };
+      plotSize: { width: number; height: number };
       xAxisLabel?: string;
       yAxisLabel?: string;
     } = {
       title: model.title,
       plots: [],
-      plotSize: {width: 1200, height: 600}
+      plotSize: { width: 1200, height: 600 },
     };
 
-    const version: string = model.version === "groovy" ? "groovy" : "direct";
+    const version: string = model.version === 'groovy' ? 'groovy' : 'direct';
     let width: number;
     let height: number;
     let showLegend: boolean;
     let useToolTip: boolean;
 
-    if (version === "groovy") {
+    if (version === 'groovy') {
       newModel.xAxisLabel = model.x_label;
       newModel.yAxisLabel = model.y_label;
       width = model.init_width;
       height = model.init_height;
       showLegend = model.show_legend;
       useToolTip = model.use_tool_tip;
-    } else if (version === "direct") {
+    } else if (version === 'direct') {
       width = model.width;
       height = model.height;
       showLegend = model.showLegend;
@@ -59,7 +59,7 @@ export class CombinedPlotFormatter {
     }
 
     const layout = {
-      bottomLayoutMargin: 30
+      bottomLayoutMargin: 30,
     };
 
     let sumWeights = 0;
@@ -72,7 +72,8 @@ export class CombinedPlotFormatter {
         weights[i] = 1;
       }
       sumWeights += weights[i];
-      if (i < model.plots.length - 1) {  //add margins for correct height calculation
+      if (i < model.plots.length - 1) {
+        //add margins for correct height calculation
         vMargins[i] = layout.bottomLayoutMargin;
         sumVMargins += vMargins[i];
       } else {
@@ -93,10 +94,10 @@ export class CombinedPlotFormatter {
         plotModel.useToolTip = useToolTip;
       }
 
-      const newPlotModel = PlotModelFactory.getPlotModel(plotModel, prefs)
-        .getStandardizedModel();
+      const newPlotModel = PlotModelFactory.getPlotModel(plotModel, prefs).getStandardizedModel();
 
-      if (i < model.plots.length - 1) {  // turn off x coordinate labels
+      if (i < model.plots.length - 1) {
+        // turn off x coordinate labels
         newPlotModel.xAxis.label = null;
         newPlotModel.xAxis.showGridlineLabels = false;
       } else {
@@ -104,10 +105,10 @@ export class CombinedPlotFormatter {
       }
 
       newPlotModel.plotSize.width = width;
-      newPlotModel.plotSize.height = (height - sumVMargins) * weights[i] / sumWeights + vMargins[i];
+      newPlotModel.plotSize.height = ((height - sumVMargins) * weights[i]) / sumWeights + vMargins[i];
       newPlotModel.auto_zoom = model.auto_zoom;
 
-      newModel.plots.push(newPlotModel)
+      newModel.plots.push(newPlotModel);
       i++;
     }
 

@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-import {IContextMenuItem} from "./IContextMenuItem";
+import { IContextMenuItem } from './IContextMenuItem';
 
 export function createSaveAsMenuItems(scope: any): IContextMenuItem[] {
   const selector = `#${scope.id}`;
@@ -24,24 +24,24 @@ export function createSaveAsMenuItems(scope: any): IContextMenuItem[] {
       id: `beakerx:saveAsSvg:${scope.id}`,
       title: 'Save as SVG',
       action: () => scope.saveAsSvg(),
-      selector: selector
+      selector: selector,
     },
     {
       id: `beakerx:saveAsPng:${scope.id}`,
       title: 'Save as PNG',
       action: () => scope.saveAsPng(),
-      selector: selector
+      selector: selector,
     },
     {
       id: `beakerx:saveAsHighDpiPng:${scope.id}`,
       title: 'Save as PNG at high DPI...',
-      items: [2,3,4,5].map((scale) => ({
+      items: [2, 3, 4, 5].map((scale) => ({
         id: `beakerx:saveAsHighDpiPng:${scope.id}:${scale}`,
         title: scale + 'x',
         action: () => scope.saveAsPng(scale),
-        selector: selector
+        selector: selector,
       })),
-      selector: selector
+      selector: selector,
     },
   ];
 }
@@ -54,7 +54,7 @@ export function createPublishMenuItems(scope: any): IContextMenuItem[] {
       id: `beakerx:publish:${scope.id}`,
       title: 'Publish...',
       action: () => scope.publish(),
-      selector
+      selector,
     },
   ];
 }

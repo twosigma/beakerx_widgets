@@ -25,9 +25,7 @@ export function enableZoomWheel(scope: any, d3: any): void {
   }
 
   scope.svg.on('wheel.zoom', scope._defaultZoomWheelFn);
-  scope.jqcontainer
-    .off('wheel.zoom')
-    .on('wheel.zoom', function (event) {
-      scope.svg.dispatch('wheel.zoom', scope._defaultZoomWheelFn);
-    });
+  scope.jqcontainer.off('wheel.zoom').on('wheel.zoom', function (event) {
+    scope.svg.dispatch('wheel.zoom', scope._defaultZoomWheelFn);
+  });
 }

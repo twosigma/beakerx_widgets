@@ -15,11 +15,11 @@
  */
 
 import * as d3 from 'd3';
-import {ScaleLinear} from 'd3';
-import {PlotFocus} from "../zoom";
-import {PlotAxisFactory} from "../std";
-import {PlotStyleUtils} from "../../../utils";
-import {PlotScope} from "../PlotScope";
+import { ScaleLinear } from 'd3';
+import { PlotFocus } from '../zoom';
+import { PlotAxisFactory } from '../std';
+import { PlotStyleUtils } from '../../../utils';
+import { PlotScope } from '../PlotScope';
 
 export class PlotRange {
   scope: PlotScope;
@@ -49,10 +49,10 @@ export class PlotRange {
     const vrange = model.vrange;
     const xAxisLabel = model.xAxis.label;
 
-    if (xAxis.axisType === "category") {
+    if (xAxis.axisType === 'category') {
       xAxis.setRange(vrange.xl, vrange.xr, model.xAxis.base);
       xAxis.setCategoryNames(model.categoryNames, model.labelsxs);
-    } else if (xAxis.axisType === "time" || xAxis.axisType === "nanotime") {
+    } else if (xAxis.axisType === 'time' || xAxis.axisType === 'nanotime') {
       xAxis.setRange(vrange.xl, vrange.xr, model.timezone);
     } else {
       xAxis.setRange(vrange.xl, vrange.xr, model.xAxis.base);
@@ -74,10 +74,10 @@ export class PlotRange {
     const label = modelAxis.label;
     const axis = PlotAxisFactory.getPlotAxis(modelAxis.type);
 
-    if (axis.axisType === "category") {
+    if (axis.axisType === 'category') {
       axis.setRange(vrange.xl, vrange.xr, model.xAxis.base);
       axis.setCategoryNames(model.categoryNames, model.labelsxs);
-    } else if (axis.axisType !== "time") {
+    } else if (axis.axisType !== 'time') {
       axis.setRange(axisVRange.yl, axisVRange.yr, modelAxis.base);
     } else {
       axis.setRange(axisVRange.yl, axisVRange.yr, modelAxis.timezone);
@@ -113,57 +113,63 @@ export class PlotRange {
 
     if (emitFocusUpdate && this.scope.model.updateFocus != null) {
       this.scope.model.updateFocus({
-        "xl": focus.xl,
-        "xr": focus.xr
+        xl: focus.xl,
+        xr: focus.xr,
       });
     }
 
-    this.data2scrY = d3.scaleLinear()
+    this.data2scrY = d3
+      .scaleLinear()
       .domain([focus.yl, focus.yr])
       .range([H - bottomMargin, topMargin]);
 
-    this.data2scrYp = d3.scaleLinear()
-      .domain([focus.yl, focus.yr])
-      .range([1, 0]);
+    this.data2scrYp = d3.scaleLinear().domain([focus.yl, focus.yr]).range([1, 0]);
 
-    this.scr2dataY = d3.scaleLinear()
+    this.scr2dataY = d3
+      .scaleLinear()
       .domain([topMargin, H - bottomMargin])
       .range([focus.yr, focus.yl]);
 
-    this.scr2dataYp = d3.scaleLinear()
+    this.scr2dataYp = d3
+      .scaleLinear()
       .domain([topMargin, H - bottomMargin])
       .range([1, 0]);
 
-    this.data2scrX = d3.scaleLinear()
+    this.data2scrX = d3
+      .scaleLinear()
       .domain([focus.xl as number, focus.xr as number])
       .range([leftMargin, W - rightMargin]);
 
-    this.data2scrXp = d3.scaleLinear()
+    this.data2scrXp = d3
+      .scaleLinear()
       .domain([focus.xl as number, focus.xr as number])
       .range([0, 1]);
 
-    this.scr2dataX = d3.scaleLinear()
+    this.scr2dataX = d3
+      .scaleLinear()
       .domain([leftMargin, W - rightMargin])
       .range([focus.xl as number, focus.xr as number]);
 
-    this.scr2dataXp = d3.scaleLinear()
+    this.scr2dataXp = d3
+      .scaleLinear()
       .domain([leftMargin, W - rightMargin])
       .range([0, 1]);
 
     if (focus.yr_r !== undefined && focus.yl_r !== undefined) {
-      this.data2scrY_r = d3.scaleLinear()
+      this.data2scrY_r = d3
+        .scaleLinear()
         .domain([focus.yl_r, focus.yr_r])
         .range([H - bottomMargin, topMargin]);
 
-      this.data2scrYp_r = d3.scaleLinear()
-        .domain([focus.yl_r, focus.yr_r])
-        .range([1, 0]);
+      this.data2scrYp_r = d3.scaleLinear().domain([focus.yl_r, focus.yr_r]).range([1, 0]);
 
-      this.scr2dataY_r = d3.scaleLinear()
+      this.scr2dataY_r = d3
+        .scaleLinear()
         .domain([topMargin, H - bottomMargin])
         .range([focus.yr_r, focus.yl_r]);
 
-      this.scr2dataYp_r = d3.scaleLinear()
+      this.scr2dataYp_r = d3
+        .scaleLinear()
         .domain([topMargin, H - bottomMargin])
         .range([1, 0]);
     }

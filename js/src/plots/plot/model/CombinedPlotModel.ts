@@ -15,7 +15,7 @@
  */
 
 import * as _ from 'underscore';
-import {PlotUtils} from "../../../utils";
+import { PlotUtils } from '../../../utils';
 
 export class CombinedPlotModel {
   model: any;
@@ -69,7 +69,7 @@ export class CombinedPlotModel {
 
   updateWidth(width, useMinWidth): void {
     this.parentScope.width = useMinWidth ? this.parentScope.getMinScopesWidth() : width;
-    this.parentScope.element.find("#combplotTitle").css("width", width);
+    this.parentScope.element.find('#combplotTitle').css('width', width);
 
     this.parentScope.updateModels('width');
   }
@@ -77,7 +77,7 @@ export class CombinedPlotModel {
   updateMargin(): void {
     // if any of plots has left-positioned legend we should update left margin (with max value)
     // for all plots (to adjust vertical position)
-    const plots = this.parentScope.element.find(".plot-plotcontainer");
+    const plots = this.parentScope.element.find('.plot-plotcontainer');
     let maxMargin = 0;
 
     plots.each(function () {
@@ -85,7 +85,7 @@ export class CombinedPlotModel {
       maxMargin = _.max([value, maxMargin]);
     });
 
-    plots.css("margin-left", maxMargin);
+    plots.css('margin-left', maxMargin);
 
     for (let i = 0; i < this.parentScope.stdmodel.plots.length; i++) {
       const plotModel = this.parentScope.stdmodel.plots[i];
@@ -104,7 +104,7 @@ export class CombinedPlotModel {
           'onclick',
           plotIndex,
           item.uid,
-          PlotUtils.getActionObject(this.parentScope.model.getCellModel().type, e, i)
+          PlotUtils.getActionObject(this.parentScope.model.getCellModel().type, e, i),
         );
 
         break;
@@ -120,9 +120,7 @@ export class CombinedPlotModel {
         continue;
       }
 
-      const params = PlotUtils.getActionObject(
-        this.parentScope.model.getCellModel().type, e, i
-      );
+      const params = PlotUtils.getActionObject(this.parentScope.model.getCellModel().type, e, i);
 
       params.key = key;
       this.parentScope.sendEvent('onkey', plotIndex, item.uid, params);
@@ -139,9 +137,7 @@ export class CombinedPlotModel {
         continue;
       }
 
-      const params = PlotUtils.getActionObject(
-        this.parentScope.model.getCellModel().type, e, i
-      );
+      const params = PlotUtils.getActionObject(this.parentScope.model.getCellModel().type, e, i);
       params.actionType = 'onclick';
       params.tag = item.clickTag;
 

@@ -14,16 +14,16 @@
  *  limitations under the License.
  */
 
-import Big from "big.js"
+import Big from 'big.js';
 
 export interface Focus {
-  xl?: Big | number | string,
-  xr?: Big | number | string,
-  yl?: number,
-  yr?: number,
-  yl_r?: number,
-  yr_r?: number,
-  xspan?: Big | number | string,
-  yspan?: Big | number | string,
-  yspan_r?: number
+  xl?: Big | number | string;
+  xr?: Big | number | string;
+  yl?: number;
+  yr?: number;
+  yl_r?: number;
+  yr_r?: number;
+  xspan?: Big | number | string;
+  yspan?: Big | number | string;
+  yspan_r?: number;
 }

@@ -16,7 +16,7 @@
 
 import * as d3 from 'd3';
 import $ from 'jquery';
-import {PlotUtils, SanitizeUtils} from "../../utils";
+import { PlotUtils, SanitizeUtils } from '../../utils';
 
 const DEFAULT_MARGIN = 30;
 
@@ -31,7 +31,7 @@ type AxisType = any;
 export class PlotLayout {
   scope: ScopeType;
 
-  plotSize: { width?: string, height?: string };
+  plotSize: { width?: string; height?: string };
   bottomLayoutMargin: number = DEFAULT_MARGIN;
   topLayoutMargin: number = DEFAULT_MARGIN;
   leftLayoutMargin: number;
@@ -42,8 +42,8 @@ export class PlotLayout {
   constructor(scope: ScopeType) {
     this.scope = scope;
     this.scope.renderFixed = 1;
-    this.scope.cursor = {x: -1, y: -1};
-    this.scope.labelPadding = {x: 10, y: 10};
+    this.scope.cursor = { x: -1, y: -1 };
+    this.scope.labelPadding = { x: 10, y: 10 };
 
     this.update();
   }
@@ -65,35 +65,36 @@ export class PlotLayout {
   }
 
   assignElements(): void {
-    this.scope.container = d3.select(this.scope.element[0]).select(".plot-plotcontainer");
-    this.scope.jqcontainer = this.scope.element.find(".plot-plotcontainer");
-    this.scope.jqlegendcontainer = this.scope.element.find("#plotLegendContainer");
-    this.scope.svg = this.scope.container.select("svg");
-    this.scope.jqsvg = this.scope.element.find("#svgg");
-    this.scope.canvas = this.scope.element.find("canvas")[0];
-    this.scope.jqplottitle = this.scope.element.find("#plotTitle");
-    this.scope.jqgridg = this.scope.element.find("#gridg");
-    this.scope.maing = d3.select(this.scope.element[0]).select("#maing");
-    this.scope.gridg = d3.select(this.scope.element[0]).select("#gridg");
-    this.scope.labelg = d3.select(this.scope.element[0]).select("#labelg");
+    this.scope.container = d3.select(this.scope.element[0]).select('.plot-plotcontainer');
+    this.scope.jqcontainer = this.scope.element.find('.plot-plotcontainer');
+    this.scope.jqlegendcontainer = this.scope.element.find('#plotLegendContainer');
+    this.scope.svg = this.scope.container.select('svg');
+    this.scope.jqsvg = this.scope.element.find('#svgg');
+    this.scope.canvas = this.scope.element.find('canvas')[0];
+    this.scope.jqplottitle = this.scope.element.find('#plotTitle');
+    this.scope.jqgridg = this.scope.element.find('#gridg');
+    this.scope.maing = d3.select(this.scope.element[0]).select('#maing');
+    this.scope.gridg = d3.select(this.scope.element[0]).select('#gridg');
+    this.scope.labelg = d3.select(this.scope.element[0]).select('#labelg');
   }
 
   setPlotSize(stdmodel: StdModelType): void {
-    this.plotSize = stdmodel.plotSize ? {...stdmodel.plotSize} : {};
+    this.plotSize = stdmodel.plotSize ? { ...stdmodel.plotSize } : {};
   }
 
   applyCssRules(): void {
     this.scope.jqcontainer.css(this.plotSize);
     this.scope.jqsvg.css(this.plotSize);
 
-    this.scope.element.find(".ui-icon-gripsmall-diagonal-se")
-      .removeClass("ui-icon-gripsmall-diagonal-se")
-      .addClass("ui-icon-grip-diagonal-se");
-    this.scope.canvas.style.display = "none";
+    this.scope.element
+      .find('.ui-icon-gripsmall-diagonal-se')
+      .removeClass('ui-icon-gripsmall-diagonal-se')
+      .addClass('ui-icon-grip-diagonal-se');
+    this.scope.canvas.style.display = 'none';
   }
 
   setTitle(stdmodel: StdModelType): void {
-    this.scope.jqplottitle.text(stdmodel.title).css("width", this.plotSize.width);
+    this.scope.jqplottitle.text(stdmodel.title).css('width', this.plotSize.width);
   }
 
   applyCustomStyles(stdmodel: StdModelType): void {
@@ -101,13 +102,14 @@ export class PlotLayout {
       return;
     }
 
-    const customStyleString = stdmodel.customStyles.map(
-      (s) => `#${this.scope.wrapperId} #${this.scope.id} ${s}`
-    ).join('\n');
+    const customStyleString = stdmodel.customStyles
+      .map((s) => `#${this.scope.wrapperId} #${this.scope.id} ${s}`)
+      .join('\n');
 
     // this string needs to be sanitized
-    $(`<style>${SanitizeUtils.sanitizeStyle()(customStyleString)}</style>`)
-      .prependTo(this.scope.element.find('.plot-plotcontainer'));
+    $(`<style>${SanitizeUtils.sanitizeStyle()(customStyleString)}</style>`).prependTo(
+      this.scope.element.find('.plot-plotcontainer'),
+    );
   }
 
   applyElementStyles(stdmodel: StdModelType): void {
@@ -121,8 +123,9 @@ export class PlotLayout {
       styles.push(`#${this.scope.wrapperId} #${this.scope.id} ${style} { ${stdmodel['elementStyles'][style]} }`);
     }
 
-    $(`<style>\n${SanitizeUtils.sanitizeStyle()(styles.join('\n'))}\n</style>`)
-      .prependTo(this.scope.element.find('.plot-plotcontainer'));
+    $(`<style>\n${SanitizeUtils.sanitizeStyle()(styles.join('\n'))}\n</style>`).prependTo(
+      this.scope.element.find('.plot-plotcontainer'),
+    );
 
     this.applyTitleElementStyles(stdmodel);
   }
@@ -138,8 +141,9 @@ export class PlotLayout {
       ${stdmodel['elementStyles']['.plot-title']}
     }`;
 
-    $(`<style>\n${SanitizeUtils.sanitizeStyle()(styleString)}\n</style>`)
-      .prependTo(this.scope.element.find(`.plot-title-${this.scope.id}`));
+    $(`<style>\n${SanitizeUtils.sanitizeStyle()(styleString)}\n</style>`).prependTo(
+      this.scope.element.find(`.plot-title-${this.scope.id}`),
+    );
   }
 
   calcVertLayoutMargin(axis: AxisType): number {
@@ -157,21 +161,18 @@ export class PlotLayout {
       result = size.width + size.height * 2;
     }
 
-    if (
-      this.scope.jqcontainer
-      && this.scope.jqcontainer.width() > MIN_WIDTH && result < MIN_LEFT_MARGIN
-    ) {
+    if (this.scope.jqcontainer && this.scope.jqcontainer.width() > MIN_WIDTH && result < MIN_LEFT_MARGIN) {
       return MIN_LEFT_MARGIN;
     }
 
     return result;
   }
 
-  measureText(pText: string, pFontSize: number): { width: number, height: number } {
+  measureText(pText: string, pFontSize: number): { width: number; height: number } {
     let lDiv: HTMLElement = document.createElement('lDiv');
 
     lDiv.style.fontSize = `${pFontSize}px`;
-    lDiv.style.position = "absolute";
+    lDiv.style.position = 'absolute';
     lDiv.style.left = '-1000';
     lDiv.style.top = '-1000';
 
@@ -181,7 +182,7 @@ export class PlotLayout {
 
     const lResult = {
       width: lDiv.clientWidth,
-      height: lDiv.clientHeight
+      height: lDiv.clientHeight,
     };
 
     document.body.removeChild(lDiv);
@@ -196,12 +197,12 @@ export class PlotLayout {
 
     this.scope.intervalStepHint = {
       x: isHorizontal ? 30 : axisXValue,
-      y: isHorizontal ? axisXValue : 30
+      y: isHorizontal ? axisXValue : 30,
     };
 
     this.scope.numIntervals = {
       x: parseInt(this.plotSize.width) / this.scope.intervalStepHint.x,
-      y: parseInt(this.plotSize.height) / this.scope.intervalStepHint.y
+      y: parseInt(this.plotSize.height) / this.scope.intervalStepHint.y,
     };
   }
 
@@ -221,9 +222,7 @@ export class PlotLayout {
     }
 
     this.leftLayoutMargin = this.calcVertLayoutMargin(stdmodel.yAxis);
-    this.rightLayoutMargin = stdmodel.yAxisR
-      ? this.calcVertLayoutMargin(stdmodel.yAxisR)
-      : DEFAULT_MARGIN;
+    this.rightLayoutMargin = stdmodel.yAxisR ? this.calcVertLayoutMargin(stdmodel.yAxisR) : DEFAULT_MARGIN;
 
     this.bottomLayoutMargin = this.topLayoutMargin = DEFAULT_MARGIN;
 
@@ -272,12 +271,11 @@ export class PlotLayout {
   }
 
   private isTreeMap(): boolean {
-    return this.scope.model.model.type === "TreeMap";
+    return this.scope.model.model.type === 'TreeMap';
   }
 
   static buildTemplate(wrapperId: string): string {
-    return (
-      `<div id="${wrapperId}">
+    return `<div id="${wrapperId}">
         <div class="dtcontainer">
           <canvas></canvas>
           <div id="plotTitle" class="plot-title"></div>
@@ -318,7 +316,6 @@ export class PlotLayout {
             </div>
           </div>
         </div>
-      </div>`
-    );
+      </div>`;
   }
 }

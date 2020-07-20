@@ -16,24 +16,24 @@
 
 import $ from 'jquery';
 import * as _ from 'underscore';
-import {PlotLayout} from "./PlotLayout";
-import {disableZoomWheel, PlotFocus, PlotZoom} from "./zoom";
-import {PlotGrid} from "./grid";
-import {PlotRange} from "./range";
-import {PlotCursor} from "./PlotCursor";
-import {PlotLegend} from "./legend";
-import {PlotInteraction} from "./PlotInteraction";
-import {PlotSize} from "./PlotSize";
-import {PointsLimitModal} from "./modal";
-import {PlotModelFactory} from "./PlotModelFactory";
-import {PlotContextMenu, SaveAsContextMenu} from "./contextMenu";
-import {PlotTip} from './PlotTip';
-import {GistPublisherUtils} from '../publisher';
+import { PlotLayout } from './PlotLayout';
+import { disableZoomWheel, PlotFocus, PlotZoom } from './zoom';
+import { PlotGrid } from './grid';
+import { PlotRange } from './range';
+import { PlotCursor } from './PlotCursor';
+import { PlotLegend } from './legend';
+import { PlotInteraction } from './PlotInteraction';
+import { PlotSize } from './PlotSize';
+import { PointsLimitModal } from './modal';
+import { PlotModelFactory } from './PlotModelFactory';
+import { PlotContextMenu, SaveAsContextMenu } from './contextMenu';
+import { PlotTip } from './PlotTip';
+import { GistPublisherUtils } from '../publisher';
 
 import 'jquery-ui/ui/widgets/draggable';
 import 'jquery-ui/ui/widgets/resizable';
-import {CommonUtils, PlotStyleUtils} from "../../utils";
-import {ChartExtender} from "./ChartExtender";
+import { CommonUtils, PlotStyleUtils } from '../../utils';
+import { ChartExtender } from './ChartExtender';
 
 export class PlotScope {
   id: string;
@@ -59,7 +59,7 @@ export class PlotScope {
   width = null;
   renderFixed = null;
   layout: PlotLayout;
-  labelPadding = {x: 0, y: 0};
+  labelPadding = { x: 0, y: 0 };
   intervalStepHint = {};
   numIntervals = {};
   cursor = {};
@@ -104,7 +104,7 @@ export class PlotScope {
       model: {},
       getCellModel: function () {
         return this.model;
-      }
+      },
     };
 
     this.plotZoom = new PlotZoom(this);
@@ -173,7 +173,7 @@ export class PlotScope {
   destroy() {
     $(window).off('resize', this.plotSize.resizeFunction);
     this.svg.remove();
-    (this.jqcontainer as any).resizable({disabled: true}).resizable('destroy');
+    (this.jqcontainer as any).resizable({ disabled: true }).resizable('destroy');
     this.jqlegendcontainer.remove();
     this.jqsvg.remove();
     this.element.remove();
@@ -227,7 +227,7 @@ export class PlotScope {
 
     if (this.hasUnorderedItem === true && this.showUnorderedHint === true) {
       this.showUnorderedHint = false;
-      console.warn("unordered area/line detected, truncation disabled");
+      console.warn('unordered area/line detected, truncation disabled');
     }
   }
 
@@ -242,17 +242,18 @@ export class PlotScope {
     const lodInfo = {
       lodType: firstLine.lodType,
       lodOn: firstLine.lodOn,
-      lodAuto: firstLine.lodAuto //consider all lines have the same lodAuto
+      lodAuto: firstLine.lodAuto, //consider all lines have the same lodAuto
     };
 
     for (let j = 0; j < lodDataIds.length; j++) {
       const dat = this.stdmodel.data[lodDataIds[j]];
 
       if (lodInfo.lodType !== dat.lodType) {
-        lodInfo.lodType = "mixed";//if merged lines have different lod types
+        lodInfo.lodType = 'mixed'; //if merged lines have different lod types
       }
 
-      if (lodInfo.lodOn !== true) {//switch off lod only if all lines has lod off
+      if (lodInfo.lodOn !== true) {
+        //switch off lod only if all lines has lod off
         lodInfo.lodOn = dat.lodOn;
       }
     }
@@ -262,9 +263,9 @@ export class PlotScope {
 
   setMergedLodHint(lodDataIds, legendLineId) {
     const lodInfo = this.getMergedLodInfo(lodDataIds);
-    const legend = this.jqlegendcontainer.find("#legends");
-    const hint = legend.find("#hint_" + legendLineId);
-    const type = hint.find(".dropdown-toggle");
+    const legend = this.jqlegendcontainer.find('#legends');
+    const hint = legend.find('#hint_' + legendLineId);
+    const type = hint.find('.dropdown-toggle');
 
     type.text(lodInfo.lodType);
   }
@@ -273,24 +274,23 @@ export class PlotScope {
     const W = PlotStyleUtils.safeWidth(this.jqsvg);
     const H = PlotStyleUtils.safeHeight(this.jqsvg);
 
-    this.svg.select('#clipPath_' + this.wrapperId + ' rect')
-      .attr("x", this.layout.leftLayoutMargin)
-      .attr("y", this.layout.topLayoutMargin)
-      .attr("height", H - this.layout.topLayoutMargin - this.layout.bottomLayoutMargin)
-      .attr("width", W - this.layout.leftLayoutMargin - this.layout.rightLayoutMargin);
+    this.svg
+      .select('#clipPath_' + this.wrapperId + ' rect')
+      .attr('x', this.layout.leftLayoutMargin)
+      .attr('y', this.layout.topLayoutMargin)
+      .attr('height', H - this.layout.topLayoutMargin - this.layout.bottomLayoutMargin)
+      .attr('width', W - this.layout.leftLayoutMargin - this.layout.rightLayoutMargin);
   }
 
   resetSvg() {
-    this.jqcontainer.find(".plot-constlabel").remove();
+    this.jqcontainer.find('.plot-constlabel').remove();
     this.plotGrid.reset();
   }
 
   standardizeData() {
     const model = this.model.getCellModel();
 
-    this.stdmodel = PlotModelFactory
-      .getPlotModel(model, this.prefs)
-      .getStandardizedModel();
+    this.stdmodel = PlotModelFactory.getPlotModel(model, this.prefs).getStandardizedModel();
   }
 
   initFlags() {
@@ -304,7 +304,7 @@ export class PlotScope {
     for (let i = 0; i < this.removePipe.length; i++) {
       const id = this.removePipe[i];
 
-      this.jqcontainer.find("#" + id).remove();
+      this.jqcontainer.find('#' + id).remove();
     }
 
     this.removePipe.length = 0;
@@ -404,7 +404,7 @@ export class PlotScope {
       this.model.model = data;
     }
 
-    if (this.model.getCellModel().type === "TreeMap") {
+    if (this.model.getCellModel().type === 'TreeMap') {
       ChartExtender.extend(this, this.element);
     }
   }

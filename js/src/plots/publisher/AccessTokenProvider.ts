@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-import {GistPublisherAccessTokenProviderInterface} from "./GistPublisherUtils";
-import {GistPublishModal} from "../../extension/gistPublish/gistPublishModal";
+import { GistPublisherAccessTokenProviderInterface } from './GistPublisherUtils';
+import { GistPublishModal } from '../../extension/gistPublish/gistPublishModal';
 
 export class AccessTokenProvider implements GistPublisherAccessTokenProviderInterface {
   public getPersonalAccessToken(): Promise<string> {

@@ -14,9 +14,9 @@
  *  limitations under the License.
  */
 
-import {PlotRange} from "../range";
-import {PlotFocus} from "../zoom";
-import {LineData} from "./interfaces";
+import { PlotRange } from '../range';
+import { PlotFocus } from '../zoom';
+import { LineData } from './interfaces';
 
 export class GridLines {
   scope: any;
@@ -55,48 +55,39 @@ export class GridLines {
   }
 
   plotGridlines(): void {
-    const selection = this.scope.gridg.selectAll("line");
-    const filterWithoutId = d => d.id;
+    const selection = this.scope.gridg.selectAll('line');
+    const filterWithoutId = (d) => d.id;
 
     selection.data(this.rpipeGridlines, filterWithoutId).exit().remove();
 
-    selection.data(this.rpipeGridlines, filterWithoutId).enter()
-      .append("line")
-      .attr("id", filterWithoutId)
-      .attr("class", d => d.class)
-      .attr("x1", d => d.x1)
-      .attr("x2", d => d.x2)
-      .attr("y1", d => d.y1)
-      .attr("y2", d => d.y2)
-      .style("stroke", d => d.stroke)
-      .style("stroke-dasharray", d => d.stroke_dasharray);
+    selection
+      .data(this.rpipeGridlines, filterWithoutId)
+      .enter()
+      .append('line')
+      .attr('id', filterWithoutId)
+      .attr('class', (d) => d.class)
+      .attr('x1', (d) => d.x1)
+      .attr('x2', (d) => d.x2)
+      .attr('y1', (d) => d.y1)
+      .attr('y2', (d) => d.y2)
+      .style('stroke', (d) => d.stroke)
+      .style('stroke-dasharray', (d) => d.stroke_dasharray);
 
-    selection.data(this.rpipeGridlines, filterWithoutId)
-      .attr("x1", d => d.x1)
-      .attr("x2", d => d.x2)
-      .attr("y1", d => d.y1)
-      .attr("y2", d => d.y2);
+    selection
+      .data(this.rpipeGridlines, filterWithoutId)
+      .attr('x1', (d) => d.x1)
+      .attr('x2', (d) => d.x2)
+      .attr('y1', (d) => d.y1)
+      .attr('y2', (d) => d.y2);
   }
 
   setGridlines() {
     const focus = this.plotFocus.getFocus();
     const model = this.scope.stdmodel;
 
-    model.xAxis.setGridlines(
-      focus.xl,
-      focus.xr,
-      this.scope.numIntervals.x,
-      model.margin.left,
-      model.margin.right
-    );
+    model.xAxis.setGridlines(focus.xl, focus.xr, this.scope.numIntervals.x, model.margin.left, model.margin.right);
 
-    model.yAxis.setGridlines(
-      focus.yl,
-      focus.yr,
-      this.scope.numIntervals.y,
-      model.margin.bottom,
-      model.margin.top
-    );
+    model.yAxis.setGridlines(focus.yl, focus.yr, this.scope.numIntervals.y, model.margin.bottom, model.margin.top);
 
     if (model.yAxisR) {
       model.yAxisR.setGridlines(
@@ -104,8 +95,8 @@ export class GridLines {
         focus.yr_r,
         this.scope.numIntervals.y,
         model.margin.bottom_r,
-        model.margin.top_r
-      )
+        model.margin.top_r,
+      );
     }
   }
 
@@ -116,12 +107,12 @@ export class GridLines {
       const x = xGridlines[i];
 
       this.rpipeGridlines.push({
-        id: "gridline_x_" + i,
-        class: "plot-gridline",
+        id: 'gridline_x_' + i,
+        class: 'plot-gridline',
         x1: mapX(x),
         y1: mapY(focus.yl),
         x2: mapX(x),
-        y2: mapY(focus.yr)
+        y2: mapY(focus.yr),
       });
     }
   }
@@ -133,35 +124,35 @@ export class GridLines {
       const y = yGridlines[i];
 
       this.rpipeGridlines.push({
-        id: "gridline_y_" + i,
-        class: "plot-gridline",
+        id: 'gridline_y_' + i,
+        class: 'plot-gridline',
         x1: mapX(focus.xl),
         y1: mapY(y),
         x2: mapX(focus.xr),
-        y2: mapY(y)
+        y2: mapY(y),
       });
     }
   }
 
   renderAxisXLine(model, focus, mapX, mapY): void {
     this.rpipeGridlines.push({
-      id: "gridline_x_base",
-      class: "plot-gridline-base",
+      id: 'gridline_x_base',
+      class: 'plot-gridline-base',
       x1: mapX(focus.xl),
       y1: mapY(focus.yl),
       x2: mapX(focus.xr),
-      y2: mapY(focus.yl)
+      y2: mapY(focus.yl),
     });
   }
 
   renderLeftAxisYLine(model, focus, mapX, mapY): void {
     this.rpipeGridlines.push({
-      id: "gridline_y_base",
-      class: "plot-gridline-base",
+      id: 'gridline_y_base',
+      class: 'plot-gridline-base',
       x1: mapX(focus.xl),
       y1: mapY(focus.yl),
       x2: mapX(focus.xl),
-      y2: mapY(focus.yr)
+      y2: mapY(focus.yr),
     });
   }
 
@@ -170,12 +161,12 @@ export class GridLines {
       const mapY_r = this.plotRange.data2scrY_r;
 
       this.rpipeGridlines.push({
-        id: "gridline_yr_base",
-        class: "plot-gridline-base",
+        id: 'gridline_yr_base',
+        class: 'plot-gridline-base',
         x1: mapX(focus.xr),
         y1: mapY_r(focus.yl_r),
         x2: mapX(focus.xr),
-        y2: mapY_r(focus.yr_r)
+        y2: mapY_r(focus.yr_r),
       });
     }
   }

@@ -16,9 +16,9 @@
 
 import * as _ from 'underscore';
 import moment from 'moment-timezone';
-import {DefaultAxis} from "./DefaultAxis";
-import {Big} from "big.js";
-import {BigNumberUtils, CommonUtils} from "../../../../utils";
+import { DefaultAxis } from './DefaultAxis';
+import { Big } from 'big.js';
+import { BigNumberUtils, CommonUtils } from '../../../../utils';
 
 const NANOTIME_TYPE = 'nanotime';
 
@@ -31,7 +31,7 @@ export class TimeAxis extends DefaultAxis {
   MONTH: number;
   YEAR: number;
 
-  constructor(type: "time" | "nanotime") {
+  constructor(type: 'time' | 'nanotime') {
     super(type);
 
     this.setUnits();
@@ -76,7 +76,7 @@ export class TimeAxis extends DefaultAxis {
       this.axisTimezone = axisTimezone;
     }
 
-    if (this.axisType === "time") {
+    if (this.axisType === 'time') {
       return;
     }
 
@@ -92,7 +92,7 @@ export class TimeAxis extends DefaultAxis {
 
   setGridlines(pointLeft, pointRight, count, marginLeft, marginRight): void {
     if (pointRight < pointLeft) {
-      console.error("cannot set right coord < left coord");
+      console.error('cannot set right coord < left coord');
 
       return;
     }
@@ -143,7 +143,7 @@ export class TimeAxis extends DefaultAxis {
   calcLabels(lines, span): { common: string; labels: string[] } {
     let labels = [];
 
-    if (this.axisType === "category") {
+    if (this.axisType === 'category') {
       labels = this.getCategoryAxisLabels(lines);
     } else {
       labels = this.getDefaultAxisLabels(lines, span);
@@ -155,22 +155,20 @@ export class TimeAxis extends DefaultAxis {
 
     return {
       common: this.calcTimeAxisLabelsCommonPart(labels, span),
-      labels: labels
+      labels: labels,
     };
   }
 
   shouldCalcTimeAxisLabels(labels: string[], span: number): boolean {
     return (
-      (
-        span > this.SECOND && this.axisType === "time"
-        || this.axisType === "nanotime" && BigNumberUtils.gt(span, this.UNIT)
-      )
-      && labels.length != _.uniq(labels).length
+      ((span > this.SECOND && this.axisType === 'time') ||
+        (this.axisType === 'nanotime' && BigNumberUtils.gt(span, this.UNIT))) &&
+      labels.length != _.uniq(labels).length
     );
   }
 
   getTimeAxisLabels(lines: any[], span: number | Big): { common: string; labels: string[] } {
-    if (this.axisType === "nanotime" && BigNumberUtils.lte(span, this.SECOND)) {
+    if (this.axisType === 'nanotime' && BigNumberUtils.lte(span, this.SECOND)) {
       span = this.UNIT;
     } else if (BigNumberUtils.lte(span, this.MINUTE)) {
       span = this.SECOND;
@@ -199,9 +197,9 @@ export class TimeAxis extends DefaultAxis {
     let common = '';
 
     if (
-      (this.axisType !== "time" && this.axisType !== "nanotime")
-      || !BigNumberUtils.gte(span, this.HOUR)
-      || labels.length <= 1
+      (this.axisType !== 'time' && this.axisType !== 'nanotime') ||
+      !BigNumberUtils.gte(span, this.HOUR) ||
+      labels.length <= 1
     ) {
       return common;
     }
@@ -222,7 +220,7 @@ export class TimeAxis extends DefaultAxis {
     };
 
     while (checkCommon(index)) {
-      common = (common != '') ? common + ' ' + tokens[index] : tokens[index];
+      common = common != '' ? common + ' ' + tokens[index] : tokens[index];
       index = index + 1;
     }
 
@@ -253,12 +251,12 @@ export class TimeAxis extends DefaultAxis {
     let value = this.getValue(pointLeft);
 
     if (BigNumberUtils.isBig(value)) {
-      value = (value as BigJs.Big);
-      value = value.gte(0) ?
-        value.div(axisStep).round(0, 3).times(axisStep) :
-        value.div(axisStep).round(0, 0).times(axisStep);
+      value = value as BigJs.Big;
+      value = value.gte(0)
+        ? value.div(axisStep).round(0, 3).times(axisStep)
+        : value.div(axisStep).round(0, 0).times(axisStep);
     } else {
-      value = this.normalizeValue(Math.ceil(value as number / axisStep) * axisStep, axisStep);
+      value = this.normalizeValue(Math.ceil((value as number) / axisStep) * axisStep, axisStep);
     }
     while (BigNumberUtils.lte(value, valueRight) || BigNumberUtils.lte(value, BigNumberUtils.plus(valueRight, 1e-12))) {
       const pointCoords = this.getPercent(value);
@@ -271,26 +269,26 @@ export class TimeAxis extends DefaultAxis {
   }
 
   normalizeValue(value, axisStep) {
-    if (this.axisType !== "time" || !BigNumberUtils.gt(axisStep, this.DAY)) {
+    if (this.axisType !== 'time' || !BigNumberUtils.gt(axisStep, this.DAY)) {
       return value;
     }
 
     if (BigNumberUtils.lte(axisStep, this.MONTH)) {
-      value = this.selectStartOrEndInterval(value, "day");
+      value = this.selectStartOrEndInterval(value, 'day');
     } else if (BigNumberUtils.lte(axisStep, this.YEAR)) {
-      value = this.selectStartOrEndInterval(value, "month");
+      value = this.selectStartOrEndInterval(value, 'month');
     } else {
-      value = this.selectStartOrEndInterval(value, "year");
+      value = this.selectStartOrEndInterval(value, 'year');
     }
 
     return value;
   }
 
   selectStartOrEndInterval(value: number, interval: moment.unitOfTime.StartOf) {
-    const nextIntervalStart = CommonUtils.applyTimezone(value, this.axisTimezone).endOf(interval).add(1, "ms");
+    const nextIntervalStart = CommonUtils.applyTimezone(value, this.axisTimezone).endOf(interval).add(1, 'ms');
     const intervalStart = CommonUtils.applyTimezone(value, this.axisTimezone).startOf(interval);
 
-    return ((nextIntervalStart.valueOf() - value) > (value - intervalStart.valueOf())) ? intervalStart : nextIntervalStart;
+    return nextIntervalStart.valueOf() - value > value - intervalStart.valueOf() ? intervalStart : nextIntervalStart;
   }
 
   getString(pointCoords: number, span: number): string {
@@ -302,48 +300,51 @@ export class TimeAxis extends DefaultAxis {
     let timestamp: number;
     let nanosec: number;
 
-    if (this.axisType === "time") {
-      timestamp = Math.ceil(value as number * 1000) / 1000;
-    } else if (this.axisType === "nanotime") {
+    if (this.axisType === 'time') {
+      timestamp = Math.ceil((value as number) * 1000) / 1000;
+    } else if (this.axisType === 'nanotime') {
       const v: Big = new Big(value);
       timestamp = parseFloat(v.div(1000000).toFixed(0));
       nanosec = parseFloat(v.mod(1000000000).toFixed(0));
     }
 
-    if (BigNumberUtils.lte(span, this.SECOND) && this.axisType === "time") {
-      return CommonUtils.formatTimestamp(
-        timestamp, this.axisTimezone, ".SSS"
-      ) + ((timestamp - Math.floor(timestamp)).toFixed(this.axisFixed));
+    if (BigNumberUtils.lte(span, this.SECOND) && this.axisType === 'time') {
+      return (
+        CommonUtils.formatTimestamp(timestamp, this.axisTimezone, '.SSS') +
+        (timestamp - Math.floor(timestamp)).toFixed(this.axisFixed)
+      );
     }
 
-    if (BigNumberUtils.lte(span, this.MINUTE) && this.axisType === "time") {
-      return CommonUtils.formatTimestamp(timestamp, this.axisTimezone, "mm:ss.SSS");
+    if (BigNumberUtils.lte(span, this.MINUTE) && this.axisType === 'time') {
+      return CommonUtils.formatTimestamp(timestamp, this.axisTimezone, 'mm:ss.SSS');
     }
 
     if (BigNumberUtils.lte(span, this.HOUR)) {
-      if (this.axisType !== "nanotime") {
-        return CommonUtils.formatTimestamp(timestamp, this.axisTimezone, "HH:mm:ss");
+      if (this.axisType !== 'nanotime') {
+        return CommonUtils.formatTimestamp(timestamp, this.axisTimezone, 'HH:mm:ss');
       }
 
       if (moment(timestamp).valueOf() < this.SECOND) {
-        return "." + CommonUtils.padStr(nanosec, 9);
+        return '.' + CommonUtils.padStr(nanosec, 9);
       }
 
-      return CommonUtils.formatTimestamp(timestamp, this.axisTimezone, "HH:mm:ss") + "." + CommonUtils.padStr(nanosec, 9);
+      return (
+        CommonUtils.formatTimestamp(timestamp, this.axisTimezone, 'HH:mm:ss') + '.' + CommonUtils.padStr(nanosec, 9)
+      );
     }
 
     if (BigNumberUtils.lte(span, this.DAY)) {
-      return CommonUtils.formatTimestamp(timestamp, this.axisTimezone, "YYYY MMM DD, HH:mm");
+      return CommonUtils.formatTimestamp(timestamp, this.axisTimezone, 'YYYY MMM DD, HH:mm');
     }
 
     if (BigNumberUtils.lte(span, this.MONTH)) {
-      return CommonUtils.formatTimestamp(timestamp, this.axisTimezone, "YYYY MMM DD");
+      return CommonUtils.formatTimestamp(timestamp, this.axisTimezone, 'YYYY MMM DD');
     }
 
     if (BigNumberUtils.lte(span, this.YEAR)) {
-      return CommonUtils.formatTimestamp(timestamp, this.axisTimezone, "YYYY MMM");
+      return CommonUtils.formatTimestamp(timestamp, this.axisTimezone, 'YYYY MMM');
     }
 
-    return CommonUtils.formatTimestamp(timestamp, this.axisTimezone, "YYYY");
+    return CommonUtils.formatTimestamp(timestamp, this.axisTimezone, 'YYYY');
   }
 }

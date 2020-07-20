@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-import {INITIAL_ZOOM_LEVEL} from "./consts";
-import {PlotStyleUtils} from "../../../utils";
+import { INITIAL_ZOOM_LEVEL } from './consts';
+import { PlotStyleUtils } from '../../../utils';
 
 export class PlotScale {
   static scaleBothAxes(scope, mouseX, mouseY): boolean {
@@ -23,25 +23,22 @@ export class PlotScale {
     const data = scope.stdmodel.data;
 
     if (
-      mouseY > PlotStyleUtils.safeHeight(scope.jqsvg) - scope.layout.bottomLayoutMargin
-      || mouseX < scope.layout.leftLayoutMargin
-      || !scope.model.model.auto_zoom
-      || !data.map(item => item.getRange ? true : false).every(b => b)
+      mouseY > PlotStyleUtils.safeHeight(scope.jqsvg) - scope.layout.bottomLayoutMargin ||
+      mouseX < scope.layout.leftLayoutMargin ||
+      !scope.model.model.auto_zoom ||
+      !data.map((item) => (item.getRange ? true : false)).every((b) => b)
     ) {
       return false;
     }
 
     // Zooming in the middle of the chart, autoscale Y
-    const ranges = data.map(item => item.getRange(item.elements.filter(el => el.x >= focus.xl && el.x <= focus.xr)));
-    const minYValue = Math.min(...ranges.map(r => r.yl).filter(y => !isNaN(y) && isFinite(y)));
-    const maxYValue = Math.max(...ranges.map(r => r.yr).filter(y => !isNaN(y) && isFinite(y)));
+    const ranges = data.map((item) =>
+      item.getRange(item.elements.filter((el) => el.x >= focus.xl && el.x <= focus.xr)),
+    );
+    const minYValue = Math.min(...ranges.map((r) => r.yl).filter((y) => !isNaN(y) && isFinite(y)));
+    const maxYValue = Math.max(...ranges.map((r) => r.yr).filter((y) => !isNaN(y) && isFinite(y)));
 
-    if (
-      !isNaN(minYValue)
-      && isFinite(minYValue)
-      && !isNaN(maxYValue)
-      && isFinite(maxYValue)
-    ) {
+    if (!isNaN(minYValue) && isFinite(minYValue) && !isNaN(maxYValue) && isFinite(maxYValue)) {
       focus.yl = minYValue;
       focus.yr = maxYValue;
       focus.yspan = focus.yr - focus.yl;
@@ -99,7 +96,7 @@ export class PlotScale {
     const nxr = xm + zoomRate * (focus.xr - xm);
     const nxspan = nxr - nxl;
 
-    if(nxspan >= level.minSpanX && nxspan <= level.maxScaleX) {
+    if (nxspan >= level.minSpanX && nxspan <= level.maxScaleX) {
       focus.xl = nxl;
       focus.xr = nxr;
       focus.xspan = nxspan;
@@ -107,7 +104,7 @@ export class PlotScale {
       return;
     }
 
-    if(nxspan > level.maxScaleX) {
+    if (nxspan > level.maxScaleX) {
       focus.xr = focus.xl + level.maxScaleX;
     } else if (nxspan < level.minSpanX) {
       focus.xr = focus.xl + level.minSpanX;

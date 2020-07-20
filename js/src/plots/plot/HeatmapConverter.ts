@@ -19,7 +19,7 @@ export class HeatmapConverter {
     // set margin
     newmodel.margin = {
       top: 0,
-      bottom: 0
+      bottom: 0,
     };
     // set axis bound as focus
     if (model.x_auto_range === false) {
@@ -51,8 +51,8 @@ export class HeatmapConverter {
     }
 
     //axes types
-    newmodel.xAxis.type = "linear";
-    newmodel.yAxis.type = "linear";
+    newmodel.xAxis.type = 'linear';
+    newmodel.yAxis.type = 'linear';
 
     const data = model.graphics_list;
 
@@ -65,17 +65,17 @@ export class HeatmapConverter {
     }
 
     const item = {
-      type: "heatmap",
+      type: 'heatmap',
       minValue: minValue,
       maxValue: maxValue,
-      legend: "true",
+      legend: 'true',
       colors: [],
       elements: [],
     };
 
     const colors = model.color;
     for (let i = 0; i < colors.length; i++) {
-      item.colors.push("#" + colors[i].substr(3));
+      item.colors.push('#' + colors[i].substr(3));
     }
 
     const elements = [];
@@ -85,8 +85,7 @@ export class HeatmapConverter {
 
       for (let colInd = 0; colInd < row.length; colInd++) {
         const value = row[colInd];
-        if (value === "NaN")
-          continue;
+        if (value === 'NaN') continue;
 
         const eleSize = 1;
         const ele = {
@@ -94,7 +93,7 @@ export class HeatmapConverter {
           y: rowInd - eleSize / 2,
           x2: colInd + eleSize / 2,
           y2: rowInd + eleSize / 2,
-          value: value
+          value: value,
         };
 
         elements.push(ele);

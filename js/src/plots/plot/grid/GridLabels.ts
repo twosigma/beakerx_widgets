@@ -14,11 +14,11 @@
  *  limitations under the License.
  */
 
-import $ from "jquery";
-import {PlotRange} from "../range";
-import {PlotFocus} from "../zoom";
-import {LabelData} from "./interfaces";
-import {PlotStyleUtils, PlotUtils} from "../../../utils";
+import $ from 'jquery';
+import { PlotRange } from '../range';
+import { PlotFocus } from '../zoom';
+import { LabelData } from './interfaces';
+import { PlotStyleUtils, PlotUtils } from '../../../utils';
 
 export class GridLabels {
   scope: any;
@@ -70,42 +70,43 @@ export class GridLabels {
   plotLabels(): void {
     const pipe = this.rpipeTexts;
 
-    this.scope.labelg.selectAll("text").remove();
-    this.scope.labelg.selectAll("text")
-      .data(pipe, d => d.id).enter().append("text")
-      .attr("id", d => d.id)
-      .attr("class", d => d.class)
-      .attr("x", d => d.x)
-      .attr("y", d => d.y)
-      .attr("transform", d => d.transform)
-      .style("text-anchor", d => d["text-anchor"])
-      .style("dominant-baseline", d => d["dominant-baseline"])
-      .text(d => d.text);
+    this.scope.labelg.selectAll('text').remove();
+    this.scope.labelg
+      .selectAll('text')
+      .data(pipe, (d) => d.id)
+      .enter()
+      .append('text')
+      .attr('id', (d) => d.id)
+      .attr('class', (d) => d.class)
+      .attr('x', (d) => d.x)
+      .attr('y', (d) => d.y)
+      .attr('transform', (d) => d.transform)
+      .style('text-anchor', (d) => d['text-anchor'])
+      .style('dominant-baseline', (d) => d['dominant-baseline'])
+      .text((d) => d.text);
   }
 
   renderAxisXLabel(i: number, model, mapX, mapY, lines, labels): void {
     const x = mapX(lines[i]);
     const y = mapY(this.plotFocus.focus.yl) + this.scope.labelPadding.y;
     const rpipeText = {
-      "id": "label_x_" + i,
-      "class": "plot-label plot-label-x",
-      "text": labels[i],
-      "x": x,
-      "y": y,
-      "text-anchor": "middle",
-      "dominant-baseline": "hanging"
+      id: 'label_x_' + i,
+      class: 'plot-label plot-label-x',
+      text: labels[i],
+      x: x,
+      y: y,
+      'text-anchor': 'middle',
+      'dominant-baseline': 'hanging',
     };
 
-    if (
-      model.categoryNamesLabelAngle
-      && model.categoryNamesLabelAngle !== 0
-      && model.orientation === 'VERTICAL'
-    ) {
-      const labelSize = this.getLabelSize(labels[i], "plot-label");
+    if (model.categoryNamesLabelAngle && model.categoryNamesLabelAngle !== 0 && model.orientation === 'VERTICAL') {
+      const labelSize = this.getLabelSize(labels[i], 'plot-label');
       const degree = -1 * model.categoryNamesLabelAngle * (180 / Math.PI);
-      const delta = degree > 0 ? (labelSize.width / 2) : -1 * (labelSize.width / 2);
+      const delta = degree > 0 ? labelSize.width / 2 : -1 * (labelSize.width / 2);
 
-      rpipeText['transform'] = `translate(${delta} ${this.scope.labelPadding.y}) rotate(${degree} ${(x - delta)} ${(y + labelSize.height / 2)})`;
+      rpipeText['transform'] = `translate(${delta} ${this.scope.labelPadding.y}) rotate(${degree} ${x - delta} ${
+        y + labelSize.height / 2
+      })`;
     }
 
     this.rpipeTexts.push(rpipeText);
@@ -115,20 +116,16 @@ export class GridLabels {
     const x = mapX(this.plotFocus.focus.xl) - this.scope.labelPadding.x;
     const y = mapY(lines[i]);
     const rpipeText = {
-      "id": "label_y_" + i,
-      "class": "plot-label plot-label-y",
-      "text": labels[i],
-      "x": x,
-      "y": y,
-      "text-anchor": "end",
-      "dominant-baseline": "central"
+      id: 'label_y_' + i,
+      class: 'plot-label plot-label-y',
+      text: labels[i],
+      x: x,
+      y: y,
+      'text-anchor': 'end',
+      'dominant-baseline': 'central',
     };
 
-    if (
-      model.categoryNamesLabelAngle
-      && model.categoryNamesLabelAngle !== 0
-      && model.orientation === 'HORIZONTAL'
-    ) {
+    if (model.categoryNamesLabelAngle && model.categoryNamesLabelAngle !== 0 && model.orientation === 'HORIZONTAL') {
       rpipeText['transform'] = `rotate(${model.categoryNamesLabelAngle * (180 / Math.PI)} ${x} ${y})`;
     }
 
@@ -139,12 +136,12 @@ export class GridLabels {
     const y = lines[i];
 
     this.rpipeTexts.push({
-      "id": `label_yr_${i}`,
-      "class": "plot-label",
-      "text": labels[i],
-      "x": mapX(this.plotFocus.focus.xr) + this.scope.labelPadding.x,
-      "y": mapY_r(y),
-      "dominant-baseline": "central"
+      id: `label_yr_${i}`,
+      class: 'plot-label',
+      text: labels[i],
+      x: mapX(this.plotFocus.focus.xr) + this.scope.labelPadding.x,
+      y: mapY_r(y),
+      'dominant-baseline': 'central',
     });
   }
 
@@ -154,11 +151,11 @@ export class GridLabels {
 
     if (model.xAxis.label != null) {
       this.rpipeTexts.push({
-        "id": "xlabel",
-        "class": "plot-xylabel",
-        "text": model.xAxis.axisLabelWithCommon,
-        "x": lMargin + (PlotStyleUtils.safeWidth(this.scope.jqsvg) - lMargin) / 2,
-        "y": PlotStyleUtils.safeHeight(this.scope.jqsvg) - PlotUtils.fonts.labelHeight
+        id: 'xlabel',
+        class: 'plot-xylabel',
+        text: model.xAxis.axisLabelWithCommon,
+        x: lMargin + (PlotStyleUtils.safeWidth(this.scope.jqsvg) - lMargin) / 2,
+        y: PlotStyleUtils.safeHeight(this.scope.jqsvg) - PlotUtils.fonts.labelHeight,
       });
     }
 
@@ -167,12 +164,12 @@ export class GridLabels {
       const y = (PlotStyleUtils.safeHeight(this.scope.jqsvg) - bMargin) / 2;
 
       this.rpipeTexts.push({
-        "id": "ylabel",
-        "class": "plot-xylabel",
-        "text": model.yAxis.label,
-        "x": x,
-        "y": y,
-        "transform": `rotate(-90 ${x} ${y})`
+        id: 'ylabel',
+        class: 'plot-xylabel',
+        text: model.yAxis.label,
+        x: x,
+        y: y,
+        transform: `rotate(-90 ${x} ${y})`,
       });
     }
 
@@ -181,12 +178,12 @@ export class GridLabels {
       const y = (PlotStyleUtils.safeHeight(this.scope.jqsvg) - bMargin) / 2;
 
       this.rpipeTexts.push({
-        "id": "yrlabel",
-        "class": "plot-xylabel",
-        "text": model.yAxisR.label,
-        "x": x,
-        "y": y,
-        "transform": `rotate(-90 ${x} ${y})`
+        id: 'yrlabel',
+        class: 'plot-xylabel',
+        text: model.yAxisR.label,
+        x: x,
+        y: y,
+        transform: `rotate(-90 ${x} ${y})`,
       });
     }
   }
@@ -194,11 +191,11 @@ export class GridLabels {
   getLabelSize(value: string, DOMClass: string): { width: number; height: number } {
     const element = $(`<div>${value}</div>`)
       .css({
-        'position': 'absolute',
-        'float': 'left',
+        position: 'absolute',
+        float: 'left',
         'white-space': 'nowrap',
-        'visibility': 'hidden',
-        'class': DOMClass
+        visibility: 'hidden',
+        class: DOMClass,
       })
       .appendTo($('body'));
 
@@ -207,6 +204,6 @@ export class GridLabels {
 
     element.remove();
 
-    return {width, height};
+    return { width, height };
   }
 }

@@ -15,16 +15,15 @@
  */
 
 interface PlotScopeInterface {
-  calcMapping: (emitFocusUpdate: boolean) => void
-  update: () => void
+  calcMapping: (emitFocusUpdate: boolean) => void;
+  update: () => void;
   layout: {
-    leftLayoutMargin: number,
-    rightLayoutMargin: number,
-  },
+    leftLayoutMargin: number;
+    rightLayoutMargin: number;
+  };
 }
 
 export class CombinedPlotScopeUtils {
-
   public static adjustLayoutMargin(scopes: PlotScopeInterface[]): void {
     const maximumMargins = CombinedPlotScopeUtils.getMaximumLayoutMarrgins(scopes);
 
@@ -33,7 +32,7 @@ export class CombinedPlotScopeUtils {
     }
   }
 
-  private static getMaximumLayoutMarrgins(scopes: PlotScopeInterface[]): { left: number; right: number; } {
+  private static getMaximumLayoutMarrgins(scopes: PlotScopeInterface[]): { left: number; right: number } {
     let maxLeft = 0;
     let maxRight = 0;
 
@@ -48,7 +47,7 @@ export class CombinedPlotScopeUtils {
     };
   }
 
-  private static adjustScopeLayoutMargin(scope: PlotScopeInterface, margins: { left: number; right: number; }) {
+  private static adjustScopeLayoutMargin(scope: PlotScopeInterface, margins: { left: number; right: number }) {
     const layout = scope.layout;
 
     if (layout.leftLayoutMargin === margins.left && layout.rightLayoutMargin === margins.right) {
@@ -61,5 +60,4 @@ export class CombinedPlotScopeUtils {
     scope.calcMapping(false);
     scope.update();
   }
-
 }

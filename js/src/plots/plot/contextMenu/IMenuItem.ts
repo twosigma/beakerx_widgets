@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-import {CommandRegistry} from '@phosphor/commands';
-import {IContextMenuItem} from "./IContextMenuItem";
+import { CommandRegistry } from '@phosphor/commands';
+import { IContextMenuItem } from './IContextMenuItem';
 
 export interface IMenuItem {
   title: string;
@@ -26,14 +26,14 @@ export interface IMenuItem {
   inputPlaceholder?: string;
   inputAction?: () => void;
   isChecked?: boolean | (() => boolean);
-  items?: IContextMenuItem[] | (() => IContextMenuItem[]),
-  keepOpen?: boolean,
-  separator?: boolean,
-  shortcut?: string
-  submenuClass?: string,
-  type?: string,
-  tooltip?: string,
-  updateLayout?: boolean,
-  isVisible?: CommandRegistry.CommandFunc<boolean>,
-  args?: Record<string, unknown>
+  items?: IContextMenuItem[] | (() => IContextMenuItem[]);
+  keepOpen?: boolean;
+  separator?: boolean;
+  shortcut?: string;
+  submenuClass?: string;
+  type?: string;
+  tooltip?: string;
+  updateLayout?: boolean;
+  isVisible?: CommandRegistry.CommandFunc<boolean>;
+  args?: Record<string, unknown>;
 }

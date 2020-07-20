@@ -14,20 +14,21 @@
  *  limitations under the License.
  */
 
-import {AbstractPlotModel} from "./AbstractPlotModel";
-import {PlotAxisFactory} from "../std";
-import {PlotFocus} from "../zoom";
-import {DefaultKernelMapping, GroovyKernelMapping, StandardModelData} from "../mapping";
-import {PlotRange} from "../range";
-import {BigNumberUtils, PlotUtils} from "../../../utils";
-import {PlotFactory} from "../PlotFactory";
+import { AbstractPlotModel } from './AbstractPlotModel';
+import { PlotAxisFactory } from '../std';
+import { PlotFocus } from '../zoom';
+import { DefaultKernelMapping, GroovyKernelMapping, StandardModelData } from '../mapping';
+import { PlotRange } from '../range';
+import { BigNumberUtils, PlotUtils } from '../../../utils';
+import { PlotFactory } from '../PlotFactory';
 
 const DEFAULT_LINE_ITEM_WIDTH = 2;
 const DEFAULT_BAR_ITEM_WIDTH = 1;
 
 export class DefaultPlotModel extends AbstractPlotModel {
   createNewModel(model): StandardModelData {
-    if (model.version === "groovy") {  // model returned from serializer
+    if (model.version === 'groovy') {
+      // model returned from serializer
       return GroovyKernelMapping.mapStandardPlotModelData(model);
     }
 
@@ -55,9 +56,9 @@ export class DefaultPlotModel extends AbstractPlotModel {
     this.formatCursor(newModel.xCursor);
     this.formatCursor(newModel.yCursor);
 
-    const logX = newModel.xAxis.type === "log";
+    const logX = newModel.xAxis.type === 'log';
     const logXBase = newModel.xAxis.base;
-    const logY = newModel.yAxis.type === "log";
+    const logY = newModel.yAxis.type === 'log';
     const logYBase = newModel.yAxis.base;
 
     this.applyOrientation(newModel);
@@ -68,10 +69,10 @@ export class DefaultPlotModel extends AbstractPlotModel {
   sortModelDataItems(model): void {
     for (const item of model.data) {
       if (
-        item.type === "treemapnode"
-        || item.type === "constline"
-        || item.type === "constband"
-        || item.type === "heatmap"
+        item.type === 'treemapnode' ||
+        item.type === 'constline' ||
+        item.type === 'constband' ||
+        item.type === 'heatmap'
       ) {
         continue;
       }
@@ -90,12 +91,7 @@ export class DefaultPlotModel extends AbstractPlotModel {
         continue;
       }
 
-      if (
-        item.type === "bar"
-        || item.type === "stem"
-        || item.type === "point"
-        || item.type === "text"
-      ) {
+      if (item.type === 'bar' || item.type === 'stem' || item.type === 'point' || item.type === 'text') {
         elements.sort((a, b) => {
           BigNumberUtils.minus(a.x, b.x);
         });
@@ -152,7 +148,7 @@ export class DefaultPlotModel extends AbstractPlotModel {
     model.yAxisR = PlotRange.updateAxisYRange(model.yAxisR, model.vrangeR, model);
 
     for (const item of model.data) {
-      if (item.type === "treemapnode") {
+      if (item.type === 'treemapnode') {
         continue;
       }
 
@@ -185,19 +181,19 @@ export class DefaultPlotModel extends AbstractPlotModel {
     const margin = newModel.margin;
 
     if (margin.bottom === null) {
-      margin.bottom = .05;
+      margin.bottom = 0.05;
     }
 
     if (margin.top === null) {
-      margin.top = .05;
+      margin.top = 0.05;
     }
 
     if (margin.left === null) {
-      margin.left = .05;
+      margin.left = 0.05;
     }
 
     if (margin.right === null) {
-      margin.right = .05;
+      margin.right = 0.05;
     }
   }
 
@@ -207,7 +203,7 @@ export class DefaultPlotModel extends AbstractPlotModel {
     }
 
     if (cursor.color === null) {
-      cursor.color = "black";
+      cursor.color = 'black';
     }
 
     if (cursor.width === null) {
@@ -228,7 +224,7 @@ export class DefaultPlotModel extends AbstractPlotModel {
   }
 
   formatModelData(newModel, logX: boolean, logXBase: number, logY: boolean, logYBase: number): void {
-    const logYR = newModel.yAxisR && newModel.yAxisR.type === "log";
+    const logYR = newModel.yAxisR && newModel.yAxisR.type === 'log';
     const logYRBase = newModel.yAxisR?.base ?? undefined;
 
     if (!newModel.data) {
@@ -247,7 +243,7 @@ export class DefaultPlotModel extends AbstractPlotModel {
     let itemLogY;
     let itemLogYBase;
 
-    if (item.type !== "treemapnode") {
+    if (item.type !== 'treemapnode') {
       useYAxisR = PlotUtils.useYAxisR(newModel, item);
       itemLogY = useYAxisR ? logYR : logY;
       itemLogYBase = useYAxisR ? logYRBase : logYBase;
@@ -256,17 +252,17 @@ export class DefaultPlotModel extends AbstractPlotModel {
     item.showItem = true;
 
     if (!item.type) {
-      item.type = "line";
+      item.type = 'line';
     }
 
-    if (item.type === "line" || item.type === "constline") {
-      item.style = item.style || "solid";
+    if (item.type === 'line' || item.type === 'constline') {
+      item.style = item.style || 'solid';
       item.stroke_dasharray = this.lineDasharrayMap[item.style];
     }
 
-    if (item.type === "point") {
-      item.shape = item.shape || "rect";
-      item.size = item.size || (item.shape === "rect" ? 8 : 5);
+    if (item.type === 'point') {
+      item.shape = item.shape || 'rect';
+      item.size = item.size || (item.shape === 'rect' ? 8 : 5);
     }
 
     if (item.useToolTip == null) {
@@ -287,28 +283,24 @@ export class DefaultPlotModel extends AbstractPlotModel {
 
     // recreate rendering objects
     item.index = i;
-    item.id = "i" + i;
+    item.id = 'i' + i;
 
     newModel.data[i] = PlotFactory.createPlotItem(item, newModel.lodThreshold);
   }
 
   setItemWidth(item): void {
-    if (item.type === "line" || item.type === "stem") {
+    if (item.type === 'line' || item.type === 'stem') {
       item.width = item.width || DEFAULT_LINE_ITEM_WIDTH;
     }
 
-    if (item.type === "bar" && item.width === null) {
+    if (item.type === 'bar' && item.width === null) {
       item.width = DEFAULT_BAR_ITEM_WIDTH;
     }
   }
 
   setItemColor(item): void {
-    if (
-      item.type === "constline"
-      || item.type === "constband"
-      || item.type === "line"
-    ) {
-      item.color = item.color || "black";
+    if (item.type === 'constline' || item.type === 'constband' || item.type === 'line') {
+      item.color = item.color || 'black';
     }
   }
 
@@ -345,8 +337,15 @@ export class DefaultPlotModel extends AbstractPlotModel {
     }
   }
 
-  formatModelDataItemElement(item, element, itemLogY: boolean, itemLogYBase: number, logX: boolean, logXBase: number): void {
-    if (item.type === "stem") {
+  formatModelDataItemElement(
+    item,
+    element,
+    itemLogY: boolean,
+    itemLogYBase: number,
+    logX: boolean,
+    logXBase: number,
+  ): void {
+    if (item.type === 'stem') {
       element.stroke_dasharray = this.lineDasharrayMap[element.style];
     }
 
@@ -365,15 +364,12 @@ export class DefaultPlotModel extends AbstractPlotModel {
       delete element.outlineOpacity;
     }
 
-    if (item.type === "bar" && element.x2 == null) {
+    if (item.type === 'bar' && element.x2 == null) {
       element.x = BigNumberUtils.minus(element.x, item.width / 2);
       element.x2 = BigNumberUtils.plus(element.x, item.width);
     }
 
-    if (
-      (item.type === "area" || item.type === "bar" || item.type === "stem")
-      && element.y2 == null
-    ) {
+    if ((item.type === 'area' || item.type === 'bar' || item.type === 'stem') && element.y2 == null) {
       if (item.height != null) {
         element.y2 = element.y + item.height;
       } else if (item.base != null) {
@@ -383,12 +379,12 @@ export class DefaultPlotModel extends AbstractPlotModel {
       }
     }
 
-    if (item.type === "point" && element.size == null) {
-      element.size = item.size || (item.shape === "rect" ? 8 : 5);
+    if (item.type === 'point' && element.size == null) {
+      element.size = item.size || (item.shape === 'rect' ? 8 : 5);
     }
 
-    if (item.type === "area") {
-      item.interpolation = item.interpolation || "linear";
+    if (item.type === 'area') {
+      item.interpolation = item.interpolation || 'linear';
     }
 
     // swap y, y2
@@ -439,7 +435,7 @@ export class DefaultPlotModel extends AbstractPlotModel {
       x: element.y,
       x2: element.y2,
       y: element.x,
-      y2: element.x2
+      y2: element.x2,
     };
 
     element.x = temp.x;
@@ -518,19 +514,14 @@ export class DefaultPlotModel extends AbstractPlotModel {
     }
 
     // visible range initially is 10x larger than data range by default
-    newModel.vrange = this.getModelRange(
-      newModel,
-      range,
-      newModel.xAxis.type === "log",
-      newModel.yAxis.type === "log"
-    );
+    newModel.vrange = this.getModelRange(newModel, range, newModel.xAxis.type === 'log', newModel.yAxis.type === 'log');
 
     if (newModel.yAxisR) {
       newModel.vrangeR = this.getModelRange(
         newModel,
         rangeR,
-        newModel.xAxis.type === "log",
-        newModel.yAxisR.type === "log"
+        newModel.xAxis.type === 'log',
+        newModel.yAxisR.type === 'log',
       );
     }
 
@@ -539,7 +530,12 @@ export class DefaultPlotModel extends AbstractPlotModel {
     this.updateRangeSpan(newModel.vrangeR);
   }
 
-  getModelRange(newModel, range, logX: boolean, logY: boolean): null | {
+  getModelRange(
+    newModel,
+    range,
+    logX: boolean,
+    logY: boolean,
+  ): null | {
     xl: BigJs.Big | number | string;
     xr: BigJs.Big | number | string;
     yl: number;
@@ -553,7 +549,7 @@ export class DefaultPlotModel extends AbstractPlotModel {
       xl: BigNumberUtils.minus(range.xl, range.xSpan * 10.0),
       xr: BigNumberUtils.plus(range.xr, range.xSpan * 10.0),
       yl: range.yl - range.ySpan * 10.0,
-      yr: range.yr + range.ySpan * 10.0
+      yr: range.yr + range.ySpan * 10.0,
     };
 
     if (logX) {

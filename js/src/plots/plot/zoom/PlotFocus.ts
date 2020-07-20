@@ -14,10 +14,10 @@
  *  limitations under the License.
  */
 
-import * as d3 from "d3";
-import * as _ from "underscore";
-import {Focus} from "./Focus";
-import {BigNumberUtils, PlotStyleUtils, PlotUtils} from "../../../utils";
+import * as d3 from 'd3';
+import * as _ from 'underscore';
+import { Focus } from './Focus';
+import { BigNumberUtils, PlotStyleUtils, PlotUtils } from '../../../utils';
 
 export class PlotFocus {
   defaultFocus: Focus;
@@ -67,7 +67,7 @@ export class PlotFocus {
   setFocus(focus: Focus, base: Focus = this.defaultFocus): void {
     this.focus = {
       ...base,
-      ...focus
+      ...focus,
     };
   }
 
@@ -75,10 +75,12 @@ export class PlotFocus {
     return this.focus;
   }
 
-  static getDefault(model): {
-    defaultFocus: Focus,
-    visibleItem?: any,
-    legendableItem?: any,
+  static getDefault(
+    model,
+  ): {
+    defaultFocus: Focus;
+    visibleItem?: any;
+    legendableItem?: any;
   } {
     const yAxisData = [];
     const yAxisRData = [];
@@ -101,7 +103,8 @@ export class PlotFocus {
     margin.top = margin.top ?? 0.05;
     margin.bottom = margin.bottom ?? 0.05;
 
-    if (ret.visibleItems === 0) { // for empty plot, focus needs to be adjusted
+    if (ret.visibleItems === 0) {
+      // for empty plot, focus needs to be adjusted
       range.xl = model.xAxis.getPercent(range.xl);
       range.xr = model.xAxis.getPercent(range.xr);
       range.yl = model.yAxis.getPercent(range.yl);
@@ -119,7 +122,7 @@ export class PlotFocus {
       yl: model.userFocus.yl,
       yr: model.userFocus.yr,
       yl_r: model.yAxisR !== null ? model.userFocus.yl_r : model.userFocus.yl,
-      yr_r: model.yAxisR !== null ? model.userFocus.yr_r : model.userFocus.yr
+      yr_r: model.yAxisR !== null ? model.userFocus.yr_r : model.userFocus.yr,
     };
 
     if (focus.xl == null) {
@@ -176,9 +179,9 @@ export class PlotFocus {
     focus.yspan = BigNumberUtils.minus(focus.yr, focus.yl);
     focus.yspan_r = focus.yr_r - focus.yl_r;
 
-    const result = {defaultFocus: focus};
+    const result = { defaultFocus: focus };
 
-    _.extend(result, _.omit(ret, "datarange"));
+    _.extend(result, _.omit(ret, 'datarange'));
 
     return result;
   }
@@ -196,9 +199,9 @@ export class PlotFocus {
     const H = PlotStyleUtils.safeHeight(this.scope.jqsvg);
 
     if (mx < lMargin && my < H - bMargin) {
-      _.extend(this.focus, _.pick(this.defaultFocus, "yl", "yr", "yspan", "yl_r", "yr_r", "yspan_r"));
+      _.extend(this.focus, _.pick(this.defaultFocus, 'yl', 'yr', 'yspan', 'yl_r', 'yr_r', 'yspan_r'));
     } else if (my > H - bMargin && mx > lMargin) {
-      _.extend(this.focus, _.pick(this.defaultFocus, "xl", "xr", "xspan"));
+      _.extend(this.focus, _.pick(this.defaultFocus, 'xl', 'xr', 'xspan'));
     } else {
       _.extend(this.focus, this.defaultFocus);
     }
@@ -221,8 +224,7 @@ export class PlotFocus {
     focus.yspan_r = focus.yr_r - focus.yl_r;
 
     if (focus.xl > focus.xr || focus.yl > focus.yr || focus.yl_r > focus.yr_r) {
-      console.error("visible range specified does not match data range, " +
-        "enforcing visible range");
+      console.error('visible range specified does not match data range, ' + 'enforcing visible range');
       _.extend(focus, this.defaultFocus);
     }
   }
@@ -295,7 +297,7 @@ export class PlotFocus {
         xr: newFocus.xr,
         xspan: newFocus.xspan,
       },
-      this.focus
+      this.focus,
     );
 
     this.scope.plotRange.calcMapping(false);

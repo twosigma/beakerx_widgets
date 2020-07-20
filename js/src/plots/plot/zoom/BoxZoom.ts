@@ -16,7 +16,7 @@
 
 import * as d3 from 'd3';
 import moment from 'moment-timezone';
-import {PlotStyleUtils} from "../../../utils";
+import { PlotStyleUtils } from '../../../utils';
 
 const QUICK_ZOOM_DEBOUNCE_TIME = 50;
 
@@ -31,9 +31,9 @@ export class BoxZoom {
 
   shouldStartBoxZooming(zoomStarted: number) {
     return (
-      Math.abs(this.scope.mousep1.x - this.scope.mousep2.x) > 10
-      && Math.abs(this.scope.mousep1.y - this.scope.mousep2.y) > 10
-      && moment().valueOf() - zoomStarted > QUICK_ZOOM_DEBOUNCE_TIME
+      Math.abs(this.scope.mousep1.x - this.scope.mousep2.x) > 10 &&
+      Math.abs(this.scope.mousep1.y - this.scope.mousep2.y) > 10 &&
+      moment().valueOf() - zoomStarted > QUICK_ZOOM_DEBOUNCE_TIME
     );
   }
 
@@ -45,8 +45,12 @@ export class BoxZoom {
     const yl = Math.min(p1.y, p2.y);
     let yr = Math.max(p1.y, p2.y);
 
-    if (xr === xl) { xr = xl + 1; }
-    if (yr === yl) { yr = yl + 1; }
+    if (xr === xl) {
+      xr = xl + 1;
+    }
+    if (yr === yl) {
+      yr = yl + 1;
+    }
 
     return { x: xl, y: yl, w: xr - xl, h: yr - yl };
   }
@@ -61,7 +65,7 @@ export class BoxZoom {
     // right click zoom
     this.scope.mousep2 = {
       x: d3.mouse(svgNode)[0],
-      y: d3.mouse(svgNode)[1]
+      y: d3.mouse(svgNode)[1],
     };
     this.locateBox = this.getLocateBoxCoords();
     this.scope.rpipeRects = [];
@@ -76,13 +80,13 @@ export class BoxZoom {
     }
 
     const p1 = {
-      "x" : this.scope.plotRange.scr2dataXp(box.x),
-      "y" : this.scope.plotRange.scr2dataYp(box.y)
+      x: this.scope.plotRange.scr2dataXp(box.x),
+      y: this.scope.plotRange.scr2dataYp(box.y),
     };
 
     const p2 = {
-      "x" : this.scope.plotRange.scr2dataXp(box.x + box.w),
-      "y" : this.scope.plotRange.scr2dataYp(box.y + box.h)
+      x: this.scope.plotRange.scr2dataXp(box.x + box.w),
+      y: this.scope.plotRange.scr2dataYp(box.y + box.h),
     };
 
     p1.x = Math.max(0, p1.x);
@@ -106,7 +110,7 @@ export class BoxZoom {
     // Calculate zoom level
     const W = PlotStyleUtils.safeWidth(this.scope.jqsvg);
     const H = PlotStyleUtils.safeHeight(this.scope.jqsvg);
-    const zoomLevel: number = (this.scope.plotZoom.lastTransform.k || 1) + ((W / box.w + H / box.h) / 2); // Calculate average zoom level
+    const zoomLevel: number = (this.scope.plotZoom.lastTransform.k || 1) + (W / box.w + H / box.h) / 2; // Calculate average zoom level
     const transform: any = d3.zoomTransform(this.scope.svg.node());
 
     this.scope.plotZoom.lastTransform.k = zoomLevel;
@@ -117,22 +121,23 @@ export class BoxZoom {
   }
 
   renderLocateBox() {
-    this.scope.svg.selectAll("#locatebox").remove();
+    this.scope.svg.selectAll('#locatebox').remove();
 
     if (!this.locateBox) {
       return;
     }
 
     const box = this.locateBox;
-    this.scope.view = this.scope.svg.selectAll("#locatebox")
+    this.scope.view = this.scope.svg
+      .selectAll('#locatebox')
       .data([{}])
       .enter()
-      .append("rect")
-      .attr("id", "locatebox")
-      .attr("class", "plot-locatebox")
-      .attr("x", box.x)
-      .attr("y", box.y)
-      .attr("width", box.w)
-      .attr("height", box.h);
+      .append('rect')
+      .attr('id', 'locatebox')
+      .attr('class', 'plot-locatebox')
+      .attr('x', box.x)
+      .attr('y', box.y)
+      .attr('width', box.w)
+      .attr('height', box.h);
   }
 }

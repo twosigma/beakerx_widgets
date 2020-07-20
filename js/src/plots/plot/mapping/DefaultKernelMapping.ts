@@ -14,23 +14,22 @@
  *  limitations under the License.
  */
 
-import {ModelData} from "./ModelData";
-import {StandardModelData} from "./StandardModelData";
-import {TreeMapModelData} from "./TreeMapModelData";
+import { ModelData } from './ModelData';
+import { StandardModelData } from './StandardModelData';
+import { TreeMapModelData } from './TreeMapModelData';
 
 export class DefaultKernelMapping {
-
   static mapModelData(modelData): ModelData {
     return {
       showLegend: modelData.showLegend,
-      legendPosition: modelData.legendPosition ?? {position: "TOP_RIGHT"},
-      legendLayout: modelData.legendLayout ?? "VERTICAL",
+      legendPosition: modelData.legendPosition ?? { position: 'TOP_RIGHT' },
+      legendLayout: modelData.legendLayout ?? 'VERTICAL',
       useToolTip: modelData.useToolTip ?? false,
       margin: modelData.margin ?? {},
       plotSize: {
         width: modelData.width ?? 1200,
-        height: modelData.height ?? 350
-      }
+        height: modelData.height ?? 350,
+      },
     };
   }
 
@@ -40,7 +39,7 @@ export class DefaultKernelMapping {
 
       ...DefaultKernelMapping.mapModelData(modelData),
 
-      orientation: modelData.orientation ?? "VERTICAL",
+      orientation: modelData.orientation ?? 'VERTICAL',
       omitCheckboxes: modelData.omitCheckboxes,
       xAxis: modelData.xAxis ?? {},
       yAxis: modelData.yAxis ?? {},
@@ -51,7 +50,7 @@ export class DefaultKernelMapping {
       userFocus: modelData.focus ?? {},
       timezone: modelData.timezone,
       categoryNames: modelData.categoryNames,
-      showXGridlines: !(modelData.orientation !== 'HORIZONTAL' && modelData.type === "CategoryPlot"),
+      showXGridlines: !(modelData.orientation !== 'HORIZONTAL' && modelData.type === 'CategoryPlot'),
       categoryMargin: modelData.categoryMargin,
       categoryNamesLabelAngle: modelData.categoryNamesLabelAngle,
       cumulative: modelData.cumulative,
@@ -74,7 +73,7 @@ export class DefaultKernelMapping {
       ratio: modelData.ratio,
       sticky: modelData.sticky,
       round: modelData.round,
-      valueAccessor: modelData.valueAccessor
-    }
+      valueAccessor: modelData.valueAccessor,
+    };
   }
 }

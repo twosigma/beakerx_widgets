@@ -23,13 +23,13 @@ export class LegendPosition {
 
   getPosition(legendPosition, isHorizontal) {
     if (!legendPosition) {
-      return this.getPosition("TOP_RIGHT", isHorizontal);
+      return this.getPosition('TOP_RIGHT', isHorizontal);
     }
 
     const margin = this.scope.layout.legendMargin;
     const containerWidth = this.scope.jqcontainer.outerWidth(true);
     const containerWidthWithMargin = containerWidth + margin;
-    const legend = this.scope.jqlegendcontainer.find("#plotLegend");
+    const legend = this.scope.jqlegendcontainer.find('#plotLegend');
     const legendHeight = legend.height();
     const legendHeightWithMargin = legendHeight + margin;
     const verticalCenter = this.scope.jqcontainer.height() / 2 - legendHeight / 2;
@@ -37,34 +37,34 @@ export class LegendPosition {
 
     if (!legendPosition.position) {
       return {
-        "left": legendPosition.x,
-        "top": legendPosition.y
+        left: legendPosition.x,
+        top: legendPosition.y,
       };
     }
 
     switch (legendPosition.position) {
-      case "TOP":
+      case 'TOP':
         return {
-          "left": horizontalCenter,
-          "top": -legendHeightWithMargin
+          left: horizontalCenter,
+          top: -legendHeightWithMargin,
         };
 
-      case "LEFT":
+      case 'LEFT':
         return {
-          "left": 0,
-          "top": verticalCenter
+          left: 0,
+          top: verticalCenter,
         };
 
-      case "BOTTOM":
+      case 'BOTTOM':
         return {
-          "left": horizontalCenter,
-          "bottom": -legendHeightWithMargin
+          left: horizontalCenter,
+          bottom: -legendHeightWithMargin,
         };
 
-      case "RIGHT":
+      case 'RIGHT':
         return {
-          "left": containerWidthWithMargin,
-          "bottom": verticalCenter
+          left: containerWidthWithMargin,
+          bottom: verticalCenter,
         };
 
       default:
@@ -85,75 +85,72 @@ export class LegendPosition {
   }
 
   getPositionForHorizontalLegend(legendPosition, containerWidth, margin) {
-    const legend = this.scope.jqlegendcontainer.find("#plotLegend");
+    const legend = this.scope.jqlegendcontainer.find('#plotLegend');
     const legendWidth = legend.outerWidth(true);
     const legendHeight = legend.height();
     const legendHeightWithMargin = legendHeight + margin;
 
     switch (legendPosition.position) {
-      case "TOP_LEFT":
+      case 'TOP_LEFT':
         return {
-          "left": 0,
-          "top": -legendHeightWithMargin
+          left: 0,
+          top: -legendHeightWithMargin,
         };
 
-      case "TOP_RIGHT":
+      case 'TOP_RIGHT':
         return {
-          "left": containerWidth - legendWidth,
-          "top": -legendHeightWithMargin
+          left: containerWidth - legendWidth,
+          top: -legendHeightWithMargin,
         };
 
-      case "BOTTOM_LEFT":
+      case 'BOTTOM_LEFT':
         return {
-          "left": 0,
-          "bottom": -legendHeightWithMargin
+          left: 0,
+          bottom: -legendHeightWithMargin,
         };
 
-      case "BOTTOM_RIGHT":
+      case 'BOTTOM_RIGHT':
         return {
-          "left": containerWidth - legendWidth,
-          "bottom": -legendHeightWithMargin
+          left: containerWidth - legendWidth,
+          bottom: -legendHeightWithMargin,
         };
     }
   }
 
   getPositionForDefaultLayout(legendPosition, containerWidthWithMargin) {
-    switch(legendPosition.position){
-      case "TOP_LEFT":
+    switch (legendPosition.position) {
+      case 'TOP_LEFT':
         return {
-          "left": 0,
-          "top": this.scope.layout.topLayoutMargin
+          left: 0,
+          top: this.scope.layout.topLayoutMargin,
         };
 
-      case "TOP_RIGHT":
+      case 'TOP_RIGHT':
         return {
-          "left": containerWidthWithMargin,
-          "top": this.scope.layout.topLayoutMargin
+          left: containerWidthWithMargin,
+          top: this.scope.layout.topLayoutMargin,
         };
 
-      case "BOTTOM_LEFT":
+      case 'BOTTOM_LEFT':
         return {
-          "left": 0,
-          "bottom": this.scope.layout.bottomLayoutMargin
+          left: 0,
+          bottom: this.scope.layout.bottomLayoutMargin,
         };
 
-      case "BOTTOM_RIGHT":
+      case 'BOTTOM_RIGHT':
         return {
-          "left": containerWidthWithMargin,
-          "bottom": this.scope.layout.bottomLayoutMargin
+          left: containerWidthWithMargin,
+          bottom: this.scope.layout.bottomLayoutMargin,
         };
     }
   }
 
   updateLegendPosition() {
-    const legendContainer = this.scope.jqlegendcontainer.find("#plotLegend");
-    const isHorizontal = this.scope.stdmodel.legendLayout === "HORIZONTAL";
+    const legendContainer = this.scope.jqlegendcontainer.find('#plotLegend');
+    const isHorizontal = this.scope.stdmodel.legendLayout === 'HORIZONTAL';
 
     if (this.scope.legendResetPosition === true) {
-      this.scope.legendPosition = this.getPosition(
-        this.scope.stdmodel.legendPosition,
-        isHorizontal
-      );
+      this.scope.legendPosition = this.getPosition(this.scope.stdmodel.legendPosition, isHorizontal);
       this.scope.legendResetPosition = false;
     }
 
@@ -164,32 +161,32 @@ export class LegendPosition {
   }
 
   updateLegendMargins(legendContainer) {
-    const isHorizontal = this.scope.stdmodel.legendLayout === "HORIZONTAL";
+    const isHorizontal = this.scope.stdmodel.legendLayout === 'HORIZONTAL';
     const margin = this.scope.layout.legendMargin;
 
     //increase plot margins if legend has predefined values
     switch (this.scope.stdmodel.legendPosition.position) {
-      case "LEFT":
-        this.scope.jqcontainer.css("margin-left", legendContainer.width() + margin);
+      case 'LEFT':
+        this.scope.jqcontainer.css('margin-left', legendContainer.width() + margin);
         break;
-      case "TOP":
-        this.scope.jqcontainer.css("margin-top", legendContainer.height() + margin);
+      case 'TOP':
+        this.scope.jqcontainer.css('margin-top', legendContainer.height() + margin);
         break;
-      case "BOTTOM":
-        this.scope.jqcontainer.css("margin-bottom", legendContainer.height() + margin);
+      case 'BOTTOM':
+        this.scope.jqcontainer.css('margin-bottom', legendContainer.height() + margin);
         break;
     }
 
     if (isHorizontal) {
-      if(["TOP_LEFT", "TOP_RIGHT"].indexOf(this.scope.stdmodel.legendPosition.position) !== -1) {
-        this.scope.jqcontainer.css("margin-top", legendContainer.height() + margin);
+      if (['TOP_LEFT', 'TOP_RIGHT'].indexOf(this.scope.stdmodel.legendPosition.position) !== -1) {
+        this.scope.jqcontainer.css('margin-top', legendContainer.height() + margin);
       }
-      if(["BOTTOM_LEFT", "BOTTOM_RIGHT"].indexOf(this.scope.stdmodel.legendPosition.position) !== -1) {
-        this.scope.jqcontainer.css("margin-bottom", legendContainer.height() + margin);
+      if (['BOTTOM_LEFT', 'BOTTOM_RIGHT'].indexOf(this.scope.stdmodel.legendPosition.position) !== -1) {
+        this.scope.jqcontainer.css('margin-bottom', legendContainer.height() + margin);
       }
     } else {
-      if(["TOP_LEFT", "BOTTOM_LEFT"].indexOf(this.scope.stdmodel.legendPosition.position) !== -1) {
-        this.scope.jqcontainer.css("margin-left", legendContainer.width() + margin);
+      if (['TOP_LEFT', 'BOTTOM_LEFT'].indexOf(this.scope.stdmodel.legendPosition.position) !== -1) {
+        this.scope.jqcontainer.css('margin-left', legendContainer.width() + margin);
       }
     }
   }
@@ -199,12 +196,12 @@ export class LegendPosition {
       return;
     }
 
-    const legenddraggable = legendContainer.find(".plot-legenddraggable");
+    const legenddraggable = legendContainer.find('.plot-legenddraggable');
 
     if (legendContainer.get(0).scrollHeight > legendContainer.get(0).clientHeight) {
-      legenddraggable.addClass("hasScroll");
+      legenddraggable.addClass('hasScroll');
     } else {
-      legenddraggable.removeClass("hasScroll");
+      legenddraggable.removeClass('hasScroll');
     }
   }
 }

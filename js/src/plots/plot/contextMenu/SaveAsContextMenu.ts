@@ -16,8 +16,8 @@
 
 import * as d3 from 'd3';
 import * as _ from 'underscore';
-import {PlotTip} from '../PlotTip';
-import {PlotStyleUtils, PlotUtils} from "../../../utils";
+import { PlotTip } from '../PlotTip';
+import { PlotStyleUtils, PlotUtils } from '../../../utils';
 
 export class SaveAsContextMenu {
   static saveAsSvg(scope) {
@@ -28,10 +28,7 @@ export class SaveAsContextMenu {
     const html = PlotStyleUtils.convertToXHTML(svgToSave.outerHTML);
     const fileName = _.isEmpty(scope.stdmodel.title) ? 'plot' : scope.stdmodel.title;
 
-    PlotUtils.download(
-      `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(html)))}`,
-      `${fileName}.svg`
-    );
+    PlotUtils.download(`data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(html)))}`, `${fileName}.svg`);
   }
 
   static saveAsPng(scale, scope) {
@@ -40,14 +37,14 @@ export class SaveAsContextMenu {
     PlotUtils.addInlineFonts(svg);
     scale = scale === undefined ? 1 : scale;
 
-    scope.canvas.width = Number(svg.getAttribute("width")) * scale;
-    scope.canvas.height = Number(svg.getAttribute("height")) * scale;
+    scope.canvas.width = Number(svg.getAttribute('width')) * scale;
+    scope.canvas.height = Number(svg.getAttribute('height')) * scale;
 
     const html = PlotStyleUtils.convertToXHTML(svg.outerHTML);
     const imgsrc = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(html)));
     const fileName = _.isEmpty(scope.stdmodel.title) ? 'plot' : scope.stdmodel.title;
 
-    PlotUtils.drawPng(scope.canvas, imgsrc, fileName + ".png");
+    PlotUtils.drawPng(scope.canvas, imgsrc, fileName + '.png');
   }
 
   static getSvgToSave(scope) {
@@ -84,7 +81,7 @@ export class SaveAsContextMenu {
     PlotUtils.translateChildren(svg, 0, titleOuterHeight);
     PlotUtils.addTitleToSvg(svg, plotTitle, {
       width: plotTitle.width(),
-      height: PlotStyleUtils.getActualCss(plotTitle, 'outerHeight')
+      height: PlotStyleUtils.getActualCss(plotTitle, 'outerHeight'),
     });
   }
 
@@ -120,10 +117,10 @@ export class SaveAsContextMenu {
 
     H += titleOuterHeight;
 
-    svg.setAttribute("width", W);
-    svg.setAttribute("height", H);
-    $(svg).css("width", W);
-    $(svg).css("height", H);
+    svg.setAttribute('width', W);
+    svg.setAttribute('height', H);
+    $(svg).css('width', W);
+    $(svg).css('height', H);
   }
 
   private static svgReplaceNbspCharacters(svg: SVGElement) {

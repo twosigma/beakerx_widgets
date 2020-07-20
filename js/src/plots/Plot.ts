@@ -17,11 +17,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import * as _ from 'underscore';
-import {PlotLayout} from "./plot/PlotLayout";
-import {PlotScope} from "./plot/PlotScope";
-import {CombinedPlotScope} from "./plot/CombinedPlotScope";
-import {DOMWidgetModel, DOMWidgetView} from "@jupyter-widgets/base";
-import {BEAKERX_MODULE_VERSION} from '../version';
+import { PlotLayout } from './plot/PlotLayout';
+import { PlotScope } from './plot/PlotScope';
+import { CombinedPlotScope } from './plot/CombinedPlotScope';
+import { DOMWidgetModel, DOMWidgetView } from '@jupyter-widgets/base';
+import { BEAKERX_MODULE_VERSION } from '../version';
 
 const OUTPUT_POINTS_LIMIT = 1000000;
 const OUTPUT_POINTS_PREVIEW_NUMBER = 10000;
@@ -37,8 +37,8 @@ export class PlotModel extends DOMWidgetModel {
       _model_module: 'beakerx_widgets.plots',
       _view_module: 'beakerx_widgets.plots',
       _model_module_version: BEAKERX_MODULE_VERSION,
-      _view_module_version: BEAKERX_MODULE_VERSION
-    }
+      _view_module_version: BEAKERX_MODULE_VERSION,
+    };
   }
 }
 
@@ -86,22 +86,28 @@ export class PlotView extends DOMWidgetView {
 
   getNumberOfPointsForPlot(plotModel: PlotModelType): number {
     switch (plotModel.type) {
-      case "Histogram":
-        return Math.max.apply(null, plotModel.graphics_list.map((graphic) => {
-          return graphic.length;
-        }));
+      case 'Histogram':
+        return Math.max.apply(
+          null,
+          plotModel.graphics_list.map((graphic) => {
+            return graphic.length;
+          }),
+        );
       default:
-        return Math.max.apply(null, plotModel.graphics_list.map((graphic) => {
-          const points = graphic.x ? graphic.x : graphic.y;
+        return Math.max.apply(
+          null,
+          plotModel.graphics_list.map((graphic) => {
+            const points = graphic.x ? graphic.x : graphic.y;
 
-          return points ? points.length : 0;
-        }));
+            return points ? points.length : 0;
+          }),
+        );
     }
   }
 
   truncatePointsForPlot(plotModel: PlotModelType): void {
     switch (plotModel.type) {
-      case "Histogram":
+      case 'Histogram':
         for (let graphic of plotModel.graphics_list) {
           graphic = graphic.slice(0, OUTPUT_POINTS_PREVIEW_NUMBER);
         }
@@ -154,7 +160,7 @@ export class PlotView extends DOMWidgetView {
     const change = this.model.get('updateData');
     const currentModel = this.model.get('model');
     const updatedModel = _.extend(currentModel, change);
-    this.model.set('model', updatedModel, {updated_view: this});
+    this.model.set('model', updatedModel, { updated_view: this });
     this.handleModelUpdate();
   }
 
