@@ -14,13 +14,11 @@
  *  limitations under the License.
  */
 
-import {OtherOptionsWidgetInterface} from "../Widgets/JVMOptions";
-import {IOtherJVMOptions} from "../../utils/api";
+import { OtherOptionsWidgetInterface } from '../Widgets/JVMOptions';
+import { IOtherJVMOptions } from '../../utils/api';
 
 export class OtherOptionsModel {
-
-  constructor(private widget: OtherOptionsWidgetInterface) {
-  }
+  constructor(private widget: OtherOptionsWidgetInterface) {}
 
   public update(otherOptions: IOtherJVMOptions): void {
     this.widget.onLoad(otherOptions);

@@ -14,20 +14,19 @@
  *  limitations under the License.
  */
 
-import {TabPanel} from "@phosphor/widgets";
-import {Message, MessageLoop} from "@phosphor/messaging";
+import { TabPanel } from '@phosphor/widgets';
+import { Message, MessageLoop } from '@phosphor/messaging';
 
-import {UIOptionsWidget} from "./UIOptions";
-import {JVMOptionsModel, UIOptionsModel} from "../Models";
-import {JVMOptionsWidget} from "./JVMOptionsWidget";
-import {DOMUtils} from "../Utils";
-import {TYPE_JVM_OPTIONS_CHANGED, TYPE_JVM_OPTIONS_ERROR, TYPE_UI_OPTIONS_CHANGED} from "../Messages";
+import { UIOptionsWidget } from './UIOptions';
+import { JVMOptionsModel, UIOptionsModel } from '../Models';
+import { JVMOptionsWidget } from './JVMOptionsWidget';
+import { DOMUtils } from '../Utils';
+import { TYPE_JVM_OPTIONS_CHANGED, TYPE_JVM_OPTIONS_ERROR, TYPE_UI_OPTIONS_CHANGED } from '../Messages';
 
 export class OptionsWidget extends TabPanel {
-
   private _models: {
-    jvm: JVMOptionsModel,
-    ui: UIOptionsModel,
+    jvm: JVMOptionsModel;
+    ui: UIOptionsModel;
   } = {
     jvm: null,
     ui: null,
@@ -92,5 +91,4 @@ export class OptionsWidget extends TabPanel {
 
     super.onAfterAttach(msg);
   }
-
 }

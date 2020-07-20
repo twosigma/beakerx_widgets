@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-import {IOtherJVMOptions} from "../../../utils/api";
+import { IOtherJVMOptions } from '../../../utils/api';
 
 export interface OtherOptionsWidgetInterface {
   onLoad: (other: IOtherJVMOptions) => void;

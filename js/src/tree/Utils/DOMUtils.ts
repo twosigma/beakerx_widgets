@@ -14,18 +14,15 @@
  *  limitations under the License.
  */
 
-import $ from "jquery";
+import $ from 'jquery';
 
 export class DOMUtils {
-
   public static getRealElementHeight(el: HTMLElement): number {
-    const copyEl = $(el).clone()
-      .attr("id", null)
-      .css({
-        visibility:"hidden",
-        display:"block",
-        position:"absolute"
-      });
+    const copyEl = $(el).clone().attr('id', null).css({
+      visibility: 'hidden',
+      display: 'block',
+      position: 'absolute',
+    });
     const fakeEl = $('<div>', { id: 'beakerx-tree-widget' });
     fakeEl.appendTo($('body'));
     copyEl.appendTo(fakeEl);

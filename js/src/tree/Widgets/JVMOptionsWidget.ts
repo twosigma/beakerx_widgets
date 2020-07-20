@@ -14,24 +14,28 @@
  *  limitations under the License.
  */
 
-import $ from "jquery";
+import $ from 'jquery';
 
-import {Panel} from "@phosphor/widgets";
-import {Message, MessageLoop} from "@phosphor/messaging";
+import { Panel } from '@phosphor/widgets';
+import { Message, MessageLoop } from '@phosphor/messaging';
 
-import {JVMOptionsModel} from "../Models";
-import {DefaultOptionsWidget, OtherOptionsWidget, PropertiesWidget} from "./JVMOptions";
-import {OptionsWidget} from "./OptionsWidget";
-import {DOMUtils} from "../Utils";
+import { JVMOptionsModel } from '../Models';
+import { DefaultOptionsWidget, OtherOptionsWidget, PropertiesWidget } from './JVMOptions';
+import { OptionsWidget } from './OptionsWidget';
+import { DOMUtils } from '../Utils';
 import {
   DefaultOptionsChangedMessage,
-  JVMOptionsChangedMessage, OtherOptionsChangedMessage, PropertiesOptionsChangedMessage,
-  TYPE_DEFAULT_JVM_OPTIONS_CHANGED, TYPE_JVM_OPTIONS_ERROR,
-  TYPE_OTHER_JVM_OPTIONS_CHANGED, TYPE_PROPERTIES_JVM_OPTIONS_CHANGED, TYPE_SIZE_CHANGED
-} from "../Messages";
+  JVMOptionsChangedMessage,
+  OtherOptionsChangedMessage,
+  PropertiesOptionsChangedMessage,
+  TYPE_DEFAULT_JVM_OPTIONS_CHANGED,
+  TYPE_JVM_OPTIONS_ERROR,
+  TYPE_OTHER_JVM_OPTIONS_CHANGED,
+  TYPE_PROPERTIES_JVM_OPTIONS_CHANGED,
+  TYPE_SIZE_CHANGED,
+} from '../Messages';
 
 export class JVMOptionsWidget extends Panel {
-
   constructor() {
     super();
 
@@ -45,11 +49,7 @@ export class JVMOptionsWidget extends Panel {
     const otherOptionsWidget = new OtherOptionsWidget();
     const propertiesWidget = new PropertiesWidget();
 
-    this._model = this.createModel(
-      defaultOptionsWidget,
-      propertiesWidget,
-      otherOptionsWidget
-    );
+    this._model = this.createModel(defaultOptionsWidget, propertiesWidget, otherOptionsWidget);
 
     this.addWidget(defaultOptionsWidget);
     this.addWidget(propertiesWidget);
@@ -103,17 +103,16 @@ export class JVMOptionsWidget extends Panel {
 
   private _model: JVMOptionsModel;
 
-  private createModel(defaultOptionsWidget: DefaultOptionsWidget, propertiesWidget: PropertiesWidget, otherOptionsWidget: OtherOptionsWidget) {
-    return new JVMOptionsModel(
-      defaultOptionsWidget,
-      propertiesWidget,
-      otherOptionsWidget,
-    );
+  private createModel(
+    defaultOptionsWidget: DefaultOptionsWidget,
+    propertiesWidget: PropertiesWidget,
+    otherOptionsWidget: OtherOptionsWidget,
+  ) {
+    return new JVMOptionsModel(defaultOptionsWidget, propertiesWidget, otherOptionsWidget);
   }
 
   private sendMessageToParent(msg: Message) {
     // direct parent is stacked panel of tab panel
     MessageLoop.sendMessage(this.parent!.parent, msg);
   }
-
 }

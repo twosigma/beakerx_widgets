@@ -14,12 +14,11 @@
  *  limitations under the License.
  */
 
-import $ from "jquery";
+import $ from 'jquery';
 
-import {Widget} from "@phosphor/widgets";
+import { Widget } from '@phosphor/widgets';
 
 export class SyncIndicatorWidget extends Widget {
-
   public readonly HTML_ELEMENT_TEMPLATE = `
 <div class="form-group text-primary">
 
@@ -68,11 +67,11 @@ export class SyncIndicatorWidget extends Widget {
   }
 
   public onError(error: Error) {
-    this.$errorsEl
-      .empty()
-      .append($('<span>', {
-        text: error.message
-      }));
+    this.$errorsEl.empty().append(
+      $('<span>', {
+        text: error.message,
+      }),
+    );
   }
 
   public clearErrors() {
@@ -80,8 +79,6 @@ export class SyncIndicatorWidget extends Widget {
   }
 
   public setResult(result: string) {
-    this.$resultEl
-      .empty()
-      .text(result);
+    this.$resultEl.empty().text(result);
   }
 }

@@ -14,23 +14,21 @@
  *  limitations under the License.
  */
 
-import {BeakerXApi, IApiSettingsResponse, IJVMOptions, IUIOptions} from "../../utils/api";
-import {JVMOptionsModel} from "./JVMOptionsModel";
-import {UIOptionsModel} from "./UIOptionsModel";
-import {DefaultOptionsModel} from "./DefaultOptionsModel";
-import {SyncIndicatorWidget} from "../Widgets/SyncIndicatorWidget";
+import { BeakerXApi, IApiSettingsResponse, IJVMOptions, IUIOptions } from '../../utils/api';
+import { JVMOptionsModel } from './JVMOptionsModel';
+import { UIOptionsModel } from './UIOptionsModel';
+import { DefaultOptionsModel } from './DefaultOptionsModel';
+import { SyncIndicatorWidget } from '../Widgets/SyncIndicatorWidget';
 
 export class TreeWidgetModel {
-
   private _options: IApiSettingsResponse;
 
   constructor(
     private api: BeakerXApi,
     private jvmOptionsModel: JVMOptionsModel,
     private uiOptionsModel: UIOptionsModel,
-    private syncWidget: SyncIndicatorWidget
-  ) {
-  }
+    private syncWidget: SyncIndicatorWidget,
+  ) {}
 
   public load() {
     this.syncStart();
@@ -40,20 +38,20 @@ export class TreeWidgetModel {
         console.log(data);
         this._options = data;
 
-        this.jvmOptionsModel
-          .update(data.jvm_options);
+        this.jvmOptionsModel.update(data.jvm_options);
         if (!!this.uiOptionsModel) {
-          this.uiOptionsModel
-            .update(data.ui_options);
+          this.uiOptionsModel.update(data.ui_options);
         }
 
         this.setResult(data.jvm_options);
 
         setTimeout(() => {
-          this.syncEnd()
+          this.syncEnd();
         }, 1000);
-      }).catch((e) => { console.log(e)});
-
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
   public save() {
@@ -63,12 +61,11 @@ export class TreeWidgetModel {
 
     this.setResult(payload.jvm_options);
 
-    this.api.saveSettings({beakerx: payload})
-      .then(() => {
-        setTimeout(() => {
-          this.syncEnd()
-        }, 1000);
-      });
+    this.api.saveSettings({ beakerx: payload }).then(() => {
+      setTimeout(() => {
+        this.syncEnd();
+      }, 1000);
+    });
   }
 
   public clearErrors() {
@@ -89,8 +86,7 @@ export class TreeWidgetModel {
 
   public showResult() {
     if (this._options) {
-      this.jvmOptionsModel
-        .update(this._options.jvm_options);
+      this.jvmOptionsModel.update(this._options.jvm_options);
     }
 
     this.syncWidget.show();
@@ -119,7 +115,7 @@ export class TreeWidgetModel {
     }
 
     for (let other of options.other) {
-      result += `${other} `
+      result += `${other} `;
     }
 
     for (let property in options.properties) {
@@ -127,5 +123,5 @@ export class TreeWidgetModel {
     }
 
     return result;
-  };
+  }
 }

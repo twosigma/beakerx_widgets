@@ -16,12 +16,11 @@
 
 import $ from 'jquery';
 
-import {Widget} from "@phosphor/widgets";
+import { Widget } from '@phosphor/widgets';
 
-import {BeakerXApi} from "../../utils/api";
+import { BeakerXApi } from '../../utils/api';
 
 export class BannerWidget extends Widget {
-
   static readonly GITHUB_RELEASE_TAG_BASE_URL = 'https://github.com/twosigma/beakerx/releases/tag/';
   static readonly SVG_LOGO = `
 <svg xmlns="http://www.w3.org/2000/svg" width="70pt" height="20pt" viewBox="0 0 70 20" version="1.1">
@@ -48,11 +47,9 @@ export class BannerWidget extends Widget {
 
     this.addClass('bx-banner-widget');
 
-    api
-      .getVersion()
-      .then((version) => {
-        this.createBanner(version);
-      });
+    api.getVersion().then((version) => {
+      this.createBanner(version);
+    });
   }
 
   private createBanner(version: string): void {
@@ -65,7 +62,7 @@ export class BannerWidget extends Widget {
         $('<a>', {
           target: '_blank',
           href: `${BannerWidget.GITHUB_RELEASE_TAG_BASE_URL}${version}`,
-          text: version
+          text: version,
         }),
 
         document.createTextNode(', from '),
@@ -83,9 +80,6 @@ export class BannerWidget extends Widget {
       class: 'beakerx_site_link',
       target: '_blank',
       href: 'http://BeakerX.com',
-    }).append(
-      $(`${BannerWidget.SVG_LOGO}`)
-    );
+    }).append($(`${BannerWidget.SVG_LOGO}`));
   }
-
 }

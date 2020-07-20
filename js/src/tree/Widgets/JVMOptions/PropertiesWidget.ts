@@ -14,17 +14,16 @@
  *  limitations under the License.
  */
 
-import $ from "jquery";
-import * as _ from "underscore";
+import $ from 'jquery';
+import * as _ from 'underscore';
 
-import {Widget} from "@phosphor/widgets";
-import {Message, MessageLoop} from "@phosphor/messaging";
+import { Widget } from '@phosphor/widgets';
+import { Message, MessageLoop } from '@phosphor/messaging';
 
-import {IPropertiesJVMOptions} from "../../../utils/api";
-import {PropertiesOptionsChangedMessage, SizeChangedMessage} from "../../Messages";
+import { IPropertiesJVMOptions } from '../../../utils/api';
+import { PropertiesOptionsChangedMessage, SizeChangedMessage } from '../../Messages';
 
 export class PropertiesWidget extends Widget {
-
   public readonly ADD_BUTTON_SELECTOR: string = '#add_property_jvm_sett';
   public readonly PROPERTIES_PANEL_SELECTOR: string = '#properties_property';
 
@@ -59,9 +58,7 @@ export class PropertiesWidget extends Widget {
 
     $(this.HTML_ELEMENT_TEMPLATE).appendTo(this.node);
 
-    this.$node
-      .find(this.ADD_BUTTON_SELECTOR)
-      .on('click', this.addPropertyButtonClickedHandler.bind(this));
+    this.$node.find(this.ADD_BUTTON_SELECTOR).on('click', this.addPropertyButtonClickedHandler.bind(this));
   }
 
   public onLoad(properties: IPropertiesJVMOptions) {
@@ -110,18 +107,17 @@ export class PropertiesWidget extends Widget {
 
   private onElementAdded(msg: ElementAddedMessage): void {
     const addedElement = msg.element;
-    addedElement.find('button')
-      .on('click', {
-        el: addedElement
-      }, this.removePropertyButtonClickedHandler.bind(this));
+    addedElement.find('button').on(
+      'click',
+      {
+        el: addedElement,
+      },
+      this.removePropertyButtonClickedHandler.bind(this),
+    );
 
     this.propertiesChanged();
 
-    addedElement.find('input')
-      .on('keyup', _.debounce(
-        this.inputChangedHandler.bind(this),
-        1000
-      ));
+    addedElement.find('input').on('keyup', _.debounce(this.inputChangedHandler.bind(this), 1000));
   }
 
   private onElementRemoved(msg: ElementRemovedMessage): void {
@@ -158,14 +154,14 @@ export class PropertiesWidget extends Widget {
       if ('' === name) {
         continue;
       }
-      properties.push({name: name, value: value});
+      properties.push({ name: name, value: value });
     }
     return properties;
   }
 
   private createFormRowElement(): JQuery<HTMLElement> {
     return $('<div>', {
-      class: 'bx-form-row'
+      class: 'bx-form-row',
     });
   }
 
@@ -174,19 +170,17 @@ export class PropertiesWidget extends Widget {
       class: 'bx-input-text',
       type: 'text',
       placeholder: placeholder,
-    }).val(val)
+    })
+      .val(val)
       .data('val', val);
   }
 
   private createRemoveButtonElement(): JQuery<HTMLElement> {
     return $('<button>', {
-      'type': 'button',
-      'class': 'bx-btn'
-    }).append(
-      $('<i>', {class: 'fa fa-times'})
-    );
+      type: 'button',
+      class: 'bx-btn',
+    }).append($('<i>', { class: 'fa fa-times' }));
   }
-
 }
 
 const TYPE_ELEMENT_ADDED = 'element-added';
@@ -218,4 +212,3 @@ class ElementRemovedMessage extends Message {
 
   private _element: JQuery<HTMLElement>;
 }
-

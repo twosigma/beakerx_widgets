@@ -14,17 +14,13 @@
  *  limitations under the License.
  */
 
-import {UIOptionsWidgetInterface} from "../Widgets/UIOptions";
-import {IUIOptions} from "../../utils/api";
+import { UIOptionsWidgetInterface } from '../Widgets/UIOptions';
+import { IUIOptions } from '../../utils/api';
 
 export class UIOptionsModel {
-
-  constructor(private widget: UIOptionsWidgetInterface) {
-
-  }
+  constructor(private widget: UIOptionsWidgetInterface) {}
 
   public update(options: IUIOptions) {
     this.widget.onLoad(options);
   }
-
 }

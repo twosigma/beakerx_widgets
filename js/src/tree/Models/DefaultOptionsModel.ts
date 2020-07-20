@@ -14,13 +14,11 @@
  *  limitations under the License.
  */
 
-import {DefaultOptionsWidgetInterface} from "../Widgets/JVMOptions";
-import {IDefaultJVMOptions} from "../../utils/api";
+import { DefaultOptionsWidgetInterface } from '../Widgets/JVMOptions';
+import { IDefaultJVMOptions } from '../../utils/api';
 
 export class DefaultOptionsModel {
-
-  constructor(private widget: DefaultOptionsWidgetInterface) {
-  }
+  constructor(private widget: DefaultOptionsWidgetInterface) {}
 
   public update(options: IDefaultJVMOptions): void {
     this.widget.setHeapGB(options.heap_GB);

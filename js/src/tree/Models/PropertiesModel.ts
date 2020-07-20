@@ -14,13 +14,11 @@
  *  limitations under the License.
  */
 
-import {PropertiesWidgetInterface} from "../Widgets/JVMOptions";
-import {IPropertiesJVMOptions} from "../../utils/api";
+import { PropertiesWidgetInterface } from '../Widgets/JVMOptions';
+import { IPropertiesJVMOptions } from '../../utils/api';
 
 export class PropertiesModel {
-
-  constructor(private widget: PropertiesWidgetInterface) {
-  }
+  constructor(private widget: PropertiesWidgetInterface) {}
 
   public update(properties: IPropertiesJVMOptions): void {
     this.widget.onLoad(properties);

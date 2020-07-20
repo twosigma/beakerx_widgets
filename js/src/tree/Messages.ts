@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-import {Message} from "@phosphor/messaging";
-import {IDefaultJVMOptions, IJVMOptions, IOtherJVMOptions, IPropertiesJVMOptions, IUIOptions} from "../utils/api";
+import { Message } from '@phosphor/messaging';
+import { IDefaultJVMOptions, IJVMOptions, IOtherJVMOptions, IPropertiesJVMOptions, IUIOptions } from '../utils/api';
 
 export const TYPE_JVM_OPTIONS_ERROR = 'jvm-options:error';
 
@@ -39,7 +39,7 @@ export class JVMOptionsChangedMessage extends Message {
 
   constructor(options: IJVMOptions) {
     super(TYPE_JVM_OPTIONS_CHANGED);
-    this._options = options
+    this._options = options;
   }
 
   get options(): IJVMOptions {
@@ -54,7 +54,7 @@ export class DefaultOptionsChangedMessage extends Message {
 
   constructor(values: IDefaultJVMOptions) {
     super(TYPE_DEFAULT_JVM_OPTIONS_CHANGED);
-    this._values = values
+    this._values = values;
   }
 
   get values(): IDefaultJVMOptions {
@@ -69,7 +69,7 @@ export class OtherOptionsChangedMessage extends Message {
 
   constructor(options: IOtherJVMOptions) {
     super(TYPE_OTHER_JVM_OPTIONS_CHANGED);
-    this._options = options
+    this._options = options;
   }
 
   get options(): IOtherJVMOptions {
@@ -84,7 +84,7 @@ export class PropertiesOptionsChangedMessage extends Message {
 
   constructor(properties: IPropertiesJVMOptions) {
     super(TYPE_PROPERTIES_JVM_OPTIONS_CHANGED);
-    this._properties = properties
+    this._properties = properties;
   }
 
   get properties(): IPropertiesJVMOptions {
@@ -99,7 +99,7 @@ export class UIOptionsChangedMessage extends Message {
 
   constructor(options: IUIOptions) {
     super(TYPE_UI_OPTIONS_CHANGED);
-    this._options = options
+    this._options = options;
   }
 
   get options(): IUIOptions {
@@ -110,10 +110,7 @@ export class UIOptionsChangedMessage extends Message {
 export const TYPE_SIZE_CHANGED = 'size-changed';
 
 export class SizeChangedMessage extends Message {
-
   constructor() {
     super(TYPE_SIZE_CHANGED);
   }
-
 }
-

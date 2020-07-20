@@ -14,18 +14,17 @@
  *  limitations under the License.
  */
 
-import {DefaultOptionsModel} from "./DefaultOptionsModel";
-import {PropertiesModel} from "./PropertiesModel";
+import { DefaultOptionsModel } from './DefaultOptionsModel';
+import { PropertiesModel } from './PropertiesModel';
 import {
   DefaultOptionsWidgetInterface,
   OtherOptionsWidgetInterface,
-  PropertiesWidgetInterface
-} from "../Widgets/JVMOptions";
-import {OtherOptionsModel} from "./OtherOptionsModel";
-import {IDefaultJVMOptions, IJVMOptions, IOtherJVMOptions, IPropertiesJVMOptions} from "../../utils/api";
+  PropertiesWidgetInterface,
+} from '../Widgets/JVMOptions';
+import { OtherOptionsModel } from './OtherOptionsModel';
+import { IDefaultJVMOptions, IJVMOptions, IOtherJVMOptions, IPropertiesJVMOptions } from '../../utils/api';
 
 export class JVMOptionsModel {
-
   private _options: IJVMOptions;
 
   private defaultOptionsModel: DefaultOptionsModel;
@@ -35,7 +34,7 @@ export class JVMOptionsModel {
   constructor(
     defaultOptionsWidget: DefaultOptionsWidgetInterface,
     propertiesWidget: PropertiesWidgetInterface,
-    otherOptionsWidget: OtherOptionsWidgetInterface
+    otherOptionsWidget: OtherOptionsWidgetInterface,
   ) {
     this.defaultOptionsModel = new DefaultOptionsModel(defaultOptionsWidget);
     this.propertiesModel = new PropertiesModel(propertiesWidget);
@@ -49,12 +48,9 @@ export class JVMOptionsModel {
   public update(options: IJVMOptions) {
     this._options = options;
 
-    this.defaultOptionsModel
-      .update({heap_GB: options.heap_GB});
-    this.propertiesModel
-      .update(options.properties);
-    this.otherOptionsModel
-      .update(options.other);
+    this.defaultOptionsModel.update({ heap_GB: options.heap_GB });
+    this.propertiesModel.update(options.properties);
+    this.otherOptionsModel.update(options.other);
   }
 
   public setDefaultOptions(values: IDefaultJVMOptions) {

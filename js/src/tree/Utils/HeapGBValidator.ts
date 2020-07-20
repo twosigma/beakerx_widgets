@@ -20,14 +20,9 @@ export class HeapGBValidator {
       return;
     }
     const parsedVal = parseFloat(value);
-    if (
-      isNaN(parsedVal)
-      || false === isFinite(value)
-      || parsedVal <= 0
-    ) {
+    if (isNaN(parsedVal) || false === isFinite(value) || parsedVal <= 0) {
       throw new Error('Heap Size must be a positive decimal number.');
     }
     return;
   }
-
 }

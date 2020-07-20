@@ -14,8 +14,7 @@
  *  limitations under the License.
  */
 
-
-import {IUIOptions} from "../../../utils/api";
+import { IUIOptions } from '../../../utils/api';
 
 export interface UIOptionsWidgetInterface {
   onLoad: (options: IUIOptions) => void;

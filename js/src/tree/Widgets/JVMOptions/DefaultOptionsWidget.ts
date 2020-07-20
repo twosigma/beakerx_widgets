@@ -14,18 +14,17 @@
  *  limitations under the License.
  */
 
-import $ from "jquery";
-import * as _ from "underscore";
+import $ from 'jquery';
+import * as _ from 'underscore';
 
-import {Widget} from "@phosphor/widgets";
-import {MessageLoop} from "@phosphor/messaging";
+import { Widget } from '@phosphor/widgets';
+import { MessageLoop } from '@phosphor/messaging';
 
-import {DefaultOptionsWidgetInterface} from "./DefaultOptionsWidgetInterface";
-import {HeapGBValidator} from "../../Utils";
-import {DefaultOptionsChangedMessage, JVMOptionsErrorMessage} from "../../Messages";
+import { DefaultOptionsWidgetInterface } from './DefaultOptionsWidgetInterface';
+import { HeapGBValidator } from '../../Utils';
+import { DefaultOptionsChangedMessage, JVMOptionsErrorMessage } from '../../Messages';
 
 export class DefaultOptionsWidget extends Widget implements DefaultOptionsWidgetInterface {
-
   public readonly HEAP_GB_SELECTOR = '#heap_GB';
 
   public readonly HTML_ELEMENT_TEMPLATE = `
@@ -49,18 +48,11 @@ export class DefaultOptionsWidget extends Widget implements DefaultOptionsWidget
 
     $(this.HTML_ELEMENT_TEMPLATE).appendTo(this.node);
 
-    this.$node
-      .find(this.HEAP_GB_SELECTOR)
-      .on('keyup', _.debounce(
-        this.optionsChangedHandler.bind(this),
-        1000
-      ));
+    this.$node.find(this.HEAP_GB_SELECTOR).on('keyup', _.debounce(this.optionsChangedHandler.bind(this), 1000));
   }
 
   public setHeapGB(value): void {
-    this.$node
-      .find(this.HEAP_GB_SELECTOR)
-      .val(value);
+    this.$node.find(this.HEAP_GB_SELECTOR).val(value);
   }
 
   private optionsChangedHandler(evt): void {
@@ -69,15 +61,12 @@ export class DefaultOptionsWidget extends Widget implements DefaultOptionsWidget
     try {
       HeapGBValidator.validate(heap_GB);
       const msg = new DefaultOptionsChangedMessage({
-        heap_GB: ('' === heap_GB) ? null : parseFloat(heap_GB)
+        heap_GB: '' === heap_GB ? null : parseFloat(heap_GB),
       });
 
       MessageLoop.sendMessage(this.parent, msg);
     } catch (e) {
       MessageLoop.sendMessage(this.parent, new JVMOptionsErrorMessage(e));
     }
-
   }
-
 }
-

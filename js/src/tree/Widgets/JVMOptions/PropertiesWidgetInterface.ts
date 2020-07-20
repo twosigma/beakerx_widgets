@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-import {IPropertiesJVMOptions} from "../../../utils/api";
+import { IPropertiesJVMOptions } from '../../../utils/api';
 
 export interface PropertiesWidgetInterface {
   onLoad: (properties: IPropertiesJVMOptions) => void;

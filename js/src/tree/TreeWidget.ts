@@ -14,22 +14,23 @@
  *  limitations under the License.
  */
 
-import {Panel} from "@phosphor/widgets";
-import {Message} from "@phosphor/messaging";
+import { Panel } from '@phosphor/widgets';
+import { Message } from '@phosphor/messaging';
 
-import {BeakerXApi} from "../utils/api";
-import {BannerWidget, OptionsWidget, SyncIndicatorWidget} from "./Widgets";
-import {ITreeWidgetOptions} from "./Types";
-import {TreeWidgetModel} from "./Models";
+import { BeakerXApi } from '../utils/api';
+import { BannerWidget, OptionsWidget, SyncIndicatorWidget } from './Widgets';
+import { ITreeWidgetOptions } from './Types';
+import { TreeWidgetModel } from './Models';
 import {
-  JVMOptionsChangedMessage, JVMOptionsErrorMessage,
-  TYPE_JVM_OPTIONS_CHANGED, TYPE_JVM_OPTIONS_ERROR,
+  JVMOptionsChangedMessage,
+  JVMOptionsErrorMessage,
+  TYPE_JVM_OPTIONS_CHANGED,
+  TYPE_JVM_OPTIONS_ERROR,
   TYPE_UI_OPTIONS_CHANGED,
-  UIOptionsChangedMessage
-} from "./Messages";
+  UIOptionsChangedMessage,
+} from './Messages';
 
 export class TreeWidget extends Panel {
-
   private _model: TreeWidgetModel;
 
   constructor(private options: ITreeWidgetOptions) {
@@ -57,7 +58,7 @@ export class TreeWidget extends Panel {
       api,
       optionsWidget.jvmOptionsModel,
       optionsWidget.uiOptionsModel,
-      syncIndicatorWidget
+      syncIndicatorWidget,
     );
 
     this.addWidget(bannerWidget);
@@ -98,5 +99,4 @@ export class TreeWidget extends Panel {
   protected onBeforeAttach(msg: Message): void {
     this._model.load();
   }
-
 }

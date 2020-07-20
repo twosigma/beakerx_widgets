@@ -14,19 +14,18 @@
  *  limitations under the License.
  */
 
-import $ from "jquery";
+import $ from 'jquery';
 
-import {Widget} from "@phosphor/widgets";
-import {MessageLoop} from "@phosphor/messaging";
+import { Widget } from '@phosphor/widgets';
+import { MessageLoop } from '@phosphor/messaging';
 
-import {UIOptionsWidgetInterface} from "./UIOptionsWidgetInterface";
-import {OptionsWidget} from "../OptionsWidget";
-import {DOMUtils} from "../../Utils";
-import {IUIOptions} from "../../../utils/api";
-import {UIOptionsChangedMessage} from "../../Messages";
+import { UIOptionsWidgetInterface } from './UIOptionsWidgetInterface';
+import { OptionsWidget } from '../OptionsWidget';
+import { DOMUtils } from '../../Utils';
+import { IUIOptions } from '../../../utils/api';
+import { UIOptionsChangedMessage } from '../../Messages';
 
 export class UIOptionsWidget extends Widget implements UIOptionsWidgetInterface {
-
   public readonly AUTO_CLOSE_SELECTOR = '#auto_close';
   public readonly WIDE_CELLS_SELECTOR = '#wide_cells';
   public readonly IMPROVE_FONTS_SELECTOR = '#improve_fonts';
@@ -87,13 +86,15 @@ export class UIOptionsWidget extends Widget implements UIOptionsWidgetInterface 
     this.prepareNode(isLab);
 
     this.$node
-      .find([
-        this.AUTO_CLOSE_SELECTOR,
-        this.IMPROVE_FONTS_SELECTOR,
-        this.WIDE_CELLS_SELECTOR,
-        this.SHOW_CATALOG_SELECTOR,
-        this.AUTO_SAVE_SELECTOR,
-      ].join(','))
+      .find(
+        [
+          this.AUTO_CLOSE_SELECTOR,
+          this.IMPROVE_FONTS_SELECTOR,
+          this.WIDE_CELLS_SELECTOR,
+          this.SHOW_CATALOG_SELECTOR,
+          this.AUTO_SAVE_SELECTOR,
+        ].join(','),
+      )
       .on('change', this.optionsChangedHandler.bind(this));
   }
 
@@ -117,16 +118,14 @@ export class UIOptionsWidget extends Widget implements UIOptionsWidgetInterface 
       if (isLab && option.isLabSupported === false) {
         continue;
       }
-      wrapperElement.append(
-        this.createCheckbox(option)
-      );
+      wrapperElement.append(this.createCheckbox(option));
     }
     wrapperElement.appendTo(this.node);
   }
 
   private createCheckbox(checkboxDefinition) {
     return $('<div>', {
-      class: 'form-check'
+      class: 'form-check',
     }).append(
       $('<input>', {
         class: 'form-check-input',
@@ -140,7 +139,7 @@ export class UIOptionsWidget extends Widget implements UIOptionsWidgetInterface 
         for: checkboxDefinition.id,
         text: checkboxDefinition.label,
       }),
-    )
+    );
   }
 
   private _updateSize(): void {
@@ -154,40 +153,27 @@ export class UIOptionsWidget extends Widget implements UIOptionsWidgetInterface 
   private optionsChangedHandler(evt): void {
     this._options[evt.currentTarget.id] = evt.currentTarget.checked;
 
-    MessageLoop.sendMessage(
-      this.parent?.parent,
-      new UIOptionsChangedMessage(this._options)
-    );
+    MessageLoop.sendMessage(this.parent?.parent, new UIOptionsChangedMessage(this._options));
   }
 
   private setWideCells(checked: boolean) {
-    this.$node
-      .find(this.WIDE_CELLS_SELECTOR)
-      .prop('checked', checked);
+    this.$node.find(this.WIDE_CELLS_SELECTOR).prop('checked', checked);
   }
 
   private setAutoClose(checked: boolean) {
-    this.$node
-      .find(this.AUTO_CLOSE_SELECTOR)
-      .prop('checked', checked);
+    this.$node.find(this.AUTO_CLOSE_SELECTOR).prop('checked', checked);
   }
 
   private setImproveFonts(checked: boolean) {
-    this.$node
-      .find(this.IMPROVE_FONTS_SELECTOR)
-      .prop('checked', checked);
+    this.$node.find(this.IMPROVE_FONTS_SELECTOR).prop('checked', checked);
   }
 
   private setShowCatalog(checked: boolean) {
-    this.$node
-      .find(this.SHOW_CATALOG_SELECTOR)
-      .prop('checked', checked);
+    this.$node.find(this.SHOW_CATALOG_SELECTOR).prop('checked', checked);
   }
 
   private setAutoSave(checked: boolean) {
-    this.$node
-      .find(this.AUTO_SAVE_SELECTOR)
-      .prop('checked', checked);
+    this.$node.find(this.AUTO_SAVE_SELECTOR).prop('checked', checked);
   }
 
   private _options: IUIOptions;

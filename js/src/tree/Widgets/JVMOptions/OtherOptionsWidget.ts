@@ -14,18 +14,17 @@
  *  limitations under the License.
  */
 
-import $ from "jquery";
-import * as _ from "underscore";
+import $ from 'jquery';
+import * as _ from 'underscore';
 
-import {Widget} from "@phosphor/widgets";
-import {Message, MessageLoop} from "@phosphor/messaging";
+import { Widget } from '@phosphor/widgets';
+import { Message, MessageLoop } from '@phosphor/messaging';
 
-import {OtherOptionsWidgetInterface} from "./OtherOptionsWidgetInterface";
-import {IOtherJVMOptions} from "../../../utils/api";
-import {OtherOptionsChangedMessage, SizeChangedMessage} from "../../Messages";
+import { OtherOptionsWidgetInterface } from './OtherOptionsWidgetInterface';
+import { IOtherJVMOptions } from '../../../utils/api';
+import { OtherOptionsChangedMessage, SizeChangedMessage } from '../../Messages';
 
 export class OtherOptionsWidget extends Widget implements OtherOptionsWidgetInterface {
-
   public readonly ADD_BUTTON_SELECTOR = '#add_option_jvm_sett';
   public readonly PANEL_SELECTOR = '#other_property';
 
@@ -57,9 +56,7 @@ export class OtherOptionsWidget extends Widget implements OtherOptionsWidgetInte
     super();
 
     $(this.HTML_ELEMENT_TEMPLATE).appendTo(this.node);
-    this.$node
-      .find(this.ADD_BUTTON_SELECTOR)
-      .on('click', this.addOptionButtonClickedHandler.bind(this));
+    this.$node.find(this.ADD_BUTTON_SELECTOR).on('click', this.addOptionButtonClickedHandler.bind(this));
   }
 
   private clear() {
@@ -90,24 +87,23 @@ export class OtherOptionsWidget extends Widget implements OtherOptionsWidgetInte
       class: 'bx-input-text',
       type: 'text',
       placeholder: 'value',
-    }).val(val)
+    })
+      .val(val)
       .data('val', val);
   }
 
   private createRemoveButtonElement(): JQuery<HTMLElement> {
     return $('<button>', {
-      'type': 'button',
-      'class': 'bx-btn'
-    }).append(
-      $('<i>', {class: 'fa fa-times'})
-    );
+      type: 'button',
+      class: 'bx-btn',
+    }).append($('<i>', { class: 'fa fa-times' }));
   }
 
   private addFormElement(value = ''): void {
     const element = this.createFormRowElement()
       .append(this.createInputElement(value))
       .append(this.createRemoveButtonElement());
-    element.appendTo(this.$node.find(this.PANEL_SELECTOR))
+    element.appendTo(this.$node.find(this.PANEL_SELECTOR));
 
     MessageLoop.sendMessage(this, new ElementAddedMessage(element));
     MessageLoop.sendMessage(this.parent, new SizeChangedMessage());
@@ -128,13 +124,9 @@ export class OtherOptionsWidget extends Widget implements OtherOptionsWidgetInte
 
   private onElementAdded(msg: ElementAddedMessage): void {
     const el = msg.element;
-    el.find('button')
-      .on('click', {el: el}, this.removeOptionButtonClickedHandler.bind(this));
+    el.find('button').on('click', { el: el }, this.removeOptionButtonClickedHandler.bind(this));
     const input = el.find('input');
-    input
-      .on('keyup', _.debounce(
-        this.inputChangedHandler.bind(this), 1000
-      ));
+    input.on('keyup', _.debounce(this.inputChangedHandler.bind(this), 1000));
     this.addOption(input.val().toString());
   }
 
