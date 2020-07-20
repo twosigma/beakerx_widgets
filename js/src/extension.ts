@@ -22,14 +22,14 @@ import './../css/beakerx_widgets.css';
 if ((window as any).require) {
   (window as any).require.config({
     map: {
-      "*": {
-        "beakerx_widgets": "nbextensions/beakerx_widgets/index",
-        "jupyter-js-widgets": "nbextensions/jupyter-js-widgets/extension",
-        "@jupyter-widgets/base": "nbextensions/jupyter-js-widgets/extension",
-        "@jupyter-widgets/controls": "nbextensions/jupyter-js-widgets/extension"
-      }
-    }
+      '*': {
+        beakerx_widgets: 'nbextensions/beakerx_widgets/index',
+        'jupyter-js-widgets': 'nbextensions/jupyter-js-widgets/extension',
+        '@jupyter-widgets/base': 'nbextensions/jupyter-js-widgets/extension',
+        '@jupyter-widgets/controls': 'nbextensions/jupyter-js-widgets/extension',
+      },
+    },
   });
 }
 
-export {load_ipython_extension} from "./extension/index";
+export { load_ipython_extension } from './extension/index';

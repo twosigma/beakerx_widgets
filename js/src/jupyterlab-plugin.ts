@@ -14,10 +14,10 @@
  *  limitations under the License.
  */
 
-import {JupyterFrontEnd, JupyterFrontEndPlugin} from '@jupyterlab/application';
-import {IJupyterWidgetRegistry} from "@jupyter-widgets/base";
-import {version} from "./version";
-import * as forms from "./forms"
+import { JupyterFrontEnd, JupyterFrontEndPlugin } from '@jupyterlab/application';
+import { IJupyterWidgetRegistry } from '@jupyter-widgets/base';
+import { version } from './version';
+import * as forms from './forms';
 
 export const BeakexWidgetsFormsPlugin: JupyterFrontEndPlugin<void> = {
   id: 'beakerx_widgets.forms.plugin',
@@ -26,12 +26,12 @@ export const BeakexWidgetsFormsPlugin: JupyterFrontEndPlugin<void> = {
     widgets.registerWidget({
       name: 'beakerx_widgets.forms',
       version: version,
-      exports: forms
-    })
+      exports: forms,
+    });
   },
-  autoStart: true
-}
+  autoStart: true,
+};
 
 export default {
   BeakexWidgetsFormsPlugin,
-}
+};

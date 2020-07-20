@@ -16,9 +16,9 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import $ from "jquery";
-import {TreeWidget} from "./tree";
-import {Widget} from "@phosphor/widgets";
+import $ from 'jquery';
+import { TreeWidget } from './tree';
+import { Widget } from '@phosphor/widgets';
 
 import 'flatpickr/dist/flatpickr.css';
 import 'jquery-ui/themes/base/all.css';
@@ -28,23 +28,24 @@ import '../css/beakerx_widgets.css';
 if ((window as any).require) {
   (window as any).require.config({
     map: {
-      "*": {
-        "beakerx_widgets": "nbextensions/beakerx_widgets/index",
-      }
-    }
+      '*': {
+        beakerx_widgets: 'nbextensions/beakerx_widgets/index',
+      },
+    },
   });
 }
-
 
 export function load_ipython_extension(): void {
   const bxTabPane = $('<div>', {
     class: 'tab-pane',
-    id: 'beakerx-tree'
-  }).appendTo($('.tab-content')).get(0);
+    id: 'beakerx-tree',
+  })
+    .appendTo($('.tab-content'))
+    .get(0);
 
   const widgetOptions = {
     baseUrl: (Jupyter.notebook_list || Jupyter.notebook).base_url,
-    isLab: false
+    isLab: false,
   };
   const bxWidget = new TreeWidget(widgetOptions);
 
@@ -56,7 +57,7 @@ export function load_ipython_extension(): void {
         id: 'beakerx_tab',
         href: '#beakerx-tree',
         'data-toggle': 'tab',
-        text: 'BeakerX'
+        text: 'BeakerX',
       }).on('click', function (e) {
         if (false === $(e.currentTarget).parents('li').hasClass('active')) {
           bxWidget.update();
@@ -65,8 +66,8 @@ export function load_ipython_extension(): void {
           return;
         }
         window.history.pushState(null, '', '#beakerx-tree');
-      })
-    )
+      }),
+    ),
   );
 
   $(window).on('resize', function () {
