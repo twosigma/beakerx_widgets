@@ -88,7 +88,10 @@ export class CombinedPlotModel {
     plots.css("margin-left", maxMargin);
 
     for (let i = 0; i < this.parentScope.stdmodel.plots.length; i++) {
-      this.parentScope.stdmodel.plots[i].updateLegendPosition();
+      const plotModel = this.parentScope.stdmodel.plots[i];
+      if (plotModel.updateLegendPosition) {
+        plotModel.updateLegendPosition();
+      }
     }
   }
 
