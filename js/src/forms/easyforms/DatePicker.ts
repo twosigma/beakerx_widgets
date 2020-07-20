@@ -18,26 +18,29 @@
 
 import $ from 'jquery';
 import moment from 'moment-timezone';
-import flatpickr from "flatpickr";
-import {LabeledDOMWidgetView as JupyterLabeledDOMWidgetView, StringModel as JupyterStringModel} from "@jupyter-widgets/controls";
-import {BEAKERX_MODULE_VERSION} from '../../version';
+import flatpickr from 'flatpickr';
+import {
+  LabeledDOMWidgetView as JupyterLabeledDOMWidgetView,
+  StringModel as JupyterStringModel,
+} from '@jupyter-widgets/controls';
+import { BEAKERX_MODULE_VERSION } from '../../version';
 
 const datepickerOpts = {
   dateFormat: 'Ymd',
-  dateTimeFormat: 'Ymd H:i'
+  dateTimeFormat: 'Ymd H:i',
 };
 
 export class DatePickerModel extends JupyterStringModel {
   defaults(): any {
     return {
       ...super.defaults(),
-      _view_name: "DatePickerView",
-      _model_name: "DatePickerModel",
+      _view_name: 'DatePickerView',
+      _model_name: 'DatePickerModel',
       _model_module: 'beakerx_widgets.forms',
       _view_module: 'beakerx_widgets.forms',
       _model_module_version: BEAKERX_MODULE_VERSION,
-      _view_module_version: BEAKERX_MODULE_VERSION
-    }
+      _view_module_version: BEAKERX_MODULE_VERSION,
+    };
   }
 }
 
@@ -65,15 +68,13 @@ export class DatePickerView extends JupyterLabeledDOMWidgetView {
 
     this.flatpickr = null;
 
-    this.datepicker = $('<input type="text" placeholder="Select Date.." data-input >')
-      .addClass('form-control');
+    this.datepicker = $('<input type="text" placeholder="Select Date.." data-input >').addClass('form-control');
 
     this.button = $(`
       <a tabindex='-1' title='Select date' class='date-picker-button ui-button ui-widget ui-state-default ui-button-icon-only custom-combobox-toggle ui-corner-right' role='button' aria-disabled='false' data-toggle>
         <span class='ui-button-icon-primary ui-icon ui-icon-triangle-1-s'></span>
         <span class='ui-button-text'></span>
-      </a>`
-    );
+      </a>`);
 
     const onChange = (selectedDates, dateStr: string) => {
       if (dateStr) {
@@ -90,18 +91,22 @@ export class DatePickerView extends JupyterLabeledDOMWidgetView {
       onChange: onChange,
       wrap: true,
       clickOpens: false,
-      allowInput: true
+      allowInput: true,
     });
 
-    this.datepicker[0].addEventListener('keyup', (event) => {
-      event.preventDefault();
-      event.stopPropagation();
+    this.datepicker[0].addEventListener(
+      'keyup',
+      (event) => {
+        event.preventDefault();
+        event.stopPropagation();
 
-      const dateStr = this.datepicker[0].value;
-      if (dateStr && dateStr.length >= 8 && moment(dateStr).isValid()) {
-        this.flatpickr.setDate(dateStr, true, this.flatpickr.config.dateFormat);
-      }
-    }, true);
+        const dateStr = this.datepicker[0].value;
+        if (dateStr && dateStr.length >= 8 && moment(dateStr).isValid()) {
+          this.flatpickr.setDate(dateStr, true, this.flatpickr.config.dateFormat);
+        }
+      },
+      true,
+    );
   }
 
   update(options?: { [optionName: string]: any }): void {
@@ -111,7 +116,7 @@ export class DatePickerView extends JupyterLabeledDOMWidgetView {
       if (this.flatpickr && this.flatpickr.input.value != newValue) {
         this.flatpickr.setDate(newValue);
       }
-      this.updateDisabled()
+      this.updateDisabled();
     }
 
     super.update.apply(this);
@@ -128,7 +133,7 @@ export class DatePickerView extends JupyterLabeledDOMWidgetView {
   }
 
   setValueToModel(value: string): void {
-    this.model.set('value', value, {updated_view: this});
+    this.model.set('value', value, { updated_view: this });
     this.touch();
   }
 }

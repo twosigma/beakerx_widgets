@@ -16,20 +16,19 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import {SelectModel as JupyterSelectModel, SelectView as JupyterSelectView} from "@jupyter-widgets/controls";
-import { BEAKERX_MODULE_VERSION } from "../../version";
-
+import { SelectModel as JupyterSelectModel, SelectView as JupyterSelectView } from '@jupyter-widgets/controls';
+import { BEAKERX_MODULE_VERSION } from '../../version';
 
 export class SelectMultipleSingleModel extends JupyterSelectModel {
   defaults(): any {
     return {
       ...super.defaults(),
-      _view_name: "SelectMultipleSingleView",
-      _model_name: "SelectMultipleSingleModel",
+      _view_name: 'SelectMultipleSingleView',
+      _model_name: 'SelectMultipleSingleModel',
       _model_module: 'beakerx_widgets.forms',
       _view_module: 'beakerx_widgets.forms',
       _model_module_version: BEAKERX_MODULE_VERSION,
-      _view_module_version: BEAKERX_MODULE_VERSION
+      _view_module_version: BEAKERX_MODULE_VERSION,
     };
   }
 }
@@ -42,8 +41,6 @@ export class SelectMultipleSingleView extends JupyterSelectView {
     if (size !== undefined) {
       $(this.listbox).attr('size', size);
     }
-    $(this.el)
-      .removeClass('widget-select')
-      .addClass('widget-select-multiple');
+    $(this.el).removeClass('widget-select').addClass('widget-select-multiple');
   }
 }

@@ -16,20 +16,20 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import {PasswordModel as JupyterPasswordModel, PasswordView as JupyterPasswordView} from "@jupyter-widgets/controls";
-import { BEAKERX_MODULE_VERSION } from "../../version";
-import {TEXT_INPUT_WIDTH_UNIT} from "./const";
+import { PasswordModel as JupyterPasswordModel, PasswordView as JupyterPasswordView } from '@jupyter-widgets/controls';
+import { BEAKERX_MODULE_VERSION } from '../../version';
+import { TEXT_INPUT_WIDTH_UNIT } from './const';
 
 export class PasswordModel extends JupyterPasswordModel {
   defaults(): any {
     return {
       ...super.defaults(),
-      _view_name: "PasswordView",
-      _model_name: "PasswordModel",
-      _model_module: "beakerx",
-      _view_module: "beakerx",
+      _view_name: 'PasswordView',
+      _model_name: 'PasswordModel',
+      _model_module: 'beakerx',
+      _view_module: 'beakerx',
       _model_module_version: BEAKERX_MODULE_VERSION,
-      _view_module_version: BEAKERX_MODULE_VERSION
+      _view_module_version: BEAKERX_MODULE_VERSION,
     };
   }
 }

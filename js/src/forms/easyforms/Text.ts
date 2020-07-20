@@ -16,20 +16,20 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import {TextModel as JupyterTextModel, TextView as JupyterTextView} from "@jupyter-widgets/controls";
-import {BEAKERX_MODULE_VERSION} from "../../version";
-import {TEXT_INPUT_WIDTH_UNIT} from "./const";
+import { TextModel as JupyterTextModel, TextView as JupyterTextView } from '@jupyter-widgets/controls';
+import { BEAKERX_MODULE_VERSION } from '../../version';
+import { TEXT_INPUT_WIDTH_UNIT } from './const';
 
 export class TextModel extends JupyterTextModel {
   defaults(): any {
     return {
       ...super.defaults(),
-      _view_name: "TextView",
-      _model_name: "TextModel",
-      _model_module: "beakerx_widgets.forms",
-      _view_module: "beakerx_widgets.forms",
+      _view_name: 'TextView',
+      _model_name: 'TextModel',
+      _model_module: 'beakerx_widgets.forms',
+      _view_module: 'beakerx_widgets.forms',
       _model_module_version: BEAKERX_MODULE_VERSION,
-      _view_module_version: BEAKERX_MODULE_VERSION
+      _view_module_version: BEAKERX_MODULE_VERSION,
     };
   }
 }
@@ -37,14 +37,14 @@ export class TextModel extends JupyterTextModel {
 export class TextView extends JupyterTextView {
   handleKeypress(e: KeyboardEvent): void {
     if (e.keyCode == 13) {
-      this.send({event: 'submit'});
+      this.send({ event: 'submit' });
       e.preventDefault();
     }
   }
 
   handleEnterKeyPress(e: KeyboardEvent): void {
     if (e.keyCode == 13) {
-      this.send({event: 'submit'});
+      this.send({ event: 'submit' });
       e.preventDefault();
     }
   }

@@ -16,19 +16,19 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import {CheckboxModel as JupyterCheckboxModel, CheckboxView as JupyterCheckboxView} from "@jupyter-widgets/controls";
-import {BEAKERX_MODULE_VERSION} from "../../version";
+import { CheckboxModel as JupyterCheckboxModel, CheckboxView as JupyterCheckboxView } from '@jupyter-widgets/controls';
+import { BEAKERX_MODULE_VERSION } from '../../version';
 
 export class CheckboxModel extends JupyterCheckboxModel {
   defaults(): any {
     return {
       ...super.defaults(),
-      _view_name: "CheckboxView",
-      _model_name: "CheckboxModel",
+      _view_name: 'CheckboxView',
+      _model_name: 'CheckboxModel',
       _model_module: 'beakerx_widgets.forms',
       _view_module: 'beakerx_widgets.forms',
       _model_module_version: BEAKERX_MODULE_VERSION,
-      _view_module_version: BEAKERX_MODULE_VERSION
+      _view_module_version: BEAKERX_MODULE_VERSION,
     };
   }
 }

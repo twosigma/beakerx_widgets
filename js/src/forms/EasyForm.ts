@@ -19,8 +19,8 @@
 const ENTER_KEY_CODE = 13;
 
 import $ from 'jquery';
-import {BoxModel, BoxView} from "@jupyter-widgets/controls"
-import {BEAKERX_MODULE_VERSION} from '../version';
+import { BoxModel, BoxView } from '@jupyter-widgets/controls';
+import { BEAKERX_MODULE_VERSION } from '../version';
 
 export class EasyFormModel extends BoxModel {
   defaults(): any {
@@ -32,7 +32,7 @@ export class EasyFormModel extends BoxModel {
       _view_module: 'beakerx_widgets.forms',
       _model_module_version: BEAKERX_MODULE_VERSION,
       _view_module_version: BEAKERX_MODULE_VERSION,
-    }
+    };
   }
 }
 
@@ -46,14 +46,11 @@ export class EasyFormView extends BoxView {
   render(): void {
     super.render.apply(this);
 
-    this.$el
-      .addClass('beaker-easyform-container')
-      .addClass('widget-vbox')
-      .addClass('beaker-fieldset');
+    this.$el.addClass('beaker-easyform-container').addClass('widget-vbox').addClass('beaker-fieldset');
 
     const formTitle = this.model.get('easyFormName');
 
-    this.$legend = $('<legend />', {textContent: formTitle});
+    this.$legend = $('<legend />', { textContent: formTitle });
     this.displayed.then(() => {
       if (EasyFormView.isDark) {
         this.$legend.css('background-color', '#636363');
@@ -65,9 +62,9 @@ export class EasyFormView extends BoxView {
     });
   }
 
-  events(): {[eventName: string]: string} {
+  events(): { [eventName: string]: string } {
     return {
-      'keypress': 'handleEnterKeyPress'
+      keypress: 'handleEnterKeyPress',
     };
   }
 
@@ -78,6 +75,7 @@ export class EasyFormView extends BoxView {
 
     const $button = this.$el.find('> .widget-button');
 
-    ($(event.target).is('[type="text"]') || $(event.target).is('[type="password"]')) && $button.first().trigger('click');
+    ($(event.target).is('[type="text"]') || $(event.target).is('[type="password"]')) &&
+      $button.first().trigger('click');
   }
 }

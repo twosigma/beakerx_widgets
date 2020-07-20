@@ -16,20 +16,23 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import {SelectMultipleModel as JupyterSelectMultipleModel, SelectMultipleView as JupyterSelectMultipleView} from "@jupyter-widgets/controls";
-import { BEAKERX_MODULE_VERSION } from "../../version";
+import {
+  SelectMultipleModel as JupyterSelectMultipleModel,
+  SelectMultipleView as JupyterSelectMultipleView,
+} from '@jupyter-widgets/controls';
+import { BEAKERX_MODULE_VERSION } from '../../version';
 
 export class SelectMultipleModel extends JupyterSelectMultipleModel {
-  defaults():any {
+  defaults(): any {
     return {
       ...super.defaults(),
-      _view_name: "SelectMultipleView",
-      _model_name: "SelectMultipleModel",
+      _view_name: 'SelectMultipleView',
+      _model_name: 'SelectMultipleModel',
       _model_module: 'beakerx_widgets.forms',
       _view_module: 'beakerx_widgets.forms',
       _model_module_version: BEAKERX_MODULE_VERSION,
-      _view_module_version: BEAKERX_MODULE_VERSION
-    }
+      _view_module_version: BEAKERX_MODULE_VERSION,
+    };
   }
 }
 

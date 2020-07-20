@@ -16,20 +16,20 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import {TextareaModel as JupyterTextAreaModel, TextareaView as JupyterTextAreaView} from "@jupyter-widgets/controls";
+import { TextareaModel as JupyterTextAreaModel, TextareaView as JupyterTextAreaView } from '@jupyter-widgets/controls';
 import { BEAKERX_MODULE_VERSION } from '../../version';
-import {TEXT_INPUT_HEIGHT_UNIT, TEXT_INPUT_WIDTH_UNIT} from "./const";
+import { TEXT_INPUT_HEIGHT_UNIT, TEXT_INPUT_WIDTH_UNIT } from './const';
 
 export class TextAreaModel extends JupyterTextAreaModel {
   defaults(): any {
     return {
       ...super.defaults(),
-      _view_name: "TextAreaView",
-      _model_name: "TextAreaModel",
+      _view_name: 'TextAreaView',
+      _model_name: 'TextAreaModel',
       _model_module: 'beakerx_widgets.forms',
       _view_module: 'beakerx_widgets.forms',
       _model_module_version: BEAKERX_MODULE_VERSION,
-      _view_module_version: BEAKERX_MODULE_VERSION
+      _view_module_version: BEAKERX_MODULE_VERSION,
     };
   }
 }

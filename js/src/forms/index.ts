@@ -14,5 +14,5 @@
  *  limitations under the License.
  */
 
-export * from './EasyForm'
-export * from './easyforms'
+export * from './EasyForm';
+export * from './easyforms';
