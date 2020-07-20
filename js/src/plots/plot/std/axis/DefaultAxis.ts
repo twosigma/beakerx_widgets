@@ -150,7 +150,7 @@ export class DefaultAxis {
   }
 
   getSpan(): number {
-    if (this.axisValSpan instanceof Big) {
+    if (BigNumberUtils.isBig(this.axisValSpan)) {
       return parseFloat(this.axisValSpan.times(this.axisPctSpan).toString());
     }
 
@@ -267,7 +267,8 @@ export class DefaultAxis {
     const valueRight: BigSource = this.getValue(pointRight);
     let value: BigSource = this.getValue(pointLeft);
 
-    if (value instanceof Big) {
+    if (BigNumberUtils.isBig(value)) {
+      value = (value as BigJs.Big);
       value = value.gte(0) ? value.div(axisStep).round(0, 3).times(axisStep) : value.div(axisStep).round(0, 0).times(axisStep);
     } else {
       value = Math.ceil(value as number / axisStep) * axisStep;
@@ -346,7 +347,7 @@ export class DefaultAxis {
       val = this.axisValR;
     }
 
-    if (val instanceof Big) {
+    if (BigNumberUtils.isBig(val)) {
       return parseFloat(val.minus(this.axisValL).div(this.axisValSpan).toString());
     }
 

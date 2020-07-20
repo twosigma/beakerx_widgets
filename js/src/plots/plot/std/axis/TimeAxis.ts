@@ -81,11 +81,11 @@ export class TimeAxis extends DefaultAxis {
     }
 
     // For nanotime
-    if (!(this.axisValL instanceof Big)) {
+    if (!BigNumberUtils.isBig(this.axisValL)) {
       this.axisValL = new Big(this.axisValL);
     }
 
-    if (!(this.axisValR instanceof Big)) {
+    if (!BigNumberUtils.isBig(this.axisValR)) {
       this.axisValR = new Big(this.axisValR);
     }
   }

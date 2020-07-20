@@ -18,7 +18,6 @@ import * as d3 from "d3";
 import * as _ from "underscore";
 import {Focus} from "./Focus";
 import {BigNumberUtils, PlotStyleUtils, PlotUtils} from "../../../utils";
-import {Big} from 'big.js';
 
 export class PlotFocus {
   defaultFocus: Focus;
@@ -99,6 +98,8 @@ export class PlotFocus {
     const range = ret.dataRange;
     const rangeR = retR.dataRange;
     const margin = model.margin;
+    margin.top = margin.top ?? 0.05;
+    margin.bottom = margin.bottom ?? 0.05;
 
     if (ret.visibleItems === 0) { // for empty plot, focus needs to be adjusted
       range.xl = model.xAxis.getPercent(range.xl);
@@ -129,11 +130,11 @@ export class PlotFocus {
       focus.xr = BigNumberUtils.plus(range.xr, BigNumberUtils.mult(range.xSpan, margin.right));
     }
 
-    if (focus.xl instanceof Big) {
+    if (BigNumberUtils.isBig(focus.xl)) {
       focus.xl = parseFloat(focus.xl.toString());
     }
 
-    if (focus.xr instanceof Big) {
+    if (BigNumberUtils.isBig(focus.xr)) {
       focus.xr = parseFloat(focus.xr.toString());
     }
 
