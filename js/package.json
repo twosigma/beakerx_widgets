@@ -23,7 +23,10 @@
     "prepublish": "yarn run build",
     "test": "karma start --single-run",
     "clean": "rimraf lib css dist",
-    "lint": "eslint src/ --ext .ts"
+    "lint": "eslint src/ --ext .ts",
+    "lint:fix": "eslint src/ --ext .ts --fix",
+    "prettier": "prettier --check src/**/*.{ts,js}",
+    "prettier:fix": "prettier --check src/**/*.{ts,js} --write"
   },
   "devDependencies": {
     "@jupyterlab/application": "^1.2.8",
