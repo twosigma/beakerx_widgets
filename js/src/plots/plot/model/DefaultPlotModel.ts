@@ -103,7 +103,7 @@ export class DefaultPlotModel extends AbstractPlotModel {
 
   addDataToAxes(newModel, yAxisRData: any[], yAxisData: any[]): void {
     for (const item of newModel.data) {
-      if (newModel.showLegend === null && item.legend) {
+      if (newModel.showLegend === undefined && item.legend) {
         newModel.showLegend = true;
       }
 
