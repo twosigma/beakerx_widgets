@@ -483,19 +483,10 @@ from queue import Queue
 class BeakerX:
 
     def __init__(self):
-        BeakerX.pandas_display_table()
         self._comm = None
         self._queue = Queue()
         self._server = BeakerxZMQServer(self._queue)
         self._url = self._server.url
-
-    @staticmethod
-    def pandas_display_default():
-        pandas.DataFrame._ipython_display_ = None
-
-    @staticmethod
-    def pandas_display_table():
-        pandas.DataFrame._ipython_display_ = TableDisplayWrapper()
 
     def set4(self, var, val, unset, sync):
         args = {'name': var, 'sync': sync}
