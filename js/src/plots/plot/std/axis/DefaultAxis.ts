@@ -47,7 +47,7 @@ export class DefaultAxis {
   showGridlineLabels: boolean;
 
   constructor(type: 'linear' | 'log' | 'time' | 'category' | 'nanotime' = 'linear') {
-    this.axisType = 'linear';
+    this.axisType = type;
     this.axisBase = 10;
     this.axisTime = 0;
     this.axisTimezone = 'UTC';
