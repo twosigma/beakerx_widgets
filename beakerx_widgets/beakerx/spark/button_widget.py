@@ -18,8 +18,8 @@ from traitlets import Unicode
 class RESTButton(BeakerxButton):
     _view_name = Unicode('RESTButtonView').tag(sync=True)
     _model_name = Unicode('RESTButtonModel').tag(sync=True)
-    _view_module = Unicode('beakerx_widgets').tag(sync=True)
-    _model_module = Unicode('beakerx_widgets').tag(sync=True)
+    _view_module = Unicode('beakerx').tag(sync=True)
+    _model_module = Unicode('beakerx').tag(sync=True)
     tooltip = Unicode('tooltip').tag(sync=True)
     url = Unicode('url').tag(sync=True)
 

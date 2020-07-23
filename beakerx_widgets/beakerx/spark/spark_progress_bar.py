@@ -33,8 +33,8 @@ class SparkStateProgress(BaseObject):
 class SparkStateProgressWidget(BeakerxBox):
     _view_name = Unicode('SparkStateProgressView').tag(sync=True)
     _model_name = Unicode('SparkStateProgressModel').tag(sync=True)
-    _view_module = Unicode('beakerx_widgets').tag(sync=True)
-    _model_module = Unicode('beakerx_widgets').tag(sync=True)
+    _view_module = Unicode('beakerx').tag(sync=True)
+    _model_module = Unicode('beakerx').tag(sync=True)
     _model_module_version = Unicode('*').tag(sync=True)
     _view_module_version = Unicode('*').tag(sync=True)
 
@@ -72,8 +72,8 @@ class SparkStateProgressWidget(BeakerxBox):
 class SparkFoldout(BeakerxBox):
     _view_name = Unicode('SparkFoldoutView').tag(sync=True)
     _model_name = Unicode('SparkFoldoutModel').tag(sync=True)
-    _view_module = Unicode('beakerx_widgets').tag(sync=True)
-    _model_module = Unicode('beakerx_widgets').tag(sync=True)
+    _view_module = Unicode('beakerx').tag(sync=True)
+    _model_module = Unicode('beakerx').tag(sync=True)
     hidePreview = Bool(False).tag(sync=True)
     headerLabel = Unicode('Spark progress').tag(sync=True)
 

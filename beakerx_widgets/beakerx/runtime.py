@@ -500,13 +500,13 @@ class BeakerX:
         self._comm.send(data=state)
 
     def init_autotranslation_comm(self):
-        self._comm = Comm(target_name='beakerx_widgets.autotranslation')
+        self._comm = Comm(target_name='beakerx.autotranslation')
         self._comm.open()
 
     def get(self, var):
         result = autotranslation_get(var)
         if result == 'undefined':
-            raise NameError('name \'' + var + '\' is not defined on the beakerx_widgets object')
+            raise NameError('name \'' + var + '\' is not defined on the beakerx object')
         return transformBack(json.loads(result))
 
     def set_session(self, id):
@@ -626,14 +626,14 @@ class BeakerX:
         return result == "true"
 
     def runByTag(self, tag):
-        arguments = dict(target_name='beakerx_widgets.tag.run')
+        arguments = dict(target_name='beakerx.tag.run')
         comm = Comm(**arguments)
         msg = {'runByTag': tag}
         state = {'state': msg}
         comm.send(data=state, buffers=[])
 
     def urlArg(self, argName):
-        arguments = dict(target_name='beakerx_widgets.geturlarg')
+        arguments = dict(target_name='beakerx.geturlarg')
         comm = Comm(**arguments)
         state = {
             'name': 'URL_ARG',

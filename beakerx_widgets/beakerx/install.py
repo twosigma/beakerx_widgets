@@ -39,21 +39,21 @@ def _classpath_for(kernel):
 
 
 def _uninstall_nbextension():
-    subprocess.check_call(["jupyter", "nbextension", "disable", "beakerx_widgets", "--py", "--sys-prefix"])
-    subprocess.check_call(["jupyter", "nbextension", "uninstall", "beakerx_widgets", "--py", "--sys-prefix"])
-    subprocess.check_call(["jupyter", "serverextension", "disable", "beakerx_widgets", "--py", "--sys-prefix"])
+    subprocess.check_call(["jupyter", "nbextension", "disable", "beakerx", "--py", "--sys-prefix"])
+    subprocess.check_call(["jupyter", "nbextension", "uninstall", "beakerx", "--py", "--sys-prefix"])
+    subprocess.check_call(["jupyter", "serverextension", "disable", "beakerx", "--py", "--sys-prefix"])
 
 
 def _install_nbextension():
     if sys.platform == 'win32':
-        subprocess.check_call(["jupyter", "nbextension", "install", "beakerx_widgets", "--py", "--sys-prefix"])
+        subprocess.check_call(["jupyter", "nbextension", "install", "beakerx", "--py", "--sys-prefix"])
     else:
         subprocess.check_call(
-            ["jupyter", "nbextension", "install", "beakerx_widgets", "--py", "--symlink", "--sys-prefix"])
+            ["jupyter", "nbextension", "install", "beakerx", "--py", "--symlink", "--sys-prefix"])
 
-    subprocess.check_call(["jupyter", "nbextension", "enable", "beakerx_widgets", "--py", "--sys-prefix"])
+    subprocess.check_call(["jupyter", "nbextension", "enable", "beakerx", "--py", "--sys-prefix"])
 
-    subprocess.check_call(["jupyter", "serverextension", "enable", "beakerx_widgets", "--py", "--sys-prefix"])
+    subprocess.check_call(["jupyter", "serverextension", "enable", "beakerx", "--py", "--sys-prefix"])
 
 
 def _install_labextensions(lab):
@@ -98,7 +98,7 @@ def _copy_icons():
 def _install_css():
     log.info("installing custom CSS...")
     # resource = os.path.join('static', 'custom')
-    # src_base = pkg_resources.resource_filename('beakerx_widgets', resource)
+    # src_base = pkg_resources.resource_filename('beakerx', resource)
     # dst_base = pkg_resources.resource_filename('notebook', resource)
     # _copy_tree(os.path.join(src_base, 'fonts'), os.path.join(dst_base, 'fonts'))
     # shutil.copyfile(os.path.join(src_base, 'custom.css'), os.path.join(dst_base, 'custom.css'))
@@ -111,15 +111,15 @@ def _install_magics():
     with open(os.path.join(dir_path, 'ipython_config.py'), 'w+') as ipython_config:
         ipython_config.write("c = get_config()\n")
         ipython_config.write("c.InteractiveShellApp.extensions = ["
-                             "'beakerx_widgets.magics.kernel_magic',\n"
-                             "'beakerx_widgets.magics.groovy_magic',\n"
-                             "'beakerx_widgets.magics.clojure_magic',\n"
-                             "'beakerx_widgets.magics.sparkex_magic',\n"
-                             "'beakerx_widgets.magics.kotlin_magic',\n"
-                             "'beakerx_widgets.magics.scala_magic',\n"
-                             "'beakerx_widgets.magics.sql_magic',\n"
-                             "'beakerx_widgets.magics.java_magic',\n"
-                             "'beakerx_widgets.magics.kernel_runner_magic'\n"
+                             "'beakerx.magics.kernel_magic',\n"
+                             "'beakerx.magics.groovy_magic',\n"
+                             "'beakerx.magics.clojure_magic',\n"
+                             "'beakerx.magics.sparkex_magic',\n"
+                             "'beakerx.magics.kotlin_magic',\n"
+                             "'beakerx.magics.scala_magic',\n"
+                             "'beakerx.magics.sql_magic',\n"
+                             "'beakerx.magics.java_magic',\n"
+                             "'beakerx.magics.kernel_runner_magic'\n"
                              "]\n")
 
 
@@ -134,7 +134,7 @@ def _pretty(it):
 
 
 def _install_kernelspec_manager(prefix, disable=False):
-    CKSM = "beakerx_widgets.kernel_spec.BeakerXKernelSpec"
+    CKSM = "beakerx.kernel_spec.BeakerXKernelSpec"
     KSMC = "kernel_spec_class"
 
     action_prefix = "Dis" if disable else "En"

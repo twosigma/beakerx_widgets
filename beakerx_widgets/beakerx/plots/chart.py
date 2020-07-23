@@ -28,8 +28,8 @@ from .plotitem import GradientColor, Points, Line
 class Plot(BeakerxDOMWidget):
     _view_name = Unicode('PlotView').tag(sync=True)
     _model_name = Unicode('PlotModel').tag(sync=True)
-    _view_module = Unicode('beakerx_widgets').tag(sync=True)
-    _model_module = Unicode('beakerx_widgets').tag(sync=True)
+    _view_module = Unicode('beakerx').tag(sync=True)
+    _model_module = Unicode('beakerx').tag(sync=True)
     model = Dict().tag(sync=True)
 
     def __init__(self, **kwargs):
@@ -137,8 +137,8 @@ class GraphicsActionObject:
 class CategoryPlot(BeakerxDOMWidget):
     _view_name = Unicode('PlotView').tag(sync=True)
     _model_name = Unicode('PlotModel').tag(sync=True)
-    _view_module = Unicode('beakerx_widgets').tag(sync=True)
-    _model_module = Unicode('beakerx_widgets').tag(sync=True)
+    _view_module = Unicode('beakerx').tag(sync=True)
+    _model_module = Unicode('beakerx').tag(sync=True)
     model = Dict().tag(sync=True)
 
     def __init__(self, **kwargs):
@@ -159,8 +159,8 @@ class CategoryPlot(BeakerxDOMWidget):
 class HeatMap(BeakerxDOMWidget):
     _view_name = Unicode('PlotView').tag(sync=True)
     _model_name = Unicode('PlotModel').tag(sync=True)
-    _view_module = Unicode('beakerx_widgets').tag(sync=True)
-    _model_module = Unicode('beakerx_widgets').tag(sync=True)
+    _view_module = Unicode('beakerx').tag(sync=True)
+    _model_module = Unicode('beakerx').tag(sync=True)
     model = Dict().tag(sync=True)
 
     def __init__(self, rows_limit=10000, column_limit=100, **kwargs):
@@ -207,8 +207,8 @@ class Histogram(BeakerxDOMWidget):
 
     _view_name = Unicode('PlotView').tag(sync=True)
     _model_name = Unicode('PlotModel').tag(sync=True)
-    _view_module = Unicode('beakerx_widgets').tag(sync=True)
-    _model_module = Unicode('beakerx_widgets').tag(sync=True)
+    _view_module = Unicode('beakerx').tag(sync=True)
+    _model_module = Unicode('beakerx').tag(sync=True)
     model = Dict().tag(sync=True)
 
     def __init__(self, **kwargs):
@@ -226,8 +226,8 @@ class Histogram(BeakerxDOMWidget):
 class TreeMap(BeakerxDOMWidget):
     _view_name = Unicode('PlotView').tag(sync=True)
     _model_name = Unicode('PlotModel').tag(sync=True)
-    _view_module = Unicode('beakerx_widgets').tag(sync=True)
-    _model_module = Unicode('beakerx_widgets').tag(sync=True)
+    _view_module = Unicode('beakerx').tag(sync=True)
+    _model_module = Unicode('beakerx').tag(sync=True)
     model = Dict().tag(sync=True)
 
     def __init__(self, **kwargs):
@@ -370,8 +370,8 @@ class SimpleTimePlot(TimePlot):
 class CombinedPlot(BeakerxDOMWidget):
     _view_name = Unicode('PlotView').tag(sync=True)
     _model_name = Unicode('PlotModel').tag(sync=True)
-    _view_module = Unicode('beakerx_widgets').tag(sync=True)
-    _model_module = Unicode('beakerx_widgets').tag(sync=True)
+    _view_module = Unicode('beakerx').tag(sync=True)
+    _model_module = Unicode('beakerx').tag(sync=True)
     model = Dict().tag(sync=True)
 
     def __init__(self, **kwargs):

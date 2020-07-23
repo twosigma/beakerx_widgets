@@ -148,13 +148,13 @@ def load_jupyter_server_extension(nbapp):
 
     web_app = nbapp.web_app
     host_pattern = '.*$'
-    settings_route_pattern = url_path_join(web_app.settings['base_url'], '/beakerx_widgets', '/settings')
-    spark_metrics_executors_route_pattern = url_path_join(web_app.settings['base_url'], '/beakerx_widgets',
+    settings_route_pattern = url_path_join(web_app.settings['base_url'], '/beakerx', '/settings')
+    spark_metrics_executors_route_pattern = url_path_join(web_app.settings['base_url'], '/beakerx',
                                                           '/sparkmetrics/executors')
-    version_route_pattern = url_path_join(web_app.settings['base_url'], '/beakerx_widgets', '/version')
+    version_route_pattern = url_path_join(web_app.settings['base_url'], '/beakerx', '/version')
     javadoc_route_pattern = url_path_join(web_app.settings['base_url'], '/static', '/javadoc/(.*)')
     javadoc_lab_route_pattern = url_path_join(web_app.settings['base_url'], '/javadoc/(.*)')
-    beakerx__rest_route_pattern = url_path_join(web_app.settings['base_url'], '/beakerx_widgets', '/rest')
+    beakerx__rest_route_pattern = url_path_join(web_app.settings['base_url'], '/beakerx', '/rest')
 
     web_app.add_handlers(host_pattern, [(settings_route_pattern, SettingsHandler)])
     web_app.add_handlers(host_pattern, [(spark_metrics_executors_route_pattern, SparkMetricsExecutorsHandler)])
@@ -162,4 +162,4 @@ def load_jupyter_server_extension(nbapp):
     web_app.add_handlers(host_pattern, [(javadoc_route_pattern, JavaDoc)])
     web_app.add_handlers(host_pattern, [(javadoc_lab_route_pattern, JavaDoc)])
     web_app.add_handlers(host_pattern, [(beakerx__rest_route_pattern, BeakerxRestHandler)])
-    nbapp.log.info("[beakerx_widgets] enabled")
+    nbapp.log.info("[beakerx] enabled")

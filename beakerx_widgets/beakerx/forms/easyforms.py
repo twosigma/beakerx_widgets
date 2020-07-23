@@ -22,8 +22,8 @@ from traitlets import Unicode
 class EasyForm(BeakerxBox):
     _view_name = Unicode('EasyFormView').tag(sync=True)
     _model_name = Unicode('EasyFormModel').tag(sync=True)
-    _view_module = Unicode('beakerx_widgets').tag(sync=True)
-    _model_module = Unicode('beakerx_widgets').tag(sync=True)
+    _view_module = Unicode('beakerx').tag(sync=True)
+    _model_module = Unicode('beakerx').tag(sync=True)
     easyFormName = Unicode(default_value='Form default').tag(sync=True)
     test = ""
     HORIZONTAL = 1
@@ -73,7 +73,7 @@ class EasyForm(BeakerxBox):
     def buttonCallback(self, *args):
         if len(args) > 0:
             args[0].actionPerformed()
-            arguments = dict(target_name='beakerx_widgets.tag.run')
+            arguments = dict(target_name='beakerx.tag.run')
             comm = Comm(**arguments)
             msg = {'runByTag': args[0].tag}
             state = {'state': msg}

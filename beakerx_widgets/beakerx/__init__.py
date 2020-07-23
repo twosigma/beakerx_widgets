@@ -27,19 +27,19 @@ def _jupyter_nbextension_paths():
         {
             'section': 'notebook',
             'src': 'static',
-            'dest': 'beakerx_widgets',
-            'require': 'beakerx_widgets/extension'
+            'dest': 'beakerx',
+            'require': 'beakerx/extension'
         }, {
             'section': 'tree',
             'src': 'static',
-            'dest': 'beakerx_widgets',
-            'require': 'beakerx_widgets/tree-extension'
+            'dest': 'beakerx',
+            'require': 'beakerx/tree-extension'
         }
     ]
 
 
 def _jupyter_server_extension_paths():
-    return [dict(module="beakerx_widgets")]
+    return [dict(module="beakerx")]
 
 
 def run():

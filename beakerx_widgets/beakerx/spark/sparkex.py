@@ -24,8 +24,8 @@ class SparkUI(BeakerxBox):
 
     _view_name = Unicode('SparkUIView').tag(sync=True)
     _model_name = Unicode('SparkUIModel').tag(sync=True)
-    _view_module = Unicode('beakerx_widgets').tag(sync=True)
-    _model_module = Unicode('beakerx_widgets').tag(sync=True)
+    _view_module = Unicode('beakerx').tag(sync=True)
+    _model_module = Unicode('beakerx').tag(sync=True)
     profiles = List().tag(sync=True)
     current_profile = Unicode("").tag(sync=True)
     is_auto_start = Bool().tag(sync=True)

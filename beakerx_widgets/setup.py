@@ -37,10 +37,10 @@ cmdclass['js'] = install_node_modules(
 )
 
 setup_args = dict(
-    name='beakerx_widgets',
+    name='beakerx',
     description='BeakerX: Beaker Extensions for Jupyter Notebook',
     long_description='BeakerX: Beaker Extensions for Jupyter Notebook',
-    version=get_version(os.path.join('beakerx_widgets', '_version.py')),
+    version=get_version(os.path.join('beakerx', '_version.py')),
     author='Two Sigma Open Source, LLC',
     author_email='beakerx-feedback@twosigma.com',
     url='http://beakerx.com',
@@ -64,7 +64,7 @@ setup_args = dict(
     ],
     entry_points={
         'console_scripts': [
-            'beakerx_widgets = beakerx_widgets:run'
+            'beakerx = beakerx:run'
         ]
     },
     install_requires=[
