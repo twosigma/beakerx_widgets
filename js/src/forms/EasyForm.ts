@@ -50,7 +50,7 @@ export class EasyFormView extends BoxView {
 
     const formTitle = this.model.get('easyFormName');
 
-    this.$legend = $('<legend />', { textContent: formTitle });
+    this.$legend = $('<legend />', { text: formTitle });
     this.displayed.then(() => {
       if (EasyFormView.isDark) {
         this.$legend.css('background-color', '#636363');
