@@ -499,7 +499,7 @@ class BeakerX:
         self._comm.send(data=state)
 
     def init_autotranslation_comm(self):
-        self._comm = Comm(target_name='beakerx_widgets.autotranslation')
+        self._comm = Comm(target_name='beakerx.autotranslation')
         self._comm.open()
 
     def get(self, var):
