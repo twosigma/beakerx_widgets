@@ -8,6 +8,8 @@ js/css/*.css
 js/css/*.css.map
 js/dist/
 js/lib/
+js/beakerx_shared/lib/
+js/lab/lib/
 
 # Karma tests coverage
 js/coverage/
