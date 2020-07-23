@@ -23,8 +23,8 @@ export class GridViewModel extends JupyterVBoxModel {
       ...super.defaults(),
       _model_name: 'GridViewModel',
       _view_name: 'GridView',
-      _model_module: 'beakerx_widgets.outputs',
-      _view_module: 'beakerx_widgets.outputs',
+      _model_module: 'beakerx.outputs',
+      _view_module: 'beakerx.outputs',
       _model_module_version: BEAKERX_MODULE_VERSION,
       _view_module_version: BEAKERX_MODULE_VERSION,
     };

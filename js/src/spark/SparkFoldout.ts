@@ -24,8 +24,8 @@ export class SparkFoldoutModel extends JupyterBoxModel {
       ...super.defaults(),
       _view_name: 'SparkFoldoutView',
       _model_name: 'SparkFoldoutModel',
-      _model_module: 'beakerx_widgets.spark',
-      _view_module: 'beakerx_widgets.spark',
+      _model_module: 'beakerx.spark',
+      _view_module: 'beakerx.spark',
       _model_module_version: BEAKERX_MODULE_VERSION,
       _view_module_version: BEAKERX_MODULE_VERSION,
     };

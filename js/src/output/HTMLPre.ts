@@ -26,8 +26,8 @@ export class HTMLPreModel extends JupyterStringModel {
       ...super.defaults(),
       _view_name: 'HTMLPreView',
       _model_name: 'HTMLPreModel',
-      _model_module: 'beakerx_widgets.outputs',
-      _view_module: 'beakerx_widgets.outputs',
+      _model_module: 'beakerx.outputs',
+      _view_module: 'beakerx.outputs',
       _model_module_version: BEAKERX_MODULE_VERSION,
       _view_module_version: BEAKERX_MODULE_VERSION,
     };

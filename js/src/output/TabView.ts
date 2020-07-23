@@ -23,8 +23,8 @@ export class TabModel extends JupyterTabModel {
       ...super.defaults(),
       _model_name: 'TabModel',
       _view_name: 'TabView',
-      _model_module: 'beakerx_widgets.outputs',
-      _view_module: 'beakerx_widgets.outputs',
+      _model_module: 'beakerx.outputs',
+      _view_module: 'beakerx.outputs',
       _model_module_version: BEAKERX_MODULE_VERSION,
       _view_module_version: BEAKERX_MODULE_VERSION,
     };

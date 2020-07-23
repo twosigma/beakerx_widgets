@@ -25,8 +25,8 @@ export class CyclingDisplayBoxModel extends JupyterBoxModel {
       ...super.defaults(),
       _model_name: 'CyclingDisplayBoxModel',
       _view_name: 'CyclingDisplayBoxView',
-      _model_module: 'beakerx_widgets.outputs',
-      _view_module: 'beakerx_widgets.outputs',
+      _model_module: 'beakerx.outputs',
+      _view_module: 'beakerx.outputs',
       _model_module_version: BEAKERX_MODULE_VERSION,
       _view_module_version: BEAKERX_MODULE_VERSION,
     };

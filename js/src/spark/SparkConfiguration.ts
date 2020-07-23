@@ -23,8 +23,8 @@ export class SparkConfigurationModel extends JupyterVBoxModel {
       ...super.defaults(),
       _view_name: 'SparkConfigurationView',
       _model_name: 'SparkConfigurationModel',
-      _model_module: 'beakerx_widgets.spark',
-      _view_module: 'beakerx_widgets.spark',
+      _model_module: 'beakerx.spark',
+      _view_module: 'beakerx.spark',
       _model_module_version: BEAKERX_MODULE_VERSION,
       _view_module_version: BEAKERX_MODULE_VERSION,
     };
