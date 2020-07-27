@@ -44,15 +44,10 @@ export class TabView extends JupyterTabView {
 
   _triggerSelectEventForChildren(currentIndex) {
     if (this.childrenViews._models && this.childrenViews._models.length) {
-      var currentModel = this.childrenViews._models[currentIndex];
+      const currentModel = this.childrenViews._models[currentIndex];
       if (currentModel && currentModel.trigger) {
         currentModel.trigger('beakerx-tabSelected');
       }
     }
   }
 }
-
-export default {
-  TabModel,
-  TabView,
-};

@@ -29,7 +29,7 @@ if ((window as any).require) {
   (window as any).require.config({
     map: {
       '*': {
-        beakerx_widgets: 'nbextensions/beakerx_widgets/index',
+        beakerx: 'nbextensions/beakerx/index',
       },
     },
   });
