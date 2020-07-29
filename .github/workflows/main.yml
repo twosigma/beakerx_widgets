@@ -1,0 +1,52 @@
+Conda package test
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache Conda
+      uses: actions/cache@v1
+      with:
+        path: ~/.conda
+        key: ${{ runner.os }}-mconda-${{ hashFiles('**/configuration.yml') }}
+        restore-keys: |
+          ${{ runner.os }}-conda-          
+    - name: Set up Conda
+      uses: goanpeca/setup-miniconda@v1
+      with:
+        miniconda-version: "latest"
+    - name: Verify conda version
+      shell: bash
+      run: conda --version
+    - name: Checkout beakerx_base repo
+      uses: actions/checkout@v2
+      with:
+        repository: twosigma/beakerx_base
+        path: beakerx_base
+    - name: Update conda package
+      shell: bash
+      run:
+        conda env create -n beakerx -f configuration.yml
+    - name: Build BeakerX Base
+      shell: bash -l {0}
+      run: |
+        conda activate beakerx
+        cd $GITHUB_WORKSPACE/beakerx_base
+        pip install -e .
+    - name: Build BeakerX widgets
+      shell: bash -l {0}
+      run: |
+        conda activate beakerx
+        cd beakerx_widgets
+        pip install -r requirements.txt --verbose
+        beakerx_widgets install
+    
