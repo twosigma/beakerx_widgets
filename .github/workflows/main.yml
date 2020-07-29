@@ -1,4 +1,4 @@
-Conda package test
+name: Conda package test
 
 on:
   push:
