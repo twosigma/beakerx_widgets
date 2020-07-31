@@ -48,5 +48,5 @@ jobs:
         conda activate beakerx
         cd beakerx
         pip install -r requirements.txt --verbose
-        beakerx_widgets install
+        beakerx install
     
