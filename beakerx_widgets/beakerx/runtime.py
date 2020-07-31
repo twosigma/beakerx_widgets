@@ -139,7 +139,7 @@ def transformNaN(obj):
     if not isinstance(obj, float):
         return obj
     if math.isnan(obj):
-        return "Nan"
+        return "NaN"
     if math.isinf(obj):
         if obj > 0:
             return "Infinity"
