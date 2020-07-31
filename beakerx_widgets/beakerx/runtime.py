@@ -135,7 +135,7 @@ def transformNaN(obj):
     if not isinstance(obj, float):
         return obj
     if math.isnan(obj):
-        return "Nan";
+        return "Nan"
     if math.isinf(obj):
         if obj > 0:
             return "Infinity"
@@ -146,11 +146,11 @@ def transformNaN(obj):
 
 def transformNaNs(obj):
     for x in range(0, len(obj)):
-        i = obj[x];
+        i = obj[x]
         if not isinstance(i, float):
             continue
         if math.isnan(i):
-            obj[x] = "NaN";
+            obj[x] = "NaN"
         if math.isinf(i):
             if i > 0:
                 obj[x] = "Infinity"
@@ -172,7 +172,7 @@ def fixNaNBack(obj):
 
 def fixNaNsBack(obj):
     for x in range(0, len(obj)):
-        i = obj[x];
+        i = obj[x]
         if not isinstance(i, str):
             continue
         if i == "NaN":
@@ -423,7 +423,7 @@ class DataFrameEncoder(json.JSONEncoder):
                 vals[x] = [idx[x]] + vals[x]
             ty = []
             num = len(obj.columns.tolist())
-            x = 0;
+            x = 0
             for x in range(0, num + 1):
                 ty.append(convertTypeName(type(vals[0][x]).__name__))
             out['types'] = ty
@@ -464,17 +464,6 @@ class MyJSONFormatter(IPython.core.formatters.BaseFormatter):
             # print(e)
             # traceback.print_exc()
             return None
-
-
-class TableDisplayWrapper(object):
-    def __get__(self, model_instance, model_class):
-        def f():
-            if TableDisplay is not None:
-                display_html(TableDisplay(model_instance))
-            else:
-                display_html("You need beakerx_tabledisplay to display this")
-
-        return f
 
 
 from .beakerx_server import BeakerxZMQServer
