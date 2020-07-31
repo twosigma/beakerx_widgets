@@ -27,13 +27,17 @@ import numpy
 import pandas
 import requests
 from IPython import get_ipython
-from IPython.display import display_html
-from beakerx_base import BaseObject
+from beakerx_base import BaseObject, BeakerxHTML
 
 try:
     from beakerx_tabledisplay import TableDisplay
 except ModuleNotFoundError:
     TableDisplay = None
+try:
+    from beakerx_tabledisplay.table_display_runtim import BeakerXTabledisplay
+except ModuleNotFoundError:
+    BeakerXTabledisplay = None
+
 from beakerx.plots import chart
 from beakerx.forms import easyforms
 from ipykernel.comm import Comm
@@ -477,6 +481,21 @@ class BeakerX:
         self._queue = Queue()
         self._server = BeakerxZMQServer(self._queue)
         self._url = self._server.url
+        if BeakerXTabledisplay is not None:
+            BeakerXTabledisplay.pandas_display_table()
+
+    @staticmethod
+    def pandas_display_default():
+        pandas.DataFrame._ipython_display_ = None
+
+    @staticmethod
+    def pandas_display_table():
+        if BeakerXTabledisplay is not None:
+            BeakerXTabledisplay.pandas_display_table()
+        else:
+            html = BeakerxHTML()
+            html.value = 'You need beakerx_tabledisplay to use this'
+            IPython.display.display_html(html)
 
     def set4(self, var, val, unset, sync):
         args = {'name': var, 'sync': sync}
