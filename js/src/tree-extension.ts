@@ -22,6 +22,7 @@ import { Widget } from '@phosphor/widgets';
 
 import 'flatpickr/dist/flatpickr.css';
 import 'jquery-ui/themes/base/all.css';
+import 'jquery-ui.combobox/lib/jquery-ui.combobox.css';
 import '@phosphor/widgets/style/index.css';
 import '../css/beakerx_widgets.css';
 
