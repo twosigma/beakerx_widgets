@@ -15,7 +15,7 @@
  */
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
+import './public-path';
 import $ from 'jquery';
 import { TreeWidget } from './tree';
 import { Widget } from '@phosphor/widgets';

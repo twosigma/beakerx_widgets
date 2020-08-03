@@ -14,9 +14,4 @@
  *  limitations under the License.
  */
 
-import './public-path';
-import 'flatpickr/dist/flatpickr.css';
-import 'jquery-ui/themes/base/all.css';
-import '@phosphor/widgets/style/index.css';
-import '../css/beakerx_widgets.css';
-export * from './index';
+__webpack_public_path__ = document.querySelector('body').getAttribute('data-base-url') + 'nbextensions/beakerx/';

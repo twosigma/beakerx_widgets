@@ -14,6 +14,7 @@
  *  limitations under the License.
  */
 
+import './public-path';
 import 'flatpickr/dist/flatpickr.css';
 import 'jquery-ui/themes/base/all.css';
 import '@phosphor/widgets/style/index.css';
