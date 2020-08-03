@@ -63,7 +63,6 @@ export class ComboBoxView extends JupyterSelectView {
     super.update();
 
     const value: string = this.model.get('value');
-
-    this.$el.find('.easyform-combobox-input').val(value);
+    this.$el.find('.ui-combobox-input').val(value);
   }
 }
