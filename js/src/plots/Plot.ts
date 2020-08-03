@@ -34,8 +34,8 @@ export class PlotModel extends DOMWidgetModel {
       ...super.defaults(),
       _model_name: 'PlotModel',
       _view_name: 'PlotView',
-      _model_module: 'beakerx_widgets.plots',
-      _view_module: 'beakerx_widgets.plots',
+      _model_module: 'beakerx.plots',
+      _view_module: 'beakerx.plots',
       _model_module_version: BEAKERX_MODULE_VERSION,
       _view_module_version: BEAKERX_MODULE_VERSION,
     };

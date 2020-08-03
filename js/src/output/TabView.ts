@@ -23,8 +23,8 @@ export class TabModel extends JupyterTabModel {
       ...super.defaults(),
       _model_name: 'TabModel',
       _view_name: 'TabView',
-      _model_module: 'beakerx_widgets.outputs',
-      _view_module: 'beakerx_widgets.outputs',
+      _model_module: 'beakerx.outputs',
+      _view_module: 'beakerx.outputs',
       _model_module_version: BEAKERX_MODULE_VERSION,
       _view_module_version: BEAKERX_MODULE_VERSION,
     };
@@ -44,15 +44,10 @@ export class TabView extends JupyterTabView {
 
   _triggerSelectEventForChildren(currentIndex) {
     if (this.childrenViews._models && this.childrenViews._models.length) {
-      var currentModel = this.childrenViews._models[currentIndex];
+      const currentModel = this.childrenViews._models[currentIndex];
       if (currentModel && currentModel.trigger) {
         currentModel.trigger('beakerx-tabSelected');
       }
     }
   }
 }
-
-export default {
-  TabModel,
-  TabView,
-};

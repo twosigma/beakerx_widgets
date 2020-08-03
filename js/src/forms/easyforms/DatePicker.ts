@@ -36,8 +36,8 @@ export class DatePickerModel extends JupyterStringModel {
       ...super.defaults(),
       _view_name: 'DatePickerView',
       _model_name: 'DatePickerModel',
-      _model_module: 'beakerx_widgets.forms',
-      _view_module: 'beakerx_widgets.forms',
+      _model_module: 'beakerx.forms',
+      _view_module: 'beakerx.forms',
       _model_module_version: BEAKERX_MODULE_VERSION,
       _view_module_version: BEAKERX_MODULE_VERSION,
     };

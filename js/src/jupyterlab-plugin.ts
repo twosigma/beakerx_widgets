@@ -20,11 +20,11 @@ import { version } from './version';
 import * as forms from './forms';
 
 export const BeakexWidgetsFormsPlugin: JupyterFrontEndPlugin<void> = {
-  id: 'beakerx_widgets.forms.plugin',
+  id: 'beakerx.forms.plugin',
   requires: [IJupyterWidgetRegistry],
   activate: (app: JupyterFrontEnd, widgets: IJupyterWidgetRegistry): void => {
     widgets.registerWidget({
-      name: 'beakerx_widgets.forms',
+      name: 'beakerx.forms',
       version: version,
       exports: forms,
     });

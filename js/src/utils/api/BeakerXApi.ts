@@ -44,7 +44,7 @@ export class BeakerXApi {
   private readonly apiUrl: string;
 
   constructor(baseUrl = '/') {
-    this.apiUrl = `${baseUrl}beakerx_widgets/`;
+    this.apiUrl = `${baseUrl}beakerx/`;
   }
 
   public getApiUrl(endpoint: string): string {

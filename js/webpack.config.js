@@ -59,13 +59,17 @@ var rules = [
   },
 ];
 
+const BEAKERX_STATIC_PATH = path.resolve(__dirname, '../beakerx_widgets/beakerx/static');
+const BEAKERX_DIST_PATH = path.resolve(__dirname, './dist/');
+const BEAKERX_MODE = 'production';
+
 module.exports = [
   // Notebook extension
   {
     entry: './lib/extension.js',
     output: {
       filename: 'extension.js',
-      path: path.resolve(__dirname, '../beakerx_widgets/beakerx_widgets/static'),
+      path: BEAKERX_STATIC_PATH,
       libraryTarget: 'amd',
     },
     devtool: 'inline-source-map',
@@ -85,13 +89,13 @@ module.exports = [
     module: {
       rules: rules,
     },
-    mode: 'production',
+    mode: BEAKERX_MODE,
   },
   {
     entry: './lib/tree-extension.js',
     output: {
       filename: 'tree-extension.js',
-      path: path.resolve(__dirname, '../beakerx_widgets/beakerx_widgets/static'),
+      path: BEAKERX_STATIC_PATH,
       libraryTarget: 'amd',
     },
     devtool: 'inline-source-map',
@@ -99,14 +103,14 @@ module.exports = [
       rules: rules,
     },
     externals: ['@jupyter-widgets/base', '@jupyter-widgets/controls', 'jquery'],
-    mode: 'production',
+    mode: BEAKERX_MODE,
   },
   // beakerx_widgets bundle for the classic notebook
   {
     entry: './lib/index-classic.js',
     output: {
       filename: 'index.js',
-      path: path.resolve(__dirname, '../beakerx_widgets/beakerx_widgets/static'),
+      path: BEAKERX_STATIC_PATH,
       libraryTarget: 'amd',
     },
     devtool: 'inline-source-map',
@@ -114,14 +118,14 @@ module.exports = [
       rules: rules,
     },
     externals: ['@jupyter-widgets/base', '@jupyter-widgets/controls', 'jquery'],
-    mode: 'production',
+    mode: BEAKERX_MODE,
   },
   // beakerx_widgets bundle for unpkg.
   {
     entry: './lib/index-embed.js',
     output: {
       filename: 'index.js',
-      path: path.resolve(__dirname, './dist/'),
+      path: BEAKERX_DIST_PATH,
       libraryTarget: 'amd',
     },
     devtool: 'inline-source-map',
@@ -129,6 +133,6 @@ module.exports = [
       rules: rules,
     },
     externals: ['@jupyter-widgets/base', '@jupyter-widgets/controls'],
-    mode: 'production',
+    mode: BEAKERX_MODE,
   },
 ];

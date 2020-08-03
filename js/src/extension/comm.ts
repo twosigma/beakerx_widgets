@@ -18,10 +18,10 @@ import { BeakerXApi } from '../utils/api';
 const dialog = require('base/js/dialog');
 const { Comm } = require('services/kernels/comm');
 
-export const BEAKER_GETCODECELLS = 'beakerx_widgets.getcodecells';
-export const BEAKER_GET_URL_ARG = 'beakerx_widgets.geturlarg';
+export const BEAKER_GETCODECELLS = 'beakerx.getcodecells';
+export const BEAKER_GET_URL_ARG = 'beakerx.geturlarg';
 export const BEAKER_AUTOTRANSLATION = 'beakerx.autotranslation';
-export const BEAKER_TAG_RUN = 'beakerx_widgets.tag.run';
+export const BEAKER_TAG_RUN = 'beakerx.tag.run';
 
 const msgHandlers = {
   [BEAKER_GETCODECELLS]: (msg) => {

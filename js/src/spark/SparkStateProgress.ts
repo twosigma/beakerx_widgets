@@ -35,8 +35,8 @@ export class SparkStateProgressModel extends JupyterHBoxModel {
       ...super.defaults(),
       _view_name: 'SparkStateProgressView',
       _model_name: 'SparkStateProgressModel',
-      _model_module: 'beakerx_widgets.spark',
-      _view_module: 'beakerx_widgets.spark',
+      _model_module: 'beakerx.spark',
+      _view_module: 'beakerx.spark',
       _model_module_version: BEAKERX_MODULE_VERSION,
       _view_module_version: BEAKERX_MODULE_VERSION,
       state: {
