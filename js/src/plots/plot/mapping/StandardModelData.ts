@@ -33,7 +33,7 @@ export interface StandardModelData extends ModelData {
   normed: boolean;
   rangeMin: number;
   rangeMax: number;
-  displayMode: string;
+  displayMode: 'SIDE_BY_SIDE' | 'STACK' | 'OVERLAP';
   rightClose: any;
   tips: any;
   tooltips: any;
