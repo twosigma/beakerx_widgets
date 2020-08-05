@@ -201,9 +201,9 @@ class HeatMap(BeakerxDOMWidget):
 
 class Histogram(BeakerxDOMWidget):
     class DisplayMode(Enum):
-        OVERLAP = 1
-        STACK = 2
-        SIDE_BY_SIDE = 3
+        OVERLAP = "OVERLAP"
+        STACK = "STACK"
+        SIDE_BY_SIDE = "SIDE_BY_SIDE"
 
     _view_name = Unicode('PlotView').tag(sync=True)
     _model_name = Unicode('PlotModel').tag(sync=True)
