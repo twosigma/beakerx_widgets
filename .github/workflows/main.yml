@@ -1,4 +1,4 @@
-name: Conda package test
+name: Conda build (Ubuntu, notebook)
 
 on:
   push:
@@ -32,6 +32,11 @@ jobs:
       with:
         repository: twosigma/beakerx_base
         path: beakerx_base
+    - name: Checkout beakerx_tests repo
+      uses: actions/checkout@v2
+      with:
+        repository: twosigma/beakerx_tests
+        path: beakerx_tests
     - name: Update conda package
       shell: bash
       run:
@@ -49,4 +54,17 @@ jobs:
         cd beakerx_widgets
         pip install -r requirements.txt --verbose
         beakerx install
+    - name: Run e2e tests (Widgets)
+      shell: bash -l {0}
+      run: |
+        cd $GITHUB_WORKSPACE/beakerx_tests/autotests
+        chmod +x gradlew
+        conda activate beakerx
+        python ci_tests.py --app=notebook --tst=python.Widget*
+    - name: Publish Test Report
+      if: always()
+      uses: scacap/action-surefire-report@v1
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        report_paths: "**/test-results/test/TEST-*.xml" 
     
