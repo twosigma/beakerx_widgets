@@ -20,6 +20,11 @@ from .magics import *
 from .outputs import *
 from .plots import *
 from .spark import *
+try:
+    from beakerx_tabledisplay.tabledisplay import *
+    from beakerx_tabledisplay.tableitems import *
+except ModuleNotFoundError:
+    pass
 
 
 def _jupyter_nbextension_paths():
