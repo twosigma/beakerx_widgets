@@ -82,7 +82,7 @@ export class PlotScope {
   saveAsMenuContainer = null;
   plotDisplayModel = null;
   plotDisplayView = null;
-  contexteMenuEvent = null;
+  contextMenuEvent = null;
 
   plotZoom: PlotZoom;
   plotFocus: PlotFocus;
@@ -96,7 +96,6 @@ export class PlotScope {
   contextMenu: PlotContextMenu;
 
   constructor(wrapperId) {
-    debugger;
     this.wrapperId = wrapperId;
     this.id = null;
 

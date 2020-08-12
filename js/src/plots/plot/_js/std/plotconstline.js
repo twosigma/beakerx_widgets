@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-define(['underscore'], function (_) {
+define(['underscore', 'jquery'], function (_, $) {
   const PlotUtils = require('../../../../utils/PlotUtils').PlotUtils;
   const PlotStyleUtils = require('../../../../utils/PlotStyleUtils').PlotStyleUtils;
 

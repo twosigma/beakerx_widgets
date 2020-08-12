@@ -73,7 +73,8 @@
   "files": [
     "css/",
     "dist/",
-    "lib/"
+    "lib/",
+    "fonts/"
   ],
   "jupyterlab": {
     "extension": "lib/jupyterlab-plugin"

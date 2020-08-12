@@ -17,6 +17,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import * as _ from 'underscore';
+import $ from 'jquery';
 import { PlotLayout } from './plot/PlotLayout';
 import { PlotScope } from './plot/PlotScope';
 import { CombinedPlotScope } from './plot/CombinedPlotScope';

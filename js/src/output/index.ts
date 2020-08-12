@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-export * from './HTML';
 export * from './CyclingDisplayBox';
 export * from './GridView';
+export * from './HTML';
 export * from './HTMLPre';
 export * from './TabView';

@@ -16,6 +16,7 @@
 
 import * as _ from 'underscore';
 import * as d3 from 'd3';
+import $ from 'jquery';
 import { PlotTip } from './PlotTip';
 import { PlotKeyboardUtils, PlotUtils } from '../../utils';
 import { disableZoomWheel, enableZoomWheel } from './zoom';

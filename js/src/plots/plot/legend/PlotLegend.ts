@@ -16,6 +16,7 @@
 
 import * as d3 from 'd3';
 import * as _ from 'underscore';
+import $ from 'jquery';
 import { PointShapeHelper } from '../std';
 import { LegendPosition } from './LegendPosition';
 import { PlotMessage } from '../PlotMessage';
