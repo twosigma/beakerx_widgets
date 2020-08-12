@@ -19,6 +19,7 @@ import { BigNumberUtils } from './BigNumberUtils';
 import { CommonUtils } from './CommonUtils';
 import { PlotStyleUtils } from './PlotStyleUtils';
 import * as d3 from 'd3';
+import $ from 'jquery';
 import LatoRegular from './../../fonts/lato/Lato-Regular.woff';
 import LatoBlack from './../../fonts/lato/Lato-Black.woff';
 

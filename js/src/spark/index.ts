@@ -17,6 +17,7 @@
 export * from './widgets';
 export * from './Foldout';
 export * from './IProfileListItem';
+export * from './RESTButton';
 export * from './SparkConfiguration';
 export * from './SparkFoldout';
 export * from './SparkStateProgress';

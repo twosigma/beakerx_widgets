@@ -21,6 +21,7 @@ import {
   SelectMultipleView as JupyterSelectMultipleView,
 } from '@jupyter-widgets/controls';
 import { BEAKERX_MODULE_VERSION } from '../../version';
+import $ from 'jquery';
 
 export class SelectMultipleModel extends JupyterSelectMultipleModel {
   defaults(): any {

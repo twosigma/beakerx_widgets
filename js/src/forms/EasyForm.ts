@@ -28,8 +28,8 @@ export class EasyFormModel extends BoxModel {
       ...super.defaults(),
       _model_name: 'EasyFormModel',
       _view_name: 'EasyFormView',
-      _model_module: 'beakerx.forms',
-      _view_module: 'beakerx.forms',
+      _model_module: 'beakerx',
+      _view_module: 'beakerx',
       _model_module_version: BEAKERX_MODULE_VERSION,
       _view_module_version: BEAKERX_MODULE_VERSION,
     };

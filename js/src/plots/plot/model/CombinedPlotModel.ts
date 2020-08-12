@@ -14,6 +14,7 @@
  *  limitations under the License.
  */
 
+import $ from 'jquery';
 import * as _ from 'underscore';
 import { PlotUtils } from '../../../utils';
 

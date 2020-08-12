@@ -141,8 +141,8 @@ export class PlotZoom {
 
     const isDispatchedAsSecond = this.eventDispatcher.contains('contextMenu');
 
-    if (isDispatchedAsSecond && this.scope.contexteMenuEvent && !this.boxZoom.shouldStartBoxZooming(this.zoomStarted)) {
-      this.scope.jqcontainer[0] && this.scope.jqcontainer[0].dispatchEvent(this.scope.contexteMenuEvent);
+    if (isDispatchedAsSecond && this.scope.contextMenuEvent && !this.boxZoom.shouldStartBoxZooming(this.zoomStarted)) {
+      this.scope.jqcontainer[0] && this.scope.jqcontainer[0].dispatchEvent(this.scope.contextMenuEvent);
     }
 
     this.eventDispatcher.reset();
@@ -151,7 +151,7 @@ export class PlotZoom {
       this.eventDispatcher.add('zoomEnd');
     }
 
-    this.scope.contexteMenuEvent = null;
+    this.scope.contextMenuEvent = null;
     this.scope.jqsvg.css('cursor', 'auto');
   }
 
@@ -162,7 +162,7 @@ export class PlotZoom {
     this.eventDispatcher.reset();
 
     if (!isDispatchedAsSecond) {
-      this.scope.contexteMenuEvent = event;
+      this.scope.contextMenuEvent = event;
       this.eventDispatcher.add('contextMenu');
     }
 

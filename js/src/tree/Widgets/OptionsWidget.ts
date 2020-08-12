@@ -14,6 +14,7 @@
  *  limitations under the License.
  */
 
+import $ from 'jquery';
 import { TabPanel } from '@phosphor/widgets';
 import { Message, MessageLoop } from '@phosphor/messaging';
 

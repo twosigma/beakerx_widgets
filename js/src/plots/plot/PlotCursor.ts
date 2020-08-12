@@ -16,6 +16,7 @@
 
 import { PlotStyleUtils, PlotUtils } from '../../utils';
 import { PlotScope } from './PlotScope';
+import $ from 'jquery';
 
 export class PlotCursor {
   scope: PlotScope;

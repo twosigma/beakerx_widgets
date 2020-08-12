@@ -18,6 +18,7 @@
 
 import { SelectModel as JupyterSelectModel, SelectView as JupyterSelectView } from '@jupyter-widgets/controls';
 import { BEAKERX_MODULE_VERSION } from '../../version';
+import $ from 'jquery';
 
 export class SelectMultipleSingleModel extends JupyterSelectModel {
   defaults(): any {

@@ -14,6 +14,8 @@
  *  limitations under the License.
  */
 
+import $ from 'jquery';
+
 export class PlotMessage {
   scope: any;
 

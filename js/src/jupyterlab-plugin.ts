@@ -17,21 +17,108 @@
 import { JupyterFrontEnd, JupyterFrontEndPlugin } from '@jupyterlab/application';
 import { IJupyterWidgetRegistry } from '@jupyter-widgets/base';
 import { version } from './version';
-import * as forms from './forms';
+import {
+  CyclingDisplayBoxModel,
+  CyclingDisplayBoxView,
+  GridView,
+  GridViewModel,
+  HTMLModel,
+  HTMLPreModel,
+  HTMLPreView,
+  HTMLView,
+  TabModel,
+  TabView,
+} from './output';
+import {
+  CheckboxModel, CheckboxView, ComboBoxModel, ComboBoxView, DatePickerModel, DatePickerView,
+  EasyFormModel,
+  EasyFormView,
+  PasswordModel,
+  PasswordView, SelectMultipleModel, SelectMultipleSingleModel, SelectMultipleSingleView, SelectMultipleView,
+  TextAreaModel,
+  TextAreaView,
+  TextModel,
+  TextView
+} from './forms';
+import {
+  FoldoutModel,
+  FoldoutView,
+  RESTButtonModel,
+  RESTButtonView,
+  SparkConfigurationModel,
+  SparkConfigurationView,
+  SparkFoldoutModel,
+  SparkFoldoutView,
+  SparkStateProgressModel,
+  SparkStateProgressView,
+  SparkUIModel,
+  SparkUIView,
+  SpinnerModel,
+  SpinnerView,
+} from './spark';
+import { PlotModel, PlotView } from './plots';
 
 export const BeakexWidgetsFormsPlugin: JupyterFrontEndPlugin<void> = {
-  id: 'beakerx.forms.plugin',
+  id: 'beakerx:plugin',
   requires: [IJupyterWidgetRegistry],
   activate: (app: JupyterFrontEnd, widgets: IJupyterWidgetRegistry): void => {
+    console.log('beakerx.forms.plugin');
     widgets.registerWidget({
-      name: 'beakerx.forms',
+      name: 'beakerx',
       version: version,
-      exports: forms,
+      exports: {
+        // output
+        CyclingDisplayBoxModel,
+        CyclingDisplayBoxView,
+        GridViewModel,
+        GridView,
+        HTMLModel,
+        HTMLView,
+        HTMLPreModel,
+        HTMLPreView,
+        TabView,
+        TabModel,
+        // forms
+        EasyFormModel,
+        EasyFormView,
+        CheckboxModel,
+        CheckboxView,
+        ComboBoxModel,
+        ComboBoxView,
+        DatePickerModel,
+        DatePickerView,
+        PasswordModel,
+        PasswordView,
+        SelectMultipleSingleModel,
+        SelectMultipleSingleView,
+        SelectMultipleModel,
+        SelectMultipleView,
+        TextModel,
+        TextView,
+        TextAreaModel,
+        TextAreaView,
+        // plot
+        PlotModel,
+        PlotView,
+        // spark
+        FoldoutModel,
+        FoldoutView,
+        RESTButtonModel,
+        RESTButtonView,
+        SpinnerModel,
+        SpinnerView,
+        SparkUIModel,
+        SparkUIView,
+        SparkStateProgressModel,
+        SparkStateProgressView,
+        SparkConfigurationModel,
+        SparkConfigurationView,
+        SparkFoldoutModel,
+        SparkFoldoutView,
+      },
     });
   },
   autoStart: true,
 };
 
-export default {
-  BeakexWidgetsFormsPlugin,
-};
+export default [BeakexWidgetsFormsPlugin] as JupyterFrontEndPlugin<any>[];
