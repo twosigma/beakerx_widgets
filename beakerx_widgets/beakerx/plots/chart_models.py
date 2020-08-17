@@ -198,7 +198,7 @@ class HistogramChart(XYChart):
         self.range_min = getValue(kwargs, 'rangeMin')
         self.range_max = getValue(kwargs, 'rangeMax')
         self.names = getValue(kwargs, 'names')
-        self.displayMode = getValue(kwargs, 'displayMode')
+        self.displayMode = getValue(kwargs, 'displayMode', "OVERLAP")
 
         color = getValue(kwargs, 'color')
         if color is not None:
