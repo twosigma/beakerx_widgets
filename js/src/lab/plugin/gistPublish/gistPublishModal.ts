@@ -14,13 +14,13 @@
  *  limitations under the License.
  */
 
-import Modal from './Modal';
+import { Modal } from './Modal';
 import { Widget } from '@phosphor/widgets';
-import { ServerConnection } from "@jupyterlab/services";
-import { PageConfig } from "@jupyterlab/coreutils";
-import gistPublishModalTemplate from './modalTemplate';
+import { ServerConnection } from '@jupyterlab/services';
+import { PageConfig } from '@jupyterlab/coreutils';
+import { template } from './modalTemplate';
 
-export default class GistPublishModal {
+export class GistPublishModal {
   private settingsUrl: string;
   private serverSettings: ServerConnection.ISettings;
 
@@ -29,14 +29,13 @@ export default class GistPublishModal {
     this.settingsUrl = `${PageConfig.getBaseUrl()}beakerx/settings`;
   }
 
-  show(submitCallback: Function): void {
-    this.getGithubPersonalAccessToken()
-      .then(personalAccessToken => {
-        this.create(submitCallback, personalAccessToken);
-      });
+  show(submitCallback: (token: string) => void): void {
+    this.getGithubPersonalAccessToken().then((personalAccessToken) => {
+      this.create(submitCallback, personalAccessToken);
+    });
   }
 
-  create(submitCallback, personalAccessToken = ''): Promise<any> {
+  create(submitCallback: (token: string) => void, personalAccessToken = ''): Promise<any> {
     const bodyWidget = this.createBodyWidget();
     const personalAccessTokenInput = bodyWidget.node.querySelector('input');
     const form = bodyWidget.node.querySelector('form');
@@ -74,7 +73,7 @@ export default class GistPublishModal {
 
     const modal = new Modal({
       submitHandler,
-      title : 'Publish to a GitHub Gist',
+      title: 'Publish to a GitHub Gist',
       body: bodyWidget,
       defaultButton: 1,
       focusNodeSelector: 'input',
@@ -87,7 +86,7 @@ export default class GistPublishModal {
   private createBodyWidget(): Widget {
     const modalContent = document.createElement('div');
 
-    modalContent.innerHTML = gistPublishModalTemplate;
+    modalContent.innerHTML = template;
 
     return new Widget({ node: modalContent });
   }
@@ -105,34 +104,32 @@ export default class GistPublishModal {
   }
 
   storePersonalAccessToken(githubPersonalAccessToken = ''): Promise<any> {
-    return this.getStoredSettings()
-      .then(storedSettings => {
-        storedSettings.beakerx.githubPersonalAccessToken = githubPersonalAccessToken;
-        return ServerConnection.makeRequest(
-          this.settingsUrl,
-          {
-            method: 'POST',
-            body: JSON.stringify({
-              ...storedSettings
-            })
-          },
-          this.serverSettings
-        ).catch(reason => { console.log(reason); })
+    return this.getStoredSettings().then((storedSettings) => {
+      storedSettings.beakerx.githubPersonalAccessToken = githubPersonalAccessToken;
+      return ServerConnection.makeRequest(
+        this.settingsUrl,
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            ...storedSettings,
+          }),
+        },
+        this.serverSettings,
+      ).catch((reason) => {
+        console.log(reason);
       });
+    });
   }
 
   getGithubPersonalAccessToken(): Promise<string> {
-    return this.getStoredSettings()
-      .then(settings => settings.beakerx.githubPersonalAccessToken || '');
+    return this.getStoredSettings().then((settings) => settings.beakerx.githubPersonalAccessToken || '');
   }
 
   getStoredSettings(): Promise<any> {
-    return ServerConnection.makeRequest(
-      this.settingsUrl,
-      { method: 'GET' },
-      this.serverSettings
-    )
-      .then(response => response.json())
-      .catch(reason => { console.log(reason); });
+    return ServerConnection.makeRequest(this.settingsUrl, { method: 'GET' }, this.serverSettings)
+      .then((response) => response.json())
+      .catch((reason) => {
+        console.log(reason);
+      });
   }
 }

@@ -16,8 +16,8 @@
 
 import { Dialog } from '@jupyterlab/apputils';
 
-export default class Modal extends Dialog<any> {
-  submitHandler: Function;
+export class Modal extends Dialog<any> {
+  submitHandler: (event: MouseEvent | KeyboardEvent) => void;
 
   constructor({ submitHandler, ...options }) {
     super(options);
@@ -26,7 +26,7 @@ export default class Modal extends Dialog<any> {
   }
 
   protected _evtClick(event: MouseEvent): void {
-    let content = this.node.getElementsByClassName('jp-Dialog-content')[0] as HTMLElement;
+    const content = this.node.getElementsByClassName('jp-Dialog-content')[0] as HTMLElement;
 
     if (!content.contains(event.target as HTMLElement)) {
       event.stopPropagation();
@@ -35,7 +35,7 @@ export default class Modal extends Dialog<any> {
       return;
     }
 
-    for (let buttonNode of this['_buttonNodes']) {
+    for (const buttonNode of this['_buttonNodes']) {
       if (buttonNode.contains(event.target as HTMLElement)) {
         this.submitHandler && this.submitHandler(event);
         break;
@@ -45,7 +45,7 @@ export default class Modal extends Dialog<any> {
 
   protected _evtKeydown(event: KeyboardEvent): void {
     switch (event.keyCode) {
-      case 13:  // Enter.
+      case 13: // Enter.
         event.stopPropagation();
         event.preventDefault();
         this.submitHandler && this.submitHandler(event);

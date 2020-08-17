@@ -15,24 +15,19 @@
  */
 
 import { DocumentRegistry } from '@jupyterlab/docregistry';
-import { INotebookModel, Notebook, NotebookPanel } from '@jupyterlab/notebook';
+import { Notebook, NotebookPanel } from '@jupyterlab/notebook';
 import { showDialog, Dialog, IClientSession } from '@jupyterlab/apputils';
 import { sendJupyterCodeCells, getCodeCellsByTag } from './codeCells';
-import {messageData, messageState} from '../interface/messageData';
-import { Kernel } from "@jupyterlab/services";
+import { Kernel } from '@jupyterlab/services';
 import { CodeCell } from '@jupyterlab/cells';
-import {Autotranslation} from "./autotranslation";
-import LOCK_PROXY = Autotranslation.LOCK_PROXY;
+import { messageData, messageState } from '../interface/messageData';
+import { AutoTranslation } from './autoTranslation';
 
 export const BEAKER_GETCODECELLS = 'beakerx.getcodecells';
 export const BEAKER_AUTOTRANSLATION = 'beakerx.autotranslation';
 export const BEAKER_TAG_RUN = 'beakerx.tag.run';
 
-const getMsgHandlers = (
-  session: IClientSession,
-  kernelInstance: Kernel.IKernelConnection,
-  notebook: Notebook
-) => ({
+const getMsgHandlers = (session: IClientSession, kernelInstance: Kernel.IKernelConnection, notebook: Notebook) => ({
   [BEAKER_GETCODECELLS]: (msg) => {
     const state: messageState = msg.content.data.state;
 
@@ -40,7 +35,7 @@ const getMsgHandlers = (
       return;
     }
 
-    if(state.name == "CodeCells") {
+    if (state.name == 'CodeCells') {
       sendJupyterCodeCells(notebook, JSON.parse(state.value), msg.content.data.url);
     }
 
@@ -50,15 +45,15 @@ const getMsgHandlers = (
   [BEAKER_AUTOTRANSLATION]: (msg) => {
     const state: messageState = msg.content.data.state;
 
-    window.beakerx[LOCK_PROXY] = true;
+    window.beakerx[AutoTranslation.LOCK_PROXY] = true;
     window.beakerx[state.name] = JSON.parse(state.value);
-    window.beakerx[LOCK_PROXY] = false;
+    window.beakerx[AutoTranslation.LOCK_PROXY] = false;
   },
 
   [BEAKER_TAG_RUN]: (msg) => {
     const data: messageData = msg.content.data;
 
-    if(!data.state || !data.state.runByTag) {
+    if (!data.state || !data.state.runByTag) {
       return;
     }
 
@@ -68,17 +63,20 @@ const getMsgHandlers = (
       showDialog({
         title: 'No cell with the tag !',
         body: 'Tag: ' + data.state.runByTag,
-        buttons: [ Dialog.okButton({ label: 'OK' }) ]
+        buttons: [Dialog.okButton({ label: 'OK' })],
       });
     } else {
       matchedCells.forEach((cell) => {
         cell instanceof CodeCell && CodeCell.execute(cell, session);
       });
     }
-  }
+  },
 });
 
-export const registerCommTargets = async (panel: NotebookPanel, context: DocumentRegistry.IContext<INotebookModel>): Promise<void> => {
+export const registerCommTargets = async (
+  panel: NotebookPanel,
+  context: DocumentRegistry.IContext<DocumentRegistry.IModel>,
+): Promise<void> => {
   const session = context.session;
   const kernelInstance = session.kernel;
   const notebook = panel.content;
@@ -89,26 +87,26 @@ export const registerCommTargets = async (panel: NotebookPanel, context: Documen
   });
 
   kernelInstance.registerCommTarget(BEAKER_AUTOTRANSLATION, (comm) => {
-    comm.onMsg = msgHandlers[BEAKER_AUTOTRANSLATION]
+    comm.onMsg = msgHandlers[BEAKER_AUTOTRANSLATION];
   });
 
   kernelInstance.registerCommTarget(BEAKER_TAG_RUN, (comm) => {
-    comm.onMsg = msgHandlers[BEAKER_TAG_RUN]
+    comm.onMsg = msgHandlers[BEAKER_TAG_RUN];
   });
 
-  let msg = await kernelInstance.requestCommInfo({});
+  const msg = await kernelInstance.requestCommInfo({});
   if (msg.content.status === 'ok') {
     assignMsgHandlersToExistingComms(msg.content.comms, kernelInstance, msgHandlers);
   }
 };
 
 const assignMsgHandlersToExistingComms = (
-  comms: Object,
+  comms: Record<string, any>,
   kernelInstance: Kernel.IKernelConnection,
-  msgHandlers: Object
+  msgHandlers: Record<string, any>,
 ): void => {
   let comm;
-  for (let commId in comms) {
+  for (const commId in comms) {
     comm = kernelInstance.connectToComm(comms[commId].target_name, commId);
     assignMsgHandlerToComm(comm, msgHandlers[comm.targetName]);
   }
