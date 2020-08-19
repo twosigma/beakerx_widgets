@@ -78,7 +78,7 @@ import { ISettingRegistry, PageConfig } from '@jupyterlab/coreutils';
 import { RequirejsLoader } from './lab/plugin/requirejs';
 import { ICommandPalette, WidgetTracker } from '@jupyterlab/apputils';
 import { JSONExt } from '@phosphor/coreutils';
-import { TreeWidget } from "./tree";
+import { TreeWidget } from './tree';
 
 export const BeakexWidgetsFormsPlugin: JupyterFrontEndPlugin<void> = {
   id: 'beakerx:plugin',
@@ -158,6 +158,17 @@ export const RequireJsPlugin: JupyterFrontEndPlugin<void> = {
   autoStart: true,
 };
 
+export const BigJsPlugin: JupyterFrontEndPlugin<void> = {
+  id: 'beakerx:bigjs',
+  requires: [],
+  activate: (app: JupyterFrontEnd): Promise<void> => {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    window['Big'] = require('big.js');
+    return;
+  },
+  autoStart: true,
+};
+
 export const TreePlugin: JupyterFrontEndPlugin<void> = {
   id: 'beakerx:tree',
   requires: [ICommandPalette, ILayoutRestorer],
@@ -202,4 +213,4 @@ export const TreePlugin: JupyterFrontEndPlugin<void> = {
   autoStart: true,
 };
 
-export default [BeakexWidgetsFormsPlugin, RequireJsPlugin, TreePlugin] as JupyterFrontEndPlugin<any>[];
+export default [BeakexWidgetsFormsPlugin, RequireJsPlugin, BigJsPlugin, TreePlugin] as JupyterFrontEndPlugin<any>[];
