@@ -35,7 +35,6 @@ export class TreeWidgetModel {
     this.api
       .loadSettings()
       .then((data: IApiSettingsResponse) => {
-        console.log(data);
         this._options = data;
 
         this.jvmOptionsModel.update(data.jvm_options);
