@@ -16,8 +16,10 @@
 
 import $ from 'jquery';
 
-export function displayHTML(outputArea, html) {
-  if (html && outputArea && outputArea.element) {
-    $(outputArea.element).append(html);
+export function displayHTML(element?: HTMLElement, html?: string) {
+  if (!element || !html) {
+    return;
   }
+
+  $(element).append(html);
 }

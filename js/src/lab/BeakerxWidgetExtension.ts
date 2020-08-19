@@ -19,7 +19,6 @@ import { ILabShell, JupyterFrontEnd } from '@jupyterlab/application';
 import { ISettingRegistry } from '@jupyterlab/coreutils';
 import { NotebookPanel } from '@jupyterlab/notebook';
 import { DisposableDelegate } from '@phosphor/disposable';
-import { Widget } from '@phosphor/widgets';
 import { bkCoreManager } from '../utils/bk/bkCoreManager';
 import {
   enableInitializationCellsFeature,
@@ -79,8 +78,8 @@ export class BeakerxWidgetExtension implements DocumentRegistry.WidgetExtension 
   }
 }
 
-function displayHTML(widget: Widget, html: string): void {
-  if (!widget.node || !html) {
+function displayHTML(element: HTMLElement, html: string): void {
+  if (!element || !html) {
     return;
   }
 
@@ -88,5 +87,5 @@ function displayHTML(widget: Widget, html: string): void {
 
   childElement.classList.add('jp-RenderedHTML');
   childElement.innerHTML = html;
-  widget.node.appendChild(childElement);
+  element.appendChild(childElement);
 }
