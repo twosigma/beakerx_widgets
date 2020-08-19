@@ -23,5 +23,5 @@ export interface IDefaultJVMOptions {
   heap_GB: number | null;
 }
 
-export interface IOtherJVMOptions extends Array<any> {}
-export interface IPropertiesJVMOptions extends Array<{ name: string; value: string }> {}
+export type IOtherJVMOptions = Array<any>;
+export type IPropertiesJVMOptions = Array<{ name: string; value: string }>;

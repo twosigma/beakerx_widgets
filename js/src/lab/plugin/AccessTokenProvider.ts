@@ -14,12 +14,11 @@
  *  limitations under the License.
  */
 
-
-import { GistPublishModal } from "./gistPublish/gistPublishModal";
+import { GistPublishModal } from './gistPublish/gistPublishModal';
 
 export class AccessTokenProvider {
   public getPersonalAccessToken(): Promise<string> {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       new GistPublishModal().show((personalAccessToken) => {
         resolve(personalAccessToken);
       });

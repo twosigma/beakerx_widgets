@@ -38,7 +38,7 @@ export class TreeWidgetModel {
         this._options = data;
 
         this.jvmOptionsModel.update(data.jvm_options);
-        if (!!this.uiOptionsModel) {
+        if (this.uiOptionsModel) {
           this.uiOptionsModel.update(data.ui_options);
         }
 
@@ -56,7 +56,7 @@ export class TreeWidgetModel {
   public save() {
     this.syncStart();
 
-    let payload: IApiSettingsResponse = this.api.mergeWithDefaults(this._options);
+    const payload: IApiSettingsResponse = this.api.mergeWithDefaults(this._options);
 
     this.setResult(payload.jvm_options);
 
@@ -108,16 +108,16 @@ export class TreeWidgetModel {
   }
 
   private buildResult(options: IJVMOptions): string {
-    let result: string = '';
+    let result = '';
     if (options.heap_GB !== null) {
       result += `-Xmx${DefaultOptionsModel.normaliseHeapSize(options.heap_GB)} `;
     }
 
-    for (let other of options.other) {
+    for (const other of options.other) {
       result += `${other} `;
     }
 
-    for (let property in options.properties) {
+    for (const property in options.properties) {
       result += `-D${options.properties[property].name}=${options.properties[property].value} `;
     }
 

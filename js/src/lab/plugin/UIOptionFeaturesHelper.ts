@@ -19,7 +19,7 @@ import { ServerConnection } from '@jupyterlab/services';
 import { NotebookPanel } from '@jupyterlab/notebook';
 import { CodeCell } from '@jupyterlab/cells';
 import { ILabShell, JupyterFrontEnd } from '@jupyterlab/application';
-import { registerGistPublishFeature } from "./gistPublish";
+import { registerGistPublishFeature } from './gistPublish';
 
 export class UIOptionFeaturesHelper {
   private showPublicationFeature: ShowPublicationFeature;

@@ -19,7 +19,7 @@ const CommonUtils = require('../../../utils/CommonUtils').CommonUtils;
 const PlotLayout = require('../PlotLayout').PlotLayout;
 const PlotScope = require('../PlotScope').PlotScope;
 
-define(['underscore'], function (_) {
+define(['underscore', 'jquery'], function (_, $) {
   var getValue = function (obj, value, defaultValue) {
     return obj.hasOwnProperty(value) ? obj[value] : defaultValue;
   };
@@ -533,7 +533,7 @@ define(['underscore'], function (_) {
     var tmpl = PlotLayout.buildTemplate(currentScope.wrapperId);
     var tmplElement = $(tmpl);
 
-    tmplElement.appendTo(output_area.element || output_area.node);
+    tmplElement.appendTo(output_area);
 
     currentScope.setModelData(this);
     currentScope.setElement(tmplElement.children('.dtcontainer'));
@@ -728,7 +728,7 @@ define(['underscore'], function (_) {
     var tmpl = currentScope.buildTemplate();
     var tmplElement = $(tmpl);
 
-    tmplElement.appendTo(output_area.element || output_area.node);
+    tmplElement.appendTo(output_area);
 
     currentScope.setModelData(this);
     currentScope.setElement(tmplElement);
@@ -795,7 +795,7 @@ define(['underscore'], function (_) {
   function getCellFromOutputArea(output_area) {
     var cell;
     try {
-      var cell_element = output_area.element.parents('.cell');
+      var cell_element = output_area.parents('.cell');
       var cell_idx = Jupyter.notebook.get_cell_elements().index(cell_element);
       cell = Jupyter.notebook.get_cell(cell_idx);
     } catch (e) {
