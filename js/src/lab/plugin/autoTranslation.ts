@@ -14,16 +14,25 @@
  *  limitations under the License.
  */
 
+import { Kernel } from '@jupyterlab/services';
 import { BEAKER_AUTOTRANSLATION } from './comm';
+
+let comm: Kernel.IComm;
 
 export class AutoTranslation {
   static readonly LOCK_PROXY = 'LOCK_PROXY';
   static readonly TABLE_FOCUSED = 'tableFocused';
 
-  public static proxify(beakerxInstance: any, kernelInstance): Record<string, unknown> {
-    const comm = kernelInstance.connectToComm(BEAKER_AUTOTRANSLATION);
-    comm.open();
+  public static checkComm(kernelInstance: Kernel.IKernelConnection) {
+    if (comm && !comm.isDisposed) {
+      return comm;
+    }
 
+    comm = kernelInstance.connectToComm(BEAKER_AUTOTRANSLATION);
+    comm.open();
+  }
+
+  public static proxify(beakerxInstance: any, kernelInstance): Record<string, unknown> {
     const handler = {
       get(obj, prop) {
         return prop in obj ? obj[prop] : undefined;
@@ -37,6 +46,7 @@ export class AutoTranslation {
           prop !== AutoTranslation.TABLE_FOCUSED &&
           !window.beakerx[AutoTranslation.LOCK_PROXY]
         ) {
+          AutoTranslation.checkComm(kernelInstance);
           comm.send({ name: prop, value });
         }
 
