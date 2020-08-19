@@ -14,12 +14,14 @@
  *  limitations under the License.
  */
 
-import $ from 'jquery';
+import { GistPublishModal } from './gistPublish/gistPublishModal';
 
-export function displayHTML(element?: HTMLElement, html?: string) {
-  if (!element || !html) {
-    return;
+export class AccessTokenProvider {
+  public getPersonalAccessToken(): Promise<string> {
+    return new Promise(function (resolve, reject) {
+      new GistPublishModal().show((personalAccessToken) => {
+        resolve(personalAccessToken);
+      });
+    });
   }
-
-  $(element).append(html);
 }

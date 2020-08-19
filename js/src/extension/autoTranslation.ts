@@ -17,7 +17,7 @@
 import { BEAKER_AUTOTRANSLATION } from './comm';
 const utils = require('base/js/utils');
 
-export class Autotranslation {
+export class AutoTranslation {
   static readonly LOCK_PROXY = 'LOCK_PROXY';
   static readonly TABLE_FOCUSED = 'tableFocused';
 
@@ -35,9 +35,9 @@ export class Autotranslation {
       set(obj, prop, value) {
         obj[prop] = value;
         if (
-          prop !== Autotranslation.LOCK_PROXY &&
-          prop !== Autotranslation.TABLE_FOCUSED &&
-          !window.beakerx[Autotranslation.LOCK_PROXY]
+          prop !== AutoTranslation.LOCK_PROXY &&
+          prop !== AutoTranslation.TABLE_FOCUSED &&
+          !window.beakerx[AutoTranslation.LOCK_PROXY]
         ) {
           if (!atComm) {
             atComm = createCommForAT();

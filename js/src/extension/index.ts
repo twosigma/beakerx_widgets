@@ -21,7 +21,7 @@
 import { extendHighlightModes, extendWithLineComment } from './codeEditor';
 import { registerFeature } from './UIOptionsHelper';
 import { enableInitializationCellsFeature } from './initializationCells';
-import { Autotranslation } from './autotranslation';
+import { AutoTranslation } from './autoTranslation';
 import { installHandler as installKernelHandler } from './kernel';
 import { displayHTML } from './htmlOutput';
 import { bkCoreManager } from '../utils/bk/bkCoreManager';
@@ -71,7 +71,7 @@ function extendWindowObject() {
   };
 
   if (!window.beakerx) {
-    window.beakerx = Autotranslation.proxify(beakerxInstance);
+    window.beakerx = AutoTranslation.proxify(beakerxInstance);
   }
 }
 

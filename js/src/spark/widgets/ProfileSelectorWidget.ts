@@ -26,7 +26,7 @@ export class ProfileSelectorWidget extends Panel {
   private readonly profileCreateWidget: ProfileCreateWidget;
   private readonly profileConfigurationWidget: ProfileConfigurationWidget;
 
-  private _currentProfileName: string = '';
+  private _currentProfileName = '';
 
   private _profiles: IProfileListItem[] = [
     {
@@ -177,9 +177,9 @@ namespace Private {
       profiles: IProfileListItem[],
       profileConfigurationWidget: ProfileConfigurationWidget,
     ): void {
-      let currentProfileName = msg.payload.selectedProfile;
+      const currentProfileName = msg.payload.selectedProfile;
       profileSelectorWidget.currentProfileName = currentProfileName;
-      let currentProfileConfiguration = Private.Utils.getProfileByName(profiles, currentProfileName);
+      const currentProfileConfiguration = Private.Utils.getProfileByName(profiles, currentProfileName);
       profileConfigurationWidget.updateConfiguration(currentProfileConfiguration);
     }
 
@@ -189,7 +189,7 @@ namespace Private {
       profileSelectWidget: ProfileSelectWidget,
       profileCreateWidget: ProfileCreateWidget,
     ): void {
-      let profileName = msg.payload.profileName.trim();
+      const profileName = msg.payload.profileName.trim();
       if (profileName === '') {
         console.log(`Profile name can't be empty.`);
         return;
@@ -229,7 +229,7 @@ namespace Private {
 
   export namespace Utils {
     export function getProfileByName(profiles: IProfileListItem[], profileName: string): IProfileListItem | null {
-      for (let p of profiles) {
+      for (const p of profiles) {
         if (p.name === profileName) {
           return p;
         }
@@ -238,9 +238,9 @@ namespace Private {
     }
 
     export function updateProfileByName(profiles: IProfileListItem[], profileName: string, configuration): void {
-      let properties = [];
+      const properties = [];
 
-      for (let i in profiles) {
+      for (const i in profiles) {
         if (profiles[i].name !== profileName) {
           continue;
         }

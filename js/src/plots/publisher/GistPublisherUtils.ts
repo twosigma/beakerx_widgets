@@ -73,7 +73,3 @@ export class GistPublisherUtils {
       });
   }
 }
-
-export default {
-  GistPublisherUtils,
-};

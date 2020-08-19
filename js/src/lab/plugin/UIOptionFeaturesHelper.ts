@@ -14,15 +14,14 @@
  *  limitations under the License.
  */
 
-import * as GistPublish from "./gistPublish/index";
-import { ISettingRegistry, PageConfig } from "@jupyterlab/coreutils";
-import { ServerConnection } from "@jupyterlab/services";
-import { NotebookPanel } from "@jupyterlab/notebook";
-import { CodeCell } from "@jupyterlab/cells";
-import {ILabShell, JupyterFrontEnd} from "@jupyterlab/application";
+import { ISettingRegistry, PageConfig } from '@jupyterlab/coreutils';
+import { ServerConnection } from '@jupyterlab/services';
+import { NotebookPanel } from '@jupyterlab/notebook';
+import { CodeCell } from '@jupyterlab/cells';
+import { ILabShell, JupyterFrontEnd } from '@jupyterlab/application';
+import { registerGistPublishFeature } from './gistPublish';
 
-export default class UIOptionFeaturesHelper {
-
+export class UIOptionFeaturesHelper {
   private showPublicationFeature: ShowPublicationFeature;
   private autoCloseBracketsFeature: AutoCloseBracketsFeature;
   private autoSaveFeature: AutoSaveFeature;
@@ -32,12 +31,10 @@ export default class UIOptionFeaturesHelper {
     private app: JupyterFrontEnd,
     private settings: ISettingRegistry,
     private panel: NotebookPanel,
-    private labShell: ILabShell
-  ) {
-  }
+    private labShell: ILabShell,
+  ) {}
 
   public registerFeatures(): void {
-
     this.showPublicationFeature = new ShowPublicationFeature(this.panel, this.app.commands);
     this.autoCloseBracketsFeature = new AutoCloseBracketsFeature(this.panel);
     this.autoSaveFeature = new AutoSaveFeature(this.settings, this.app.commands);
@@ -51,8 +48,7 @@ export default class UIOptionFeaturesHelper {
       this.onActiveChanged();
     });
 
-    this
-      .loadSettings()
+    this.loadSettings()
       .then((data) => {
         this.initFeatures(data);
       })
@@ -73,29 +69,28 @@ export default class UIOptionFeaturesHelper {
 
   private initFeatures(data): void {
     this.showPublicationFeature.init(data.beakerx.ui_options.show_publication);
-    this.autoCloseBracketsFeature.init(data.beakerx.ui_options.auto_close)
+    this.autoCloseBracketsFeature.init(data.beakerx.ui_options.auto_close);
     this.autoSaveFeature.init(data.beakerx.ui_options.auto_save);
     this.improveFontsFeature.init(data.beakerx.ui_options.improve_fonts);
   }
 
   private updateFeatures(data): void {
     this.showPublicationFeature.update(data.beakerx.ui_options.show_publication);
-    this.autoCloseBracketsFeature.update(data.beakerx.ui_options.auto_close)
+    this.autoCloseBracketsFeature.update(data.beakerx.ui_options.auto_close);
     this.autoSaveFeature.update(data.beakerx.ui_options.auto_save);
     this.improveFontsFeature.update(data.beakerx.ui_options.improve_fonts);
   }
 
   private loadSettings(): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      let serverSettings = ServerConnection.makeSettings();
-      let settingsUrl = `${PageConfig.getBaseUrl()}beakerx/settings`;
-      ServerConnection.makeRequest(
-        settingsUrl,
-        { method: 'GET' },
-        serverSettings
-      )
-        .then(response => resolve(response.json()))
-        .catch(reason => { reject(reason); console.log(reason); });
+      const serverSettings = ServerConnection.makeSettings();
+      const settingsUrl = `${PageConfig.getBaseUrl()}beakerx/settings`;
+      ServerConnection.makeRequest(settingsUrl, { method: 'GET' }, serverSettings)
+        .then((response) => resolve(response.json()))
+        .catch((reason) => {
+          reject(reason);
+          console.log(reason);
+        });
     });
   }
 }
@@ -106,20 +101,18 @@ interface IUIOptionsFeature {
 }
 
 class ShowPublicationFeature implements IUIOptionsFeature {
-
   constructor(private panel: NotebookPanel, private commands) {}
 
   public init(isEnabled: boolean) {
-    GistPublish.registerFeature(this.panel, this.commands, isEnabled);
+    registerGistPublishFeature(this.panel, this.commands, isEnabled);
   }
 
   public update(isEnabled: boolean): void {
-    GistPublish.registerFeature(this.panel, this.commands, isEnabled);
+    registerGistPublishFeature(this.panel, this.commands, isEnabled);
   }
 }
 
 class AutoCloseBracketsFeature implements IUIOptionsFeature {
-
   constructor(private panel: NotebookPanel) {}
 
   public init(isEnabled: boolean): void {
@@ -133,27 +126,27 @@ class AutoCloseBracketsFeature implements IUIOptionsFeature {
   private setOptionForNewAndExistingCells(autoClosingBrackets: boolean) {
     this.panel.content.editorConfig.code.autoClosingBrackets = autoClosingBrackets;
 
-    for (let cell of this.getCodeCells()) {
+    for (const cell of this.getCodeCells()) {
       cell.editor.setOption('autoClosingBrackets', autoClosingBrackets);
     }
   }
 
   private getCodeCells(): CodeCell[] {
-    if (this.panel.isDisposed) { return []; }
+    if (this.panel.isDisposed) {
+      return [];
+    }
     const cells = this.panel.content.widgets || [];
     return <CodeCell[]>cells.filter((cell) => {
-      return (cell instanceof CodeCell);
+      return cell instanceof CodeCell;
     });
   }
 }
 
 class AutoSaveFeature implements IUIOptionsFeature {
+  private pluginId = '@jupyterlab/docmanager-extension:plugin';
+  private commandId = 'docmanager:toggle-autosave';
 
-  private pluginId: string = '@jupyterlab/docmanager-extension:plugin';
-  private commandId: string = 'docmanager:toggle-autosave';
-
-  constructor(private settings: ISettingRegistry, private commands) {
-  }
+  constructor(private settings: ISettingRegistry, private commands) {}
 
   public init(isEnabled: boolean): void {
     this.runToggleAutoSaveCommandIfNeeded(isEnabled);
@@ -164,18 +157,15 @@ class AutoSaveFeature implements IUIOptionsFeature {
   }
 
   private runToggleAutoSaveCommandIfNeeded(isEnabled: boolean): void {
-    this.settings
-      .get(this.pluginId, 'autosave')
-      .then((val) => {
-        if (val.composite !== isEnabled) {
-          this.commands.execute(this.commandId);
-        }
-      });
+    this.settings.get(this.pluginId, 'autosave').then((val) => {
+      if (val.composite !== isEnabled) {
+        this.commands.execute(this.commandId);
+      }
+    });
   }
 }
 
 class ImproveFontsFeature implements IUIOptionsFeature {
-
   public init(isEnabled: boolean): void {
     if (isEnabled) {
       document.body.classList.add('improveFonts');
@@ -189,5 +179,4 @@ class ImproveFontsFeature implements IUIOptionsFeature {
       document.body.classList.remove('improveFonts');
     }
   }
-
 }

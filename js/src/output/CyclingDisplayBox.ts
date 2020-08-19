@@ -51,7 +51,7 @@ export class CyclingDisplayBoxView extends JupyterBoxView {
     this.draw_widget();
     if (this.period) {
       this.interval = setInterval(() => {
-        let max = this.model.get('children').length - 1;
+        const max = this.model.get('children').length - 1;
 
         if (currentWidgetIndex >= max) {
           currentWidgetIndex = 0;
@@ -69,7 +69,7 @@ export class CyclingDisplayBoxView extends JupyterBoxView {
 
     if (element && this.children_views) {
       this.children_views.update([element]).then(function (views) {
-        let heights = views.map((view) => {
+        const heights = views.map((view) => {
           return view.$el.height();
         });
 

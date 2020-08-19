@@ -14,34 +14,36 @@
  *  limitations under the License.
  */
 
-/// <reference path='../global.env.ts'/>
+import { BEAKER_AUTOTRANSLATION } from './comm';
 
-import {BEAKER_AUTOTRANSLATION} from "./comm";
+export class AutoTranslation {
+  static readonly LOCK_PROXY = 'LOCK_PROXY';
+  static readonly TABLE_FOCUSED = 'tableFocused';
 
-export namespace Autotranslation {
-  export const LOCK_PROXY = 'LOCK_PROXY';
-  export const TABLE_FOCUSED = 'tableFocused';
-
-  export function proxify(beakerxInstance: any, kernelInstance): Proxy<any> {
-    let autotranslationComm = kernelInstance.connectToComm(BEAKER_AUTOTRANSLATION);
-    autotranslationComm.open();
+  public static proxify(beakerxInstance: any, kernelInstance): Record<string, unknown> {
+    const comm = kernelInstance.connectToComm(BEAKER_AUTOTRANSLATION);
+    comm.open();
 
     const handler = {
       get(obj, prop) {
         return prop in obj ? obj[prop] : undefined;
       },
 
-      set(obj, prop, value) {
+      set: function (obj, prop, value) {
         obj[prop] = value;
 
-        if (prop !== LOCK_PROXY && prop !== TABLE_FOCUSED && !window.beakerx[LOCK_PROXY]) {
-          autotranslationComm.send({ name: prop, value });
+        if (
+          prop !== AutoTranslation.LOCK_PROXY &&
+          prop !== AutoTranslation.TABLE_FOCUSED &&
+          !window.beakerx[AutoTranslation.LOCK_PROXY]
+        ) {
+          comm.send({ name: prop, value });
         }
 
         return true;
-      }
+      },
     };
 
-    return new Proxy<any>(beakerxInstance, handler);
+    return new Proxy<Record<string, unknown>>(beakerxInstance, handler);
   }
 }

@@ -67,14 +67,14 @@ export class StartWidget extends Panel {
   }
 
   private createButton(): Widget {
-    let el = (this.buttonEl = document.createElement('button'));
+    const el = (this.buttonEl = document.createElement('button'));
 
     el.textContent = this.BUTTON_TEXT;
     el.title = this.BUTTON_TITLE;
 
     el.addEventListener('click', (evt: MouseEvent) => this.onStartClicked(evt));
 
-    let w = new Widget({ node: el });
+    const w = new Widget({ node: el });
 
     w.addClass('jupyter-button');
     w.addClass('widget-button');

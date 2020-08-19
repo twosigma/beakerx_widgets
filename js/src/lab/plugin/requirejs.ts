@@ -14,6 +14,30 @@
  *  limitations under the License.
  */
 
-const beakerx = require('../lib/index.js');
+let loader: Promise<void>;
 
-export default beakerx;
+export class RequirejsLoader {
+  public static load(): Promise<void> {
+    if (loader) {
+      return loader;
+    }
+
+    loader = new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+
+      s.id = 'bx-requirejs';
+      s.src = '//cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js';
+      s.onload = (evt) => {
+        resolve();
+      };
+
+      s.onerror = (evt) => {
+        reject(evt);
+      };
+
+      document.head.appendChild(s);
+    });
+
+    return loader;
+  }
+}

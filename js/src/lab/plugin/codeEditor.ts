@@ -14,18 +14,18 @@
  *  limitations under the License.
  */
 
-import { CodeMirrorEditor } from "@jupyterlab/codemirror";
+import { CodeMirrorEditor } from '@jupyterlab/codemirror';
 import { Cell, CodeCell } from '@jupyterlab/cells';
-import { NotebookPanel } from "@jupyterlab/notebook";
-import CodeMirror = require("codemirror");
+import { NotebookPanel } from '@jupyterlab/notebook';
+import CodeMirror = require('codemirror');
 
 const LINE_COMMENT_CHAR = '//';
 const LINE_MAGIC_MODE = 'line_magic';
 
-const getCodeCellsWithCodeMirrorEditor = (panel: NotebookPanel): CodeCell[] => (
-  ((panel.content.widgets || []) as Cell[])
-    .filter(cell => (cell instanceof CodeCell)) as CodeCell[])
-    .filter(cell => (cell.editor instanceof CodeMirrorEditor));
+const getCodeCellsWithCodeMirrorEditor = (panel: NotebookPanel): CodeCell[] =>
+  (((panel.content.widgets || []) as Cell[]).filter((cell) => cell instanceof CodeCell) as CodeCell[]).filter(
+    (cell) => cell.editor instanceof CodeMirrorEditor,
+  );
 
 export const registerCommentOutCmd = (panel: NotebookPanel): void => {
   getCodeCellsWithCodeMirrorEditor(panel).forEach(setCodeMirrorLineComment);
@@ -35,10 +35,10 @@ const setCodeMirrorLineComment = (cell: CodeCell): void => {
   const cmEditor: CodeMirror.Editor = (cell.editor as CodeMirrorEditor).editor;
   const doc: CodeMirror.Doc = cmEditor.getDoc();
   const mode = doc.getMode();
-  if(mode.lineComment) {
+  if (mode.lineComment) {
     return;
   }
-  CodeMirror.extendMode(mode.name, { 'lineComment': LINE_COMMENT_CHAR });
+  CodeMirror.extendMode(mode.name, { lineComment: LINE_COMMENT_CHAR });
   mode.lineComment = LINE_COMMENT_CHAR;
   doc['mode'] = mode;
 };
@@ -75,7 +75,7 @@ const lineMagicOverlay = {
     stream.skipToEnd();
 
     return null;
-  }
+  },
 };
 
 export function autoHighlightLineMagics(editor: CodeMirror.Editor) {
@@ -87,7 +87,7 @@ export function autoHighlightLineMagics(editor: CodeMirror.Editor) {
 
   const re = /^%(%classpath|%spark|\w+)/;
 
-  editor.getDoc().eachLine(line => {
+  editor.getDoc().eachLine((line) => {
     if (line && line.text.match(re) !== null) {
       // Add an overlay mode to recognize the first line as "line magic" instead
       // of the mode used for the rest of the cell.
@@ -105,12 +105,12 @@ export function autoHighlightLineMagics(editor: CodeMirror.Editor) {
 export function addLineMagicsOverlay(editor: CodeMirror.Editor) {
   autoHighlightLineMagics(editor);
 
-  editor.off("focus", autoHighlightLineMagics);
-  editor.on("focus", autoHighlightLineMagics);
-  editor.off("change", autoHighlightLineMagics);
-  editor.on("change", autoHighlightLineMagics);
-  editor.off("blur", autoHighlightLineMagics);
-  editor.on("blur", autoHighlightLineMagics);
+  editor.off('focus', autoHighlightLineMagics);
+  editor.on('focus', autoHighlightLineMagics);
+  editor.off('change', autoHighlightLineMagics);
+  editor.on('change', autoHighlightLineMagics);
+  editor.off('blur', autoHighlightLineMagics);
+  editor.on('blur', autoHighlightLineMagics);
 
   editor.refresh();
 }

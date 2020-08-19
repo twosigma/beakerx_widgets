@@ -14,19 +14,8 @@
  *  limitations under the License.
  */
 
-declare interface Window {
-  beakerx: any;
-  beakerxHolder: any
-}
-
-type Proxy<T> = {
-  get(): T;
-  set(value: T): void;
-}
-
-interface ProxyConstructor {
-  revocable<T extends object>(target: T, handler: ProxyHandler<T>): { proxy: T; revoke: () => void; };
-  new <T extends object>(target: T, handler: ProxyHandler<T>): T;
-}
-
-declare var Proxy: ProxyConstructor;
+export * from './codeCells';
+export * from './codeEditor';
+export * from './comm';
+export * from './initializationCells';
+export * from './UIOptionFeaturesHelper';

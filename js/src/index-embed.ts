@@ -18,5 +18,5 @@ import 'flatpickr/dist/flatpickr.css';
 import 'jquery-ui/themes/base/all.css';
 import 'jquery-ui.combobox/lib/jquery-ui.combobox.css';
 import '@phosphor/widgets/style/index.css';
-import '../sass/beakerx_widgets.scss';
+import '../css/beakerx_widgets.css';
 export * from './index';

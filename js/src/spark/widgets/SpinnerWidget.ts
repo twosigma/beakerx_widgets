@@ -5,7 +5,7 @@ export class SpinnerWidget extends Widget {
     super();
     this.hide();
     this.addClass('lds-spinner');
-    let children = [];
+    const children = [];
     for (let i = 0; i < 12; i++) {
       children.push(document.createElement('div'));
     }

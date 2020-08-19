@@ -17,10 +17,10 @@
 @use "bxvariables" as *;
 @use "fontface" as ff;
 
-//@include ff.fontFace('Roboto Mono', '../fonts/robotomono/robotomono', normal, normal);
-//@include ff.fontFace('Roboto Mono', '../fonts/robotomono/robotomono-bold', normal, bold);
-//@include ff.fontFace('Lato', '../fonts/lato/Lato-Regular', normal, bold);
-//@include ff.fontFace('Lato', '../fonts/lato/Lato-Black', normal, bold);
+@include ff.fontFace('Roboto Mono', '../fonts/robotomono/robotomono', normal, normal);
+@include ff.fontFace('Roboto Mono', '../fonts/robotomono/robotomono-bold', normal, bold);
+@include ff.fontFace('Lato', '../fonts/lato/Lato-Regular', normal, normal);
+@include ff.fontFace('Lato', '../fonts/lato/Lato-Black', normal, bold);
 
 .improveFonts .context-menu-root .context-menu-item span {
   font-family: "Lato", Helvetica, sans-serif;
