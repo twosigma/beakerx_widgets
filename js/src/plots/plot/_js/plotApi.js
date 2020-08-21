@@ -431,6 +431,10 @@ define(['underscore', 'jquery'], function (_, $) {
     });
     this.version = 'groovy';
   };
+  Chart.prototype.setLegendPosition = function (position) {
+    this.legend_position = position;
+    return this;
+  };
 
   var AbstractChart = function (data) {
     if (!data) {
