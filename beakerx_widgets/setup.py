@@ -70,7 +70,9 @@ setup_args = dict(
     install_requires=[
         'beakerx_base',
         'requests',
-        'pandas'
+        'pandas',
+        'bottle',
+        'pyspark'
     ],
     python_requires='>=3',
     zip_safe=False,

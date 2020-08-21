@@ -20,6 +20,10 @@ from .magics import *
 from .outputs import *
 from .plots import *
 from .spark import *
+from .object import beakerx
+
+from beakerx_base import *
+
 try:
     from beakerx_tabledisplay.tabledisplay import *
     from beakerx_tabledisplay.tableitems import *
