@@ -52,6 +52,11 @@ class Plot(BeakerxDOMWidget):
         self.model = self.chart.transform()
         return self
 
+    def setLegendPosition(self, position):
+        self.chart.legend_position = position
+        self.model = self.chart.transform()
+        return self
+
     def setXBound(self, *args):
         if len(args) == 1 and isinstance(args[0], list):
             arg_list = args[0]
