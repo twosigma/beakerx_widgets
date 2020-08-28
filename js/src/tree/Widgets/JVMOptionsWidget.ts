@@ -16,8 +16,8 @@
 
 import $ from 'jquery';
 
-import { Panel } from '@phosphor/widgets';
-import { Message, MessageLoop } from '@phosphor/messaging';
+import { Panel } from '@lumino/widgets';
+import { Message, MessageLoop } from '@lumino/messaging';
 
 import { JVMOptionsModel } from '../Models';
 import { DefaultOptionsWidget, OtherOptionsWidget, PropertiesWidget } from './JVMOptions';

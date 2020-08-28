@@ -14,7 +14,8 @@
  *  limitations under the License.
  */
 
-import { ISettingRegistry, PageConfig } from '@jupyterlab/coreutils';
+import { PageConfig } from '@jupyterlab/coreutils';
+import { ISettingRegistry } from '@jupyterlab/settingregistry';
 import { ServerConnection } from '@jupyterlab/services';
 import { NotebookPanel } from '@jupyterlab/notebook';
 import { CodeCell } from '@jupyterlab/cells';

@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-import { Panel, Widget } from '@phosphor/widgets';
+import { Panel, Widget } from '@lumino/widgets';
 import { BoxModel as JupyterBoxModel, BoxView as JupyterBoxView, reject } from '@jupyter-widgets/controls';
 import { BEAKERX_MODULE_VERSION } from '../version';
 import { DOMWidgetView as JupyterDOMWidgetView } from '@jupyter-widgets/base';

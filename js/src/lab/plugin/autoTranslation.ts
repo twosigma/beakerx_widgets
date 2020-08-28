@@ -28,7 +28,7 @@ export class AutoTranslation {
       return comm;
     }
 
-    comm = kernelInstance.connectToComm(BEAKER_AUTOTRANSLATION);
+    comm = kernelInstance.createComm(BEAKER_AUTOTRANSLATION);
     comm.open();
   }
 

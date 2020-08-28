@@ -16,9 +16,9 @@
 
 import { DocumentRegistry } from '@jupyterlab/docregistry';
 import { ILabShell, JupyterFrontEnd } from '@jupyterlab/application';
-import { ISettingRegistry } from '@jupyterlab/coreutils';
-import { NotebookPanel } from '@jupyterlab/notebook';
-import { DisposableDelegate } from '@phosphor/disposable';
+import { ISettingRegistry } from '@jupyterlab/settingregistry';
+import { INotebookModel, NotebookPanel } from '@jupyterlab/notebook';
+import { DisposableDelegate } from '@lumino/disposable';
 import { bkCoreManager } from '../utils/bk/bkCoreManager';
 import {
   enableInitializationCellsFeature,
@@ -34,11 +34,11 @@ const PlotApi = require('../plots/plot/_js/plotApi');
 export class BeakerxWidgetExtension implements DocumentRegistry.WidgetExtension {
   constructor(private app: JupyterFrontEnd, private settings: ISettingRegistry, private labShell: ILabShell) {}
 
-  createNew(panel: NotebookPanel, context: DocumentRegistry.IContext<DocumentRegistry.IModel>): DisposableDelegate {
+  createNew(panel: NotebookPanel, context: DocumentRegistry.IContext<INotebookModel>): DisposableDelegate {
     const app = this.app;
     const settings = this.settings;
     const labShell = this.labShell;
-    Promise.all([panel.session.ready, context.ready]).then(function () {
+    Promise.all([panel.sessionContext.ready, context.ready]).then(function () {
       extendHighlightModes(panel);
       enableInitializationCellsFeature(panel);
       registerCommentOutCmd(panel);
@@ -51,13 +51,13 @@ export class BeakerxWidgetExtension implements DocumentRegistry.WidgetExtension 
         displayHTML,
         prefs: bkCoreManager.getBkApp().getBeakerObject().beakerObj.prefs,
       };
-      window.beakerx = AutoTranslation.proxify(beakerxInstance, context.session.kernel);
-      window.beakerxHolder[context.session.kernel.id] = window.beakerx;
+      window.beakerx = AutoTranslation.proxify(beakerxInstance, context.sessionContext.session.kernel);
+      window.beakerxHolder[context.sessionContext.session.kernel.id] = window.beakerx;
 
       plotApiList.setActiveLabPanel(panel);
       labShell.activeChanged.connect((sender, args) => {
         if (args.newValue == panel) {
-          window.beakerx = window.beakerxHolder[panel.context.session.kernel.id];
+          window.beakerx = window.beakerxHolder[panel.context.sessionContext.session.kernel.id];
           plotApiList.setActiveLabPanel(panel);
         }
       });

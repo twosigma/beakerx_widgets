@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-import { Signal } from '@phosphor/signaling';
+import { Signal } from '@lumino/signaling';
 import { IProfileListItem } from './IProfileListItem';
 import { SparkUIView } from './SparkUI';
 import { BeakerXApi } from '../utils/api';

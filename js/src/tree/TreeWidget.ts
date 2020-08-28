@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-import { Panel } from '@phosphor/widgets';
-import { Message } from '@phosphor/messaging';
+import { Panel } from '@lumino/widgets';
+import { Message } from '@lumino/messaging';
 
 import { BeakerXApi } from '../utils/api';
 import { BannerWidget, OptionsWidget, SyncIndicatorWidget } from './Widgets';

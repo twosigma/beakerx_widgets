@@ -17,7 +17,7 @@
 import 'flatpickr/dist/flatpickr.css';
 import 'jquery-ui/themes/base/all.css';
 import 'jquery-ui.combobox/lib/jquery-ui.combobox.css';
-import '@phosphor/widgets/style/index.css';
+import '@lumino/widgets/style/index.css';
 import '../css/beakerx_widgets.css';
 import '../css/beakerx_widgets_lab.css';
 
@@ -74,11 +74,12 @@ import {
 } from './spark';
 import { PlotModel, PlotView } from './plots';
 import { BeakerxWidgetExtension } from './lab/BeakerxWidgetExtension';
-import { ISettingRegistry, PageConfig } from '@jupyterlab/coreutils';
+import { PageConfig } from '@jupyterlab/coreutils';
 import { RequirejsLoader } from './lab/plugin/requirejs';
 import { ICommandPalette, WidgetTracker } from '@jupyterlab/apputils';
-import { JSONExt } from '@phosphor/coreutils';
+import { JSONExt } from '@lumino/coreutils';
 import { TreeWidget } from './tree';
+import { ISettingRegistry } from '@jupyterlab/settingregistry';
 
 export const BeakexWidgetsFormsPlugin: JupyterFrontEndPlugin<void> = {
   id: 'beakerx:plugin',

@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-import { Panel, Widget } from '@phosphor/widgets';
+import { Panel, Widget } from '@lumino/widgets';
 
 export abstract class InputWithLabelWidget extends Panel {
   private readonly labelWidget: Widget;

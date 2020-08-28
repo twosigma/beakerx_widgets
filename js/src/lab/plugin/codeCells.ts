@@ -15,7 +15,7 @@
  */
 
 import { Notebook } from '@jupyterlab/notebook';
-import { JSONArray } from '@phosphor/coreutils';
+import { JSONArray } from '@lumino/coreutils';
 import { Cell, CodeCell, CodeCellModel } from '@jupyterlab/cells';
 import { PageConfig } from '@jupyterlab/coreutils';
 import { BeakerXApi } from '../../utils/api';

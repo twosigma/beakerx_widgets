@@ -16,9 +16,9 @@
 
 declare let lab: { contextMenu: ContextMenu };
 
-import { CommandRegistry } from '@phosphor/commands';
-import { IDisposable } from '@phosphor/disposable';
-import { ContextMenu, Menu } from '@phosphor/widgets';
+import { CommandRegistry } from '@lumino/commands';
+import { IDisposable } from '@lumino/disposable';
+import { ContextMenu, Menu } from '@lumino/widgets';
 import { IContextMenuItem } from './IContextMenuItem';
 import { IMenu } from './IMenu';
 import { IMenuItem } from './IMenuItem';

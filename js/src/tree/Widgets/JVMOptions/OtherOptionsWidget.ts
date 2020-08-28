@@ -17,8 +17,8 @@
 import $ from 'jquery';
 import * as _ from 'underscore';
 
-import { Widget } from '@phosphor/widgets';
-import { Message, MessageLoop } from '@phosphor/messaging';
+import { Widget } from '@lumino/widgets';
+import { Message, MessageLoop } from '@lumino/messaging';
 
 import { OtherOptionsWidgetInterface } from './OtherOptionsWidgetInterface';
 import { IOtherJVMOptions } from '../../../utils/api';
