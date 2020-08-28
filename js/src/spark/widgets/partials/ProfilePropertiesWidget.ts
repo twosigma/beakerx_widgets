@@ -228,6 +228,7 @@ export class ProfilePropertiesToolbar extends Panel {
     return w;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private onAddNewClicked(evt: MouseEvent): void {
     MessageLoop.sendMessage(this.parent.parent, new SparkUIMessage('add-new-property-clicked'));
   }

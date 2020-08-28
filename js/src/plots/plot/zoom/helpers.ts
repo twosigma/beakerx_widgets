@@ -19,12 +19,14 @@ export function disableZoomWheel(scope: any): void {
   scope.jqcontainer.off('wheel.zoom');
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function enableZoomWheel(scope: any, d3: any): void {
   if (!scope._defaultZoomWheelFn) {
     return;
   }
 
   scope.svg.on('wheel.zoom', scope._defaultZoomWheelFn);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   scope.jqcontainer.off('wheel.zoom').on('wheel.zoom', function (event) {
     scope.svg.dispatch('wheel.zoom', scope._defaultZoomWheelFn);
   });

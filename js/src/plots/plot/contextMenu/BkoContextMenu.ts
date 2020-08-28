@@ -129,6 +129,7 @@ export abstract class BkoContextMenu implements IMenu {
       return;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
     this.disposables.push(
       this.commands.addCommand(menuItem.id, {

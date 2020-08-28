@@ -27,6 +27,7 @@ export class RequirejsLoader {
 
       s.id = 'bx-requirejs';
       s.src = '//cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js';
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       s.onload = (evt) => {
         resolve();
       };

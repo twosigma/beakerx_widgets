@@ -15,6 +15,6 @@
  */
 
 export interface IMenu {
-  open: Function;
-  destroy: Function;
+  open: (e: MouseEvent) => void;
+  destroy: () => void;
 }

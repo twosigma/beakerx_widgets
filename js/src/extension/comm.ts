@@ -15,7 +15,9 @@
  */
 
 import { BeakerXApi } from '../utils/api';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const dialog = require('base/js/dialog');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { Comm } = require('services/kernels/comm');
 
 export const BEAKER_GETCODECELLS = 'beakerx.getcodecells';
@@ -139,6 +141,7 @@ class BeakerxRestHandler {
     }
 
     try {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const coreutils = require('@jupyterlab/coreutils');
       coreutils.PageConfig.getOption('pageUrl');
       baseUrl = coreutils.PageConfig.getBaseUrl();

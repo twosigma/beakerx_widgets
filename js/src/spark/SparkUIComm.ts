@@ -43,6 +43,7 @@ export class SparkUIComm {
 
   private _view: SparkUIView;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public ready: Promise<void> = new Promise<void>((resolve, reject) => {
     this._readySignal.connect(() => {
       resolve();
@@ -145,6 +146,7 @@ export class SparkUIComm {
     }
 
     try {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const coreutils = require('@jupyterlab/coreutils');
       coreutils.PageConfig.getOption('pageUrl');
       baseUrl = coreutils.PageConfig.getBaseUrl();

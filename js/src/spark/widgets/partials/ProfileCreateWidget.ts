@@ -96,6 +96,7 @@ export class ProfileCreateWidget extends Panel {
     return w;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private onCreateCreateClicked(ev: MouseEvent): void {
     MessageLoop.sendMessage(
       this.parent,
@@ -107,6 +108,7 @@ export class ProfileCreateWidget extends Panel {
     this.input.value = '';
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private onCreateCancelClicked(ev: MouseEvent): void {
     MessageLoop.sendMessage(this.parent, new SparkUIMessage('profile-create-cancel-clicked', {}));
 

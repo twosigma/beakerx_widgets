@@ -29,6 +29,7 @@ import {
 } from './plugin';
 import { AutoTranslation } from './plugin/autoTranslation';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const PlotApi = require('../plots/plot/_js/plotApi');
 
 export class BeakerxWidgetExtension implements DocumentRegistry.WidgetExtension {

@@ -108,6 +108,7 @@ export class FoldoutView extends JupyterBoxView {
     this.label.addWidget(this.previewContainer);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   addCustomStyleToPreviewContainer(node: HTMLElement): void {}
 
   addHiddenContainer() {
@@ -181,6 +182,7 @@ export class FoldoutView extends JupyterBoxView {
     this.el.classList.add('foldout-widget');
     this.el.classList.add('collapsed');
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     this.children_views.update(this.model.get('children')).then((views) => {
       setTimeout(() => {
         this.renderPreview();

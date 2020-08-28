@@ -67,7 +67,7 @@ export class GistPublisherUtils {
           personalAccessToken,
           notebook_name,
           this.prepareContentToPublish(scope),
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
           (errorMsg) => {},
         );
       });

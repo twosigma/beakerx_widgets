@@ -14,4 +14,5 @@
  *  limitations under the License.
  */
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 export const PlotLine = require('../_js/std/plotline.js');

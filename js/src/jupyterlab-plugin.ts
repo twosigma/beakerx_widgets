@@ -153,6 +153,7 @@ export const BeakexWidgetsFormsPlugin: JupyterFrontEndPlugin<void> = {
 export const RequireJsPlugin: JupyterFrontEndPlugin<void> = {
   id: 'beakerx:requirejs',
   requires: [],
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   activate: (app: JupyterFrontEnd): Promise<void> => {
     return RequirejsLoader.load();
   },
@@ -162,6 +163,7 @@ export const RequireJsPlugin: JupyterFrontEndPlugin<void> = {
 export const BigJsPlugin: JupyterFrontEndPlugin<void> = {
   id: 'beakerx:bigjs',
   requires: [],
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   activate: (app: JupyterFrontEnd): Promise<void> => {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     window['Big'] = require('big.js');

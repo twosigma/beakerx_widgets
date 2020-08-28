@@ -128,6 +128,7 @@ export class DefaultAxis {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setGridlines(pointLeft, pointRight, count, marginLeft, marginRight): void {
     if (pointRight < pointLeft) {
       console.error('cannot set right coord < left coord');
@@ -364,6 +365,7 @@ export class DefaultAxis {
     return BigNumberUtils.plus(BigNumberUtils.mult(this.axisValSpan, pointCoords), this.axisValL);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getString(pointCoords: number, span: number): string {
     return this.getDefaultAxisStringValue(pointCoords);
   }

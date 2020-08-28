@@ -54,9 +54,11 @@ export class BeakerXApi {
   public getVersion(): Promise<string> {
     return new Promise((resolve, reject) => {
       $.ajax(this.getApiUrl('version'), {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         success: (data, status) => {
           resolve(data.version);
         },
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         error: (jqXHR, status, err) => {
           reject();
         },
@@ -67,9 +69,11 @@ export class BeakerXApi {
   public loadSettings(): Promise<IApiSettingsResponse> {
     return new Promise((resolve, reject) => {
       $.ajax(this.getApiUrl('settings'), {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         success: (data, status) => {
           resolve(this.mergeWithDefaults(data.beakerx));
         },
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         error: (jqXHR, status, err) => {
           reject();
         },
@@ -107,9 +111,11 @@ export class BeakerXApi {
         headers: {
           'X-XSRFToken': getCookie('_xsrf'),
         },
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         success: (data, status) => {
           resolve();
         },
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         error: (jqXHR, status, err) => {
           reject();
         },
@@ -129,6 +135,7 @@ export class BeakerXApi {
         headers: {
           'X-XSRFToken': getCookie('_xsrf'),
         },
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         success: (data, status) => {
           resolve();
         },

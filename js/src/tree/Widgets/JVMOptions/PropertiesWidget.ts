@@ -87,6 +87,7 @@ export class PropertiesWidget extends Widget {
     MessageLoop.sendMessage(this.parent, new SizeChangedMessage());
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private addPropertyButtonClickedHandler(evt) {
     this.addPropertyElement();
   }
@@ -120,10 +121,12 @@ export class PropertiesWidget extends Widget {
     addedElement.find('input').on('keyup', _.debounce(this.inputChangedHandler.bind(this), 1000));
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private onElementRemoved(msg: ElementRemovedMessage): void {
     this.propertiesChanged();
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private inputChangedHandler(evt): void {
     this.propertiesChanged();
   }

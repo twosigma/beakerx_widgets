@@ -72,6 +72,7 @@ export class OtherOptionsWidget extends Widget implements OtherOptionsWidgetInte
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private addOptionButtonClickedHandler(evt) {
     this.addFormElement();
   }

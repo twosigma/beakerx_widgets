@@ -112,7 +112,9 @@ export class JVMOptionsWidget extends Panel {
   }
 
   private sendMessageToParent(msg: Message) {
-    // direct parent is stacked panel of tab panel
-    MessageLoop.sendMessage(this.parent!.parent, msg);
+    if (this.parent?.parent) {
+      // direct parent is stacked panel of tab panel
+      MessageLoop.sendMessage(this.parent.parent, msg);
+    }
   }
 }

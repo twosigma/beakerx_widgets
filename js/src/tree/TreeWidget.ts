@@ -96,6 +96,7 @@ export class TreeWidget extends Panel {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected onBeforeAttach(msg: Message): void {
     this._model.load();
   }

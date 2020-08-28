@@ -38,7 +38,7 @@ export class TabView extends JupyterTabView {
   }
 
   _onTabChanged(tabBar, tabs) {
-    super._onTabChanged.apply(this, arguments);
+    super._onTabChanged.apply(this, [tabBar, tabs]);
     this._triggerSelectEventForChildren(tabs.currentIndex);
   }
 

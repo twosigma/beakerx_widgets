@@ -56,6 +56,7 @@ export class PlotInteraction {
       return disableZoomWheel(scope);
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     scope.jqsvg.mousemove((e) => scope.plotCursor.render(e)).mouseleave((e) => scope.plotCursor.clear());
   }
 
