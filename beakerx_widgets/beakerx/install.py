@@ -38,70 +38,10 @@ def _classpath_for(kernel):
         'beakerx', os.path.join('kernel', kernel, 'lib', '*'))
 
 
-def _uninstall_nbextension():
-    subprocess.check_call(["jupyter", "nbextension", "disable", "beakerx", "--py", "--sys-prefix"])
-    subprocess.check_call(["jupyter", "nbextension", "uninstall", "beakerx", "--py", "--sys-prefix"])
-    subprocess.check_call(["jupyter", "serverextension", "disable", "beakerx", "--py", "--sys-prefix"])
-
-
-def _install_nbextension():
-    if sys.platform == 'win32':
-        subprocess.check_call(["jupyter", "nbextension", "install", "beakerx", "--py", "--sys-prefix"])
-    else:
-        subprocess.check_call(
-            ["jupyter", "nbextension", "install", "beakerx", "--py", "--symlink", "--sys-prefix"])
-
-    subprocess.check_call(["jupyter", "nbextension", "enable", "beakerx", "--py", "--sys-prefix"])
-
-    subprocess.check_call(["jupyter", "serverextension", "enable", "beakerx", "--py", "--sys-prefix"])
-
-
-def _install_labextensions(lab):
-    if lab:
-        subprocess.check_call(["jupyter", "labextension", "install", "@jupyter-widgets/jupyterlab-manager"])
-        subprocess.check_call(["jupyter", "labextension", "install", "beakerx-jupyterlab"])
-
-
-def _uninstall_labextensions(lab):
-    if lab:
-        subprocess.check_call(["jupyter", "labextension", "uninstall", "beakerx-jupyterlab"])
-        subprocess.check_call(["jupyter", "labextension", "uninstall", "@jupyter-widgets/jupyterlab-manager"])
-
-
-def _install_tabledisplay(lab):
-    if lab:
-        subprocess.check_call(["beakerx_tabledisplay", "install", "--lab"])
-    else:
-        subprocess.check_call(["beakerx_tabledisplay", "install"])
-
-
-def _uninstall_tabledisplay():
-    subprocess.check_call(["beakerx_tabledisplay", "uninstall"])
-
-
 def _copy_tree(src, dst):
     if os.path.exists(dst):
         shutil.rmtree(dst)
     shutil.copytree(src, dst)
-
-
-def _copy_icons():
-    log.info("installing icons...")
-    # kernels = KernelSpecManager().find_kernel_specs()
-    # for kernel in _all_kernels():
-    #     dst_base = kernels.get(kernel)
-    #     src_base = _base_classpath_for(kernel)
-    #     shutil.copyfile(os.path.join(src_base, 'logo-32x32.png'), os.path.join(dst_base, 'logo-32x32.png'))
-    #     shutil.copyfile(os.path.join(src_base, 'logo-64x64.png'), os.path.join(dst_base, 'logo-64x64.png'))
-
-
-def _install_css():
-    log.info("installing custom CSS...")
-    # resource = os.path.join('static', 'custom')
-    # src_base = pkg_resources.resource_filename('beakerx', resource)
-    # dst_base = pkg_resources.resource_filename('notebook', resource)
-    # _copy_tree(os.path.join(src_base, 'fonts'), os.path.join(dst_base, 'fonts'))
-    # shutil.copyfile(os.path.join(src_base, 'custom.css'), os.path.join(dst_base, 'custom.css'))
 
 
 def _install_magics():
@@ -176,28 +116,29 @@ def make_parser():
     return parser
 
 
-def _disable_beakerx(args):
-    _uninstall_nbextension()
-    _uninstall_labextensions(args.lab)
-    _install_kernelspec_manager(args.prefix, disable=True)
+def install(args):
+    if sys.platform == 'win32':
+        subprocess.check_call(["jupyter", "nbextension", "install", "beakerx", "--py", "--sys-prefix"])
+    else:
+        subprocess.check_call(["jupyter", "nbextension", "install", "beakerx", "--py", "--symlink", "--sys-prefix"])
+    subprocess.check_call(["jupyter", "nbextension", "enable", "beakerx", "--py", "--sys-prefix"])
+    subprocess.check_call(["jupyter", "serverextension", "enable", "beakerx", "--py", "--sys-prefix"])
+    if subprocess.call(["jupyter", "labextension", "install", "@jupyter-widgets/jupyterlab-manager", "--no-build"],
+                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) == 0:
+        subprocess.check_call(["jupyter", "labextension", "install", "@beakerx/beakerx-widgets"])
 
-
-def _install_beakerx(args):
-    _install_nbextension()
-    _install_labextensions(args.lab)
-    _install_css()
-    _copy_icons()
     _install_kernelspec_manager(args.prefix)
     _install_magics()
     _set_conf_privileges()
 
 
-def install(args):
-    _install_beakerx(args)
-
-
 def uninstall(args):
-    _disable_beakerx(args)
+    subprocess.check_call(["jupyter", "nbextension", "disable", "beakerx", "--py", "--sys-prefix"])
+    subprocess.check_call(["jupyter", "nbextension", "uninstall", "beakerx", "--py", "--sys-prefix"])
+    subprocess.check_call(["jupyter", "serverextension", "disable", "beakerx", "--py", "--sys-prefix"])
+    subprocess.check(["jupyter", "labextension", "uninstall", "@beakerx/beakerx-widgets"],
+                     stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    _install_kernelspec_manager(args.prefix, disable=True)
 
 
 if __name__ == "__main__":
