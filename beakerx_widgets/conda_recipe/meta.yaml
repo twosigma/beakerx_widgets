@@ -1,5 +1,6 @@
 {% set name = "beakerx_widgets" %}
-{% set version = "1.6.0" %}
+{% set fname = "beakerx" %}
+{% set version = "2.0.0" %}
 
 package:
   name: "{{ name|lower }}"
@@ -10,8 +11,8 @@ source:
   git_tag: master
 
 source:
-  url: https://files.pythonhosted.org/packages/source/b/beakerx/{{ name }}-{{ version }}.tar.gz
-  #url: file:///YOUR_LOCAL_PATH/beakerx_widgets/beakerx/dist/{{ name }}-{{ version }}.tar.gz
+  #url: https://files.pythonhosted.org/packages/source/b/beakerx/{{ name }}-{{ version }}.tar.gz
+  url: file:///Users/ildipo/src/beakerx_widgets/beakerx_widgets/dist/{{ fname }}-{{ version }}.tar.gz
 
 build:
   number: 1
@@ -25,7 +26,6 @@ requirements:
   - pip
   run:
   - beakerx_base={{ version }}
-  - beakerx_tabledisplay={{ version }}
   - python >=3
   - notebook >=5.7.4
   - ipywidgets >=7.0
