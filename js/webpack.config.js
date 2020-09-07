@@ -128,7 +128,7 @@ module.exports = [
       filename: 'index.js',
       path: BEAKERX_DIST_PATH,
       libraryTarget: 'amd',
-      publicPath: 'https://unpkg.com/' + pkg.name + '@' + pkg.version + '/dist/'
+      // publicPath: 'https://unpkg.com/' + pkg.name + '@' + pkg.version + '/dist/'
     },
     devtool: 'inline-source-map',
     module: {

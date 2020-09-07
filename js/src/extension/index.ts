@@ -31,7 +31,7 @@ const configmod = require('services/config');
 const utils = require('base/js/utils');
 const Jupyter = require('base/js/namespace');
 const events = require('base/js/events');
-const plotApi = require('../plots/plot/_js/plotApi');
+const plotApi = require('../plots/plotsrc/_js/plotApi');
 const big = require('big.js');
 const tocUtils = require('./tableOfContents/index');
 /* eslint-enable @typescript-eslint/no-var-requires */
