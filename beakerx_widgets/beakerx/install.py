@@ -123,8 +123,9 @@ def install(args):
         subprocess.check_call(["jupyter", "nbextension", "install", "beakerx", "--py", "--symlink", "--sys-prefix"])
     subprocess.check_call(["jupyter", "nbextension", "enable", "beakerx", "--py", "--sys-prefix"])
     subprocess.check_call(["jupyter", "serverextension", "enable", "beakerx", "--py", "--sys-prefix"])
-    if subprocess.call(["jupyter", "labextension", "install", "@jupyter-widgets/jupyterlab-manager", "--no-build"],
-                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) == 0:
+    if args.lab:
+        subprocess.call(["jupyter", "labextension", "install", "@jupyter-widgets/jupyterlab-manager", "--no-build"],
+                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         subprocess.check_call(["jupyter", "labextension", "install", "@beakerx/beakerx-widgets"])
 
     _install_kernelspec_manager(args.prefix)
