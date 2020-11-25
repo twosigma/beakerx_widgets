@@ -27,6 +27,11 @@ jobs:
     - name: Verify conda version
       shell: bash
       run: conda --version
+    - name: Checkout beakerx_kernel_base repo
+      uses: actions/checkout@v2
+      with:
+        repository: twosigma/beakerx_kernel_base
+        path: beakerx_kernel_base
     - name: Checkout beakerx_base repo
       uses: actions/checkout@v2
       with:
@@ -45,20 +50,23 @@ jobs:
     - name: Update conda package
       shell: bash
       run:
-        conda env create -n beakerx -f configuration.yml
+        conda env create -n beakerx -f configuration.yml       
+    - name: Build Groovy Kernel
+      shell: bash -l {0}
+      run: |
+        cd $GITHUB_WORKSPACE/beakerx_kernel_base
+        chmod +x gradlew
+        ./gradlew install
+        conda activate beakerx
+        cd $GITHUB_WORKSPACE/beakerx_kernel_groovy/groovy-dist
+        pip install -r requirements.txt --verbose
+        beakerx_kernel_groovy install     
     - name: Build BeakerX Base
       shell: bash -l {0}
       run: |
         conda activate beakerx
         cd $GITHUB_WORKSPACE/beakerx_base
         pip install -e .
-    - name: Build Groovy Kernel
-      shell: bash -l {0}
-      run: |
-        conda activate beakerx
-        cd $GITHUB_WORKSPACE/beakerx_kernel_groovy/groovy-dist
-        pip install -r requirements.txt --verbose
-        beakerx_kernel_groovy install
     - name: Build BeakerX widgets
       shell: bash -l {0}
       run: |
