@@ -32,6 +32,11 @@ jobs:
       with:
         repository: twosigma/beakerx_base
         path: beakerx_base
+    - name: Checkout beakerx_kernel_groovy repo
+      uses: actions/checkout@v2
+      with:
+        repository: twosigma/beakerx_kernel_groovy
+        path: beakerx_kernel_groovy
     - name: Checkout beakerx_tests repo
       uses: actions/checkout@v2
       with:
@@ -41,6 +46,13 @@ jobs:
       shell: bash
       run:
         conda env create -n beakerx -f configuration.yml
+    - name: Build Groovy Kernel
+      shell: bash -l {0}
+      run: |
+        conda activate beakerx
+        cd $GITHUB_WORKSPACE/beakerx_kernel_groovy/groovy-dist
+        pip install -r requirements.txt --verbose
+        beakerx_kernel_groovy install
     - name: Build BeakerX Base
       shell: bash -l {0}
       run: |
@@ -61,11 +73,11 @@ jobs:
         chmod +x gradlew
         conda activate beakerx
         pip install psutil
-        python ci_tests.py --app=notebook --tst=python.Widget*
+        python ci_tests.py --app=notebook --tst=*.Widget*
     - name: Publish Test Report
       if: always()
       uses: scacap/action-surefire-report@v1
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         report_paths: "**/test-results/test/TEST-*.xml" 
-    
+      
