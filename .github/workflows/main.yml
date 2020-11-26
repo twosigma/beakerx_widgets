@@ -51,6 +51,11 @@ jobs:
       with:
         repository: twosigma/beakerx_tests
         path: beakerx_tests
+    - name: Build BeakerX Kernel Base
+      run: |
+        cd $GITHUB_WORKSPACE/beakerx_kernel_base
+        chmod +x gradlew
+        ./gradlew install     
     - name: Update conda package
       shell: bash
       run:
@@ -58,11 +63,9 @@ jobs:
     - name: Build Groovy Kernel
       shell: bash -l {0}
       run: |
-        cd $GITHUB_WORKSPACE/beakerx_kernel_base
-        chmod +x gradlew
-        ./gradlew install -x test
-        conda activate beakerx
         cd $GITHUB_WORKSPACE/beakerx_kernel_groovy/groovy-dist
+        chmod +x gradlew
+        conda activate beakerx
         pip install -r requirements.txt --verbose
         beakerx_kernel_groovy install     
     - name: Build BeakerX Base
