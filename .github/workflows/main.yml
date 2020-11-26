@@ -17,6 +17,13 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.11
+    - name: Cache gradle
+      uses: actions/cache@v2
+      with:
+        path: ~/.gradle/caches
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle    
     - name: Cache Conda
       uses: actions/cache@v1
       with:
@@ -57,9 +64,10 @@ jobs:
         chmod +x gradlew
         ./gradlew install     
     - name: Update conda package
-      shell: bash
-      run:
-        conda env create -n beakerx -f configuration.yml       
+      shell: bash -l {0}
+      run: |
+        cd $GITHUB_WORKSPACE/beakerx_tests/dev_scripts
+        conda env create -n beakerx -f configuration.yml      
     - name: Build Groovy Kernel
       shell: bash -l {0}
       run: |
