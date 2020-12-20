@@ -39,29 +39,22 @@ export class ComboBoxModel extends JupyterSelectModel {
 export class ComboBoxView extends JupyterSelectView {
   render(): void {
     super.render();
-
     this.el.classList.add('widget-combobox');
     this.listbox.setAttribute('easyform-editable', this.model.get('editable'));
     this.listbox.setAttribute('size', this.model.get('size'));
-
-    setTimeout(() => {
-      const listbox: any = $(this.listbox);
-      listbox.combobox({
-        change: this.setValueToModel.bind(this),
-      });
-
-      this.update();
+    const listbox: any = $(this.listbox);
+    listbox.combobox();
+    listbox.on('change', () => {
+      this.setValueToModel();
     });
+    this.update();
   }
-
-  setValueToModel(value: string): void {
-    this.model.set('value', value, { updated_view: this });
+  setValueToModel(): void {
+    this.model.set('value', this.listbox.value, { updated_view: this });
     this.touch();
   }
-
   update(): void {
     super.update();
-
     const value: string = this.model.get('value');
     this.$el.find('.ui-combobox-input').val(value);
   }

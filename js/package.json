@@ -1,7 +1,7 @@
 {
-  "name": "beakerx_widgets",
-  "version": "2.0.0",
-  "description": "BeakerX: Beaker EasyForms, Magics, Plots and Spark Extension for Jupyter",
+  "name": "@beakerx/beakerx-widgets",
+  "version": "2.0.2",
+  "description": "BeakerX: Beaker EasyForms, Magics, Plots and Spark Extension for Jupyter Lab 1.2.x",
   "keywords": [
     "jupyter",
     "jupyterlab",

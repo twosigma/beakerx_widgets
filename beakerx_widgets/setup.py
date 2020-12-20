@@ -68,7 +68,7 @@ setup_args = dict(
         ]
     },
     install_requires=[
-        'beakerx_base',
+        'beakerx_base>=2.0.1',
         'requests',
         'pandas',
         'bottle',

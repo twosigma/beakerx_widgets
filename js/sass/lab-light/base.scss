@@ -94,6 +94,11 @@
   outline: none !important;
 }
 
+.beaker-fieldset  legend {
+  border-color: var(--jp-widgets-input-border-color);
+  background-color: var(--jp-widgets-input-background-color);
+}
+
 .hidden {
   display: none !important;
 }
