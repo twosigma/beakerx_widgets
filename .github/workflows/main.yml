@@ -96,10 +96,4 @@ jobs:
         conda activate beakerx
         pip install psutil
         python ci_tests.py --app=notebook --tst=*.Widget*
-    - name: Publish Test Report
-      if: always()
-      uses: scacap/action-surefire-report@v1
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        report_paths: "**/test-results/test/TEST-*.xml" 
       
