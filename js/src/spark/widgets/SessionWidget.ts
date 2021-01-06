@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-import { Panel, Widget } from '@phosphor/widgets';
-import { MessageLoop } from '@phosphor/messaging';
+import { Panel, Widget } from '@lumino/widgets';
+import { MessageLoop } from '@lumino/messaging';
 import { SparkUIMessage } from '../SparkUIMessage';
 import { SpinnerWidget } from './SpinnerWidget';
 import { CommonUtils } from '../../utils';
@@ -95,6 +95,7 @@ export class SessionWidget extends Panel {
     connectionStatusEl.classList.add('bx-label', 'connection');
     connectionStatusEl.style.cursor = 'pointer';
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     connectionStatusEl.addEventListener('click', (event: MouseEvent) => {
       window.open(`${this._sparkUiWebUrl}/executors`, '_blank');
     });
@@ -140,6 +141,7 @@ export class SessionWidget extends Panel {
     return w;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private onStopClicked(evt: MouseEvent): void {
     MessageLoop.sendMessage(this.parent, new SparkUIMessage('stop-clicked'));
   }

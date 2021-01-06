@@ -15,8 +15,8 @@
  */
 
 import $ from 'jquery';
-import { TabPanel } from '@phosphor/widgets';
-import { Message, MessageLoop } from '@phosphor/messaging';
+import { TabPanel } from '@lumino/widgets';
+import { Message, MessageLoop } from '@lumino/messaging';
 
 import { UIOptionsWidget } from './UIOptions';
 import { JVMOptionsModel, UIOptionsModel } from '../Models';

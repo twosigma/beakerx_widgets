@@ -21,6 +21,7 @@ import { PointShapeHelper } from '../std';
 import { LegendPosition } from './LegendPosition';
 import { PlotMessage } from '../PlotMessage';
 import { CommonUtils, PlotColorUtils, PlotStyleUtils } from '../../../utils';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const GradientLegend = require('../_js/gradientlegend.js');
 
 export class PlotLegend {
@@ -159,6 +160,7 @@ export class PlotLegend {
     const isHorizontal = this.scope.stdmodel.legendLayout === 'HORIZONTAL';
     const draggable = {
       containment: 'parent',
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       start: function (event, ui) {
         $(this).css({
           //avoid resizing for bottom-stacked legend
@@ -308,7 +310,7 @@ export class PlotLegend {
   }
 
   renderLegendMergedLine(id, legendLineUnit, legend) {
-    if (!this.scope.legendMergedLines.hasOwnProperty(id)) {
+    if (!Object.prototype.hasOwnProperty.call(this.scope.legendMergedLines, id)) {
       return;
     }
 
@@ -319,12 +321,14 @@ export class PlotLegend {
     }
 
     let highlightTimeoutId;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
 
     const unit = $(legendLineUnit)
       .appendTo(legend)
       .attr('id', 'legend_' + id)
       .addClass('plot-legendline')
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .mouseenter(function (e) {
         const legendLine = $(this)[0];
 
@@ -332,6 +336,7 @@ export class PlotLegend {
           self.highlightElements(legendLine.id.split('_')[1], true);
         }, 300);
       })
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .mouseleave(function (e) {
         clearTimeout(highlightTimeoutId);
         self.highlightElements($(this)[0].id.split('_')[1], false);

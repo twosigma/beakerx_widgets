@@ -18,6 +18,7 @@ import { BigNumberUtils } from '../../utils';
 import { PlotLine } from './std/PlotLine';
 import { TimeAxis } from './std/axis';
 
+/* eslint-disable @typescript-eslint/no-var-requires */
 const PlotBar = require('./_js/std/plotbar.js');
 const PlotStem = require('./_js/std/plotstem.js');
 const PlotArea = require('./_js/std/plotarea.js');
@@ -33,6 +34,7 @@ const PlotBarLodLoader = require('./_js/lodloader/plotBarLodLoader.js');
 const PlotStemLodLoader = require('./_js/lodloader/plotStemLodLoader.js');
 const PlotAreaLodLoader = require('./_js/lodloader/plotAreaLodLoader');
 const PlotPointLodLoader = require('./_js/lodloader/plotPointLodLoader.js');
+/* eslint-enable @typescript-eslint/no-var-requires */
 
 export class PlotFactory {
   static createPlotItem(item: any, lodThreshold = 1500) {

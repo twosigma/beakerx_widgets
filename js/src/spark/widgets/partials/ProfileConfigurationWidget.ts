@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-import { Panel } from '@phosphor/widgets';
+import { Panel } from '@lumino/widgets';
 import { ProfilePropertiesWidget } from './ProfilePropertiesWidget';
 import { HiveSupportWidget } from './HiveSupportWidget';
 import { MasterURLWidget } from './MasterURLWidget';

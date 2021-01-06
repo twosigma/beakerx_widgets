@@ -15,16 +15,18 @@
  */
 
 import { Notebook } from '@jupyterlab/notebook';
-import { JSONArray } from '@phosphor/coreutils';
+import { JSONArray } from '@lumino/coreutils';
 import { Cell, CodeCell, CodeCellModel } from '@jupyterlab/cells';
 import { PageConfig } from '@jupyterlab/coreutils';
 import { BeakerXApi } from '../../utils/api';
 
 export function sendJupyterCodeCells(notebook: Notebook, filter: string, url: string): void {
-  const codeCells = <JSONArray>getCodeCellsByTag(notebook, filter).map((cell: CodeCell): object => ({
-    cell_type: cell.model.type,
-    ...cell.model.toJSON(),
-  }));
+  const codeCells = <JSONArray>getCodeCellsByTag(notebook, filter).map(
+    (cell: CodeCell): Record<string, unknown> => ({
+      cell_type: cell.model.type,
+      ...cell.model.toJSON(),
+    }),
+  );
 
   const data: { code_cells: any; url: string } = {
     code_cells: codeCells,

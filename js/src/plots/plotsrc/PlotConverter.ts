@@ -14,4 +14,5 @@
  *  limitations under the License.
  */
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 export const PlotConverter = require('./_js/plotConverter.js');

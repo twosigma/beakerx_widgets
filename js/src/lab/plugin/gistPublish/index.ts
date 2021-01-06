@@ -18,7 +18,7 @@ import { NotebookPanel } from '@jupyterlab/notebook';
 import { Dialog, showDialog, ToolbarButton } from '@jupyterlab/apputils';
 import { GistPublishModal } from './gistPublishModal';
 import { Cell, CodeCell } from '@jupyterlab/cells';
-import { CommandRegistry } from '@phosphor/commands';
+import { CommandRegistry } from '@lumino/commands';
 import { GistPublisher, GistPublisherUtils } from '../../../plots/publisher';
 import { AccessTokenProvider } from '../AccessTokenProvider';
 

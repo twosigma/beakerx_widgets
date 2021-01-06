@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-import { Panel } from '@phosphor/widgets';
-import { Message } from '@phosphor/messaging';
+import { Panel } from '@lumino/widgets';
+import { Message } from '@lumino/messaging';
 
 import { BeakerXApi } from '../utils/api';
 import { BannerWidget, OptionsWidget, SyncIndicatorWidget } from './Widgets';
@@ -96,6 +96,7 @@ export class TreeWidget extends Panel {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected onBeforeAttach(msg: Message): void {
     this._model.load();
   }

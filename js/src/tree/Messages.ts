@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-import { Message } from '@phosphor/messaging';
+import { Message } from '@lumino/messaging';
 import { IDefaultJVMOptions, IJVMOptions, IOtherJVMOptions, IPropertiesJVMOptions, IUIOptions } from '../utils/api';
 
 export const TYPE_JVM_OPTIONS_ERROR = 'jvm-options:error';

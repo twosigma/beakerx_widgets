@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-import { Panel, Widget } from '@phosphor/widgets';
-import { MessageLoop } from '@phosphor/messaging';
+import { Panel, Widget } from '@lumino/widgets';
+import { MessageLoop } from '@lumino/messaging';
 import { SparkUIMessage } from '../SparkUIMessage';
 import { SpinnerWidget } from './SpinnerWidget';
 
@@ -24,7 +24,7 @@ export class StartWidget extends Panel {
   readonly BUTTON_TITLE: string = 'Start a session with cluster (or a local instance)';
 
   private buttonEl: HTMLButtonElement;
-  private readonly errorWidget: Private.ErrorWidget;
+  private readonly errorWidget: ErrorWidget;
   private readonly spinnerWidget: SpinnerWidget;
 
   constructor() {
@@ -32,7 +32,7 @@ export class StartWidget extends Panel {
 
     this.addClass('bx-spark-start');
 
-    this.errorWidget = new Private.ErrorWidget();
+    this.errorWidget = new ErrorWidget();
     this.spinnerWidget = new SpinnerWidget();
 
     this.addWidget(this.createButton());
@@ -84,20 +84,19 @@ export class StartWidget extends Panel {
     return w;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private onStartClicked(evt: MouseEvent): void {
     MessageLoop.sendMessage(this.parent, new SparkUIMessage('start-clicked'));
   }
 }
 
-namespace Private {
-  export class ErrorWidget extends Widget {
-    constructor() {
-      super();
-      this.addClass('bx-spark-error');
-    }
+class ErrorWidget extends Widget {
+  constructor() {
+    super();
+    this.addClass('bx-spark-error');
+  }
 
-    public setMessage(message: string) {
-      this.node.textContent = message;
-    }
+  public setMessage(message: string) {
+    this.node.textContent = message;
   }
 }

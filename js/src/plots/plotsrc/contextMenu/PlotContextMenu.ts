@@ -19,6 +19,7 @@ import { BkoContextMenu } from './BkoContextMenu';
 import { PlotScope } from '../PlotScope';
 import { CombinedPlotScope } from '../CombinedPlotScope';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function selectShowPublication(scope: PlotScope | CombinedPlotScope): boolean {
   // TODO
   return true;

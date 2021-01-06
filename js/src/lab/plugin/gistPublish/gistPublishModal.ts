@@ -15,7 +15,7 @@
  */
 
 import { Modal } from './Modal';
-import { Widget } from '@phosphor/widgets';
+import { Widget } from '@lumino/widgets';
 import { ServerConnection } from '@jupyterlab/services';
 import { PageConfig } from '@jupyterlab/coreutils';
 import { template } from './modalTemplate';

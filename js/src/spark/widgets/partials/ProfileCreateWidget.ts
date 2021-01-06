@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-import { Panel, Widget } from '@phosphor/widgets';
-import { MessageLoop } from '@phosphor/messaging';
+import { Panel, Widget } from '@lumino/widgets';
+import { MessageLoop } from '@lumino/messaging';
 import { SparkUIMessage } from '../../SparkUIMessage';
 
 export class ProfileCreateWidget extends Panel {
@@ -96,6 +96,7 @@ export class ProfileCreateWidget extends Panel {
     return w;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private onCreateCreateClicked(ev: MouseEvent): void {
     MessageLoop.sendMessage(
       this.parent,
@@ -107,6 +108,7 @@ export class ProfileCreateWidget extends Panel {
     this.input.value = '';
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private onCreateCancelClicked(ev: MouseEvent): void {
     MessageLoop.sendMessage(this.parent, new SparkUIMessage('profile-create-cancel-clicked', {}));
 

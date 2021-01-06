@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-import { Panel, Widget } from '@phosphor/widgets';
+import { Panel, Widget } from '@lumino/widgets';
 import { BoxModel as JupyterBoxModel, BoxView as JupyterBoxView, reject } from '@jupyter-widgets/controls';
 import { BEAKERX_MODULE_VERSION } from '../version';
 import { DOMWidgetView as JupyterDOMWidgetView } from '@jupyter-widgets/base';
@@ -108,6 +108,7 @@ export class FoldoutView extends JupyterBoxView {
     this.label.addWidget(this.previewContainer);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   addCustomStyleToPreviewContainer(node: HTMLElement): void {}
 
   addHiddenContainer() {
@@ -181,6 +182,7 @@ export class FoldoutView extends JupyterBoxView {
     this.el.classList.add('foldout-widget');
     this.el.classList.add('collapsed');
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     this.children_views.update(this.model.get('children')).then((views) => {
       setTimeout(() => {
         this.renderPreview();

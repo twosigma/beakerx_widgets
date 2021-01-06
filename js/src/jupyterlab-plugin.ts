@@ -17,7 +17,7 @@
 import 'flatpickr/dist/flatpickr.css';
 import 'jquery-ui/themes/base/all.css';
 import 'jquery-ui.combobox/lib/jquery-ui.combobox.css';
-import '@phosphor/widgets/style/index.css';
+import '@lumino/widgets/style/index.css';
 import '../css/beakerx_widgets.css';
 import '../css/beakerx_widgets_lab.css';
 
@@ -74,11 +74,12 @@ import {
 } from './spark';
 import { PlotModel, PlotView } from './plots';
 import { BeakerxWidgetExtension } from './lab/BeakerxWidgetExtension';
-import { ISettingRegistry, PageConfig } from '@jupyterlab/coreutils';
+import { PageConfig } from '@jupyterlab/coreutils';
 import { RequirejsLoader } from './lab/plugin/requirejs';
 import { ICommandPalette, WidgetTracker } from '@jupyterlab/apputils';
-import { JSONExt } from '@phosphor/coreutils';
+import { JSONExt } from '@lumino/coreutils';
 import { TreeWidget } from './tree';
+import { ISettingRegistry } from '@jupyterlab/settingregistry';
 
 export const BeakexWidgetsFormsPlugin: JupyterFrontEndPlugin<void> = {
   id: 'beakerx:plugin',
@@ -152,6 +153,7 @@ export const BeakexWidgetsFormsPlugin: JupyterFrontEndPlugin<void> = {
 export const RequireJsPlugin: JupyterFrontEndPlugin<void> = {
   id: 'beakerx:requirejs',
   requires: [],
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   activate: (app: JupyterFrontEnd): Promise<void> => {
     return RequirejsLoader.load();
   },
@@ -161,6 +163,7 @@ export const RequireJsPlugin: JupyterFrontEndPlugin<void> = {
 export const BigJsPlugin: JupyterFrontEndPlugin<void> = {
   id: 'beakerx:bigjs',
   requires: [],
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   activate: (app: JupyterFrontEnd): Promise<void> => {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     window['Big'] = require('big.js');

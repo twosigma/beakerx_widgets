@@ -33,7 +33,7 @@ export function enableInitializationCellsFeature(panel: NotebookPanel): void {
 
   registerNotebookInitCellsAction(panel, options);
 
-  panel.session.kernel.ready.then(() => runInitCells(panel, options));
+  runInitCells(panel, options);
 }
 
 export function runInitCells(panel: NotebookPanel, options: IInitCellsOptions): void {
@@ -46,7 +46,7 @@ export function runInitCells(panel: NotebookPanel, options: IInitCellsOptions): 
   }
 
   console.log(logPrefix, 'running all initialization cells');
-  cells.forEach((cell: CodeCell) => CodeCell.execute(cell, panel.session));
+  cells.forEach((cell: CodeCell) => CodeCell.execute(cell, panel.sessionContext));
   console.log(logPrefix, `finished running ${cells.length} initialization cell${cells.length !== 1 ? 's' : ''}`);
 }
 
@@ -56,15 +56,23 @@ export function getInitCells(panel: NotebookPanel): CodeCell[] {
   return <CodeCell[]>cells.filter((cell: Cell) => cell instanceof CodeCell && cell.model.metadata.get('init_cell'));
 }
 
-function canExecuteInitCells(panel: NotebookPanel, options: IInitCellsOptions, cells: CodeCell[]) {
+async function canExecuteInitCells(
+  panel: NotebookPanel,
+  options: IInitCellsOptions,
+  cells: CodeCell[],
+): Promise<boolean> {
   const trusted = cells.length && cells[0].model.trusted;
 
-  return (
-    options.run_on_kernel_ready &&
-    (trusted || options.run_untrusted) &&
-    panel.session.kernel &&
-    panel.session.kernel.info.status === 'ok'
-  );
+  if (!options.run_on_kernel_ready) {
+    return false;
+  }
+
+  if (!trusted && !options.run_untrusted) {
+    return false;
+  }
+
+  const info = await panel.sessionContext.session.kernel.info;
+  return info.status === 'ok';
 }
 
 function handleUntrustedKernelInitCells(cells: CodeCell[], options: IInitCellsOptions) {

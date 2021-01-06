@@ -325,7 +325,7 @@ define(['underscore'], function (_) {
         return d.y;
       })
       .attr('text-anchor', 'middle')
-      .style('fill', 'black')
+      .attr('class', 'plot-label')
       .text(function (d) {
         return d.text;
       });

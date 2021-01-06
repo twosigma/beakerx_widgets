@@ -15,6 +15,7 @@
  */
 
 import { BEAKER_AUTOTRANSLATION } from './comm';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const utils = require('base/js/utils');
 
 export class AutoTranslation {

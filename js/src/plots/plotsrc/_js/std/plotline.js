@@ -324,7 +324,7 @@ define(['underscore'], function (_) {
         return d.y;
       })
       .attr('text-anchor', 'middle')
-      .style('fill', 'black')
+      .attr('class', 'plot-label')
       .style('stroke', 'none')
       .text(function (d) {
         return d.text;

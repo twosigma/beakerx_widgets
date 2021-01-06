@@ -16,7 +16,7 @@
 
 import $ from 'jquery';
 
-import { Widget } from '@phosphor/widgets';
+import { Widget } from '@lumino/widgets';
 
 export class SyncIndicatorWidget extends Widget {
   public readonly HTML_ELEMENT_TEMPLATE = `

@@ -55,6 +55,7 @@ export class RESTButtonView extends JupyterButtonView {
     }
 
     try {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const coreutils = require('@jupyterlab/coreutils');
       coreutils.PageConfig.getOption('pageUrl');
       baseUrl = coreutils.PageConfig.getBaseUrl();

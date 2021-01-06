@@ -46,6 +46,7 @@ export class GistPublisher {
         public: true,
         files: filedata,
       }),
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       success: (data, status) => {
         console.log('gist successfully published: ' + data.id);
         window.open(CONFIG.nbviewerBaseUrl + data.id);

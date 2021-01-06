@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-import { Panel } from '@phosphor/widgets';
+import { Panel } from '@lumino/widgets';
 import { SparkUIMessage } from './SparkUIMessage';
 import { ProfileSelectorWidget, SessionWidget, StartWidget } from './widgets';
 import { SparkUIComm } from './SparkUIComm';

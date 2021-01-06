@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-import { Panel, Widget } from '@phosphor/widgets';
-import { MessageLoop } from '@phosphor/messaging';
+import { Panel, Widget } from '@lumino/widgets';
+import { MessageLoop } from '@lumino/messaging';
 import { SparkUIMessage } from '../../SparkUIMessage';
 
 export class ProfilePropertiesWidget extends Panel {
@@ -228,6 +228,7 @@ export class ProfilePropertiesToolbar extends Panel {
     return w;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private onAddNewClicked(evt: MouseEvent): void {
     MessageLoop.sendMessage(this.parent.parent, new SparkUIMessage('add-new-property-clicked'));
   }

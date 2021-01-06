@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-import { Panel } from '@phosphor/widgets';
+import { Panel } from '@lumino/widgets';
 import { IProfileListItem } from '../IProfileListItem';
 import { SparkUIMessage } from '../SparkUIMessage';
 import { ProfileConfigurationWidget, ProfileCreateWidget, ProfileSelectWidget } from './partials';
@@ -95,10 +95,10 @@ export class ProfileSelectorWidget extends Panel {
   public processMessage(msg: SparkUIMessage): void {
     switch (msg.type) {
       case 'profile-create-new-clicked':
-        Private.MessageHandlers.onProfileCreateNew(this.profileSelectWidget, this.profileCreateWidget);
+        _onProfileCreateNewMessageHandler(this.profileSelectWidget, this.profileCreateWidget);
         break;
       case 'profile-remove-clicked':
-        Private.MessageHandlers.onProfileRemove(
+        _onProfileRemoveMessageHandler(
           this._currentProfileName,
           this._profiles,
           this.profileSelectWidget,
@@ -106,7 +106,7 @@ export class ProfileSelectorWidget extends Panel {
         );
         break;
       case 'profile-save-clicked':
-        Private.MessageHandlers.onProfileSave(
+        _onProfileSaveMessageHandler(
           this.comm,
           this._profiles,
           this._currentProfileName,
@@ -114,10 +114,10 @@ export class ProfileSelectorWidget extends Panel {
         );
         break;
       case 'profile-selection-changed':
-        Private.MessageHandlers.onProfileSelectionChanged(this, msg, this._profiles, this.profileConfigurationWidget);
+        _onProfileSelectionChangedMessageHandler(this, msg, this._profiles, this.profileConfigurationWidget);
         break;
       case 'profile-create-create-clicked':
-        Private.MessageHandlers.onProfileCreateConfirmed(
+        _onProfileCreateConfirmedMessageHandler(
           msg,
           this._profiles,
           this.profileSelectWidget,
@@ -125,7 +125,7 @@ export class ProfileSelectorWidget extends Panel {
         );
         break;
       case 'profile-create-cancel-clicked':
-        Private.MessageHandlers.onProfileCreateCanceled(this.profileSelectWidget, this.profileCreateWidget);
+        _onProfileCreateCanceledMessageHandler(this.profileSelectWidget, this.profileCreateWidget);
         break;
       default:
         super.processMessage(msg);
@@ -134,130 +134,124 @@ export class ProfileSelectorWidget extends Panel {
   }
 }
 
-namespace Private {
-  export namespace MessageHandlers {
-    export function onProfileCreateNew(
-      profileSelectWidget: ProfileSelectWidget,
-      profileCreateWidget: ProfileCreateWidget,
-    ): void {
-      profileSelectWidget.hide();
-      profileCreateWidget.show();
-    }
+function _onProfileCreateNewMessageHandler(
+  profileSelectWidget: ProfileSelectWidget,
+  profileCreateWidget: ProfileCreateWidget,
+): void {
+  profileSelectWidget.hide();
+  profileCreateWidget.show();
+}
 
-    export function onProfileRemove(
-      currentProfileName: string,
-      profiles: IProfileListItem[],
-      profileSelectWidget: ProfileSelectWidget,
-      profileConfigurationWidget: ProfileConfigurationWidget,
-    ): void {
-      if (currentProfileName === '') {
-        console.log(`You can't remove default profile`);
-        return;
-      }
-      profiles = profiles.filter((p) => p.name !== currentProfileName);
-      currentProfileName = '';
+function _onProfileRemoveMessageHandler(
+  currentProfileName: string,
+  profiles: IProfileListItem[],
+  profileSelectWidget: ProfileSelectWidget,
+  profileConfigurationWidget: ProfileConfigurationWidget,
+): void {
+  if (currentProfileName === '') {
+    console.log(`You can't remove default profile`);
+    return;
+  }
+  profiles = profiles.filter((p) => p.name !== currentProfileName);
+  currentProfileName = '';
 
-      profileSelectWidget.updateProfiles(profiles);
-      profileConfigurationWidget.updateConfiguration(profiles.filter((p) => p.name === currentProfileName)[0]);
-    }
+  profileSelectWidget.updateProfiles(profiles);
+  profileConfigurationWidget.updateConfiguration(profiles.filter((p) => p.name === currentProfileName)[0]);
+}
 
-    export function onProfileSave(comm: SparkUIComm, profiles: IProfileListItem[], profileName, configuration) {
-      comm.saved.connect(_onSave, comm);
-      Utils.updateProfileByName(profiles, profileName, configuration);
-      comm.sendSaveProfilesMessage(profiles);
-    }
+function _onProfileSaveMessageHandler(comm: SparkUIComm, profiles: IProfileListItem[], profileName, configuration) {
+  comm.saved.connect(__onSave, comm);
+  _updateProfileByName(profiles, profileName, configuration);
+  comm.sendSaveProfilesMessage(profiles);
+}
 
-    function _onSave() {
-      this.saved.disconnect(_onSave, this);
-    }
+function __onSave(this: SparkUIComm) {
+  this.saved.disconnect(__onSave, this);
+}
 
-    export function onProfileSelectionChanged(
-      profileSelectorWidget: ProfileSelectorWidget,
-      msg: SparkUIMessage,
-      profiles: IProfileListItem[],
-      profileConfigurationWidget: ProfileConfigurationWidget,
-    ): void {
-      const currentProfileName = msg.payload.selectedProfile;
-      profileSelectorWidget.currentProfileName = currentProfileName;
-      const currentProfileConfiguration = Private.Utils.getProfileByName(profiles, currentProfileName);
-      profileConfigurationWidget.updateConfiguration(currentProfileConfiguration);
-    }
+function _onProfileSelectionChangedMessageHandler(
+  profileSelectorWidget: ProfileSelectorWidget,
+  msg: SparkUIMessage,
+  profiles: IProfileListItem[],
+  profileConfigurationWidget: ProfileConfigurationWidget,
+): void {
+  const currentProfileName = msg.payload.selectedProfile;
+  profileSelectorWidget.currentProfileName = currentProfileName;
+  const currentProfileConfiguration = _getProfileByName(profiles, currentProfileName);
+  profileConfigurationWidget.updateConfiguration(currentProfileConfiguration);
+}
 
-    export function onProfileCreateConfirmed(
-      msg: SparkUIMessage,
-      profiles: IProfileListItem[],
-      profileSelectWidget: ProfileSelectWidget,
-      profileCreateWidget: ProfileCreateWidget,
-    ): void {
-      const profileName = msg.payload.profileName.trim();
-      if (profileName === '') {
-        console.log(`Profile name can't be empty.`);
-        return;
-      }
-
-      let profile = Utils.getProfileByName(profiles, profileName);
-      if (profile !== null) {
-        console.log(`Profile name '%s' already exists`, profileName);
-        return;
-      }
-
-      profile = {
-        name: profileName,
-        'spark.master': 'local[10]',
-        'spark.executor.cores': '10',
-        'spark.executor.memory': '8g',
-        properties: [],
-      };
-
-      profiles.push(profile);
-
-      profileSelectWidget.addProfile(profile);
-      profileSelectWidget.selectProfile(profile.name);
-
-      profileSelectWidget.show();
-      profileCreateWidget.hide();
-    }
-
-    export function onProfileCreateCanceled(
-      profileSelectWidget: ProfileSelectWidget,
-      profileCreateWidget: ProfileCreateWidget,
-    ): void {
-      profileSelectWidget.show();
-      profileCreateWidget.hide();
-    }
+function _onProfileCreateConfirmedMessageHandler(
+  msg: SparkUIMessage,
+  profiles: IProfileListItem[],
+  profileSelectWidget: ProfileSelectWidget,
+  profileCreateWidget: ProfileCreateWidget,
+): void {
+  const profileName = msg.payload.profileName.trim();
+  if (profileName === '') {
+    console.log(`Profile name can't be empty.`);
+    return;
   }
 
-  export namespace Utils {
-    export function getProfileByName(profiles: IProfileListItem[], profileName: string): IProfileListItem | null {
-      for (const p of profiles) {
-        if (p.name === profileName) {
-          return p;
-        }
-      }
-      return null;
-    }
+  let profile = _getProfileByName(profiles, profileName);
+  if (profile !== null) {
+    console.log(`Profile name '%s' already exists`, profileName);
+    return;
+  }
 
-    export function updateProfileByName(profiles: IProfileListItem[], profileName: string, configuration): void {
-      const properties = [];
+  profile = {
+    name: profileName,
+    'spark.master': 'local[10]',
+    'spark.executor.cores': '10',
+    'spark.executor.memory': '8g',
+    properties: [],
+  };
 
-      for (const i in profiles) {
-        if (profiles[i].name !== profileName) {
-          continue;
-        }
-        for (const propertyName in configuration.properties) {
-          properties.push({
-            name: propertyName,
-            value: configuration.properties[propertyName],
-          });
-        }
-        profiles[i] = {
-          'spark.executor.memory': configuration.executorMemory,
-          'spark.master': configuration.masterURL,
-          name: profileName,
-          'spark.executor.cores': configuration.executorCores,
-          properties: properties,
-        };
-      }
+  profiles.push(profile);
+
+  profileSelectWidget.addProfile(profile);
+  profileSelectWidget.selectProfile(profile.name);
+
+  profileSelectWidget.show();
+  profileCreateWidget.hide();
+}
+
+function _onProfileCreateCanceledMessageHandler(
+  profileSelectWidget: ProfileSelectWidget,
+  profileCreateWidget: ProfileCreateWidget,
+): void {
+  profileSelectWidget.show();
+  profileCreateWidget.hide();
+}
+
+function _getProfileByName(profiles: IProfileListItem[], profileName: string): IProfileListItem | null {
+  for (const p of profiles) {
+    if (p.name === profileName) {
+      return p;
     }
+  }
+  return null;
+}
+
+function _updateProfileByName(profiles: IProfileListItem[], profileName: string, configuration): void {
+  const properties = [];
+
+  for (const i in profiles) {
+    if (profiles[i].name !== profileName) {
+      continue;
+    }
+    for (const propertyName in configuration.properties) {
+      properties.push({
+        name: propertyName,
+        value: configuration.properties[propertyName],
+      });
+    }
+    profiles[i] = {
+      'spark.executor.memory': configuration.executorMemory,
+      'spark.master': configuration.masterURL,
+      name: profileName,
+      'spark.executor.cores': configuration.executorCores,
+      properties: properties,
+    };
   }
 }

@@ -114,7 +114,7 @@ define(['underscore', 'd3'], function (_, d3) {
         y: axisliney + this.layout.labelVPadding,
         dy: '.35em',
         text: ticks[i],
-        'text-anchor': 'middle',
+        //'text-anchor': 'middle',
       });
     }
 
@@ -174,6 +174,9 @@ define(['underscore', 'd3'], function (_, d3) {
       .append('text')
       .attr('id', function (d) {
         return d.id;
+      })
+      .attr('class', function (d) {
+        return d.class;
       })
       .attr('x', function (d) {
         return d.x;

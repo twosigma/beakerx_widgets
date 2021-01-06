@@ -37,8 +37,8 @@ export class CyclingDisplayBoxView extends JupyterBoxView {
   private interval: any;
   private period: number;
 
-  initialize() {
-    super.initialize.apply(this, arguments);
+  initialize(...args) {
+    super.initialize.apply(this, args);
     this.interval = undefined;
     this.period = this.model.get('period');
   }

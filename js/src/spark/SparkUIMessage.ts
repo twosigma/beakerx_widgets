@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-import { Message } from '@phosphor/messaging';
+import { Message } from '@lumino/messaging';
 
 export type SparkUI2MessageTypes =
   | 'start-clicked'
