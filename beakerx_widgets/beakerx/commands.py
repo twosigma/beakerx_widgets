@@ -30,9 +30,6 @@ def install_subparser(subparser):
     install_parser.add_argument("--prefix",
                                 help="location of the environment to install into",
                                 default=sys.prefix)
-    install_parser.add_argument("--lab",
-                                help="install lab extension",
-                                action='store_true')
     return subparser
 
 
@@ -42,9 +39,6 @@ def uninstall_subparser(subparser):
     uninstall_parser.add_argument("--prefix",
                                   help="location of the environment to uninstall from",
                                   default=sys.prefix)
-    uninstall_parser.add_argument("--lab",
-                                  help="uninstall lab extension",
-                                  action='store_true')
     return subparser
 
 

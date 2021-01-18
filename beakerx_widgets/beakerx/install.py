@@ -27,6 +27,12 @@ import pkg_resources
 from jupyter_core import paths
 from traitlets.config.manager import BaseJSONConfigManager
 
+try:
+    import jupyterlab
+    LAB_VERSION=int(jupyterlab.__version__[0])
+except:
+    LAB_VERSION=None
+
 
 def _base_classpath_for(kernel):
     return pkg_resources.resource_filename(
@@ -123,10 +129,13 @@ def install(args):
         subprocess.check_call(["jupyter", "nbextension", "install", "beakerx", "--py", "--symlink", "--sys-prefix"])
     subprocess.check_call(["jupyter", "nbextension", "enable", "beakerx", "--py", "--sys-prefix"])
     subprocess.check_call(["jupyter", "serverextension", "enable", "beakerx", "--py", "--sys-prefix"])
-    if args.lab:
+    if LAB_VERSION is not None:
         subprocess.call(["jupyter", "labextension", "install", "@jupyter-widgets/jupyterlab-manager", "--no-build"],
                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        subprocess.check_call(["jupyter", "labextension", "install", "@beakerx/beakerx-widgets"])
+        if LAB_VERSION == 1:
+            subprocess.check_call(["jupyter", "labextension", "install", "@beakerx/beakerx-widgets@2.0"])
+        else:
+            subprocess.check_call(["jupyter", "labextension", "install", "@beakerx/beakerx-widgets@2.1"])
 
     _install_kernelspec_manager(args.prefix)
     _install_magics()
@@ -137,8 +146,9 @@ def uninstall(args):
     subprocess.check_call(["jupyter", "nbextension", "disable", "beakerx", "--py", "--sys-prefix"])
     subprocess.check_call(["jupyter", "nbextension", "uninstall", "beakerx", "--py", "--sys-prefix"])
     subprocess.check_call(["jupyter", "serverextension", "disable", "beakerx", "--py", "--sys-prefix"])
-    subprocess.check(["jupyter", "labextension", "uninstall", "@beakerx/beakerx-widgets"],
-                     stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    if LAB_VERSION is not None:
+        subprocess.check(["jupyter", "labextension", "uninstall", "@beakerx/beakerx-widgets"],
+                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     _install_kernelspec_manager(args.prefix, disable=True)
 
 
