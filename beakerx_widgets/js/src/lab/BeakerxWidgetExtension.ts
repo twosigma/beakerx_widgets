@@ -25,7 +25,7 @@ import {
   extendHighlightModes,
   registerCommentOutCmd,
   registerCommTargets,
-  //UIOptionFeaturesHelper,
+  UIOptionFeaturesHelper,
 } from './plugin';
 import { AutoTranslation } from './plugin/autoTranslation';
 
@@ -73,7 +73,7 @@ export class BeakerxWidgetExtension implements DocumentRegistry.WidgetExtension 
         return originalProcessFn.call(app.commands, event);
       };
       console.debug(settings);
-      //new UIOptionFeaturesHelper(app, settings, panel, labShell).registerFeatures();
+      new UIOptionFeaturesHelper(app, settings, panel, labShell).registerFeatures();
     });
 
     return new DisposableDelegate(() => {});

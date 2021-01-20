@@ -48,7 +48,7 @@ jstargets = [
 
 package_data_spec = {
     name: [
-        'static/*.*js*',
+        'static/*',
         'labextension/*'
     ]
 }

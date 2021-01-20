@@ -143,23 +143,26 @@ class JavaDoc(web.StaticFileHandler, IPythonHandler):
         return web.StaticFileHandler.get(self, path)
 
 
-def load_jupyter_server_extension(nbapp):
+def setup_handlers(web_app, url_path):
     start_autotranslation_server()
 
-    web_app = nbapp.web_app
     host_pattern = '.*$'
-    settings_route_pattern = url_path_join(web_app.settings['base_url'], '/beakerx', '/settings')
-    spark_metrics_executors_route_pattern = url_path_join(web_app.settings['base_url'], '/beakerx',
-                                                          '/sparkmetrics/executors')
-    version_route_pattern = url_path_join(web_app.settings['base_url'], '/beakerx', '/version')
-    javadoc_route_pattern = url_path_join(web_app.settings['base_url'], '/static', '/javadoc/(.*)')
-    javadoc_lab_route_pattern = url_path_join(web_app.settings['base_url'], '/javadoc/(.*)')
-    beakerx__rest_route_pattern = url_path_join(web_app.settings['base_url'], '/beakerx', '/rest')
+    base_url = web_app.settings["base_url"]
+    
+    settings_route_pattern = url_path_join(base_url, url_path, '/settings')
+    spark_metrics_executors_route_pattern = url_path_join(base_url, url_path, '/sparkmetrics/executors')
+    version_route_pattern = url_path_join(base_url, url_path, '/version')
+    javadoc_route_pattern = url_path_join(base_url, '/static', '/javadoc/(.*)')
+    javadoc_lab_route_pattern = url_path_join(base_url, '/javadoc/(.*)')
+    beakerx__rest_route_pattern = url_path_join(base_url, url_path, '/rest')
 
-    web_app.add_handlers(host_pattern, [(settings_route_pattern, SettingsHandler)])
-    web_app.add_handlers(host_pattern, [(spark_metrics_executors_route_pattern, SparkMetricsExecutorsHandler)])
-    web_app.add_handlers(host_pattern, [(version_route_pattern, VersionHandler)])
-    web_app.add_handlers(host_pattern, [(javadoc_route_pattern, JavaDoc)])
-    web_app.add_handlers(host_pattern, [(javadoc_lab_route_pattern, JavaDoc)])
-    web_app.add_handlers(host_pattern, [(beakerx__rest_route_pattern, BeakerxRestHandler)])
-    nbapp.log.info("[beakerx] enabled")
+    handlers = [
+        (settings_route_pattern, SettingsHandler),
+        (spark_metrics_executors_route_pattern, SparkMetricsExecutorsHandler),
+        (version_route_pattern, VersionHandler),
+        (javadoc_route_pattern, JavaDoc),
+        (javadoc_lab_route_pattern, JavaDoc),
+        (beakerx__rest_route_pattern, BeakerxRestHandler)
+    ]
+
+    web_app.add_handlers(host_pattern, handlers)

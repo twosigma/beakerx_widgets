@@ -17,7 +17,6 @@
 import 'flatpickr/dist/flatpickr.css';
 import 'jquery-ui/themes/base/all.css';
 import 'jquery-ui.combobox/lib/jquery-ui.combobox.css';
-import '@lumino/widgets/style/index.css';
 import '../css/beakerx_widgets.css';
 import '../css/beakerx_widgets_lab.css';
 
