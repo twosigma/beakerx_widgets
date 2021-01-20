@@ -144,7 +144,6 @@ export const BeakexWidgetsFormsPlugin: JupyterFrontEndPlugin<void> = {
         SparkFoldoutView,
       },
     });
-
     app.docRegistry.addWidgetExtension('Notebook', new BeakerxWidgetExtension(app, settings, labShell));
   },
   autoStart: true,
@@ -216,4 +215,12 @@ export const TreePlugin: JupyterFrontEndPlugin<void> = {
   autoStart: true,
 };
 
-export default [BeakexWidgetsFormsPlugin, RequireJsPlugin, BigJsPlugin, TreePlugin] as JupyterFrontEndPlugin<any>[];
+
+const plugins: JupyterFrontEndPlugin<any>[] = [
+  BeakexWidgetsFormsPlugin,
+  RequireJsPlugin,
+  BigJsPlugin,
+  TreePlugin
+];
+
+export default plugins;

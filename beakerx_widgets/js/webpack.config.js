@@ -60,9 +60,9 @@ var rules = [
   },
 ];
 
-const BEAKERX_STATIC_PATH = path.resolve(__dirname, '../beakerx_widgets/beakerx/static');
+const BEAKERX_STATIC_PATH = path.resolve(__dirname, '../beakerx/static');
 const BEAKERX_DIST_PATH = path.resolve(__dirname, './dist/');
-const BEAKERX_MODE = 'production';
+const BEAKERX_MODE = 'development';
 
 module.exports = [
   // Notebook extension
@@ -76,7 +76,6 @@ module.exports = [
     devtool: 'inline-source-map',
     externals: [
       '@jupyter-widgets/base',
-      '@jupyter-widgets/controls',
       'jquery',
       'base/js/dialog',
       'base/js/events',
@@ -103,7 +102,7 @@ module.exports = [
     module: {
       rules: rules,
     },
-    externals: ['@jupyter-widgets/base', '@jupyter-widgets/controls', 'jquery'],
+    externals: ['@jupyter-widgets/base', 'jquery'],
     mode: BEAKERX_MODE,
   },
   // beakerx_widgets bundle for the classic notebook
@@ -118,7 +117,7 @@ module.exports = [
     module: {
       rules: rules,
     },
-    externals: ['@jupyter-widgets/base', '@jupyter-widgets/controls', 'jquery'],
+    externals: ['@jupyter-widgets/base', 'jquery'],
     mode: BEAKERX_MODE,
   },
   // beakerx_widgets bundle for unpkg.
@@ -134,7 +133,7 @@ module.exports = [
     module: {
       rules: rules,
     },
-    externals: ['@jupyter-widgets/base', '@jupyter-widgets/controls'],
+    externals: ['@jupyter-widgets/base'],
     mode: BEAKERX_MODE,
   },
 ];

@@ -25,14 +25,16 @@ import {
   extendHighlightModes,
   registerCommentOutCmd,
   registerCommTargets,
-  UIOptionFeaturesHelper,
+  //UIOptionFeaturesHelper,
 } from './plugin';
 import { AutoTranslation } from './plugin/autoTranslation';
 
 const PlotApi = require('../plots/plotsrc/_js/plotApi');
 
 export class BeakerxWidgetExtension implements DocumentRegistry.WidgetExtension {
-  constructor(private app: JupyterFrontEnd, private settings: ISettingRegistry, private labShell: ILabShell) {}
+  constructor(private app: JupyterFrontEnd, private settings: ISettingRegistry, private labShell: ILabShell) {
+    console.debug("hi there", settings);
+  }
 
   createNew(panel: NotebookPanel, context: DocumentRegistry.IContext<INotebookModel>): DisposableDelegate {
     const app = this.app;
@@ -70,8 +72,8 @@ export class BeakerxWidgetExtension implements DocumentRegistry.WidgetExtension 
 
         return originalProcessFn.call(app.commands, event);
       };
-
-      new UIOptionFeaturesHelper(app, settings, panel, labShell).registerFeatures();
+      console.debug(settings);
+      //new UIOptionFeaturesHelper(app, settings, panel, labShell).registerFeatures();
     });
 
     return new DisposableDelegate(() => {});
