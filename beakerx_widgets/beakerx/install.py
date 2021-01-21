@@ -125,8 +125,7 @@ def make_parser():
 def install(args):
     if sys.platform == 'win32':
         subprocess.check_call(["jupyter", "nbextension", "install", "beakerx", "--py", "--sys-prefix"])
-    else:
-        subprocess.check_call(["jupyter", "nbextension", "install", "beakerx", "--py", "--symlink", "--sys-prefix"])
+        
     subprocess.check_call(["jupyter", "nbextension", "enable", "beakerx", "--py", "--sys-prefix"])
     subprocess.check_call(["jupyter", "serverextension", "enable", "beakerx", "--py", "--sys-prefix"])
     if LAB_VERSION is not None and LAB_VERSION != 3:
@@ -134,8 +133,8 @@ def install(args):
                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         if LAB_VERSION == 1:
             subprocess.check_call(["jupyter", "labextension", "install", "@beakerx/beakerx-widgets@2.0"])
-        else:
-            subprocess.check_call(["jupyter", "labextension", "install", "@beakerx/beakerx-widgets@2.1"])
+    #else:
+    #subprocess.check_call(["jupyter", "labextension", "install", "@beakerx/beakerx-widgets@2.1"])
 
     _install_kernelspec_manager(args.prefix)
     _install_magics()

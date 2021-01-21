@@ -9,7 +9,7 @@
     "jupyterlab-extension"
   ],
   "author": "Two Sigma Open Source, LLC",
-  "main": "lib/index.js",
+  "main": "lib/jupyterlab-plugin",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -34,7 +34,6 @@
     "prettier:fix": "prettier --check src/**/*.{ts,js} --write"
   },
   "devDependencies": {
-    "@jupyter-widgets/controls": "^2.0.0 || ^3.0.0",
     "@jupyterlab/application": "^2.2.4 || ^3.0.3",
     "@jupyterlab/apputils": "^2.2.4 || ^3.0.2",
     "@jupyterlab/builder": "^3.0.1",
@@ -73,6 +72,7 @@
   },
   "dependencies": {
     "@jupyter-widgets/base": "^2.0.2 || ^3.0.0 || ^4.0.0",
+    "@jupyter-widgets/controls": "^2.0.0 || ^3.0.0",
     "@lumino/commands": "^1.12.0",
     "@lumino/coreutils": "^1.5.3",
     "@lumino/disposable": "^1.4.3",
