@@ -133,8 +133,8 @@ def install(args):
                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         if LAB_VERSION == 1:
             subprocess.check_call(["jupyter", "labextension", "install", "@beakerx/beakerx-widgets@2.0"])
-    #else:
-    #subprocess.check_call(["jupyter", "labextension", "install", "@beakerx/beakerx-widgets@2.1"])
+        else:
+            subprocess.check_call(["jupyter", "labextension", "install", "@beakerx/beakerx-widgets@2.1"])
 
     _install_kernelspec_manager(args.prefix)
     _install_magics()
