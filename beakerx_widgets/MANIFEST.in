@@ -1,5 +1,9 @@
-recursive-include beakerx/static *
+graft beakerx/static
+graft beakerx/labextension
+
+graft beakerx/js
 
 include LICENSE
 include NOTICE
-include setupbase.py
+include pyproject.toml
+include beakerx.json

@@ -17,7 +17,6 @@
 import 'flatpickr/dist/flatpickr.css';
 import 'jquery-ui/themes/base/all.css';
 import 'jquery-ui.combobox/lib/jquery-ui.combobox.css';
-import '@lumino/widgets/style/index.css';
 import '../css/beakerx_widgets.css';
 import '../css/beakerx_widgets_lab.css';
 
@@ -144,7 +143,6 @@ export const BeakexWidgetsFormsPlugin: JupyterFrontEndPlugin<void> = {
         SparkFoldoutView,
       },
     });
-
     app.docRegistry.addWidgetExtension('Notebook', new BeakerxWidgetExtension(app, settings, labShell));
   },
   autoStart: true,
@@ -216,4 +214,12 @@ export const TreePlugin: JupyterFrontEndPlugin<void> = {
   autoStart: true,
 };
 
-export default [BeakexWidgetsFormsPlugin, RequireJsPlugin, BigJsPlugin, TreePlugin] as JupyterFrontEndPlugin<any>[];
+
+const plugins: JupyterFrontEndPlugin<any>[] = [
+  BeakexWidgetsFormsPlugin,
+  RequireJsPlugin,
+  BigJsPlugin,
+  TreePlugin
+];
+
+export default plugins;

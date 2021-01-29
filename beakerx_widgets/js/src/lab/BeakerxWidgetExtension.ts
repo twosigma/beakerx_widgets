@@ -70,7 +70,6 @@ export class BeakerxWidgetExtension implements DocumentRegistry.WidgetExtension 
 
         return originalProcessFn.call(app.commands, event);
       };
-
       new UIOptionFeaturesHelper(app, settings, panel, labShell).registerFeatures();
     });
 
