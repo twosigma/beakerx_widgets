@@ -40,11 +40,15 @@
   }
 
   &.icon-close:before {
-    content: "\f00d" !important;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f00d";
   }
 
   &.icon-add:before {
-    content: "\f067" !important;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f067";
   }
 
   &.icon-bg:before {
