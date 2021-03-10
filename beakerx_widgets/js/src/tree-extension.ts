@@ -15,6 +15,9 @@
  */
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
+window.beakerx = {};
+window.beakerxHolder = {};
+
 import './public-path';
 import $ from 'jquery';
 import { TreeWidget } from './tree';

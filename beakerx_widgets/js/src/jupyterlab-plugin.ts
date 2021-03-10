@@ -14,6 +14,9 @@
  *  limitations under the License.
  */
 
+window.beakerx = {};
+window.beakerxHolder = {};
+
 import 'flatpickr/dist/flatpickr.css';
 import 'jquery-ui/themes/base/all.css';
 import 'jquery-ui.combobox/lib/jquery-ui.combobox.css';
