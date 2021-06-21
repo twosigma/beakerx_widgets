@@ -38,6 +38,7 @@ export class BeakerxWidgetExtension implements DocumentRegistry.WidgetExtension 
     const app = this.app;
     const settings = this.settings;
     const labShell = this.labShell;
+
     Promise.all([panel.sessionContext.ready, context.ready]).then(function () {
       extendHighlightModes(panel);
       enableInitializationCellsFeature(panel);
@@ -57,14 +58,16 @@ export class BeakerxWidgetExtension implements DocumentRegistry.WidgetExtension 
       plotApiList.setActiveLabPanel(panel);
       labShell.activeChanged.connect((sender, args) => {
         if (args.newValue == panel) {
-          window.beakerx = window.beakerxHolder[panel.context.sessionContext.session.kernel.id];
-          plotApiList.setActiveLabPanel(panel);
+          panel.sessionContext.ready.then(() => {
+            window.beakerx = window.beakerxHolder[panel.context.sessionContext.session.kernel.id];
+            plotApiList.setActiveLabPanel(panel);
+          });
         }
       });
 
       const originalProcessFn = app.commands.processKeydownEvent;
       app.commands.processKeydownEvent = (event) => {
-        if (window.beakerx.tableFocused) {
+        if (window.beakerx && window.beakerx.tableFocused) {
           return false;
         }
 
