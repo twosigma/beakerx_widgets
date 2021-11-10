@@ -107,7 +107,8 @@ setup_args = dict(
         'requests',
         'pandas',
         'bottle',
-        'pyspark'
+        'pyspark',
+        'jupyter-server'
     ],
     python_requires='>=3',
     zip_safe=False,
