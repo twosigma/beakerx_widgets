@@ -1,6 +1,6 @@
 {
   "name": "@beakerx/beakerx-widgets",
-  "version": "2.3.9",
+  "version": "2.3.11",
   "description": "BeakerX: Beaker EasyForms, Magics, Plots and Spark Extension for Jupyter Lab 2.x",
   "keywords": [
     "jupyter",
@@ -35,15 +35,15 @@
     "prettier:fix": "prettier --check src/**/*.{ts,js} --write"
   },
   "devDependencies": {
-    "@jupyterlab/application": "^2.2.4 || ^3.0.3",
-    "@jupyterlab/apputils": "^2.2.4 || ^3.0.2",
-    "@jupyterlab/builder": "^3.0.1",
-    "@jupyterlab/cells": "^2.2.4 || ^3.0.3",
-    "@jupyterlab/codemirror": "^2.2.2 || ^3.0.2",
-    "@jupyterlab/coreutils": "^4.2.3 || ^5.0.1",
-    "@jupyterlab/docregistry": "^2.2.2 || ^3.0.3",
-    "@jupyterlab/notebook": "^2.2.4 || ^3.0.3",
-    "@jupyterlab/settingregistry": "^2.2.3 || ^3.0.1",
+    "@jupyterlab/application": "^3.2.5",
+    "@jupyterlab/apputils": "^3.2.5",
+    "@jupyterlab/builder": "^3.2.5",
+    "@jupyterlab/cells": "^3.2.5",
+    "@jupyterlab/codemirror": "^3.2.5",
+    "@jupyterlab/coreutils": "^5.2.5",
+    "@jupyterlab/docregistry": "^3.2.5",
+    "@jupyterlab/notebook": "^3.2.5",
+    "@jupyterlab/settingregistry": "^3.2.5",
     "@types/big.js": "^4.0.5",
     "@types/chai": "^4.2.11",
     "@types/codemirror": "^0.0.76",
@@ -69,12 +69,12 @@
     "style-loader": "^1.2.1",
     "typescript": "^3.9.7",
     "url-loader": "^4.1.0",
-    "webpack": "^4.43.0",
+    "webpack": "^4.46.0",
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
-    "@jupyter-widgets/base": "^2.0.2 || ^3.0.0 || ^4.0.0",
-    "@jupyter-widgets/controls": "^2.0.0 || ^3.0.0",
+    "@jupyter-widgets/base": "^4.0.0",
+    "@jupyter-widgets/controls": "^3.0.0",
     "@lumino/commands": "^1.12.0",
     "@lumino/coreutils": "^1.5.3",
     "@lumino/disposable": "^1.4.3",
