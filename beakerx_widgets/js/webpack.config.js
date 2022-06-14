@@ -1,6 +1,13 @@
 const path = require('path');
 const pkg = require('./package.json');
 
+const crypto = require('crypto');
+
+// Workaround for loaders using "md4" by default, which is not supported in FIPS-compliant OpenSSL
+// Xref: https://github.com/jupyterlab/jupyterlab/pull/11249
+const cryptoOrigCreateHash = crypto.createHash;
+crypto.createHash = (algorithm) => cryptoOrigCreateHash(algorithm == 'md4' ? 'sha256' : algorithm);
+
 var rules = [
   {
     test: /\.css$/i,
@@ -72,6 +79,7 @@ module.exports = [
       filename: 'extension.js',
       path: BEAKERX_STATIC_PATH,
       libraryTarget: 'amd',
+      hashFunction: 'sha256',
     },
     devtool: 'inline-source-map',
     externals: [
@@ -97,6 +105,7 @@ module.exports = [
       filename: 'tree-extension.js',
       path: BEAKERX_STATIC_PATH,
       libraryTarget: 'amd',
+      hashFunction: 'sha256',
     },
     devtool: 'inline-source-map',
     module: {
@@ -112,6 +121,7 @@ module.exports = [
       filename: 'index.js',
       path: BEAKERX_STATIC_PATH,
       libraryTarget: 'amd',
+      hashFunction: 'sha256',
     },
     devtool: 'inline-source-map',
     module: {
@@ -128,6 +138,7 @@ module.exports = [
       path: BEAKERX_DIST_PATH,
       libraryTarget: 'amd',
       // publicPath: 'https://unpkg.com/' + pkg.name + '@' + pkg.version + '/dist/'
+      hashFunction: 'sha256',
     },
     devtool: 'inline-source-map',
     module: {
