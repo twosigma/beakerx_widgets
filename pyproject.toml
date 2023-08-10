@@ -8,12 +8,18 @@ readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.8"
 classifiers = [
+    "License :: OSI Approved :: Apache Software License",
+    "Development Status :: 5 - Production/Stable",
+    "Framework :: IPython",
+    "Framework :: Jupyter",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Topic :: Multimedia :: Graphics",
     "Framework :: Jupyter",
     "Framework :: Jupyter :: JupyterLab",
     "Framework :: Jupyter :: JupyterLab :: 4",
     "Framework :: Jupyter :: JupyterLab :: Extensions",
     "Framework :: Jupyter :: JupyterLab :: Extensions :: Prebuilt",
-    "License :: OSI Approved :: BSD License",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.8",
@@ -22,8 +28,17 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
 ]
 dependencies = [
+    "beakerx_base>=2.0.1",
+    "requests",
+    "pandas",
+    "bottle",
+    "pyspark",
+    "jupyter-server",
 ]
 dynamic = ["version", "description", "authors", "urls", "keywords"]
+
+[project.scripts]
+beakerx = "beakerx:run"
 
 [tool.hatch.version]
 source = "nodejs"
@@ -32,11 +47,13 @@ source = "nodejs"
 fields = ["description", "authors", "urls"]
 
 [tool.hatch.build.targets.sdist]
-artifacts = ["beakerx/labextension"]
+artifacts = ["beakerx/labextension", "beakerx/static", "NOTICE", "beakerx.json"]
 exclude = [".github", "binder"]
 
 [tool.hatch.build.targets.wheel.shared-data]
 "beakerx/labextension" = "share/jupyter/labextensions/@beakerx/beakerx-widgets"
+"beakerx/static" = "share/jupyter/nbextensions/beakerx"
+"beakerx.json" = "etc/jupyter/nbconfig/notebook.d/beakerx.json"
 "install.json" = "share/jupyter/labextensions/@beakerx/beakerx-widgets/install.json"
 
 [tool.hatch.build.hooks.version]

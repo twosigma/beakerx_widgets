@@ -3,20 +3,21 @@
 *.iml
 
 # Javascript compiled files
-beakerx_widgets/js/css
-beakerx_widgets/js/dist
-beakerx_widgets/js/lib
+css
+dist
+lib
 
 # Karma tests coverage
-beakerx_widgets/js/coverage
+coverage
 
 # JS bundles
 beakerx_widgets/beakerx/static
 beakerx_widgets/beakerx/labextension
 
 # Node modules
-beakerx_widgets/js/node_modules
+node_modules
 
+.yarn/
 yarn-error.log
 
 # Python
@@ -39,3 +40,4 @@ gradlew.bat
 # conda
 dist
 
+tsconfig.tsbuildinfo

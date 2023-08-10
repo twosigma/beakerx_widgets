@@ -4,10 +4,12 @@
   "description": "BeakerX: Beaker EasyForms, Magics, Plots and Spark Extension for Jupyter Lab 2.x",
   "homepage": "http://beakerx.com/",
   "keywords": [
+    "beakerx",
     "jupyter",
     "jupyterlab",
     "jupyterlab notebook",
-    "jupyterlab-extension"
+    "jupyterlab-extension",
+    "widgets"
   ],
   "author": {
     "name": "Two Sigma Open Source, LLC",
@@ -27,7 +29,7 @@
     "build:js": "tsc",
     "build:labextension": "yarn run build && jupyter labextension build .",
     "build:labextension:dev": "yarn run build && jupyter labextension build --development True .",
-    "clean": "rimraf lib css dist ../beakerx/labextension",
+    "clean": "rimraf lib css dist beakerx/labextension",
     "lint": "eslint src/ --ext .ts",
     "lint:fix": "eslint src/ --ext .ts --fix",
     "prepublish": "yarn run build",
@@ -105,8 +107,7 @@
     "css/",
     "dist/",
     "lib/",
-    "fonts/",
-    "style/index.js"
+    "fonts/"
   ],
   "jupyterlab": {
     "extension": "lib/jupyterlab-plugin",
@@ -180,7 +181,7 @@
   ],
   "prettier": {
     "singleQuote": true,
-    "trailingComma": "none",
+    "trailingComma": "all",
     "arrowParens": "avoid",
     "endOfLine": "auto",
     "overrides": [
