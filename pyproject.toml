@@ -69,11 +69,11 @@ ensured-targets = [
 skip-if-exists = ["beakerx/labextension/static/style.js"]
 
 [tool.hatch.build.hooks.jupyter-builder.build-kwargs]
-build_cmd = "build:prod"
+build_cmd = "build:labextension"
 npm = ["jlpm"]
 
 [tool.hatch.build.hooks.jupyter-builder.editable-build-kwargs]
-build_cmd = "install:extension"
+build_cmd = "build:labextension:dev"
 npm = ["jlpm"]
 source_dir = "src"
 build_dir = "beakerx/labextension"
@@ -85,7 +85,7 @@ version_cmd = "hatch version"
 before-build-npm = [
     "python -m pip install 'jupyterlab>=4.0.0,<5'",
     "jlpm",
-    "jlpm build:prod"
+    "jlpm build:labextension"
 ]
 before-build-python = ["jlpm clean:all"]
 

@@ -22,17 +22,17 @@
     "url": "https://github.com/twosigma/beakerx_widgets.git"
   },
   "scripts": {
-    "build": "yarn run clean && yarn run build:css && yarn run build:js && webpack",
-    "build:css": "yarn run build:css:classic && yarn run build:css:lab",
+    "build": "npm run clean && npm run build:css && npm run build:js && webpack",
+    "build:css": "npm run build:css:classic && npm run build:css:lab",
     "build:css:classic": "sass --no-source-map --load-path node_modules sass/beakerx_widgets.scss css/beakerx_widgets.css",
     "build:css:lab": "sass --no-source-map --load-path node_modules sass/beakerx_widgets_lab.scss css/beakerx_widgets_lab.css",
     "build:js": "tsc",
-    "build:labextension": "yarn run build && jupyter labextension build .",
-    "build:labextension:dev": "yarn run build && jupyter labextension build --development True .",
-    "clean": "rimraf lib css dist beakerx/labextension",
+    "build:labextension": "npm run build && jupyter labextension build .",
+    "build:labextension:dev": "npm run build && jupyter labextension build --development True .",
+    "clean": "rimraf lib css dist beakerx/labextension tsconfig.tsbuildinfo",
     "lint": "eslint src/ --ext .ts",
     "lint:fix": "eslint src/ --ext .ts --fix",
-    "prepublish": "yarn run build",
+    "prepublish": "npm run build",
     "prettier": "prettier --check src/**/*.{ts,js}",
     "prettier:fix": "prettier --check src/**/*.{ts,js} --write",
     "test": "karma start --single-run",
@@ -177,6 +177,5 @@
       "selector-no-vendor-prefix": null,
       "value-no-vendor-prefix": null
     }
-  },
-  "styleModule": "style/index.js"
+  }
 }

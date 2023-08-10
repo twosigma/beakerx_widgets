@@ -85,7 +85,6 @@ jobs:
       shell: bash -l {0}
       run: |
         conda activate beakerx
-        cd beakerx_widgets
         pip install -r requirements.txt --verbose
         beakerx install
     - name: Run e2e tests (Widgets)

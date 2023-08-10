@@ -11,8 +11,8 @@ lib
 coverage
 
 # JS bundles
-beakerx_widgets/beakerx/static
-beakerx_widgets/beakerx/labextension
+beakerx/static
+beakerx/labextension
 
 # Node modules
 node_modules

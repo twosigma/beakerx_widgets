@@ -67,7 +67,7 @@ var rules = [
   },
 ];
 
-const BEAKERX_STATIC_PATH = path.resolve(__dirname, '../beakerx/static');
+const BEAKERX_STATIC_PATH = path.resolve(__dirname, 'beakerx/static');
 const BEAKERX_DIST_PATH = path.resolve(__dirname, './dist/');
 const BEAKERX_MODE = 'development';
 
