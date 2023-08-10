@@ -18,26 +18,17 @@ window.beakerx = {};
 window.beakerxHolder = {};
 
 import 'flatpickr/dist/flatpickr.css';
-import 'jquery-ui/themes/base/all.css';
 import 'jquery-ui.combobox/lib/jquery-ui.combobox.css';
+import 'jquery-ui/themes/base/all.css';
 import '../css/beakerx_widgets.css';
 import '../css/beakerx_widgets_lab.css';
 
-import { ILabShell, ILayoutRestorer, JupyterFrontEnd, JupyterFrontEndPlugin } from '@jupyterlab/application';
 import { IJupyterWidgetRegistry } from '@jupyter-widgets/base';
-import { version } from './version';
-import {
-  CyclingDisplayBoxModel,
-  CyclingDisplayBoxView,
-  GridView,
-  GridViewModel,
-  HTMLModel,
-  HTMLPreModel,
-  HTMLPreView,
-  HTMLView,
-  TabModel,
-  TabView,
-} from './output';
+import { ILabShell, ILayoutRestorer, JupyterFrontEnd, JupyterFrontEndPlugin } from '@jupyterlab/application';
+import { ICommandPalette, WidgetTracker } from '@jupyterlab/apputils';
+import { PageConfig } from '@jupyterlab/coreutils';
+import { ISettingRegistry } from '@jupyterlab/settingregistry';
+import { JSONExt } from '@lumino/coreutils';
 import {
   CheckboxModel,
   CheckboxView,
@@ -58,6 +49,21 @@ import {
   TextModel,
   TextView,
 } from './forms';
+import { BeakerxWidgetExtension } from './lab/BeakerxWidgetExtension';
+import { RequirejsLoader } from './lab/plugin/requirejs';
+import {
+  CyclingDisplayBoxModel,
+  CyclingDisplayBoxView,
+  GridView,
+  GridViewModel,
+  HTMLModel,
+  HTMLPreModel,
+  HTMLPreView,
+  HTMLView,
+  TabModel,
+  TabView,
+} from './output';
+import { PlotModel, PlotView } from './plots';
 import {
   FoldoutModel,
   FoldoutView,
@@ -74,14 +80,8 @@ import {
   SpinnerModel,
   SpinnerView,
 } from './spark';
-import { PlotModel, PlotView } from './plots';
-import { BeakerxWidgetExtension } from './lab/BeakerxWidgetExtension';
-import { PageConfig } from '@jupyterlab/coreutils';
-import { RequirejsLoader } from './lab/plugin/requirejs';
-import { ICommandPalette, WidgetTracker } from '@jupyterlab/apputils';
-import { JSONExt } from '@lumino/coreutils';
 import { TreeWidget } from './tree';
-import { ISettingRegistry } from '@jupyterlab/settingregistry';
+import { version } from './version';
 
 export const BeakexWidgetsFormsPlugin: JupyterFrontEndPlugin<void> = {
   id: 'beakerx:plugin',
