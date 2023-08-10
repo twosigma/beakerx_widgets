@@ -41,3 +41,4 @@ gradlew.bat
 dist
 
 tsconfig.tsbuildinfo
+beakerx/_version.py

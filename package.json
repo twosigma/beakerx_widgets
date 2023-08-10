@@ -29,7 +29,7 @@
     "build:js": "tsc",
     "build:labextension": "npm run build && jupyter labextension build .",
     "build:labextension:dev": "npm run build && jupyter labextension build --development True .",
-    "clean": "rimraf lib css dist beakerx/labextension tsconfig.tsbuildinfo",
+    "clean": "rimraf lib css dist beakerx/static beakerx/labextension tsconfig.tsbuildinfo",
     "lint": "eslint src/ --ext .ts",
     "lint:fix": "eslint src/ --ext .ts --fix",
     "prepublish": "npm run build",
@@ -105,7 +105,7 @@
   },
   "files": [
     "css/",
-    "dist/",
+    "dist/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff,woff2,ttf}",
     "lib/",
     "fonts/"
   ],
