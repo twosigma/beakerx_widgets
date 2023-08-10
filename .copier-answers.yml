@@ -1,0 +1,15 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v4.1.0
+_src_path: https://github.com/jupyterlab/extension-template
+author_email: beakerx-feedback@twosigma.com
+author_name: Two Sigma Open Source, LLC
+has_binder: false
+has_settings: false
+kind: frontend
+labextension_name: '@beakerx/beakerx-widgets'
+project_short_description: 'BeakerX: Beaker EasyForms, Magics, Plots and Spark Extension
+    for Jupyter Lab 2.x'
+python_name: beakerx
+repository: https://github.com/twosigma/beakerx_widgets.git
+test: false
+

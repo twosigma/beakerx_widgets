@@ -1,25 +1,25 @@
 {
   "compilerOptions": {
     "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "composite": true,
     "declaration": true,
     "esModuleInterop": true,
+    "incremental": true,
     "module": "CommonJS",
-    "moduleResolution": "Node",
+    "moduleResolution": "node",
     "noEmitOnError": true,
+    "noImplicitAny": true,
     "noUnusedLocals": true,
-    "outDir": "lib",
     "preserveWatchOutput": true,
-    "rootDir": "src",
-    "inlineSourceMap": true,
+    "resolveJsonModule": true,
+    "outDir": "lib",
     "skipLibCheck": true,
-    "strictNullChecks": false,
-    "target": "ES2017",
+    "rootDir": "src",
+    "strict": true,
+    "strictNullChecks": true,
+    "target": "ES2018",
     "types": ["mocha", "node"],
-    "lib": [
-      "ES2017",
-      "dom",
-      "es2015.proxy"
-    ]
   },
   "include": [
     "./src/**/*",
