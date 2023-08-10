@@ -35,27 +35,27 @@ export class PlotFocus {
   static remapFocusRegion(model): void {
     const focus = model.userFocus;
 
-    if (focus.xl != null) {
+    if (focus.xl !== null) {
       focus.xl = model.xAxis.getPercent(focus.xl);
     }
 
-    if (focus.xr != null) {
+    if (focus.xr !== null) {
       focus.xr = model.xAxis.getPercent(focus.xr);
     }
 
-    if (focus.yl != null) {
+    if (focus.yl !== null) {
       focus.yl = model.yAxis.getPercent(focus.yl);
     }
 
-    if (focus.yr != null) {
+    if (focus.yr !== null) {
       focus.yr = model.yAxis.getPercent(focus.yr);
     }
 
-    if (focus.yl_r != null && model.yAxisR) {
+    if (focus.yl_r !== null && model.yAxisR) {
       focus.yl_r = model.yAxisR.getPercent(focus.yl_r);
     }
 
-    if (focus.yr_r != null && model.yAxisR) {
+    if (focus.yr_r !== null && model.yAxisR) {
       focus.yr_r = model.yAxisR.getPercent(focus.yr_r);
     }
   }
@@ -123,11 +123,11 @@ export class PlotFocus {
       yr_r: model.yAxisR !== null ? model.userFocus.yr_r : model.userFocus.yr,
     };
 
-    if (focus.xl == null) {
+    if (focus.xl === null) {
       focus.xl = BigNumberUtils.minus(range.xl, BigNumberUtils.mult(range.xSpan, margin.left));
     }
 
-    if (focus.xr == null) {
+    if (focus.xr === null) {
       focus.xr = BigNumberUtils.plus(range.xr, BigNumberUtils.mult(range.xSpan, margin.right));
     }
 
@@ -139,7 +139,7 @@ export class PlotFocus {
       focus.xr = parseFloat(focus.xr.toString());
     }
 
-    if (focus.yl == null) {
+    if (focus.yl === null) {
       if (model.yIncludeZero === true) {
         const yl = model.vrange.yspan * range.yl + model.vrange.yl;
 
@@ -152,11 +152,11 @@ export class PlotFocus {
       focus.yl = range.yl - range.ySpan * margin.bottom;
     }
 
-    if (focus.yr == null) {
+    if (focus.yr === null) {
       focus.yr = range.yr + range.ySpan * margin.top;
     }
 
-    if (focus.yl_r == null) {
+    if (focus.yl_r === null) {
       if (model.yIncludeZero === true && model.vrangeR) {
         const yl_r = model.vrangeR.yspan * rangeR.yl + model.vrangeR.yl;
 
@@ -169,7 +169,7 @@ export class PlotFocus {
       focus.yl_r = rangeR.yl - rangeR.ySpan * (_.isNumber(margin.bottom_r) ? margin.bottom_r : 0);
     }
 
-    if (focus.yr_r == null) {
+    if (focus.yr_r === null) {
       focus.yr_r = rangeR.yr + rangeR.ySpan * (_.isNumber(margin.top_r) ? margin.top_r : 0);
     }
 

@@ -320,7 +320,7 @@ export class PlotUtils {
       } else {
         actionObject.type = 'XYGraphicsActionObject';
       }
-      if (e.ele != null) {
+      if (e.ele !== null) {
         actionObject.index = e.ele.index;
       }
     }

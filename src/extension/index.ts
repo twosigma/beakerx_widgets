@@ -70,7 +70,7 @@ function extendWindowObject() {
     prefs: bkObject.beakerObj.prefs,
   };
 
-  if (window.beakerx.keys().length == 0) {
+  if (window.beakerx.keys().length === 0) {
     window.beakerx = AutoTranslation.proxify(beakerxInstance);
   }
 }

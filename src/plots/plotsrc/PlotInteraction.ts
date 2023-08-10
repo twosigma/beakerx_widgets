@@ -208,7 +208,7 @@ export class PlotInteraction {
         continue;
       }
 
-      if (data.keyTags != null && !_.isEmpty(data.keyTags[key])) {
+      if (data.keyTags !== null && !_.isEmpty(data.keyTags[key])) {
         return this.sendOnKeyTagAction(key, data, item);
       }
 
@@ -252,7 +252,7 @@ export class PlotInteraction {
   }
 
   runOnKeyAction(key, data, item) {
-    if (data.keys == null || data.keys.indexOf(key) === -1) {
+    if (data.keys === null || data.keys.indexOf(key) === -1) {
       return;
     }
 
@@ -352,7 +352,7 @@ export class PlotInteraction {
     const data = this.scope.stdmodel.data;
     // id in the format "legendcheck_id"
 
-    if (id == 'all') {
+    if (id === 'all') {
       return this.toggleAllLines(data);
     }
 

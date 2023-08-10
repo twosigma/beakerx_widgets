@@ -79,7 +79,7 @@ export class PlotTip {
       scope.jqsvg.find('#' + d.id).attr('font-weight', 'bold');
     }
 
-    if (d.sticking == true) {
+    if (d.sticking === true) {
       PlotTip.pinCloseIcon(scope, d);
       PlotTip.drawLine(scope, d, tipdiv);
     }
@@ -96,7 +96,7 @@ export class PlotTip {
       .attr('class', 'plot-tooltip')
       .append(tiptext)
       .on('mouseup', function (e) {
-        if (e.which == 3) {
+        if (e.which === 3) {
           PlotTip.clear(scope, d);
           $(this).remove();
         }
@@ -129,7 +129,7 @@ export class PlotTip {
       !scope.tips[id].sticking && PlotTip.clear(scope, scope.tips[id]);
     });
 
-    if (!d || scope.tips[d.id] != null) {
+    if (!d || scope.tips[d.id] !== null) {
       return;
     }
 
@@ -144,7 +144,7 @@ export class PlotTip {
   }
 
   static untooltip(scope, d) {
-    if (!d || scope.tips[d.id] == null || scope.tips[d.id].sticking === true) {
+    if (!d || scope.tips[d.id] === null || scope.tips[d.id].sticking === true) {
       return;
     }
 

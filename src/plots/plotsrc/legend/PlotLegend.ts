@@ -188,11 +188,11 @@ export class PlotLegend {
         PlotStyleUtils.safeHeight(this.scope.jqsvg) - layout.bottomLayoutMargin - layout.topLayoutMargin,
       );
 
-    if (className != null) {
+    if (className !== null) {
       legendContainer.addClass(className);
     }
 
-    if (handle != null) {
+    if (handle !== null) {
       draggable['handle'] = handle;
     } else {
       legendContainer.addClass('plot-legenddraggable');
@@ -213,13 +213,13 @@ export class PlotLegend {
     for (let i = 0; i < data.length; i++) {
       const item = data[i];
 
-      if (item.legend == null || item.legend === '') {
+      if (item.legend === null || item.legend === '') {
         continue;
       }
 
       const lineUniqueIndex = item.legend + this.getColorInfoUid(item);
 
-      if (lineUniqueAttributesSet[lineUniqueIndex] == null) {
+      if (lineUniqueAttributesSet[lineUniqueIndex] === null) {
         this.addNewLegendLineData(item, lineUniqueIndex, mergedLines, lineUniqueAttributesSet, i);
       } else {
         this.addDataForExistingLegendLine(item, mergedLines[lineUniqueAttributesSet[lineUniqueIndex]], i);
@@ -318,7 +318,7 @@ export class PlotLegend {
 
     const line = this.scope.legendMergedLines[id];
 
-    if (line.legend == null || line.legend === '') {
+    if (line.legend === null || line.legend === '') {
       return;
     }
 
@@ -350,7 +350,7 @@ export class PlotLegend {
     $('<span></span>')
       .attr('id', 'legendbox_' + id)
       .attr('class', 'plot-legendbox')
-      .attr('title', line.color == null ? 'Element-based colored item' : '')
+      .attr('title', line.color === null ? 'Element-based colored item' : '')
       .appendTo(unit)
       .append(PointShapeHelper.createLegendMarker(line));
 

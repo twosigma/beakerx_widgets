@@ -38,13 +38,13 @@ export class HeatmapConverter {
       }
     }
 
-    if (model.rangeAxes != null) {
+    if (model.rangeAxes !== null) {
       const axis = model.rangeAxes[0];
       if (axis.auto_range === false) {
-        if (axis.lower_bound != null) {
+        if (axis.lower_bound !== null) {
           newmodel.userFocus.yl = axis.lower_bound;
         }
-        if (axis.upper_bound != null) {
+        if (axis.upper_bound !== null) {
           newmodel.userFocus.yr = axis.upper_bound;
         }
       }

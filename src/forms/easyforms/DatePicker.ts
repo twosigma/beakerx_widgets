@@ -110,10 +110,10 @@ export class DatePickerView extends JupyterLabeledDOMWidgetView {
   }
 
   update(options?: { [optionName: string]: any }): void {
-    if (options === undefined || options.updated_view != this) {
+    if (options === undefined || options.updated_view !== this) {
       const newValue = this.model.get('value');
 
-      if (this.flatpickr && this.flatpickr.input.value != newValue) {
+      if (this.flatpickr && this.flatpickr.input.value !== newValue) {
         this.flatpickr.setDate(newValue);
       }
       this.updateDisabled();

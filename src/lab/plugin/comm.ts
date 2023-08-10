@@ -35,7 +35,7 @@ const getMsgHandlers = (session: ISessionContext, kernelInstance: Kernel.IKernel
       return;
     }
 
-    if (state.name == 'CodeCells') {
+    if (state.name === 'CodeCells') {
       sendJupyterCodeCells(notebook, JSON.parse(state.value), msg.content.data.url);
     }
 

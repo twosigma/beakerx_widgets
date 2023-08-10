@@ -36,14 +36,14 @@ export class PasswordModel extends JupyterPasswordModel {
 
 export class PasswordView extends JupyterPasswordView {
   handleKeypress(e: KeyboardEvent): void {
-    if (e.keyCode == 13) {
+    if (e.keyCode === 13) {
       this.send({ event: 'submit' });
       e.preventDefault();
     }
   }
 
   handleEnterKeyPress(e: KeyboardEvent): void {
-    if (e.keyCode == 13) {
+    if (e.keyCode === 13) {
       this.send({ event: 'submit' });
       e.preventDefault();
     }

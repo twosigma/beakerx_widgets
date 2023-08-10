@@ -165,7 +165,7 @@ export class DefaultAxis {
     let diff = mindiff;
     let i = 0;
 
-    if (count == null) {
+    if (count === null) {
       console.error('missing setCoords count');
       count = 1;
     }

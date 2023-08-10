@@ -30,11 +30,11 @@ export class PlotMessage {
       .attr('class', 'plot-message')
       .on('mousedown', function (e) {
         if (e.which === 3) {
-          if (callbackn != null) {
+          if (callbackn !== null) {
             callbackn();
           }
         } else {
-          if (callbacky != null) {
+          if (callbacky !== null) {
             callbacky();
           }
         }
@@ -42,7 +42,7 @@ export class PlotMessage {
         $(this).remove();
       });
 
-    if (title != null && title != '') {
+    if (title !== null && title !== '') {
       $('<div></div>').appendTo(message).attr('class', 'plot-message-title').text(title);
     }
 

@@ -213,7 +213,7 @@ export class PlotLayout {
 
     let factor = 2.0;
 
-    if (stdmodel.xAxis.label == null) {
+    if (stdmodel.xAxis.label === null) {
       factor -= 1.0;
     }
 
@@ -233,11 +233,11 @@ export class PlotLayout {
       this.topLayoutMargin += PlotUtils.fonts.labelHeight / 2;
     }
 
-    if (stdmodel.yAxis.label != null) {
+    if (stdmodel.yAxis.label !== null) {
       this.leftLayoutMargin += PlotUtils.fonts.labelHeight;
     }
 
-    if (stdmodel.yAxisR != null) {
+    if (stdmodel.yAxisR !== null) {
       this.rightLayoutMargin += PlotUtils.fonts.labelHeight;
     }
   }

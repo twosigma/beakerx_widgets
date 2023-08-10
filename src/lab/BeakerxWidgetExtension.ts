@@ -29,7 +29,7 @@ import {
 } from './plugin';
 import { AutoTranslation } from './plugin/autoTranslation';
 
-const PlotApi = require('../plots/plotsrc/_js/plotApi');
+import * as PlotApi from '../plots/plotsrc/_js/plotApi';
 
 export class BeakerxWidgetExtension implements DocumentRegistry.WidgetExtension {
   constructor(
@@ -61,7 +61,7 @@ export class BeakerxWidgetExtension implements DocumentRegistry.WidgetExtension 
 
       plotApiList.setActiveLabPanel(panel);
       labShell.activeChanged.connect((sender, args) => {
-        if (args.newValue == panel) {
+        if (args.newValue === panel) {
           panel.sessionContext.ready.then(() => {
             window.beakerx = window.beakerxHolder[panel.context.sessionContext.session.kernel.id];
             plotApiList.setActiveLabPanel(panel);

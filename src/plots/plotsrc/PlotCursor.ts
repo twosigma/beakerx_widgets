@@ -42,7 +42,7 @@ export class PlotCursor {
 
     if (
       x < leftMargin ||
-      (model.yAxisR != null && x > width - rightMargin) ||
+      (model.yAxisR !== null && x > width - rightMargin) ||
       y > height - bottomMargin ||
       y < topMargin
     ) {
@@ -57,7 +57,7 @@ export class PlotCursor {
   }
 
   renderCursorX(x, height, topMargin, bottomMargin): void {
-    if (this.scope.stdmodel.xCursor == null) {
+    if (this.scope.stdmodel.xCursor === null) {
       return;
     }
 
@@ -100,12 +100,12 @@ export class PlotCursor {
     label.css({
       left: point.x,
       top: point.y,
-      'background-color': opt.color != null ? opt.color : 'black',
+      'background-color': opt.color !== null ? opt.color : 'black',
     });
   }
 
   renderCursorY(y, width, leftMargin, rightMargin): void {
-    if (this.scope.stdmodel.yCursor == null) {
+    if (this.scope.stdmodel.yCursor === null) {
       return;
     }
 
@@ -139,7 +139,7 @@ export class PlotCursor {
   }
 
   renderCursorLabel(axis, id, y, alignRight): void {
-    if (axis == null) {
+    if (axis === null) {
       return;
     }
 
@@ -160,7 +160,7 @@ export class PlotCursor {
 
     label.css({
       top: point.y,
-      'background-color': opt.color != null ? opt.color : 'black',
+      'background-color': opt.color !== null ? opt.color : 'black',
       [alignRight ? 'right' : 'left']: point.x,
     });
   }

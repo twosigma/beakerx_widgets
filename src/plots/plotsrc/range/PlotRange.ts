@@ -58,7 +58,7 @@ export class PlotRange {
       xAxis.setRange(vrange.xl, vrange.xr, model.xAxis.base);
     }
 
-    if (xAxisLabel != null) {
+    if (xAxisLabel !== null) {
       xAxis.setLabel(xAxisLabel);
     }
 
@@ -66,7 +66,7 @@ export class PlotRange {
   }
 
   static updateAxisYRange(modelAxis, axisVRange, model) {
-    if (modelAxis == null || axisVRange == null) {
+    if (modelAxis === null || axisVRange === null) {
       return null;
     }
 
@@ -83,7 +83,7 @@ export class PlotRange {
       axis.setRange(axisVRange.yl, axisVRange.yr, modelAxis.timezone);
     }
 
-    if (label != null) {
+    if (label !== null) {
       axis.setLabel(label);
     }
 
@@ -111,7 +111,7 @@ export class PlotRange {
     const W = PlotStyleUtils.safeWidth(this.scope.jqsvg);
     const H = PlotStyleUtils.safeHeight(this.scope.jqsvg);
 
-    if (emitFocusUpdate && this.scope.model.updateFocus != null) {
+    if (emitFocusUpdate && this.scope.model.updateFocus !== null) {
       this.scope.model.updateFocus({
         xl: focus.xl,
         xr: focus.xr,

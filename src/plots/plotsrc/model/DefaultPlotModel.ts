@@ -265,7 +265,7 @@ export class DefaultPlotModel extends AbstractPlotModel {
       item.size = item.size || (item.shape === 'rect' ? 8 : 5);
     }
 
-    if (item.useToolTip == null) {
+    if (item.useToolTip === null) {
       item.useToolTip = newModel.useToolTip === true;
     }
 
@@ -331,9 +331,9 @@ export class DefaultPlotModel extends AbstractPlotModel {
       item.color_opacity = item.color_opacity ?? 1.0; // default show fully
     }
 
-    if (item.stroke_opacity == null) {
+    if (item.stroke_opacity === null) {
       // default show based on whether stroke is set
-      item.stroke_opacity = item.stroke == null ? 0.0 : 1.0;
+      item.stroke_opacity = item.stroke === null ? 0.0 : 1.0;
     }
   }
 
@@ -349,37 +349,37 @@ export class DefaultPlotModel extends AbstractPlotModel {
       element.stroke_dasharray = this.lineDasharrayMap[element.style];
     }
 
-    if (element.outlineColor != null) {
+    if (element.outlineColor !== null) {
       element.stroke = element.outlineColor;
       delete element.outlineColor;
     }
 
-    if (element.outlineWidth != null) {
+    if (element.outlineWidth !== null) {
       element.stroke_width = element.outlineWidth;
       delete element.outlineWidth;
     }
 
-    if (element.outlineOpacity != null) {
+    if (element.outlineOpacity !== null) {
       element.stroke_opacity = element.outlineOpacity;
       delete element.outlineOpacity;
     }
 
-    if (item.type === 'bar' && element.x2 == null) {
+    if (item.type === 'bar' && element.x2 === null) {
       element.x = BigNumberUtils.minus(element.x, item.width / 2);
       element.x2 = BigNumberUtils.plus(element.x, item.width);
     }
 
-    if ((item.type === 'area' || item.type === 'bar' || item.type === 'stem') && element.y2 == null) {
-      if (item.height != null) {
+    if ((item.type === 'area' || item.type === 'bar' || item.type === 'stem') && element.y2 === null) {
+      if (item.height !== null) {
         element.y2 = element.y + item.height;
-      } else if (item.base != null) {
+      } else if (item.base !== null) {
         element.y2 = item.base;
       } else {
         element.y2 = itemLogY ? 1 : 0;
       }
     }
 
-    if (item.type === 'point' && element.size == null) {
+    if (item.type === 'point' && element.size === null) {
       element.size = item.size || (item.shape === 'rect' ? 8 : 5);
     }
 
@@ -388,28 +388,28 @@ export class DefaultPlotModel extends AbstractPlotModel {
     }
 
     // swap y, y2
-    if (element.y != null && element.y2 != null && element.y > element.y2) {
+    if (element.y !== null && element.y2 !== null && element.y > element.y2) {
       const temp = element.y;
 
       element.y = element.y2;
       element.y2 = temp;
     }
 
-    if (element.x != null) {
+    if (element.x !== null) {
       element._x = element.x;
       if (logX) {
         element.x = Math.log(element.x) / Math.log(logXBase);
       }
     }
 
-    if (element.x2 != null) {
+    if (element.x2 !== null) {
       element._x2 = element.x2;
       if (logX) {
         element.x2 = Math.log(element.x2) / Math.log(logXBase);
       }
     }
 
-    if (element.y != null) {
+    if (element.y !== null) {
       element._y = element.y;
 
       if (itemLogY) {
@@ -417,7 +417,7 @@ export class DefaultPlotModel extends AbstractPlotModel {
       }
     }
 
-    if (element.y2 != null) {
+    if (element.y2 !== null) {
       element._y2 = element.y2;
 
       if (itemLogY) {
@@ -541,7 +541,7 @@ export class DefaultPlotModel extends AbstractPlotModel {
     yl: number;
     yr: number;
   } {
-    if (range == null) {
+    if (range === null) {
       return null;
     }
 

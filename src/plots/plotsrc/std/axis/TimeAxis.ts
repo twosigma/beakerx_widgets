@@ -163,7 +163,7 @@ export class TimeAxis extends DefaultAxis {
     return (
       ((span > this.SECOND && this.axisType === 'time') ||
         (this.axisType === 'nanotime' && BigNumberUtils.gt(span, this.UNIT))) &&
-      labels.length != _.uniq(labels).length
+      labels.length !== _.uniq(labels).length
     );
   }
 
@@ -220,7 +220,7 @@ export class TimeAxis extends DefaultAxis {
     };
 
     while (checkCommon(index)) {
-      common = common != '' ? common + ' ' + tokens[index] : tokens[index];
+      common = common !== '' ? common + ' ' + tokens[index] : tokens[index];
       index = index + 1;
     }
 
@@ -228,7 +228,7 @@ export class TimeAxis extends DefaultAxis {
       for (let i = 1; i < labels.length; i++) {
         const label = labels[i];
 
-        if (common != label.substring(0, common.length)) {
+        if (common !== label.substring(0, common.length)) {
           common = '';
 
           break;

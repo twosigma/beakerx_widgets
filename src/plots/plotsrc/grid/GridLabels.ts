@@ -149,7 +149,7 @@ export class GridLabels {
     const lMargin = this.scope.layout.leftLayoutMargin;
     const bMargin = this.scope.layout.bottomLayoutMargin;
 
-    if (model.xAxis.label != null) {
+    if (model.xAxis.label !== null) {
       this.rpipeTexts.push({
         id: 'xlabel',
         class: 'plot-xylabel',
@@ -159,7 +159,7 @@ export class GridLabels {
       });
     }
 
-    if (model.yAxis.label != null) {
+    if (model.yAxis.label !== null) {
       const x = PlotUtils.fonts.labelHeight * 2;
       const y = (PlotStyleUtils.safeHeight(this.scope.jqsvg) - bMargin) / 2;
 
@@ -173,7 +173,7 @@ export class GridLabels {
       });
     }
 
-    if (model.yAxisR && model.yAxisR.label != null) {
+    if (model.yAxisR && model.yAxisR.label !== null) {
       const x = PlotStyleUtils.safeWidth(this.scope.jqsvg) - PlotUtils.fonts.labelHeight;
       const y = (PlotStyleUtils.safeHeight(this.scope.jqsvg) - bMargin) / 2;
 

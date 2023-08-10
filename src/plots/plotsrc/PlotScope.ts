@@ -231,7 +231,7 @@ export class PlotScope {
   }
 
   updateMargin() {
-    if (this.model.updateMargin != null) {
+    if (this.model.updateMargin !== null) {
       setTimeout(() => this.model.updateMargin(), 0);
     }
   }

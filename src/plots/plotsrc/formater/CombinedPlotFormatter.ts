@@ -65,7 +65,7 @@ export class CombinedPlotFormatter {
     let sumWeights = 0;
     let sumVMargins = 0;
     const vMargins = [];
-    const weights: number[] = model.weights == null ? [] : model.weights;
+    const weights: number[] = model.weights === null ? [] : model.weights;
 
     for (let i = 0; i < model.plots.length; i++) {
       if (weights[i] === null) {
@@ -84,13 +84,13 @@ export class CombinedPlotFormatter {
 
     let i = 0;
     for (const plotModel of model.plots) {
-      if (plotModel.version == null) {
+      if (plotModel.version === null) {
         plotModel.version = version;
       }
-      if (plotModel.showLegend == null) {
+      if (plotModel.showLegend === null) {
         plotModel.showLegend = showLegend;
       }
-      if (plotModel.useToolTip == null) {
+      if (plotModel.useToolTip === null) {
         plotModel.useToolTip = useToolTip;
       }
 

@@ -45,7 +45,7 @@ export abstract class AbstractPlotModel {
   standardize(originalModel, settings): any {
     const model = { ...originalModel };
 
-    if (model.graphics_list != null) {
+    if (model.graphics_list !== null) {
       model.version = 'groovy'; // TODO, a hack now to check DS source
     }
 

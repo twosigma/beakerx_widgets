@@ -71,7 +71,7 @@ export class CombinedPlotScope {
   }
 
   initLayout(): void {
-    if (this.stdmodel.title == null) {
+    if (this.stdmodel.title === null) {
       return;
     }
 

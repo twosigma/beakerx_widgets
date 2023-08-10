@@ -27,7 +27,7 @@ export const BEAKER_TAG_RUN = 'beakerx.tag.run';
 
 const msgHandlers = {
   [BEAKER_GETCODECELLS]: msg => {
-    if (msg.content.data.state.name == 'CodeCells') {
+    if (msg.content.data.state.name === 'CodeCells') {
       sendJupyterCodeCells(JSON.parse(msg.content.data.state.value), msg.content.data.url);
     }
 
@@ -35,7 +35,7 @@ const msgHandlers = {
   },
 
   [BEAKER_GET_URL_ARG]: msg => {
-    if (msg.content.data.state.name == 'URL_ARG') {
+    if (msg.content.data.state.name === 'URL_ARG') {
       sendArgUrl(msg.content.data.url, msg.content.data.type, msg.content.data.state.arg_name);
     }
   },
@@ -104,7 +104,7 @@ const sendJupyterCodeCells = (filter: string, url: string) => {
   };
   data.code_cells = Jupyter.notebook.get_cells().filter(cell => {
     if (cell._metadata.tags) {
-      return cell.cell_type == 'code' && cell._metadata.tags.includes(filter);
+      return cell.cell_type === 'code' && cell._metadata.tags.includes(filter);
     }
     return false;
   });
