@@ -65,7 +65,7 @@ export class DefaultOptionsWidget extends Widget implements DefaultOptionsWidget
       });
 
       MessageLoop.sendMessage(this.parent, msg);
-    } catch (e) {
+    } catch (e: any) {
       MessageLoop.sendMessage(this.parent, new JVMOptionsErrorMessage(e));
     }
   }

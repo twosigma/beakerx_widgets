@@ -81,7 +81,8 @@ export class PlotStyleUtils {
     //to get actual size/position/etc values of hidden elements
     let value;
     const getValue = () => {
-      const fn = jqElement[jqFunction] as () => unknown;
+      // eslint-disable-next-line @typescript-eslint/ban-types
+      const fn = jqElement[jqFunction] as Function;
       return jqFunctionParams !== undefined ? fn.call(jqElement, jqFunctionParams) : fn.call(jqElement);
     };
     if (jqElement.is(':visible')) {

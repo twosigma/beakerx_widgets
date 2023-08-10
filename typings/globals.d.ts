@@ -1,3 +1,4 @@
+declare let CodeMirror: any;
 declare interface Window {
   beakerx: any;
   beakerxHolder: any;

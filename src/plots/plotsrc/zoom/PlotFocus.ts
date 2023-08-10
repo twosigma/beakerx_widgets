@@ -211,7 +211,9 @@ export class PlotFocus {
   }
 
   fix(focus: Focus): void {
+    // @ts-expect-error xl is a number
     focus.xl = focus.xl < 0 ? 0 : focus.xl;
+    // @ts-expect-error xr is a number
     focus.xr = focus.xr > 1 ? 1 : focus.xr;
     focus.yl = focus.yl < 0 ? 0 : focus.yl;
     focus.yr = focus.yr > 1 ? 1 : focus.yr;

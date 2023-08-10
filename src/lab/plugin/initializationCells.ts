@@ -28,7 +28,7 @@ const modName = 'init_cell';
 const logPrefix = `[${modName}]`;
 
 export function enableInitializationCellsFeature(panel: NotebookPanel): void {
-  const modOptions = panel.model.metadata[modName];
+  const modOptions = panel.model.metadata[modName] as any;
   const options = { run_on_kernel_ready: true, ...modOptions };
 
   registerNotebookInitCellsAction(panel, options);
@@ -53,7 +53,7 @@ export function runInitCells(panel: NotebookPanel, options: IInitCellsOptions): 
 export function getInitCells(panel: NotebookPanel): CodeCell[] {
   const cells = panel.content.widgets || [];
 
-  return <CodeCell[]>cells.filter((cell: Cell) => cell instanceof CodeCell && cell.model.metadata.get('init_cell'));
+  return <CodeCell[]>cells.filter((cell: Cell) => cell instanceof CodeCell && cell.model.getMetadata('init_cell'));
 }
 
 async function canExecuteInitCells(

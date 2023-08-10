@@ -50,7 +50,7 @@ export class BeakerxWidgetExtension implements DocumentRegistry.WidgetExtension 
       registerCommTargets(panel, context);
 
       window.beakerxHolder = window.beakerxHolder || {};
-      const plotApiList = PlotApi.list();
+      const plotApiList = (PlotApi as any).list();
       const beakerxInstance = {
         ...plotApiList,
         displayHTML,

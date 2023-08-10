@@ -82,6 +82,7 @@ export class CombinedPlotModel {
     let maxMargin = 0;
 
     plots.each(function () {
+      // @ts-expect-error this shadow the class `this`
       const value = parseFloat($(this).css('margin-left'));
       maxMargin = _.max([value, maxMargin]);
     });

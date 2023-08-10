@@ -413,13 +413,12 @@ export class PlotInteraction {
   }
 
   calculateShowAllLines(): boolean {
-    return Object.entries(this.scope.legendMergedLines).reduce(
-      (total, pair: [string, { showItem: boolean; [k: string]: unknown }]) => {
-        const [, value] = pair;
-        return total && value.showItem;
-      },
-      true,
-    );
+    return Object.entries(
+      this.scope.legendMergedLines as Record<string, { showItem: boolean; [k: string]: unknown }>,
+    ).reduce((total, pair) => {
+      const [, value] = pair;
+      return total && value.showItem;
+    }, true);
   }
 
   findLegendCheckAllElement(): JQuery<HTMLElement> {

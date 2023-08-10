@@ -18,6 +18,7 @@ import { BoxModel as JupyterBoxModel, BoxView as JupyterBoxView } from '@jupyter
 import { BEAKERX_MODULE_VERSION } from '../version';
 import { SparkUIComm } from './SparkUIComm';
 import { SparkUIWidget } from './SparkUIWidget';
+import { JupyterLuminoPanelWidget } from '@jupyter-widgets/base';
 
 export class SparkUIModel extends JupyterBoxModel {
   private spark_comm: SparkUIComm;
@@ -162,6 +163,6 @@ export class SparkUIView extends JupyterBoxView {
 
     await this.displayed;
 
-    this.pWidget.addWidget(w);
+    ((this.luminoWidget ?? this.pWidget) as JupyterLuminoPanelWidget).addWidget(w);
   }
 }

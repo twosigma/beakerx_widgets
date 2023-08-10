@@ -16,13 +16,13 @@
 
 import { Notebook } from '@jupyterlab/notebook';
 import { JSONArray } from '@lumino/coreutils';
-import { Cell, CodeCell, CodeCellModel } from '@jupyterlab/cells';
+import { Cell, CodeCellModel } from '@jupyterlab/cells';
 import { PageConfig } from '@jupyterlab/coreutils';
 import { BeakerXApi } from '../../utils/api';
 
 export function sendJupyterCodeCells(notebook: Notebook, filter: string, url: string): void {
   const codeCells = <JSONArray>getCodeCellsByTag(notebook, filter).map(
-    (cell: CodeCell): Record<string, unknown> => ({
+    (cell: Cell): Record<string, unknown> => ({
       cell_type: cell.model.type,
       ...cell.model.toJSON(),
     }),
@@ -41,7 +41,7 @@ export function getCodeCellsByTag(notebook: Notebook, tag: string): Cell[] {
   const cells = notebook.widgets || [];
 
   return cells.filter(cell => {
-    const tags: any = cell.model.metadata.get('tags');
+    const tags: any = cell.model.getMetadata('tags');
 
     return cell.model instanceof CodeCellModel && tags && tags.length && tags.includes(tag);
   });

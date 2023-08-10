@@ -58,10 +58,12 @@ export const bkCoreManager = {
 
   _prefs: {
     getTheme: function (): string {
+      // @ts-expect-error theme never exist on this
       if (this.theme === undefined) {
         return 'default';
       }
 
+      // @ts-expect-error theme never exist on this
       return this.theme;
     },
   },

@@ -17,10 +17,10 @@
 import { CodeMirrorEditor } from '@jupyterlab/codemirror';
 import { Cell, CodeCell } from '@jupyterlab/cells';
 import { NotebookPanel } from '@jupyterlab/notebook';
-import CodeMirror = require('codemirror');
+import { EditorView } from '@codemirror/view';
 
-const LINE_COMMENT_CHAR = '//';
-const LINE_MAGIC_MODE = 'line_magic';
+// const LINE_COMMENT_CHAR = '//';
+// const LINE_MAGIC_MODE = 'line_magic';
 
 const getCodeCellsWithCodeMirrorEditor = (panel: NotebookPanel): CodeCell[] =>
   (((panel.content.widgets || []) as Cell[]).filter(cell => cell instanceof CodeCell) as CodeCell[]).filter(
@@ -32,15 +32,16 @@ export const registerCommentOutCmd = (panel: NotebookPanel): void => {
 };
 
 const setCodeMirrorLineComment = (cell: CodeCell): void => {
-  const cmEditor: CodeMirror.Editor = (cell.editor as CodeMirrorEditor).editor;
-  const doc: CodeMirror.Doc = cmEditor.getDoc();
-  const mode = doc.getMode();
-  if (mode.lineComment) {
-    return;
-  }
-  CodeMirror.extendMode(mode.name, { lineComment: LINE_COMMENT_CHAR });
-  mode.lineComment = LINE_COMMENT_CHAR;
-  doc['mode'] = mode;
+  // FIXME
+  // const cmEditor: EditorView = (cell.editor as CodeMirrorEditor).editor;
+  // const doc = cmEditor.state.doc;
+  // const mode = doc.getMode();
+  // if (mode.lineComment) {
+  //   return;
+  // }
+  // CodeMirror.extendMode(mode.name, { lineComment: LINE_COMMENT_CHAR });
+  // mode.lineComment = LINE_COMMENT_CHAR;
+  // doc['mode'] = mode;
 };
 
 export function extendHighlightModes(panel: NotebookPanel) {
@@ -52,6 +53,7 @@ function setLineMagicForCell(cell: CodeCell) {
   addLineMagicsOverlay((<CodeMirrorEditor>cell.editor).editor);
 }
 
+/*
 const lineMagicOverlay = {
   startState() {
     return { firstMatched: false, inMagicLine: false };
@@ -77,8 +79,11 @@ const lineMagicOverlay = {
     return null;
   },
 };
+*/
 
-export function autoHighlightLineMagics(editor: CodeMirror.Editor) {
+export function autoHighlightLineMagics(editor: EditorView) {
+  // FIXME
+  /*
   const mode = editor.getOption('mode');
 
   if (mode === LINE_MAGIC_MODE) {
@@ -100,9 +105,12 @@ export function autoHighlightLineMagics(editor: CodeMirror.Editor) {
       return false;
     }
   });
+  */
 }
 
-export function addLineMagicsOverlay(editor: CodeMirror.Editor) {
+export function addLineMagicsOverlay(editor: EditorView) {
+  // FIXME
+  /*
   autoHighlightLineMagics(editor);
 
   editor.off('focus', autoHighlightLineMagics);
@@ -113,4 +121,5 @@ export function addLineMagicsOverlay(editor: CodeMirror.Editor) {
   editor.on('blur', autoHighlightLineMagics);
 
   editor.refresh();
+  */
 }
