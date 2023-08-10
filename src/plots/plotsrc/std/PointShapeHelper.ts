@@ -149,28 +149,44 @@ export class PointShapeHelper {
         $(this.createSvgEl('circle')).attr('cx', 5).attr('cy', 5).attr('r', 5).appendTo(gEl);
         break;
       case 'diamond':
-        $(this.createSvgEl('polygon')).attr('points', PointShapeHelper.getDiamondPoints(5, 5, 10)).appendTo(gEl);
+        $(this.createSvgEl('polygon'))
+          .attr('points', PointShapeHelper.getDiamondPoints(5, 5, 10))
+          .appendTo(gEl);
         break;
       case 'triangle':
-        $(this.createSvgEl('polygon')).attr('points', PointShapeHelper.getTrianglePoints(5, 5, 10)).appendTo(gEl);
+        $(this.createSvgEl('polygon'))
+          .attr('points', PointShapeHelper.getTrianglePoints(5, 5, 10))
+          .appendTo(gEl);
         break;
       case 'downtriangle':
-        $(this.createSvgEl('polygon')).attr('points', PointShapeHelper.getDownTrianglePoints(5, 5, 10)).appendTo(gEl);
+        $(this.createSvgEl('polygon'))
+          .attr('points', PointShapeHelper.getDownTrianglePoints(5, 5, 10))
+          .appendTo(gEl);
         break;
       case 'vlevel':
-        $(this.createSvgEl('polygon')).attr('points', PointShapeHelper.getVLevelPoints(5, 5, 10)).appendTo(gEl);
+        $(this.createSvgEl('polygon'))
+          .attr('points', PointShapeHelper.getVLevelPoints(5, 5, 10))
+          .appendTo(gEl);
         break;
       case 'level':
-        $(this.createSvgEl('polygon')).attr('points', PointShapeHelper.getLevelPoints(5, 5, 10)).appendTo(gEl);
+        $(this.createSvgEl('polygon'))
+          .attr('points', PointShapeHelper.getLevelPoints(5, 5, 10))
+          .appendTo(gEl);
         break;
       case 'cross':
-        $(this.createSvgEl('polygon')).attr('points', PointShapeHelper.getCrossPoints(5, 5, 10)).appendTo(gEl);
+        $(this.createSvgEl('polygon'))
+          .attr('points', PointShapeHelper.getCrossPoints(5, 5, 10))
+          .appendTo(gEl);
         break;
       case 'dcross':
-        $(this.createSvgEl('polygon')).attr('points', PointShapeHelper.getDCrossPoints(5, 5, 10)).appendTo(gEl);
+        $(this.createSvgEl('polygon'))
+          .attr('points', PointShapeHelper.getDCrossPoints(5, 5, 10))
+          .appendTo(gEl);
         break;
       case 'linecross':
-        $(this.createSvgEl('polygon')).attr('points', PointShapeHelper.getLineCrossPoints(5, 5, 10)).appendTo(gEl);
+        $(this.createSvgEl('polygon'))
+          .attr('points', PointShapeHelper.getLineCrossPoints(5, 5, 10))
+          .appendTo(gEl);
         break;
       case 'rect':
       default:

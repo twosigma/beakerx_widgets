@@ -35,7 +35,7 @@ export function createSaveAsMenuItems(scope: any): IContextMenuItem[] {
     {
       id: `beakerx:saveAsHighDpiPng:${scope.id}`,
       title: 'Save as PNG at high DPI...',
-      items: [2, 3, 4, 5].map((scale) => ({
+      items: [2, 3, 4, 5].map(scale => ({
         id: `beakerx:saveAsHighDpiPng:${scope.id}:${scale}`,
         title: scale + 'x',
         action: () => scope.saveAsPng(scale),

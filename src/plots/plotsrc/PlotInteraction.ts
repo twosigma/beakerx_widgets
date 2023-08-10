@@ -57,7 +57,7 @@ export class PlotInteraction {
     });
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    scope.jqsvg.mousemove((e) => scope.plotCursor.render(e)).mouseleave((e) => scope.plotCursor.clear());
+    scope.jqsvg.mousemove(e => scope.plotCursor.render(e)).mouseleave(e => scope.plotCursor.clear());
   }
 
   mouseDown() {
@@ -114,7 +114,7 @@ export class PlotInteraction {
       return;
     }
 
-    this.onKeyListeners[item.id] = (onKeyEvent) => {
+    this.onKeyListeners[item.id] = onKeyEvent => {
       this.onKeyAction(item, onKeyEvent);
     };
 

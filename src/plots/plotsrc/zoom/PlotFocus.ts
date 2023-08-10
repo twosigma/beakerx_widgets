@@ -75,9 +75,7 @@ export class PlotFocus {
     return this.focus;
   }
 
-  static getDefault(
-    model,
-  ): {
+  static getDefault(model): {
     defaultFocus: Focus;
     visibleItem?: any;
     legendableItem?: any;

@@ -62,7 +62,7 @@ export function load_ipython_extension(): void {
         href: '#beakerx-tree',
         'data-toggle': 'tab',
         text: 'BeakerX',
-      }).on('click', function (e) {
+      }).on('click', e => {
         if (false === $(e.currentTarget).parents('li').hasClass('active')) {
           bxWidget.update();
         }
@@ -74,7 +74,7 @@ export function load_ipython_extension(): void {
     ),
   );
 
-  $(window).on('resize', function () {
+  $(window).on('resize', () => {
     bxWidget.update();
   });
 }

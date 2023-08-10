@@ -125,7 +125,7 @@ export class PlotTip {
   }
 
   static tooltip(scope, d, mousePos) {
-    Object.keys(scope.tips).forEach(function (id) {
+    Object.keys(scope.tips).forEach(id => {
       !scope.tips[id].sticking && PlotTip.clear(scope, scope.tips[id]);
     });
 
@@ -197,7 +197,7 @@ export class PlotTip {
       return;
     }
 
-    tooltipElements.forEach((tooltip) => {
+    tooltipElements.forEach(tooltip => {
       tooltip = $(tooltip);
       const tooltipCopy = tooltip.clone();
 
@@ -209,7 +209,7 @@ export class PlotTip {
         right: 'auto',
       });
 
-      const getPositive = (value) => (value > 0 ? value : 0);
+      const getPositive = value => (value > 0 ? value : 0);
       const position = PlotStyleUtils.getActualCss(tooltip, 'position') as JQuery.Coordinates;
       const x = getPositive(position.left);
       const y = getPositive(position.top);
@@ -322,7 +322,7 @@ export class PlotTip {
     PlotTip.addAttachment(left + width, top + height, x2, y2, attachments);
     PlotTip.addAttachment(left, top + height, x2, y2, attachments);
 
-    const attachment = _.min(attachments, (item) => item.dist);
+    const attachment = _.min(attachments, item => item.dist);
     const x1 = attachment.x;
     const y1 = attachment.y;
 

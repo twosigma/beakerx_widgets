@@ -74,7 +74,7 @@ export class PlotUtils {
       },
       {
         name: 'Save as PNG at high DPI...',
-        items: [2, 3, 4, 5].map((scale) => {
+        items: [2, 3, 4, 5].map(scale => {
           return {
             name: scale + 'x',
             callback: () => scope.saveAsPng(scale),
@@ -225,7 +225,7 @@ export class PlotUtils {
           'YYYY MMM DD ddd, HH:mm:ss',
         ) +
         '.' +
-        CommonUtils.padStr((nanosec as unknown) as number, 9)
+        CommonUtils.padStr(nanosec as unknown as number, 9)
       );
     }
 

@@ -27,7 +27,7 @@ export function enableZoomWheel(scope: any, d3: any): void {
 
   scope.svg.on('wheel.zoom', scope._defaultZoomWheelFn);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  scope.jqcontainer.off('wheel.zoom').on('wheel.zoom', function (event) {
+  scope.jqcontainer.off('wheel.zoom').on('wheel.zoom', event => {
     scope.svg.dispatch('wheel.zoom', scope._defaultZoomWheelFn);
   });
 }

@@ -207,7 +207,7 @@ export class TimeAxis extends DefaultAxis {
     const tokens = labels[0].split(' ');
     let index = 0;
 
-    const checkCommon: (number) => boolean = (index) => {
+    const checkCommon: (number) => boolean = index => {
       const substring = common ? `${common} ${tokens[index]}` : tokens[index];
 
       for (let i = 1; i < labels.length; i++) {

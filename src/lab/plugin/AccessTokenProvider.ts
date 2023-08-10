@@ -19,8 +19,8 @@ import { GistPublishModal } from './gistPublish/gistPublishModal';
 export class AccessTokenProvider {
   public getPersonalAccessToken(): Promise<string> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    return new Promise(function (resolve, reject) {
-      new GistPublishModal().show((personalAccessToken) => {
+    return new Promise((resolve, reject) => {
+      new GistPublishModal().show(personalAccessToken => {
         resolve(personalAccessToken);
       });
     });

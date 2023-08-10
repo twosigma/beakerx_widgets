@@ -142,7 +142,7 @@ export class FoldoutView extends JupyterBoxView {
     this.content.node.style.height = `${this.hiddenContainer.clientHeight}px`;
 
     setTimeout(() => {
-      this.content.node.style.height = `0px`;
+      this.content.node.style.height = '0px';
       this.timeoutId = setTimeout(this.deactivateFoldoutCallback.bind(this), ANIMATION_DURATION) as any;
     });
   }
@@ -183,7 +183,7 @@ export class FoldoutView extends JupyterBoxView {
     this.el.classList.add('collapsed');
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    this.children_views.update(this.model.get('children')).then((views) => {
+    this.children_views.update(this.model.get('children')).then(views => {
       setTimeout(() => {
         this.renderPreview();
       }, 100);

@@ -24,14 +24,14 @@ export function registerFeature(baseUrl: string): void {
   const api = new BeakerXApi(baseUrl);
   api
     .loadSettings()
-    .then((data) => {
+    .then(data => {
       setupAutoCloseBrackets(data.ui_options.auto_close);
       setupWideCells(data.ui_options.wide_cells);
       setupImproveFonts(data.ui_options.improve_fonts);
       setupShowCatalog(data.ui_options.show_catalog);
       setupAutoSave(data.ui_options.auto_save);
     })
-    .catch((e) => {
+    .catch(e => {
       console.log(e);
     });
 }
@@ -41,7 +41,7 @@ function setupAutoCloseBrackets(autoCloseBrackets: boolean): void {
   Jupyter.CodeCell.options_default.cm_config.autoCloseBrackets = autoCloseBrackets;
 
   // existing
-  const code_cells = Jupyter.notebook.get_cells().filter((cell) => {
+  const code_cells = Jupyter.notebook.get_cells().filter(cell => {
     return cell.cell_type === 'code';
   });
 
@@ -59,7 +59,7 @@ function setupWideCells(wideCells: boolean): void {
   }
 
   const s = document.createElement('style');
-  s.innerText = `#notebook_panel .container { width:auto; margin: 0 16px; }`;
+  s.innerText = '#notebook_panel .container { width:auto; margin: 0 16px; }';
 
   document.body.appendChild(s);
 }

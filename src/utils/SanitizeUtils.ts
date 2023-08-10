@@ -35,14 +35,14 @@ export class SanitizeUtils {
 
       SanitizeUtils.fixCaja();
 
-      return (styleString) =>
+      return styleString =>
         caja.sanitizeStylesheet(window.location.pathname, styleString, {
           containerClass: null,
           idSuffox: '',
           virtualizeAttrName: (x: any) => x,
         });
     } catch (e) {
-      return (original) => original;
+      return original => original;
     }
   }
 

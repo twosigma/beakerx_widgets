@@ -76,7 +76,7 @@ export class RESTButtonView extends JupyterButtonView {
   _handle_REST_click(event) {
     event.preventDefault();
     const data = { url: this.url };
-    this.api.restService(data).catch((err) => {
+    this.api.restService(data).catch(err => {
       console.log(err);
     });
   }

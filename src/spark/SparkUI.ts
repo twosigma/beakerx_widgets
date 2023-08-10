@@ -64,7 +64,7 @@ export class SparkUIModel extends JupyterBoxModel {
       comm.saved.emit(undefined);
     });
 
-    this.listenTo(this, 'beakerx:spark.errored', async (error) => {
+    this.listenTo(this, 'beakerx:spark.errored', async error => {
       await comm.ready;
       comm.errored.emit(error.message);
     });

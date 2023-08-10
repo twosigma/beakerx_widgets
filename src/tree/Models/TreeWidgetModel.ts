@@ -48,7 +48,7 @@ export class TreeWidgetModel {
           this.syncEnd();
         }, 1000);
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e);
       });
   }

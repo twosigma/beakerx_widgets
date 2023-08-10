@@ -33,7 +33,7 @@ export class GistPublishModal {
   }
 
   show(submitCallback: (personalAccessToken: string) => void): void {
-    this.getGithubPersonalAccessToken().then((personalAccessToken) => {
+    this.getGithubPersonalAccessToken().then(personalAccessToken => {
       this.create(submitCallback, personalAccessToken);
     });
   }
@@ -45,7 +45,7 @@ export class GistPublishModal {
     const formGroup = modalContent.querySelector('.form-group');
     const errorNode = this.createErrorIconNode();
 
-    const submitHandler = (event) => {
+    const submitHandler = event => {
       const personalAccessToken = personalAccessTokenInput ? personalAccessTokenInput.value : '';
 
       event.preventDefault();
@@ -109,7 +109,7 @@ export class GistPublishModal {
   }
 
   storePersonalAccessToken(githubPersonalAccessToken = ''): Promise<any> {
-    return this.getStoredSettings().then((storedSettings) => {
+    return this.getStoredSettings().then(storedSettings => {
       storedSettings.beakerx.githubPersonalAccessToken = githubPersonalAccessToken;
       utils
         .ajax(this.settingsUrl, {
@@ -118,14 +118,14 @@ export class GistPublishModal {
             ...storedSettings,
           }),
         })
-        .fail((reason) => {
+        .fail(reason => {
           console.log(reason);
         });
     });
   }
 
   private getGithubPersonalAccessToken(): Promise<string> {
-    return this.getStoredSettings().then((settings) => settings.beakerx.githubPersonalAccessToken || '');
+    return this.getStoredSettings().then(settings => settings.beakerx.githubPersonalAccessToken || '');
   }
 
   private getStoredSettings(): Promise<any> {
@@ -133,7 +133,7 @@ export class GistPublishModal {
       .ajax(this.settingsUrl, {
         method: 'GET',
       })
-      .fail((reason) => {
+      .fail(reason => {
         console.log(reason);
       });
   }

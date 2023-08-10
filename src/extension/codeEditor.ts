@@ -95,11 +95,11 @@ export function autoHighlightLineMagics(code_mirror) {
 
   const re = /^%(%classpath|%spark|\w+)/;
 
-  code_mirror.eachLine((line) => {
+  code_mirror.eachLine(line => {
     if (line && line.text.match(re) !== null) {
       // Add an overlay mode to recognize the first line as "line magic" instead
       // of the mode used for the rest of the cell.
-      CodeMirror.defineMode(LINE_MAGIC_MODE, (config) => {
+      CodeMirror.defineMode(LINE_MAGIC_MODE, config => {
         return CodeMirror.overlayMode(CodeMirror.getMode(config, current_mode), lineMagicOverlay);
       });
 

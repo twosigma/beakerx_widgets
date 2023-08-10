@@ -61,7 +61,7 @@ class ProfilePropertiesContainer extends Panel {
   public addProperty(name: string, value: string) {
     const p = this.getPropertyByName(name);
     if (p !== null) {
-      console.log(`There is already a property: '%s'`, name);
+      console.log("There is already a property: '%s'", name);
       return;
     }
     const w = this.createProperty(name, value);
@@ -76,12 +76,12 @@ class ProfilePropertiesContainer extends Panel {
   public removeProperty(name: string) {
     const p = this.getPropertyByName(name);
     if (p === null) {
-      console.log(`There is no property: '%s'`, name);
+      console.log("There is no property: '%s'", name);
       return;
     }
 
     p.widget.dispose();
-    this.properties = this.properties.filter((p) => {
+    this.properties = this.properties.filter(p => {
       return p.name !== name;
     });
   }

@@ -135,7 +135,7 @@ export class PropertiesWidget extends Widget {
     const elementToRemove = evt.data.el;
     elementToRemove.remove();
 
-    this._elements = this._elements.filter((el) => {
+    this._elements = this._elements.filter(el => {
       return el !== elementToRemove;
     });
 

@@ -149,14 +149,14 @@ function _onProfileRemoveMessageHandler(
   profileConfigurationWidget: ProfileConfigurationWidget,
 ): void {
   if (currentProfileName === '') {
-    console.log(`You can't remove default profile`);
+    console.log("You can't remove default profile");
     return;
   }
-  profiles = profiles.filter((p) => p.name !== currentProfileName);
+  profiles = profiles.filter(p => p.name !== currentProfileName);
   currentProfileName = '';
 
   profileSelectWidget.updateProfiles(profiles);
-  profileConfigurationWidget.updateConfiguration(profiles.filter((p) => p.name === currentProfileName)[0]);
+  profileConfigurationWidget.updateConfiguration(profiles.filter(p => p.name === currentProfileName)[0]);
 }
 
 function _onProfileSaveMessageHandler(comm: SparkUIComm, profiles: IProfileListItem[], profileName, configuration) {
@@ -189,13 +189,13 @@ function _onProfileCreateConfirmedMessageHandler(
 ): void {
   const profileName = msg.payload.profileName.trim();
   if (profileName === '') {
-    console.log(`Profile name can't be empty.`);
+    console.log("Profile name can't be empty.");
     return;
   }
 
   let profile = _getProfileByName(profiles, profileName);
   if (profile !== null) {
-    console.log(`Profile name '%s' already exists`, profileName);
+    console.log("Profile name '%s' already exists", profileName);
     return;
   }
 

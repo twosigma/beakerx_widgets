@@ -174,11 +174,11 @@ export class PlotRange {
         .range([1, 0]);
     }
 
-    this.data2scrXi = (val) => Number(this.data2scrX(val).toFixed(this.scope.renderFixed));
-    this.data2scrYi = (val) => Number(this.data2scrY(val).toFixed(this.scope.renderFixed));
+    this.data2scrXi = val => Number(this.data2scrX(val).toFixed(this.scope.renderFixed));
+    this.data2scrYi = val => Number(this.data2scrY(val).toFixed(this.scope.renderFixed));
 
     if (this.data2scrY_r !== undefined) {
-      this.data2scrYi_r = (val) => Number(this.data2scrY_r(val).toFixed(this.scope.renderFixed));
+      this.data2scrYi_r = val => Number(this.data2scrY_r(val).toFixed(this.scope.renderFixed));
     }
   }
 }

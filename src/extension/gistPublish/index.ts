@@ -52,7 +52,7 @@ function setupPublisher() {
   const options = {
     accessTokenProvider: new AccessTokenProvider(),
     saveWidgetsStateHandler: saveWidgetsState,
-    prepareContentToPublish: (scope) => {
+    prepareContentToPublish: scope => {
       const el = scope.node || scope.element[0];
       let cell;
       for (const c of Jupyter.notebook.get_cells()) {
@@ -71,12 +71,12 @@ function setupPublisher() {
 }
 
 function openPublishDialog(): void {
-  new GistPublishModal().show((personalAccessToken) => {
+  new GistPublishModal().show(personalAccessToken => {
     saveWidgetsState()
       .then(() => {
         doPublish(personalAccessToken);
       })
-      .catch((reason) => console.log(reason));
+      .catch(reason => console.log(reason));
   });
 }
 
@@ -108,7 +108,7 @@ export function saveWidgetsState(): Promise<string> {
 }
 
 export function doPublish(personalAccessToken: string): void {
-  GistPublisher.doPublish(personalAccessToken, Jupyter.notebook.notebook_name, Jupyter.notebook.toJSON(), (errorMsg) =>
+  GistPublisher.doPublish(personalAccessToken, Jupyter.notebook.notebook_name, Jupyter.notebook.toJSON(), errorMsg =>
     showErrorDialog(errorMsg),
   );
 }

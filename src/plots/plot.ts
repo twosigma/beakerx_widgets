@@ -72,7 +72,7 @@ export class PlotView extends DOMWidgetView {
 
       this.on('remove', () => {
         if (this._currentScope instanceof CombinedPlotScope) {
-          this._currentScope.scopes.forEach(function (scope) {
+          this._currentScope.scopes.forEach(scope => {
             scope.destroy();
           });
         } else if (this._currentScope) {
@@ -90,14 +90,14 @@ export class PlotView extends DOMWidgetView {
       case 'Histogram':
         return Math.max.apply(
           null,
-          plotModel.graphics_list.map((graphic) => {
+          plotModel.graphics_list.map(graphic => {
             return graphic.length;
           }),
         );
       default:
         return Math.max.apply(
           null,
-          plotModel.graphics_list.map((graphic) => {
+          plotModel.graphics_list.map(graphic => {
             const points = graphic.x ? graphic.x : graphic.y;
 
             return points ? points.length : 0;
@@ -138,7 +138,7 @@ export class PlotView extends DOMWidgetView {
     }
 
     numberOfPoints = Math.max.apply(plotModel.plots.map(this.getNumberOfPointsForPlot));
-    plotModel.plots.forEach((standardPlotModel) => {
+    plotModel.plots.forEach(standardPlotModel => {
       this.limitPointsForPlot(standardPlotModel, numberOfPoints);
     });
   }

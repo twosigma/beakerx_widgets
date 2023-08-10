@@ -32,14 +32,18 @@ import { AutoTranslation } from './plugin/autoTranslation';
 const PlotApi = require('../plots/plotsrc/_js/plotApi');
 
 export class BeakerxWidgetExtension implements DocumentRegistry.WidgetExtension {
-  constructor(private app: JupyterFrontEnd, private settings: ISettingRegistry, private labShell: ILabShell) {}
+  constructor(
+    private app: JupyterFrontEnd,
+    private settings: ISettingRegistry,
+    private labShell: ILabShell,
+  ) {}
 
   createNew(panel: NotebookPanel, context: DocumentRegistry.IContext<INotebookModel>): DisposableDelegate {
     const app = this.app;
     const settings = this.settings;
     const labShell = this.labShell;
 
-    Promise.all([panel.sessionContext.ready, context.ready]).then(function () {
+    Promise.all([panel.sessionContext.ready, context.ready]).then(() => {
       extendHighlightModes(panel);
       enableInitializationCellsFeature(panel);
       registerCommentOutCmd(panel);
@@ -66,7 +70,7 @@ export class BeakerxWidgetExtension implements DocumentRegistry.WidgetExtension 
       });
 
       const originalProcessFn = app.commands.processKeydownEvent;
-      app.commands.processKeydownEvent = (event) => {
+      app.commands.processKeydownEvent = event => {
         if (window.beakerx && window.beakerx.tableFocused) {
           return false;
         }

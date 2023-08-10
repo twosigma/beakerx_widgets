@@ -94,7 +94,7 @@ export abstract class BkoContextMenu implements IMenu {
   }
 
   protected createMenuItem(menuItem: IContextMenuItem, menu: addItem): void {
-    const subitems = typeof menuItem.items == 'function' ? menuItem.items() : menuItem.items;
+    const subitems = typeof menuItem.items === 'function' ? menuItem.items() : menuItem.items;
     const hasSubitems = Array.isArray(subitems) && subitems.length;
 
     menuItem.separator && this.addSeparatorItem(menuItem, menu);
@@ -138,7 +138,7 @@ export abstract class BkoContextMenu implements IMenu {
         iconClass: () => menuItem.icon ?? '',
         isVisible: menuItem.isVisible,
         execute: (): void => {
-          if (menuItem.action && typeof menuItem.action == 'function') {
+          if (menuItem.action && typeof menuItem.action === 'function') {
             menuItem.action(self.event);
           }
         },
@@ -183,11 +183,11 @@ export abstract class BkoContextMenu implements IMenu {
   }
 
   removeMenuItems(): void {
-    this.menuItems.forEach((item) => this.contextMenu.menu.removeItem(item));
+    this.menuItems.forEach(item => this.contextMenu.menu.removeItem(item));
   }
 
   dispose(): void {
-    this.disposables.forEach((disposable) => disposable.dispose());
+    this.disposables.forEach(disposable => disposable.dispose());
   }
 
   unbind(): void {

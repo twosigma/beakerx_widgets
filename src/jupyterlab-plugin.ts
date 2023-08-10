@@ -217,12 +217,6 @@ export const TreePlugin: JupyterFrontEndPlugin<void> = {
   autoStart: true,
 };
 
-
-const plugins: JupyterFrontEndPlugin<any>[] = [
-  BeakexWidgetsFormsPlugin,
-  RequireJsPlugin,
-  BigJsPlugin,
-  TreePlugin
-];
+const plugins: JupyterFrontEndPlugin<any>[] = [BeakexWidgetsFormsPlugin, RequireJsPlugin, BigJsPlugin, TreePlugin];
 
 export default plugins;

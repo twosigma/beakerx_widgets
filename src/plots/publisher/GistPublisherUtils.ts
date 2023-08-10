@@ -58,17 +58,17 @@ export class GistPublisherUtils {
     let personalAccessToken = '';
     this.accessTokenProvider
       .getPersonalAccessToken()
-      .then((accessToken) => {
+      .then(accessToken => {
         personalAccessToken = accessToken;
         return this.saveWidgetStateHandler();
       })
-      .then((notebook_name) => {
+      .then(notebook_name => {
         GistPublisher.doPublish(
           personalAccessToken,
           notebook_name,
           this.prepareContentToPublish(scope),
           // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
-          (errorMsg) => {},
+          errorMsg => {},
         );
       });
   }

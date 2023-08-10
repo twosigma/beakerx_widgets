@@ -103,7 +103,7 @@ export class PlotLayout {
     }
 
     const customStyleString = stdmodel.customStyles
-      .map((s) => `#${this.scope.wrapperId} #${this.scope.id} ${s}`)
+      .map(s => `#${this.scope.wrapperId} #${this.scope.id} ${s}`)
       .join('\n');
 
     // this string needs to be sanitized
@@ -246,7 +246,7 @@ export class PlotLayout {
     $(window).resize(this.scope.plotSize.resizeFunction);
 
     const scope = this.scope;
-    this.scope.jqcontainer.on('resize', (e) => {
+    this.scope.jqcontainer.on('resize', e => {
       e.stopPropagation();
       e.preventDefault();
 

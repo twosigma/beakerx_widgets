@@ -56,7 +56,7 @@ export class GridLines {
 
   plotGridlines(): void {
     const selection = this.scope.gridg.selectAll('line');
-    const filterWithoutId = (d) => d.id;
+    const filterWithoutId = d => d.id;
 
     selection.data(this.rpipeGridlines, filterWithoutId).exit().remove();
 
@@ -65,20 +65,20 @@ export class GridLines {
       .enter()
       .append('line')
       .attr('id', filterWithoutId)
-      .attr('class', (d) => d.class)
-      .attr('x1', (d) => d.x1)
-      .attr('x2', (d) => d.x2)
-      .attr('y1', (d) => d.y1)
-      .attr('y2', (d) => d.y2)
-      .style('stroke', (d) => d.stroke)
-      .style('stroke-dasharray', (d) => d.stroke_dasharray);
+      .attr('class', d => d.class)
+      .attr('x1', d => d.x1)
+      .attr('x2', d => d.x2)
+      .attr('y1', d => d.y1)
+      .attr('y2', d => d.y2)
+      .style('stroke', d => d.stroke)
+      .style('stroke-dasharray', d => d.stroke_dasharray);
 
     selection
       .data(this.rpipeGridlines, filterWithoutId)
-      .attr('x1', (d) => d.x1)
-      .attr('x2', (d) => d.x2)
-      .attr('y1', (d) => d.y1)
-      .attr('y2', (d) => d.y2);
+      .attr('x1', d => d.x1)
+      .attr('x2', d => d.x2)
+      .attr('y1', d => d.y1)
+      .attr('y2', d => d.y2);
   }
 
   setGridlines() {

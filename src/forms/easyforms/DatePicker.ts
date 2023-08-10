@@ -96,7 +96,7 @@ export class DatePickerView extends JupyterLabeledDOMWidgetView {
 
     this.datepicker[0].addEventListener(
       'keyup',
-      (event) => {
+      event => {
         event.preventDefault();
         event.stopPropagation();
 

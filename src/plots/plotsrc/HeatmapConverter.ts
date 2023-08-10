@@ -85,7 +85,9 @@ export class HeatmapConverter {
 
       for (let colInd = 0; colInd < row.length; colInd++) {
         const value = row[colInd];
-        if (value === 'NaN') continue;
+        if (value === 'NaN') {
+          continue;
+        }
 
         const eleSize = 1;
         const ele = {

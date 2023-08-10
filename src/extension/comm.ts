@@ -26,7 +26,7 @@ export const BEAKER_AUTOTRANSLATION = 'beakerx.autotranslation';
 export const BEAKER_TAG_RUN = 'beakerx.tag.run';
 
 const msgHandlers = {
-  [BEAKER_GETCODECELLS]: (msg) => {
+  [BEAKER_GETCODECELLS]: msg => {
     if (msg.content.data.state.name == 'CodeCells') {
       sendJupyterCodeCells(JSON.parse(msg.content.data.state.value), msg.content.data.url);
     }
@@ -34,19 +34,19 @@ const msgHandlers = {
     msgHandlers[BEAKER_AUTOTRANSLATION](msg);
   },
 
-  [BEAKER_GET_URL_ARG]: (msg) => {
+  [BEAKER_GET_URL_ARG]: msg => {
     if (msg.content.data.state.name == 'URL_ARG') {
       sendArgUrl(msg.content.data.url, msg.content.data.type, msg.content.data.state.arg_name);
     }
   },
 
-  [BEAKER_AUTOTRANSLATION]: (msg) => {
+  [BEAKER_AUTOTRANSLATION]: msg => {
     window.beakerx['LOCK_PROXY'] = true;
     window.beakerx[msg.content.data.state.name] = JSON.parse(msg.content.data.state.value);
     window.beakerx['LOCK_PROXY'] = false;
   },
 
-  [BEAKER_TAG_RUN]: (msg) => {
+  [BEAKER_TAG_RUN]: msg => {
     if (!msg.content.data.state || !msg.content.data.state.runByTag) {
       return;
     }
@@ -76,23 +76,23 @@ const msgHandlers = {
 };
 
 export const registerCommTargets = (kernel: any): void => {
-  kernel.comm_manager.register_target(BEAKER_GETCODECELLS, function (comm) {
+  kernel.comm_manager.register_target(BEAKER_GETCODECELLS, comm => {
     comm.on_msg(msgHandlers[BEAKER_GETCODECELLS]);
   });
 
-  kernel.comm_manager.register_target(BEAKER_AUTOTRANSLATION, function (comm) {
+  kernel.comm_manager.register_target(BEAKER_AUTOTRANSLATION, comm => {
     comm.on_msg(msgHandlers[BEAKER_AUTOTRANSLATION]);
   });
 
-  kernel.comm_manager.register_target(BEAKER_TAG_RUN, function (comm) {
+  kernel.comm_manager.register_target(BEAKER_TAG_RUN, comm => {
     comm.on_msg(msgHandlers[BEAKER_TAG_RUN]);
   });
 
-  kernel.comm_manager.register_target(BEAKER_GET_URL_ARG, function (comm) {
+  kernel.comm_manager.register_target(BEAKER_GET_URL_ARG, comm => {
     comm.on_msg(msgHandlers[BEAKER_GET_URL_ARG]);
   });
 
-  kernel.comm_info(null, (msg) => {
+  kernel.comm_info(null, msg => {
     assignMsgHandlersToExistingComms(msg.content.comms, kernel);
   });
 };
@@ -102,7 +102,7 @@ const sendJupyterCodeCells = (filter: string, url: string) => {
     code_cells: [],
     url: url,
   };
-  data.code_cells = Jupyter.notebook.get_cells().filter(function (cell) {
+  data.code_cells = Jupyter.notebook.get_cells().filter(cell => {
     if (cell._metadata.tags) {
       return cell.cell_type == 'code' && cell._metadata.tags.includes(filter);
     }
@@ -153,7 +153,7 @@ class BeakerxRestHandler {
   }
 
   public post(data) {
-    this.api.restService(data).catch((err) => {
+    this.api.restService(data).catch(err => {
       console.log(err);
     });
   }
@@ -168,7 +168,7 @@ const assignMsgHandlersToExistingComms = (comms, kernel) => {
   }
 };
 
-const assignMsgHandlerToComm = (comm) => {
+const assignMsgHandlerToComm = comm => {
   const handler = msgHandlers[comm.target_name];
 
   if (handler) {

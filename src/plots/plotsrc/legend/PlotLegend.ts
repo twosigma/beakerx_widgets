@@ -65,7 +65,7 @@ export class PlotLegend {
       $(item).attr('style', style);
     });
 
-    const getPositive = (value) => (value > 0 ? value : 0);
+    const getPositive = value => (value > 0 ? value : 0);
     const position = PlotStyleUtils.getActualCss(legend, 'position') as { top: number; left: number };
     const x = getPositive(position.left);
     const y = getPositive(position.top);
@@ -176,10 +176,12 @@ export class PlotLegend {
     };
 
     const layout = this.scope.layout;
-    const legendContainer = ($('<div></div>')
-      .appendTo(this.scope.jqlegendcontainer)
-      .attr('id', 'plotLegend')
-      .attr('class', 'plot-legend') as any)
+    const legendContainer = (
+      $('<div></div>')
+        .appendTo(this.scope.jqlegendcontainer)
+        .attr('id', 'plotLegend')
+        .attr('class', 'plot-legend') as any
+    )
       .draggable(draggable)
       .css(
         'max-height',
@@ -385,11 +387,11 @@ export class PlotLegend {
 
     const lodTypeMenuItems = [];
 
-    line.dataIds.forEach((dataId) => {
+    line.dataIds.forEach(dataId => {
       const graphics = this.scope.stdmodel.data[dataId];
 
-      graphics.lodTypes.forEach((lodType) => {
-        if (!_.some(lodTypeMenuItems, (item) => item.lodType === lodType)) {
+      graphics.lodTypes.forEach(lodType => {
+        if (!_.some(lodTypeMenuItems, item => item.lodType === lodType)) {
           lodTypeMenuItems.push(this.createLodTypeMenuItem(lodType, id));
         }
       });
@@ -420,7 +422,7 @@ export class PlotLegend {
 
     let hasChanged = false;
 
-    dataIds.forEach((dataId) => {
+    dataIds.forEach(dataId => {
       const loadLoader = this.scope.stdmodel.data[dataId];
 
       if (!loadLoader.lodType || loadLoader.lodType === lodType) {
@@ -454,7 +456,7 @@ export class PlotLegend {
       ],
       'msg_lodoff',
       () => {
-        dataIds.forEach((dataId) => {
+        dataIds.forEach(dataId => {
           const loadLoader = this.scope.stdmodel.data[dataId];
 
           loadLoader.toggleLod && loadLoader.toggleLod(this.scope);
@@ -479,10 +481,10 @@ export class PlotLegend {
 
     const dropdownMenuElement = lodhint.find('ul.dropdown-menu');
 
-    lodTypeMenuItems.forEach((item) => {
+    lodTypeMenuItems.forEach(item => {
       const liElem = $(`<li class=""><a>${item.name}</a></li>`);
 
-      liElem.children('a').on('click', (e) => {
+      liElem.children('a').on('click', e => {
         item.action();
         $(e.target).parents('.lod-dropdown-menu').removeClass('open');
       });
@@ -490,7 +492,7 @@ export class PlotLegend {
       dropdownMenuElement.append(liElem);
     });
 
-    lodhint.find('a.dropdown-toggle').on('click', (e) => {
+    lodhint.find('a.dropdown-toggle').on('click', e => {
       const parent: any = $(e.target).parent();
 
       $('.lod-dropdown-menu').not(parent).removeClass('open');

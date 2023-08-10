@@ -86,7 +86,7 @@ export class PlotCursor {
 
     this.scope.jqcontainer.find('#cursor_xlabel').remove();
 
-    const label = $(`<div id="cursor_xlabel" class="plot-cursorlabel"></div>`)
+    const label = $('<div id="cursor_xlabel" class="plot-cursorlabel"></div>')
       .appendTo(this.scope.jqcontainer)
       .text(PlotUtils.getTipStringPercent(mapX(x), model.xAxis));
 

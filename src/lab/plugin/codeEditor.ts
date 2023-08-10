@@ -23,8 +23,8 @@ const LINE_COMMENT_CHAR = '//';
 const LINE_MAGIC_MODE = 'line_magic';
 
 const getCodeCellsWithCodeMirrorEditor = (panel: NotebookPanel): CodeCell[] =>
-  (((panel.content.widgets || []) as Cell[]).filter((cell) => cell instanceof CodeCell) as CodeCell[]).filter(
-    (cell) => cell.editor instanceof CodeMirrorEditor,
+  (((panel.content.widgets || []) as Cell[]).filter(cell => cell instanceof CodeCell) as CodeCell[]).filter(
+    cell => cell.editor instanceof CodeMirrorEditor,
   );
 
 export const registerCommentOutCmd = (panel: NotebookPanel): void => {
@@ -87,11 +87,11 @@ export function autoHighlightLineMagics(editor: CodeMirror.Editor) {
 
   const re = /^%(%classpath|%spark|\w+)/;
 
-  editor.getDoc().eachLine((line) => {
+  editor.getDoc().eachLine(line => {
     if (line && line.text.match(re) !== null) {
       // Add an overlay mode to recognize the first line as "line magic" instead
       // of the mode used for the rest of the cell.
-      CodeMirror.defineMode(LINE_MAGIC_MODE, (config) => {
+      CodeMirror.defineMode(LINE_MAGIC_MODE, config => {
         return CodeMirror.overlayMode(CodeMirror.getMode(config, mode), lineMagicOverlay);
       });
 

@@ -50,20 +50,20 @@ export class UIOptionFeaturesHelper {
     });
 
     this.loadSettings()
-      .then((data) => {
+      .then(data => {
         this.initFeatures(data);
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e);
       });
   }
 
   private onActiveChanged(): void {
     this.loadSettings()
-      .then((data) => {
+      .then(data => {
         this.updateFeatures(data);
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e);
       });
   }
@@ -87,8 +87,8 @@ export class UIOptionFeaturesHelper {
       const serverSettings = ServerConnection.makeSettings();
       const settingsUrl = `${PageConfig.getBaseUrl()}beakerx/settings`;
       ServerConnection.makeRequest(settingsUrl, { method: 'GET' }, serverSettings)
-        .then((response) => resolve(response.json()))
-        .catch((reason) => {
+        .then(response => resolve(response.json()))
+        .catch(reason => {
           reject(reason);
           console.log(reason);
         });
@@ -102,7 +102,10 @@ interface IUIOptionsFeature {
 }
 
 class ShowPublicationFeature implements IUIOptionsFeature {
-  constructor(private panel: NotebookPanel, private commands) {}
+  constructor(
+    private panel: NotebookPanel,
+    private commands,
+  ) {}
 
   public init(isEnabled: boolean) {
     registerGistPublishFeature(this.panel, this.commands, isEnabled);
@@ -137,7 +140,7 @@ class AutoCloseBracketsFeature implements IUIOptionsFeature {
       return [];
     }
     const cells = this.panel.content.widgets || [];
-    return <CodeCell[]>cells.filter((cell) => {
+    return <CodeCell[]>cells.filter(cell => {
       return cell instanceof CodeCell;
     });
   }
@@ -147,7 +150,10 @@ class AutoSaveFeature implements IUIOptionsFeature {
   private pluginId = '@jupyterlab/docmanager-extension:plugin';
   private commandId = 'docmanager:toggle-autosave';
 
-  constructor(private settings: ISettingRegistry, private commands) {}
+  constructor(
+    private settings: ISettingRegistry,
+    private commands,
+  ) {}
 
   public init(isEnabled: boolean): void {
     this.runToggleAutoSaveCommandIfNeeded(isEnabled);
@@ -158,7 +164,7 @@ class AutoSaveFeature implements IUIOptionsFeature {
   }
 
   private runToggleAutoSaveCommandIfNeeded(isEnabled: boolean): void {
-    this.settings.get(this.pluginId, 'autosave').then((val) => {
+    this.settings.get(this.pluginId, 'autosave').then(val => {
       if (val.composite !== isEnabled) {
         this.commands.execute(this.commandId);
       }

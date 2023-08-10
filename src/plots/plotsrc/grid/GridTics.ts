@@ -52,15 +52,15 @@ export class GridTics {
     this.scope.labelg.selectAll('line').remove();
     this.scope.labelg
       .selectAll('line')
-      .data(this.rpipeTicks, (d) => d.id)
+      .data(this.rpipeTicks, d => d.id)
       .enter()
       .append('line')
-      .attr('id', (d) => d.id)
-      .attr('class', (d) => d.class)
-      .attr('x1', (d) => d.x1)
-      .attr('x2', (d) => d.x2)
-      .attr('y1', (d) => d.y1)
-      .attr('y2', (d) => d.y2);
+      .attr('id', d => d.id)
+      .attr('class', d => d.class)
+      .attr('x1', d => d.x1)
+      .attr('x2', d => d.x2)
+      .attr('y1', d => d.y1)
+      .attr('y2', d => d.y2);
   }
 
   renderAxisXTics(model, focus, mapX, mapY): void {

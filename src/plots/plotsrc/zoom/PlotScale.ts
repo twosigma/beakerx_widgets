@@ -26,17 +26,15 @@ export class PlotScale {
       mouseY > PlotStyleUtils.safeHeight(scope.jqsvg) - scope.layout.bottomLayoutMargin ||
       mouseX < scope.layout.leftLayoutMargin ||
       !scope.model.model.auto_zoom ||
-      !data.map((item) => (item.getRange ? true : false)).every((b) => b)
+      !data.map(item => (item.getRange ? true : false)).every(b => b)
     ) {
       return false;
     }
 
     // Zooming in the middle of the chart, autoscale Y
-    const ranges = data.map((item) =>
-      item.getRange(item.elements.filter((el) => el.x >= focus.xl && el.x <= focus.xr)),
-    );
-    const minYValue = Math.min(...ranges.map((r) => r.yl).filter((y) => !isNaN(y) && isFinite(y)));
-    const maxYValue = Math.max(...ranges.map((r) => r.yr).filter((y) => !isNaN(y) && isFinite(y)));
+    const ranges = data.map(item => item.getRange(item.elements.filter(el => el.x >= focus.xl && el.x <= focus.xr)));
+    const minYValue = Math.min(...ranges.map(r => r.yl).filter(y => !isNaN(y) && isFinite(y)));
+    const maxYValue = Math.max(...ranges.map(r => r.yr).filter(y => !isNaN(y) && isFinite(y)));
 
     if (!isNaN(minYValue) && isFinite(minYValue) && !isNaN(maxYValue) && isFinite(maxYValue)) {
       focus.yl = minYValue;

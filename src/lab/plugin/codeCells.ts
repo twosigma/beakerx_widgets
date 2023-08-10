@@ -40,7 +40,7 @@ export function sendJupyterCodeCells(notebook: Notebook, filter: string, url: st
 export function getCodeCellsByTag(notebook: Notebook, tag: string): Cell[] {
   const cells = notebook.widgets || [];
 
-  return cells.filter((cell) => {
+  return cells.filter(cell => {
     const tags: any = cell.model.metadata.get('tags');
 
     return cell.model instanceof CodeCellModel && tags && tags.length && tags.includes(tag);
@@ -72,7 +72,7 @@ export class BeakerxRestHandler {
   }
 
   public post(data) {
-    this.api.restService(data).catch((err) => {
+    this.api.restService(data).catch(err => {
       console.log(err);
     });
   }

@@ -39,7 +39,7 @@ export const initCellUiCallback = CellToolbar.utils.checkbox_ui_generator(
       delete cell.metadata.init_cell;
     }
   },
-  (cell) => cell.metadata.init_cell, // if init_cell is undefined, it'll be interpreted as false anyway
+  cell => cell.metadata.init_cell, // if init_cell is undefined, it'll be interpreted as false anyway
 );
 
 export function registerCelltoolbarPreset(): void {
@@ -88,7 +88,7 @@ export function runInitCells(options: IInitCellsOptions): void {
 }
 
 export function getInitCells(): any[] {
-  return Jupyter.notebook.get_cells().filter((cell) => cell instanceof CodeCell && cell.metadata.init_cell === true);
+  return Jupyter.notebook.get_cells().filter(cell => cell instanceof CodeCell && cell.metadata.init_cell === true);
 }
 
 function canExecuteInitCells(options: IInitCellsOptions) {
@@ -105,8 +105,7 @@ function handleUntrustedKernelInitCells(cells, options) {
   if (!Jupyter.notebook.trusted && !options.run_untrusted && cells.length) {
     dialog.modal({
       title: 'Initialization cells in untrusted notebook',
-      body:
-        'This notebook is not trusted, so initialization cells will not be automatically run on kernel load. You can still run them manually, though.',
+      body: 'This notebook is not trusted, so initialization cells will not be automatically run on kernel load. You can still run them manually, though.',
       buttons: { OK: { class: 'btn-primary' } },
       notebook: Jupyter.notebook,
       keyboard_manager: Jupyter.keyboard_manager,

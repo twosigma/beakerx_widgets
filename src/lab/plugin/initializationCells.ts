@@ -79,8 +79,7 @@ function handleUntrustedKernelInitCells(cells: CodeCell[], options: IInitCellsOp
   if (cells.length && !cells[0].model.trusted && !options.run_untrusted) {
     showDialog({
       title: 'Initialization cells in untrusted notebook',
-      body:
-        'This notebook is not trusted, so initialization cells will not be automatically run on kernel load. You can still run them manually, though.',
+      body: 'This notebook is not trusted, so initialization cells will not be automatically run on kernel load. You can still run them manually, though.',
       buttons: [Dialog.okButton({ label: 'OK' })],
     });
   }

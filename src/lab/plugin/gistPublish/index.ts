@@ -62,7 +62,7 @@ function setupPublisher(panel: NotebookPanel, commands: CommandRegistry) {
   const options = {
     accessTokenProvider: new AccessTokenProvider(),
     saveWidgetsStateHandler: saveWidgetsState.bind(undefined, panel, commands),
-    prepareContentToPublish: (scope) => {
+    prepareContentToPublish: scope => {
       const el = scope.node || scope.element[0];
       let cell: CodeCell;
       const cells: CodeCell[] = <CodeCell[]>(
@@ -84,7 +84,7 @@ function setupPublisher(panel: NotebookPanel, commands: CommandRegistry) {
 }
 
 function openPublishDialog(panel: NotebookPanel, commands: CommandRegistry) {
-  new GistPublishModal().show(async (personalAccessToken) => {
+  new GistPublishModal().show(async personalAccessToken => {
     await saveWidgetsState(panel, commands);
     return doPublish(panel, personalAccessToken);
   });
@@ -109,6 +109,6 @@ function doPublish(panel: NotebookPanel, personalAccessToken: string | null): vo
     personalAccessToken,
     panel.context.contentsModel.name,
     panel.content.model.toJSON(),
-    (errorMsg) => showErrorDialog(errorMsg),
+    errorMsg => showErrorDialog(errorMsg),
   );
 }

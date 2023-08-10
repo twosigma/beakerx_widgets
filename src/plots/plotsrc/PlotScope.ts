@@ -431,7 +431,7 @@ export class PlotScope {
 
     model.getSvgToSave = () => SaveAsContextMenu.getSvgToSave(self);
     model.saveAsSvg = () => this.saveAsSvg();
-    model.saveAsPng = (scale) => this.saveAsPng(scale);
+    model.saveAsPng = scale => this.saveAsPng(scale);
     model.updateLegendPosition = () => this.plotLegend.legendPosition.updateLegendPosition();
   }
 

@@ -47,7 +47,7 @@ export class BannerWidget extends Widget {
 
     this.addClass('bx-banner-widget');
 
-    api.getVersion().then((version) => {
+    api.getVersion().then(version => {
       this.createBanner(version);
     });
   }

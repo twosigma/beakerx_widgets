@@ -28,7 +28,7 @@ export const BEAKER_AUTOTRANSLATION = 'beakerx.autotranslation';
 export const BEAKER_TAG_RUN = 'beakerx.tag.run';
 
 const getMsgHandlers = (session: ISessionContext, kernelInstance: Kernel.IKernelConnection, notebook: Notebook) => ({
-  [BEAKER_GETCODECELLS]: (msg) => {
+  [BEAKER_GETCODECELLS]: msg => {
     const state: messageState = msg.content.data.state;
 
     if (!state.name) {
@@ -42,7 +42,7 @@ const getMsgHandlers = (session: ISessionContext, kernelInstance: Kernel.IKernel
     window.beakerx[state.name] = JSON.parse(state.value);
   },
 
-  [BEAKER_AUTOTRANSLATION]: (msg) => {
+  [BEAKER_AUTOTRANSLATION]: msg => {
     const state: messageState = msg.content.data.state;
 
     window.beakerx[AutoTranslation.LOCK_PROXY] = true;
@@ -50,7 +50,7 @@ const getMsgHandlers = (session: ISessionContext, kernelInstance: Kernel.IKernel
     window.beakerx[AutoTranslation.LOCK_PROXY] = false;
   },
 
-  [BEAKER_TAG_RUN]: (msg) => {
+  [BEAKER_TAG_RUN]: msg => {
     const data: messageData = msg.content.data;
 
     if (!data.state || !data.state.runByTag) {
@@ -66,7 +66,7 @@ const getMsgHandlers = (session: ISessionContext, kernelInstance: Kernel.IKernel
         buttons: [Dialog.okButton({ label: 'OK' })],
       });
     } else {
-      matchedCells.forEach((cell) => {
+      matchedCells.forEach(cell => {
         cell instanceof CodeCell && CodeCell.execute(cell, session);
       });
     }
@@ -82,15 +82,15 @@ export const registerCommTargets = async (
   const notebook = panel.content;
   const msgHandlers = getMsgHandlers(sessionContext, kernelInstance, notebook);
 
-  kernelInstance.registerCommTarget(BEAKER_GETCODECELLS, (comm) => {
+  kernelInstance.registerCommTarget(BEAKER_GETCODECELLS, comm => {
     comm.onMsg = msgHandlers[BEAKER_GETCODECELLS];
   });
 
-  kernelInstance.registerCommTarget(BEAKER_AUTOTRANSLATION, (comm) => {
+  kernelInstance.registerCommTarget(BEAKER_AUTOTRANSLATION, comm => {
     comm.onMsg = msgHandlers[BEAKER_AUTOTRANSLATION];
   });
 
-  kernelInstance.registerCommTarget(BEAKER_TAG_RUN, (comm) => {
+  kernelInstance.registerCommTarget(BEAKER_TAG_RUN, comm => {
     comm.onMsg = msgHandlers[BEAKER_TAG_RUN];
   });
 

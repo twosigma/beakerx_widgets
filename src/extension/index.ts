@@ -85,7 +85,7 @@ function setupNotebook() {
       () => {
         options = { ...options, ...Jupyter.notebook.config.data[MOD_NAME] };
       },
-      (reason) => {
+      reason => {
         console.warn(log_prefix, 'error loading config:', reason);
       },
     )
@@ -94,7 +94,7 @@ function setupNotebook() {
         ? callback_notebook_loaded()
         : events.on('notebook_loaded.Notebook', callback_notebook_loaded);
     })
-    .catch((reason) => {
+    .catch(reason => {
       console.error(log_prefix, 'unhandled error:', reason);
     });
 

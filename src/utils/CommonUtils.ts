@@ -58,7 +58,9 @@ export class CommonUtils {
   }
 
   public static formatBytes(bytes: number): string {
-    if (bytes <= 1000) return '0 KB';
+    if (bytes <= 1000) {
+      return '0 KB';
+    }
 
     const k = 1000;
     const dm = 0;

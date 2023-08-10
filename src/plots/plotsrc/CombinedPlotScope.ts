@@ -177,7 +177,7 @@ export class CombinedPlotScope {
   getMinScopesWidth(): number {
     return Math.min.apply(
       null,
-      this.scopes.map((scope) => scope.width).filter((width) => !!width),
+      this.scopes.map(scope => scope.width).filter(width => !!width),
     );
   }
 
@@ -303,7 +303,7 @@ export class CombinedPlotScope {
   }
 
   updateModels(updateType): void {
-    this.scopes.forEach((scope) => {
+    this.scopes.forEach(scope => {
       if (updateType === 'focus') {
         scope.plotFocus.onModelFocusUpdate(this.plotFocus.getFocus());
       } else if (updateType === 'width') {

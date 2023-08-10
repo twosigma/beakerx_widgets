@@ -68,8 +68,8 @@ export class CyclingDisplayBoxView extends JupyterBoxView {
     const element = this.model.get('children')[currentWidgetIndex];
 
     if (element && this.children_views) {
-      this.children_views.update([element]).then(function (views) {
-        const heights = views.map((view) => {
+      this.children_views.update([element]).then(views => {
+        const heights = views.map(view => {
           return view.$el.height();
         });
 

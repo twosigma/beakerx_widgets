@@ -31,7 +31,7 @@ export class PlotStyleUtils {
     if (includeMargin) {
       properties.push('margin-left', 'margin-right');
     }
-    return properties.map((property) => this.getComputedStyle(e, property) as number).reduce((p, c) => p + c, 0);
+    return properties.map(property => this.getComputedStyle(e, property) as number).reduce((p, c) => p + c, 0);
   }
 
   public static outerHeight(e: JQuery<Element>, includeMargin = false): number | null {
@@ -42,7 +42,7 @@ export class PlotStyleUtils {
     if (includeMargin) {
       properties.push('margin-top', 'margin-bottom');
     }
-    return properties.map((property) => this.getComputedStyle(e, property) as number).reduce((p, c) => p + c, 0);
+    return properties.map(property => this.getComputedStyle(e, property) as number).reduce((p, c) => p + c, 0);
   }
 
   public static convertToXHTML(html: string): string {

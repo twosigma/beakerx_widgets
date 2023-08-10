@@ -73,17 +73,17 @@ export class GridLabels {
     this.scope.labelg.selectAll('text').remove();
     this.scope.labelg
       .selectAll('text')
-      .data(pipe, (d) => d.id)
+      .data(pipe, d => d.id)
       .enter()
       .append('text')
-      .attr('id', (d) => d.id)
-      .attr('class', (d) => d.class)
-      .attr('x', (d) => d.x)
-      .attr('y', (d) => d.y)
-      .attr('transform', (d) => d.transform)
-      .style('text-anchor', (d) => d['text-anchor'])
-      .style('dominant-baseline', (d) => d['dominant-baseline'])
-      .text((d) => d.text);
+      .attr('id', d => d.id)
+      .attr('class', d => d.class)
+      .attr('x', d => d.x)
+      .attr('y', d => d.y)
+      .attr('transform', d => d.transform)
+      .style('text-anchor', d => d['text-anchor'])
+      .style('dominant-baseline', d => d['dominant-baseline'])
+      .text(d => d.text);
   }
 
   renderAxisXLabel(i: number, model, mapX, mapY, lines, labels): void {

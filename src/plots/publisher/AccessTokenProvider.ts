@@ -20,8 +20,8 @@ import { GistPublishModal } from '../../extension/gistPublish/gistPublishModal';
 export class AccessTokenProvider implements GistPublisherAccessTokenProviderInterface {
   public getPersonalAccessToken(): Promise<string> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    return new Promise(function (resolve, reject) {
-      new GistPublishModal().show((personalAccessToken) => {
+    return new Promise((resolve, reject) => {
+      new GistPublishModal().show(personalAccessToken => {
         resolve(personalAccessToken);
       });
     });
