@@ -26,7 +26,6 @@ version_info = __version__.split(".")
 from .commands import parse_widgets
 from .forms import *
 from .handlers import setup_handlers
-from .jupyter_server_handlers import setup_jupyter_server_handlers
 from .magics import *
 from .outputs import *
 from .plots import *
@@ -41,52 +40,25 @@ try:
 except ModuleNotFoundError:
     pass
 
-
-def _jupyter_nbextension_paths():
-    return [
-        {
-            'section': 'notebook',
-            'src': 'static',
-            'dest': 'beakerx',
-            'require': 'beakerx/extension'
-        }, {
-            'section': 'tree',
-            'src': 'static',
-            'dest': 'beakerx',
-            'require': 'beakerx/tree-extension'
-        }
-    ]
-
 def _jupyter_labextension_paths():
     return [{
         'src': 'labextension',
         'dest': '@beakerx/beakerx-widgets',
     }]
 
-def _jupyter_server_extension_paths():
-    return [dict(module="beakerx")]
-
 def _jupyter_server_extension_points():
     return [dict(module="beakerx")]
 
-def load_jupyter_server_extension(lab_app):
+def _load_jupyter_server_extension(serverapp):
     """Registers the API handler to receive HTTP requests from the frontend extension.
+
     Parameters
     ----------
     lab_app: jupyterlab.labapp.LabApp
         JupyterLab application instance
     """
     url_path = "beakerx"
-    setup_handlers(lab_app.web_app, url_path)
-    lab_app.log.info("Registered beakerx server extension at URL path /{}".format(url_path))
-
-def _load_jupyter_server_extension(serverapp):
-    """Registers the API handler to receive HTTP requests from the frontend extension.
-
-    Used by JupyterLab 3
-    """
-    url_path = "beakerx"
-    setup_jupyter_server_handlers(serverapp, url_path)
+    setup_handlers(serverapp, url_path)
     serverapp.log.info("Registered beakerx server extension at URL path /{}".format(url_path))
 
 def run():

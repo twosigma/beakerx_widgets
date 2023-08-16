@@ -15,7 +15,7 @@ import argparse
 import sys
 
 import beakerx
-from notebook import notebookapp as app
+from jupyter_server import serverapp as app
 
 from .bkr2ipynb import main
 from .install import install, uninstall

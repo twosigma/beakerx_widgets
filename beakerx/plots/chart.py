@@ -321,7 +321,7 @@ class SimpleTimePlot(TimePlot):
             if not isinstance(tableData.index, RangeIndex):
                 parse_x = False
                 xs = tableData.index.to_numpy()
-            tableData = tableData.to_dict(orient='rows')
+            tableData = tableData.to_dict(orient='records')
 
         timeColumn = getValue(kwargs, 'timeColumn', time_column_default)
         self.chart.domain_axis_label = getValue(kwargs, 'xLabel', timeColumn)

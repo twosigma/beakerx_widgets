@@ -18,9 +18,9 @@ import os
 import beakerx
 import tornado
 import zmq
-from notebook.base.handlers import APIHandler, IPythonHandler
-from notebook.utils import url_path_join
-from tornado import web, gen
+from jupyter_server.base.handlers import APIHandler, JupyterHandler
+from jupyter_server.utils import url_path_join
+from tornado import web
 from tornado.simple_httpclient import HTTPStreamClosedError
 
 from .beakerx_autotranslation_server import start_autotranslation_server
@@ -33,8 +33,7 @@ class BeakerxRestHandler(APIHandler):
         pass
 
     @web.authenticated
-    @gen.coroutine
-    def post(self):
+    async def post(self):
 
         data = tornado.escape.json_decode(self.request.body)
         content = json.dumps(data)
@@ -62,7 +61,7 @@ class BeakerxRestHandler(APIHandler):
             )
             client = tornado.httpclient.AsyncHTTPClient()
             try:
-                res = yield client.fetch(req)
+                res = await client.fetch(req)
                 self.finish(res.body)
             except Exception as e:
                 raise web.HTTPError(500, 'Internal server error:\n' + str(e))
@@ -73,8 +72,7 @@ class SparkMetricsExecutorsHandler(APIHandler):
         pass
 
     @web.authenticated
-    @gen.coroutine
-    def get(self):
+    async def get(self):
 
         app_id = self.get_argument('sparkAppId', None)
         ui_web_url = self.get_argument('sparkUiWebUrl', None)
@@ -91,7 +89,7 @@ class SparkMetricsExecutorsHandler(APIHandler):
 
         client = tornado.httpclient.AsyncHTTPClient()
         try:
-            res = yield client.fetch(req)
+            res = await client.fetch(req)
             self.finish(res.body)
         except ConnectionRefusedError as cre:
             pass  # spark was stopped
@@ -132,7 +130,7 @@ class VersionHandler(APIHandler):
         self.finish(json.dumps(data))
 
 
-class JavaDoc(web.StaticFileHandler, IPythonHandler):
+class JavaDoc(web.StaticFileHandler, JupyterHandler):
     def initialize(self):
         beakerx_path = os.path.dirname(beakerx.__file__)
         web.StaticFileHandler.initialize(self, path=os.path.join(beakerx_path, 'javadoc'))
@@ -143,10 +141,11 @@ class JavaDoc(web.StaticFileHandler, IPythonHandler):
         return web.StaticFileHandler.get(self, path)
 
 
-def setup_handlers(web_app, url_path):
+def setup_handlers(serverapp, url_path):
     start_autotranslation_server()
 
     host_pattern = '.*$'
+    web_app = serverapp.web_app
     base_url = web_app.settings["base_url"]
     
     settings_route_pattern = url_path_join(base_url, url_path, '/settings')

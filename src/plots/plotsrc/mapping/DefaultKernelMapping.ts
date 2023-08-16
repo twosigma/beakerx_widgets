@@ -47,7 +47,7 @@ export class DefaultKernelMapping {
       range: modelData.range ?? null,
       xCursor: modelData.xCursor,
       yCursor: modelData.yCursor,
-      userFocus: modelData.focus ?? {},
+      userFocus: modelData.focus ?? { xl: null, xr: null, yl: null, yl_r: null, yr: null, yr_r: null },
       timezone: modelData.timezone,
       categoryNames: modelData.categoryNames,
       showXGridlines: !(modelData.orientation !== 'HORIZONTAL' && modelData.type === 'CategoryPlot'),

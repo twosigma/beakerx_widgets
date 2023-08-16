@@ -46,7 +46,7 @@ export class GroovyKernelMapping {
 
       ...GroovyKernelMapping.mapModelData(modelData),
 
-      userFocus: {},
+      userFocus: { xl: null, xr: null, yl: null, yl_r: null, yr: null, yr_r: null },
       xAxis: {
         label: modelData.domain_axis_label,
       },
