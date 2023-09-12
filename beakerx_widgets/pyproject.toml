@@ -11,6 +11,6 @@ factory = "jupyter_packaging.npm_builder"
 [tool.jupyter-packaging.build-args]
 path = "js"
 build_cmd = "build:labextension"
-npm = ["yarn"]
+npm = ["jlpm"]
 build_dir = "js/dist"
 source_dir = "js/src"

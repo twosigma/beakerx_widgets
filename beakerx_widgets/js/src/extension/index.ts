@@ -18,7 +18,6 @@
 // It contains some requirejs configuration and the `load_ipython_extension`
 // which is required for any notebook extension.
 
-import { extendHighlightModes, extendWithLineComment } from './codeEditor';
 import { registerFeature } from './UIOptionsHelper';
 import { enableInitializationCellsFeature } from './initializationCells';
 import { AutoTranslation } from './autoTranslation';
@@ -97,9 +96,6 @@ function setupNotebook() {
     .catch((reason) => {
       console.error(log_prefix, 'unhandled error:', reason);
     });
-
-  extendWithLineComment(Jupyter, CodeMirror);
-  extendHighlightModes(Jupyter);
 }
 
 export function load_ipython_extension(): void {

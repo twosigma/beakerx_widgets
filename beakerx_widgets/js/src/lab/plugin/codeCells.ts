@@ -41,7 +41,8 @@ export function getCodeCellsByTag(notebook: Notebook, tag: string): Cell[] {
   const cells = notebook.widgets || [];
 
   return cells.filter((cell) => {
-    const tags: any = cell.model.metadata.get('tags');
+    // @ts-ignore: Support for both JupyterLab 3 and 4. It does not compile against JupyterLab 4.
+    const tags: any = cell.model.getMetadata ? cell.model.getMetadata('tags') : cell.model.metadata.get('tags');
 
     return cell.model instanceof CodeCellModel && tags && tags.length && tags.includes(tag);
   });

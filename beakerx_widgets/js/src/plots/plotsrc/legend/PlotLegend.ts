@@ -176,10 +176,12 @@ export class PlotLegend {
     };
 
     const layout = this.scope.layout;
-    const legendContainer = ($('<div></div>')
-      .appendTo(this.scope.jqlegendcontainer)
-      .attr('id', 'plotLegend')
-      .attr('class', 'plot-legend') as any)
+    const legendContainer = (
+      $('<div></div>')
+        .appendTo(this.scope.jqlegendcontainer)
+        .attr('id', 'plotLegend')
+        .attr('class', 'plot-legend') as any
+    )
       .draggable(draggable)
       .css(
         'max-height',

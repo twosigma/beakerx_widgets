@@ -75,9 +75,7 @@ export class PlotFocus {
     return this.focus;
   }
 
-  static getDefault(
-    model,
-  ): {
+  static getDefault(model): {
     defaultFocus: Focus;
     visibleItem?: any;
     legendableItem?: any;
@@ -213,8 +211,8 @@ export class PlotFocus {
   }
 
   fix(focus: Focus): void {
-    focus.xl = focus.xl < 0 ? 0 : focus.xl;
-    focus.xr = focus.xr > 1 ? 1 : focus.xr;
+    focus.xl = new Big(focus.xl).lt(0) ? 0 : focus.xl;
+    focus.xr = new Big(focus.xr).gt(1) ? 1 : focus.xr;
     focus.yl = focus.yl < 0 ? 0 : focus.yl;
     focus.yr = focus.yr > 1 ? 1 : focus.yr;
     focus.yl_r = focus.yl_r < 0 ? 0 : focus.yl_r;
