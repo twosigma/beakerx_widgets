@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from IPython.display import display
+
 from beakerx_base import BeakerxHTML, BeakerxHTMLPre, CyclingDisplayBox, Tab, BeakerxHBox, GridView
 
 try:
@@ -75,7 +77,7 @@ class SimpleLayoutManager(OutputContainerLayoutManager):
 
     def display(self, output_container):
         for widget in self.getWidgets(output_container):
-            widget._ipython_display_()
+            display(widget)
 
 
 class TabbedOutputContainerLayoutManager(OutputContainerLayoutManager):
@@ -85,7 +87,7 @@ class TabbedOutputContainerLayoutManager(OutputContainerLayoutManager):
     def display(self, output_container):
         widgets = self.getWidgets(output_container)
         tab = Tab(widgets, output_container.labels)
-        tab._ipython_display_()
+        display(tab)
 
 
 class CyclingOutputContainerLayoutManager(OutputContainerLayoutManager):
@@ -100,7 +102,7 @@ class CyclingOutputContainerLayoutManager(OutputContainerLayoutManager):
     def display(self, output_container):
         c = CyclingDisplayBox(self.getWidgets(output_container))
         c.setPeriod(self.period)
-        c._ipython_display_()
+        display(c)
 
 
 class AbstractGridLayoutManager(OutputContainerLayoutManager):
@@ -125,7 +127,7 @@ class GridOutputContainerLayoutManager(AbstractGridLayoutManager):
             rows.append(BeakerxHBox(self.createRow(columns, items, itemIndex)))
 
         grid_view = GridView(rows)
-        grid_view._ipython_display_()
+        display(grid_view)
 
     def createRow(self, columns, items, itemIndex):
         row_items = []
