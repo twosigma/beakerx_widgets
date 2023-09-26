@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from ._version import version_info, __version__
-# from .commands import parse_widgets
+from .commands import parse_widgets
 from .forms import *
 from .jupyter_server_handlers import setup_jupyter_server_handlers
 from .magics import *

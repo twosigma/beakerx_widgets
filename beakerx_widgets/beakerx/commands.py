@@ -15,7 +15,6 @@ import argparse
 import sys
 
 import beakerx
-from notebook import notebookapp as app
 
 from .bkr2ipynb import main
 from .install import install, uninstall
@@ -63,14 +62,9 @@ def bkr2ipynb_subparser(subparser):
 #     Py4JServer(args.port, args.pyport, args.kernel, args.context)
 
 
-def run_jupyter(jupyter_commands):
-    app.launch_new_instance(jupyter_commands)
-
-
 def init_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('--version', action='version', version=beakerx.__version__)
-    parser.set_defaults(func=run_jupyter)
 
     subparsers = parser.add_subparsers()
     install_subparser(subparsers)
@@ -83,9 +77,7 @@ def init_parser():
 def parse_widgets():
     parser = init_parser()
     args, jupyter_commands = parser.parse_known_args()
-    if args.func == run_jupyter:
-        args.func(jupyter_commands)
-    elif not jupyter_commands:
+    if not jupyter_commands:
         args.func(args)
     else:
         parser.parse_args(jupyter_commands)
