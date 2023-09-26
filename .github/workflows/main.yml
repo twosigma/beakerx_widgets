@@ -23,14 +23,14 @@ jobs:
         path: ~/.gradle/caches
         key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
         restore-keys: |
-          ${{ runner.os }}-gradle    
+          ${{ runner.os }}-gradle
     - name: Cache Conda
       uses: actions/cache@v1
       with:
         path: ~/.conda
         key: ${{ runner.os }}-mconda-${{ hashFiles('**/configuration.yml') }}
         restore-keys: |
-          ${{ runner.os }}-conda-          
+          ${{ runner.os }}-conda-
     - name: Set up Conda
       uses: conda-incubator/setup-miniconda@v2
       with:
@@ -46,12 +46,14 @@ jobs:
     - name: Checkout beakerx_base repo
       uses: actions/checkout@v2
       with:
-        repository: twosigma/beakerx_base
+        repository: fcollonval/beakerx_base
+        ref: maintenance/bump-ipywidgets
         path: beakerx_base
     - name: Checkout beakerx_kernel_groovy repo
       uses: actions/checkout@v2
       with:
-        repository: twosigma/beakerx_kernel_groovy
+        repository: martinRenou/beakerx_kernel_groovy
+        ref: 'update_notebook'
         path: beakerx_kernel_groovy
     - name: Checkout beakerx_tests repo
       uses: actions/checkout@v2
@@ -62,19 +64,19 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/beakerx_kernel_base
         chmod +x gradlew
-        ./gradlew install     
+        ./gradlew install
     - name: Update conda package
       shell: bash -l {0}
       run: |
         cd $GITHUB_WORKSPACE/beakerx_tests/dev_scripts
-        conda env create -n beakerx -f configuration.yml      
+        conda env create -n beakerx -f configuration.yml
     - name: Build Groovy Kernel
       shell: bash -l {0}
       run: |
         conda activate beakerx
         cd $GITHUB_WORKSPACE/beakerx_kernel_groovy/groovy-dist
         pip install -r requirements.txt --verbose
-        beakerx_kernel_groovy install     
+        beakerx_kernel_groovy install
     - name: Build BeakerX Base
       shell: bash -l {0}
       run: |
@@ -96,4 +98,3 @@ jobs:
         conda activate beakerx
         pip install psutil
         python ci_tests.py --app=notebook --tst=*.Widget*
-      
