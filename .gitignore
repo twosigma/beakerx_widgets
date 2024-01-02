@@ -10,6 +10,9 @@ beakerx_widgets/js/lib
 # Karma tests coverage
 beakerx_widgets/js/coverage
 
+# Yarn cache
+beakerx_widgets/js/.yarn
+
 # JS bundles
 beakerx_widgets/beakerx/static
 beakerx_widgets/beakerx/labextension
