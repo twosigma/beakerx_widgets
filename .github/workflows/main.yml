@@ -46,8 +46,8 @@ jobs:
     - name: Checkout beakerx_base repo
       uses: actions/checkout@v2
       with:
-        repository: fcollonval/beakerx_base
-        ref: maintenance/bump-ipywidgets
+        repository: twosigma/beakerx_base
+        ref: master
         path: beakerx_base
     - name: Checkout beakerx_kernel_groovy repo
       uses: actions/checkout@v2
