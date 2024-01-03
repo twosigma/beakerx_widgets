@@ -139,7 +139,7 @@ def install(args):
 
 def uninstall(args):
     subprocess.check_call(["jupyter", "server", "extension", "disable", "beakerx", "--py", "--sys-prefix"])
-    if LAB_VERSION is not None:
+    if LAB_VERSION is not None and LAB_VERSION < 3:
         subprocess.check(["jupyter", "labextension", "uninstall", "@beakerx/beakerx-widgets"],
                          stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     _install_kernelspec_manager(args.prefix, disable=True)
