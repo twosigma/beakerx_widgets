@@ -52,8 +52,7 @@ jobs:
     - name: Checkout beakerx_kernel_groovy repo
       uses: actions/checkout@v2
       with:
-        repository: martinRenou/beakerx_kernel_groovy
-        ref: 'update_notebook'
+        repository: twosigma/beakerx_kernel_groovy
         path: beakerx_kernel_groovy
     - name: Checkout beakerx_tests repo
       uses: actions/checkout@v2
