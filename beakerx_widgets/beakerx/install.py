@@ -123,12 +123,8 @@ def make_parser():
 
 
 def install(args):
-    if sys.platform == 'win32':
-        subprocess.check_call(["jupyter", "nbextension", "install", "beakerx", "--py", "--sys-prefix"])
-        
-    subprocess.check_call(["jupyter", "nbextension", "enable", "beakerx", "--py", "--sys-prefix"])
-    subprocess.check_call(["jupyter", "serverextension", "enable", "beakerx", "--py", "--sys-prefix"])
-    if LAB_VERSION is not None and LAB_VERSION != 3:
+    subprocess.check_call(["jupyter", "server", "extension", "enable", "beakerx", "--py", "--sys-prefix"])
+    if LAB_VERSION is not None and LAB_VERSION < 3:
         subprocess.call(["jupyter", "labextension", "install", "@jupyter-widgets/jupyterlab-manager", "--no-build"],
                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         if LAB_VERSION == 1:
@@ -142,10 +138,8 @@ def install(args):
 
 
 def uninstall(args):
-    subprocess.check_call(["jupyter", "nbextension", "disable", "beakerx", "--py", "--sys-prefix"])
-    subprocess.check_call(["jupyter", "nbextension", "uninstall", "beakerx", "--py", "--sys-prefix"])
-    subprocess.check_call(["jupyter", "serverextension", "disable", "beakerx", "--py", "--sys-prefix"])
-    if LAB_VERSION is not None:
+    subprocess.check_call(["jupyter", "server", "extension", "disable", "beakerx", "--py", "--sys-prefix"])
+    if LAB_VERSION is not None and LAB_VERSION < 3:
         subprocess.check(["jupyter", "labextension", "uninstall", "@beakerx/beakerx-widgets"],
                          stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     _install_kernelspec_manager(args.prefix, disable=True)

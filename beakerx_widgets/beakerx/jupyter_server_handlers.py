@@ -19,7 +19,7 @@ import beakerx
 import tornado
 import zmq
 from jupyter_server.base.handlers import APIHandler, JupyterHandler
-from notebook.utils import url_path_join
+from jupyter_server.utils import url_path_join
 from tornado import web, gen
 from tornado.simple_httpclient import HTTPStreamClosedError
 
@@ -149,7 +149,7 @@ def setup_jupyter_server_handlers(serverapp, url_path):
     host_pattern = '.*$'
     web_app = serverapp.web_app
     base_url = web_app.settings["base_url"]
-    
+
     settings_route_pattern = url_path_join(base_url, url_path, '/settings')
     spark_metrics_executors_route_pattern = url_path_join(base_url, url_path, '/sparkmetrics/executors')
     version_route_pattern = url_path_join(base_url, url_path, '/version')

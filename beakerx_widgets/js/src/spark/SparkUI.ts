@@ -14,6 +14,7 @@
  *  limitations under the License.
  */
 
+import { JupyterLuminoPanelWidget } from '@jupyter-widgets/base';
 import { BoxModel as JupyterBoxModel, BoxView as JupyterBoxView } from '@jupyter-widgets/controls';
 import { BEAKERX_MODULE_VERSION } from '../version';
 import { SparkUIComm } from './SparkUIComm';
@@ -162,6 +163,12 @@ export class SparkUIView extends JupyterBoxView {
 
     await this.displayed;
 
-    this.pWidget.addWidget(w);
+    if (this['pWidget']) {
+      // ipywidgets 7 support
+      (this.pWidget as JupyterLuminoPanelWidget).addWidget(w);
+    } else {
+      // ipywidgets 8 support
+      this.luminoWidget.addWidget(w);
+    }
   }
 }

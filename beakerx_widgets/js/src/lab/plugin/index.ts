@@ -18,7 +18,6 @@ window.beakerx = {};
 window.beakerxHolder = {};
 
 export * from './codeCells';
-export * from './codeEditor';
 export * from './comm';
 export * from './initializationCells';
 export * from './UIOptionFeaturesHelper';

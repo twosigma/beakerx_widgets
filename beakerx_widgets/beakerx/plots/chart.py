@@ -81,9 +81,9 @@ class Plot(BeakerxDOMWidget):
         self.model = self.chart.transform()
         return self
 
-    def _ipython_display_(self, **kwargs):
+    def _repr_mimebundle_(self, **kwargs):
         self.model = self.chart.transform()
-        super(Plot, self)._ipython_display_(**kwargs)
+        return super(Plot, self)._repr_mimebundle_(**kwargs)
 
     def _handle_msg(self, msg):
         if 'content' in msg['content']['data']:
@@ -156,9 +156,9 @@ class CategoryPlot(BeakerxDOMWidget):
         self.model = self.chart.transform()
         return self
 
-    def _ipython_display_(self, **kwargs):
+    def _repr_mimebundle_(self, **kwargs):
         self.model = self.chart.transform()
-        super(CategoryPlot, self)._ipython_display_(**kwargs)
+        return super(CategoryPlot, self)._repr_mimebundle_(**kwargs)
 
 
 class HeatMap(BeakerxDOMWidget):

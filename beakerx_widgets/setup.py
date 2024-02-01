@@ -115,7 +115,7 @@ try:
         build_cmd="build:labextension",
         source_dir=str(pkg_json_path.parent / "src"),
         build_dir=str(pkg_json_path.parent / "dist"),
-        npm=["yarn"],
+        npm=["jlpm"],
     )
     setup_args["cmdclass"] = wrap_installers(
         post_develop=post_develop, ensured_targets=ensured_targets

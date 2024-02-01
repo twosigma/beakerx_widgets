@@ -29,7 +29,7 @@ const logPrefix = `[${modName}]`;
 
 export function enableInitializationCellsFeature(panel: NotebookPanel): void {
   const modOptions = panel.model.metadata[modName];
-  const options = { run_on_kernel_ready: true, ...modOptions };
+  const options = { run_on_kernel_ready: true, ...(typeof modOptions === "object" ? modOptions : {}) };
 
   registerNotebookInitCellsAction(panel, options);
 
@@ -53,7 +53,14 @@ export function runInitCells(panel: NotebookPanel, options: IInitCellsOptions): 
 export function getInitCells(panel: NotebookPanel): CodeCell[] {
   const cells = panel.content.widgets || [];
 
-  return <CodeCell[]>cells.filter((cell: Cell) => cell instanceof CodeCell && cell.model.metadata.get('init_cell'));
+  return <CodeCell[]>(
+    cells.filter(
+      (cell: Cell) =>
+        cell instanceof CodeCell &&
+        // @ts-ignore: Support for both JupyterLab 3 and 4. It does not compile against JupyterLab 4.
+        (cell.model.getMetadata ? cell.model.getMetadata('init_cell') : cell.model.metadata.get('init_cell')),
+    )
+  );
 }
 
 async function canExecuteInitCells(
@@ -79,8 +86,7 @@ function handleUntrustedKernelInitCells(cells: CodeCell[], options: IInitCellsOp
   if (cells.length && !cells[0].model.trusted && !options.run_untrusted) {
     showDialog({
       title: 'Initialization cells in untrusted notebook',
-      body:
-        'This notebook is not trusted, so initialization cells will not be automatically run on kernel load. You can still run them manually, though.',
+      body: 'This notebook is not trusted, so initialization cells will not be automatically run on kernel load. You can still run them manually, though.',
       buttons: [Dialog.okButton({ label: 'OK' })],
     });
   }

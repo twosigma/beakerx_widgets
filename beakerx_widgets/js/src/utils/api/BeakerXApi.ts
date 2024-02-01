@@ -113,7 +113,7 @@ export class BeakerXApi {
         },
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         success: (data, status) => {
-          resolve();
+          resolve(null);
         },
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         error: (jqXHR, status, err) => {
@@ -137,7 +137,7 @@ export class BeakerXApi {
         },
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         success: (data, status) => {
-          resolve();
+          resolve(null);
         },
         error: (jqXHR, status, err) => {
           reject(err);

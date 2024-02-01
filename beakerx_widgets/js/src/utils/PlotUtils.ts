@@ -225,7 +225,7 @@ export class PlotUtils {
           'YYYY MMM DD ddd, HH:mm:ss',
         ) +
         '.' +
-        CommonUtils.padStr((nanosec as unknown) as number, 9)
+        CommonUtils.padStr(nanosec as unknown as number, 9)
       );
     }
 

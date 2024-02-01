@@ -3,7 +3,7 @@ channels:
   - conda-forge
 dependencies:
   - bottle
-  - ipywidgets>=7.5.1,<8
+  - ipywidgets>=7.5.1,<9
   - pandas
   - py4j
   - pyspark

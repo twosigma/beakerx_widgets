@@ -22,8 +22,6 @@ import { DisposableDelegate } from '@lumino/disposable';
 import { bkCoreManager } from '../utils/bk/bkCoreManager';
 import {
   enableInitializationCellsFeature,
-  extendHighlightModes,
-  registerCommentOutCmd,
   registerCommTargets,
   UIOptionFeaturesHelper,
 } from './plugin';
@@ -40,9 +38,7 @@ export class BeakerxWidgetExtension implements DocumentRegistry.WidgetExtension 
     const labShell = this.labShell;
 
     Promise.all([panel.sessionContext.ready, context.ready]).then(function () {
-      extendHighlightModes(panel);
       enableInitializationCellsFeature(panel);
-      registerCommentOutCmd(panel);
       registerCommTargets(panel, context);
 
       window.beakerxHolder = window.beakerxHolder || {};

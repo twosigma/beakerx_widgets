@@ -17,7 +17,7 @@
 import { Panel, Widget } from '@lumino/widgets';
 import { BoxModel as JupyterBoxModel, BoxView as JupyterBoxView, reject } from '@jupyter-widgets/controls';
 import { BEAKERX_MODULE_VERSION } from '../version';
-import { DOMWidgetView as JupyterDOMWidgetView } from '@jupyter-widgets/base';
+import { DOMWidgetView as JupyterDOMWidgetView, JupyterLuminoPanelWidget } from '@jupyter-widgets/base';
 
 const DEFAULT_LABEL_TEXT = 'Output';
 const ANIMATION_DURATION = 300;
@@ -84,7 +84,13 @@ export class FoldoutView extends JupyterBoxView {
     this.label.node.classList.add('foldout-label');
     this.label.node.addEventListener('click', this.headerClickCallback.bind(this));
     this.label.insertWidget(0, this.labelContent);
-    this.pWidget.insertWidget(0, this.label);
+    if (this['pWidget']) {
+      // ipywidgets 7 support
+      (this.pWidget as JupyterLuminoPanelWidget).insertWidget(0, this.label);
+    } else {
+      // ipywidgets 8 support
+      this.luminoWidget.insertWidget(0, this.label);
+    }
   }
 
   addContent() {
@@ -93,7 +99,13 @@ export class FoldoutView extends JupyterBoxView {
     this.content.node.classList.add('foldout-content');
     this.content.node.style.height = '0px';
     this.content.node.style.display = 'none';
-    this.pWidget.insertWidget(1, this.content);
+    if (this['pWidget']) {
+      // ipywidgets 7 support
+      (this.pWidget as JupyterLuminoPanelWidget).insertWidget(1, this.content);
+    } else {
+      // ipywidgets 8 support
+      this.luminoWidget.insertWidget(1, this.content);
+    }
   }
 
   addPreviewContent() {

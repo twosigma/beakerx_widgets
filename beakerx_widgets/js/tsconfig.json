@@ -17,8 +17,7 @@
     "types": ["mocha", "node"],
     "lib": [
       "ES2017",
-      "dom",
-      "es2015.proxy"
+      "dom"
     ]
   },
   "include": [

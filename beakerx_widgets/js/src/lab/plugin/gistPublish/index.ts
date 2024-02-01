@@ -48,9 +48,7 @@ function addActionButton(panel: NotebookPanel, commands: CommandRegistry): void 
 }
 
 function removeActionButton(panel: NotebookPanel): void {
-  const iter = panel.toolbar.layout.iter();
-  let widget;
-  while ((widget = iter.next())) {
+  for (const widget of panel.toolbar.layout) {
     if (widget instanceof ToolbarButton && widget.id == 'bx-publishButton') {
       panel.toolbar.layout.removeWidget(widget);
       break;
