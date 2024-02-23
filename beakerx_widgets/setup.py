@@ -74,7 +74,7 @@ setup_args = dict(
     long_description=pkg_json["description"],
     packages=setuptools.find_packages(),
     install_requires=[
-        "beakerx_base>=2.2.0",
+        "beakerx_base>=2.3,<3",
         "requests",
         "pandas",
         "bottle",
