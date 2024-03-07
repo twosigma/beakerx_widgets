@@ -53,6 +53,7 @@ data_files_spec = [
         "**",
     ),
     ("etc/jupyter/nbconfig/notebook.d", str(HERE), "beakerx.json"),
+    ("etc/jupyter/jupyter_server_config.d", str(HERE), "beakerx-server.json"),
 ]
 
 version = (
