@@ -16,7 +16,7 @@
 
 @use 'fonts';
 @use 'base';
- 
+
 body {
 	background-color: var(--jp-layout-color3);
 }
@@ -98,20 +98,32 @@ pre {
 	fill: var(--jp-content-font-color1);
 }
 
-#beakerx-tree-widget .p-TabBar-content {
+/* <DEPRECATED> */
+#beakerx-tree-widget .p-TabBar-content,
+/* </DEPRECATED> */
+#beakerx-tree-widget .lm-TabBar-content {
 	border-color: var(--jp-border-color2);
 }
 
-#beakerx-tree-widget .p-TabBar-tab.p-mod-current {
+/* <DEPRECATED> */
+#beakerx-tree-widget .p-TabBar-tab.p-mod-current,
+/* </DEPRECATED> */
+#beakerx-tree-widget .lm-TabBar-tab.lm-mod-current {
 	background-color: var(--jp-layout-color1);
 	border-color: var(--jp-border-color2);
 }
 
-#beakerx-tree-widget .p-TabBar-tab {
+/* <DEPRECATED> */
+#beakerx-tree-widget .p-TabBar-tab,
+/* </DEPRECATED> */
+#beakerx-tree-widget .lm-TabBar-tab {
 	background-color: var(--jp-layout-color2);
 }
 
-#beakerx-tree-widget .p-TabBar-tab:hover:not(.p-mod-current) {
+/* <DEPRECATED> */
+#beakerx-tree-widget .p-TabBar-tab:hover:not(.p-mod-current),
+/* </DEPRECATED> */
+#beakerx-tree-widget .lm-TabBar-tab:hover:not(.lm-mod-current) {
 	background-color: var(--jp-layout-color0);
 }
 
@@ -153,14 +165,23 @@ pre {
 	border-color: var(--jp-border-color2);
 }
 
-.p-DataGrid {
+/* <DEPRECATED> */
+.p-DataGrid,
+/* </DEPRECATED> */
+.lm-DataGrid {
 	border-color: transparent;
 }
 
-.p-DataGrid-viewport {
+/* <DEPRECATED> */
+.p-DataGrid-viewport,
+/* </DEPRECATED> */
+.lm-DataGrid-viewport {
 	border-color: var(--jp-border-color2);
 }
-.p-DataGrid-viewport input[type="text"] {
+/* <DEPRECATED> */
+.p-DataGrid-viewport input[type="text"],
+/* </DEPRECATED> */
+.lm-DataGrid-viewport input[type="text"] {
 	background-color: var(--jp-layout-color1);
 	color: var(--jp-content-font-color1);
 	border-color: var(--jp-border-color2);
@@ -169,27 +190,45 @@ pre {
 	color: var(--jp-content-font-color1);
 }
 
-.p-DataGrid-scrollBar {
+/* <DEPRECATED> */
+.p-DataGrid-scrollBar,
+/* </DEPRECATED> */
+.lm-DataGrid-scrollBar {
 	border-color: var(--jp-border-color2) !important;
 }
-.p-DataGrid-scrollBar .p-ScrollBar-button {
+/* <DEPRECATED> */
+.p-DataGrid-scrollBar .p-ScrollBar-button,
+/* </DEPRECATED> */
+.lm-DataGrid-scrollBar .lm-ScrollBar-button {
 	background-color: var(--jp-layout-color0);
 }
-.p-DataGrid-scrollBar .p-ScrollBar-track {
+/* <DEPRECATED> */
+.p-DataGrid-scrollBar .p-ScrollBar-track,
+/* </DEPRECATED> */
+.lm-DataGrid-scrollBar .lm-ScrollBar-track {
 	background-color: var(--jp-layout-color2);
 }
-.p-DataGrid-scrollBar .p-ScrollBar-thumb {
+/* <DEPRECATED> */
+.p-DataGrid-scrollBar .p-ScrollBar-thumb,
+/* </DEPRECATED> */
+.lm-DataGrid-scrollBar .lm-ScrollBar-thumb {
 	background-color: var(--jp-layout-color0);
 	border-color: var(--jp-border-color2) !important;
 }
 
-.p-DataGrid-tooltip {
+/* <DEPRECATED> */
+.p-DataGrid-tooltip,
+/* </DEPRECATED> */
+.lm-DataGrid-tooltip {
 	background-color: var(--jp-layout-color1);
 	color: var(--jp-content-font-color1);
 	border-color: var(--jp-border-color1);
 }
 
-.p-DataGrid-scrollCorner {
+/* <DEPRECATED> */
+.p-DataGrid-scrollCorner,
+/* </DEPRECATED> */
+.lm-DataGrid-scrollCorner {
 	background-color: var(--jp-layout-color0);
 	border-color: var(--jp-border-color2);
 }
@@ -221,20 +260,32 @@ pre {
 	background-color: var(--jp-layout-color0);
 }
 
-.bko-table-menu .p-Menu-content .p-Menu-item {
+/* <DEPRECATED> */
+.bko-table-menu .p-Menu-content .p-Menu-item,
+/* </DEPRECATED> */
+.bko-table-menu .lm-Menu-content .lm-Menu-item {
 	color: var(--jp-ui-font-color0);
 }
 
-.bko-table-menu .p-Menu-content .p-Menu-item:hover {
+/* <DEPRECATED> */
+.bko-table-menu .p-Menu-content .p-Menu-item:hover,
+/* </DEPRECATED> */
+.bko-table-menu .lm-Menu-content .lm-Menu-item:hover {
 	background-color: var(--jp-layout-color2);
 	color: var(--jp-ui-font-color0);
 }
 
-.p-Menu-item.p-mod-active {
+/* <DEPRECATED> */
+.p-Menu-item.p-mod-active,
+/* </DEPRECATED> */
+.lm-Menu-item.lm-mod-active {
 	background-color: var(--jp-layout-color2);
 }
 
-.bko-table-menu .p-Menu-content [data-type="submenu"] > .p-Menu-itemSubmenuIcon:after {
+/* <DEPRECATED> */
+.bko-table-menu .p-Menu-content [data-type="submenu"] > .p-Menu-itemSubmenuIcon:after,
+/* </DEPRECATED> */
+.bko-table-menu .lm-Menu-content [data-type="submenu"] > .lm-Menu-itemSubmenuIcon:after {
 	color: var(--jp-ui-font-color0);
 }
 
