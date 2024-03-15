@@ -120,7 +120,7 @@ a {
   }
 
   .p-TabBar-tab.p-mod-current,
-  .lm-TabBar-tab.p-mod-current {
+  .lm-TabBar-tab.lm-mod-current {
     background-color: $bxBgColor1;
     border-color: $bxBorderColor1;
     border-bottom-color: transparent;
@@ -128,7 +128,7 @@ a {
   }
 
   .p-TabBar-tab:hover:not(.p-mod-current),
-  .lm-TabBar-tab:hover:not(.p-mod-current) {
+  .lm-TabBar-tab:hover:not(.lm-mod-current) {
     background: $bxBgColor2;
   }
 
