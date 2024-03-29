@@ -39,7 +39,7 @@
     "prettier:fix": "prettier --check src/**/*.{ts,js} --write"
   },
   "devDependencies": {
-    "@jupyterlab/builder": "^4",
+    "@jupyterlab/builder": "^3 || ^4",
     "@types/big.js": "^4.0.5",
     "@types/chai": "^4.2.11",
     "@types/d3": "^5.7.2",
