@@ -21,6 +21,7 @@ import { Cell, CodeCell } from '@jupyterlab/cells';
 import { CommandRegistry } from '@lumino/commands';
 import { GistPublisher, GistPublisherUtils } from '../../../plots/publisher';
 import { AccessTokenProvider } from '../AccessTokenProvider';
+import { Widget } from '@lumino/widgets';
 
 export function registerGistPublishFeature(panel: NotebookPanel, commands: CommandRegistry, showPublication: boolean) {
   if (showPublication) {
@@ -48,10 +49,22 @@ function addActionButton(panel: NotebookPanel, commands: CommandRegistry): void 
 }
 
 function removeActionButton(panel: NotebookPanel): void {
-  for (const widget of panel.toolbar.layout) {
-    if (widget instanceof ToolbarButton && widget.id == 'bx-publishButton') {
-      panel.toolbar.layout.removeWidget(widget);
-      break;
+  try {
+    for (const widget of panel.toolbar.layout) {
+      if (widget instanceof ToolbarButton && widget.id == 'bx-publishButton') {
+        panel.toolbar.layout.removeWidget(widget);
+        break;
+      }
+    }
+  } catch(e) {
+    // @ts-ignore JupyterLab 3 support
+    const iter = panel.toolbar.layout.iter();
+    let widget: Widget;
+    while ((widget = iter.next())) {
+      if (widget instanceof ToolbarButton && widget.id == 'bx-publishButton') {
+        panel.toolbar.layout.removeWidget(widget);
+        break;
+      }
     }
   }
 }

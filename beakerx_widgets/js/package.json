@@ -1,6 +1,6 @@
 {
   "name": "@beakerx/beakerx-widgets",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "BeakerX: Beaker EasyForms, Magics, Plots and Spark Extension for Jupyter Lab 2.x",
   "homepage": "http://beakerx.com/",
   "keywords": [
@@ -39,7 +39,7 @@
     "prettier:fix": "prettier --check src/**/*.{ts,js} --write"
   },
   "devDependencies": {
-    "@jupyterlab/builder": "^4",
+    "@jupyterlab/builder": "^3 || ^4",
     "@types/big.js": "^4.0.5",
     "@types/chai": "^4.2.11",
     "@types/d3": "^5.7.2",
